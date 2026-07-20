@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<!--
+  TEMPLATE: Dual Infinite Marquee Carousel
+  =========================================
+  Duas fileiras de imagens em loop infinito — fileira 1 vai para a direita,
+  fileira 2 vai para a esquerda. Hover pausa a fileira e cicla entre as fotos
+  extras do item via data-imgs.
+
+  COMO USAR:
+  1. Substitua as imagens nos data-imgs e no src de cada .marquee-item
+  2. Ajuste os hrefs para as páginas de destino
+  3. Duplique o Set A dentro de cada .marquee-track (Set B) para loop sem corte
+  4. Para mais itens: adicione mais .marquee-item em ambos os sets
+  5. Ajuste --marquee-speed (segundos) para velocidade diferente
+
+  DEPENDÊNCIAS: Nenhuma — CSS puro + JS vanilla
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Template — Dual Marquee Carousel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset mínimo ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ── Variáveis ── */
+    :root {
+      --accent:      #F07800;     /* cor de destaque (laranja) */
+      --bg:          #F7F6F3;     /* fundo da seção */
+      --item-w:      clamp(220px, 28vw, 320px);   /* largura de cada card */
+      --item-h:      clamp(160px, 20vw, 230px);   /* altura de cada card */
+      --marquee-gap: 0.75rem;                       /* espaço entre cards */
+      --marquee-speed-fwd: 38s;                    /* velocidade fileira 1 */
+      --marquee-speed-rev: 32s;                    /* velocidade fileira 2 */
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+    }
+
+    /* ── Seção principal ── */
+    .marquee-section {
+      background: var(--bg);
+      padding-block: clamp(4rem, 8vw, 7rem);
+      overflow: hidden;
+    }
+
+    /* ── Cabeçalho ── */
+    .marquee-section__head {
+      max-width: 1260px;
+      margin-inline: auto;
+      padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+      margin-bottom: 2.5rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: var(--font-sans);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #222;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-sub {
+      font-family: var(--font-sans);
+      font-size: clamp(.85rem, 1.4vw, 1rem);
+      color: #6B6B6B;
+      margin-top: .9rem;
+      max-width: 560px;
+    }
+
+    /* ── Wrapper dos marquees ── */
+    .dual-marquee {
+      position: relative;
+    }
+
+    /* Fade nas bordas laterais */
+    .dual-marquee::before,
+    .dual-marquee::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: clamp(3rem, 8vw, 7rem);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .dual-marquee::before { left: 0;  background: linear-gradient(to right, var(--bg) 10%, transparent); }
+    .dual-marquee::after  { right: 0; background: linear-gradient(to left,  var(--bg) 10%, transparent); }
+
+    /* ── Fileira ── */
+    .marquee-row {
+      position: relative;
+      overflow: hidden;
+    }
+    .marquee-row:first-child { padding-top: 1.75rem; } /* espaço para o label */
+
+    /* ── Label de fileira ("Ambientes" / "Produtos") ── */
+    .row-label {
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    /* Label da fileira 1: posição absoluta no padding-top */
+    .row-label--fwd {
+      position: absolute;
+      top: 0.3rem;
+      left: clamp(1.25rem, 3vw, 2.5rem);
+      z-index: 10;
+    }
+    /* Label da fileira 2: dentro do divisor, alinhado à direita */
+    .row-label--rev {
+      position: relative;
+      z-index: 5;
+    }
+    .row-label em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(.9rem, 1.4vw, 1.15rem);
+      font-weight: 600;
+      letter-spacing: .07em;
+      color: var(--accent);
+      text-shadow: 0 0 14px rgba(240,120,0,.3);
+    }
+
+    /* ── Divisor com linha de glow ── */
+    .marquee-divider {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0.65rem clamp(1.25rem, 3vw, 2.5rem);
+      position: relative;
+    }
+    .marquee-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: clamp(2rem, 8vw, 6rem);
+      right: clamp(2rem, 8vw, 6rem);
+      height: 1px;
+      background: linear-gradient(to right, transparent 0%, rgba(240,120,0,.5) 20%, rgba(240,120,0,.5) 80%, transparent 100%);
+      box-shadow: 0 0 6px rgba(240,120,0,.4), 0 0 20px rgba(240,120,0,.15);
+    }
+
+    /* ── Track (faixa que anima) ── */
+    .marquee-track {
+      display: flex;
+      gap: var(--marquee-gap);
+      width: max-content;
+      padding-block: .5rem;
+    }
+    /* Animação da fileira 1 → direita */
+    .marquee-track--fwd {
+      animation: marquee-fwd var(--marquee-speed-fwd) linear infinite;
+    }
+    /* Animação da fileira 2 ← esquerda */
+    .marquee-track--rev {
+      animation: marquee-rev var(--marquee-speed-rev) linear infinite;
+    }
+    /* Pausa ao hover na fileira */
+    .marquee-row:hover .marquee-track { animation-play-state: paused; }
+
+    @keyframes marquee-fwd {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); }
+    }
+    @keyframes marquee-rev {
+      from { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); }
+      to   { transform: translateX(0); }
+    }
+
+    /* ── Card de item ── */
+    .marquee-item {
+      position: relative;
+      flex-shrink: 0;
+      width: var(--item-w);
+      height: var(--item-h);
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: filter .45s ease;
+    }
+    .marquee-item:hover { filter: drop-shadow(0 0 16px rgba(240,120,0,.38)); }
+
+    .marquee-item__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity .2s ease;
+    }
+
+    /* Label sobre a imagem */
+    .marquee-item__label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: .85rem 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.7) 28%, rgba(0,0,0,.25) 55%, transparent 80%);
+      opacity: 0;
+      transition: opacity .35s ease;
+    }
+    .marquee-item:hover .marquee-item__label { opacity: 1; }
+
+    .marquee-item__cat {
+      font-family: var(--font-sans);
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 1px 4px rgba(0,0,0,.6);
+      margin-bottom: .2rem;
+    }
+    .marquee-item__name {
+      font-family: var(--font-serif);
+      font-size: clamp(.95rem, 1.8vw, 1.15rem);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.2;
+      text-shadow: 0 1px 6px rgba(0,0,0,.7), 0 2px 16px rgba(0,0,0,.4);
+    }
+
+    /* ── Mobile: esconde labels, reduz cards ── */
+    @media (max-width: 600px) {
+      .marquee-item { width: clamp(190px, 55vw, 270px); }
+      .row-label--fwd, .row-label--rev { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<section class="marquee-section">
+
+  <!-- Cabeçalho da seção -->
+  <div class="marquee-section__head">
+    <p class="eyebrow">Ambientes</p>
+    <h2 class="section-title">
+      Cada espaço tem<br /><em>a sua linguagem</em>
+    </h2>
+    <p class="section-sub">
+      Passe o mouse em qualquer item para explorar. Hover pausa a faixa e cicla entre as fotos.
+    </p>
+  </div>
+
+  <div class="dual-marquee">
+
+    <!-- ── Fileira 1 → (esquerda para direita) ── -->
+    <div class="marquee-row">
+      <span class="row-label row-label--fwd" aria-hidden="true"><em>Categoria A</em></span>
+      <div class="marquee-track marquee-track--fwd">
+
+        <!-- ══ Set A ══ (mínimo 6–9 itens para o loop parecer infinito) -->
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Externo</span>
+            <span class="marquee-item__name">Área Gourmet</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Sala de Estar</span>
+            <span class="marquee-item__name">Living</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Estofados</span>
+            <span class="marquee-item__name">Linha Couro</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1522771739844-6a9136b5c672?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Dormitório</span>
+            <span class="marquee-item__name">Quartos</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Jantar</span>
+            <span class="marquee-item__name">Sala de Jantar</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Escritório</span>
+            <span class="marquee-item__name">Corporativo</span>
+          </div>
+        </a>
+
+        <!-- ══ Set B — cópia exata do Set A para o loop ser contínuo ══ -->
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Externo</span><span class="marquee-item__name">Área Gourmet</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Sala de Estar</span><span class="marquee-item__name">Living</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Estofados</span><span class="marquee-item__name">Linha Couro</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1522771739844-6a9136b5c672?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Dormitório</span><span class="marquee-item__name">Quartos</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Jantar</span><span class="marquee-item__name">Sala de Jantar</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Escritório</span><span class="marquee-item__name">Corporativo</span></div>
+        </a>
+
+      </div><!-- /track fwd -->
+    </div><!-- /row fwd -->
+
+    <!-- ── Divisor com linha de glow + label "Categoria B" ── -->
+    <div class="marquee-divider">
+      <span class="row-label row-label--rev" aria-hidden="true"><em>Categoria B</em></span>
+    </div>
+
+    <!-- ── Fileira 2 ← (direita para esquerda) ── -->
+    <div class="marquee-row">
+      <div class="marquee-track marquee-track--rev">
+
+        <!-- ══ Set A ══ -->
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Produto</span>
+            <span class="marquee-item__name">Item 01</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Produto</span>
+            <span class="marquee-item__name">Item 02</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1524758631624-e2822132143e?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Produto</span>
+            <span class="marquee-item__name">Item 03</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Produto</span>
+            <span class="marquee-item__name">Item 04</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1574375927443-fe27dd4d49f7?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Produto</span>
+            <span class="marquee-item__name">Item 05</span>
+          </div>
+        </a>
+
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label">
+            <span class="marquee-item__cat">Produto</span>
+            <span class="marquee-item__name">Item 06</span>
+          </div>
+        </a>
+
+        <!-- ══ Set B — cópia exata do Set A ══ -->
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Produto</span><span class="marquee-item__name">Item 01</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Produto</span><span class="marquee-item__name">Item 02</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1524758631624-e2822132143e?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Produto</span><span class="marquee-item__name">Item 03</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Produto</span><span class="marquee-item__name">Item 04</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1574375927443-fe27dd4d49f7?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Produto</span><span class="marquee-item__name">Item 05</span></div>
+        </a>
+        <a href="#" class="marquee-item"
+           data-imgs='["https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=700&q=80"]'>
+          <img class="marquee-item__img" src="https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+          <div class="marquee-item__label"><span class="marquee-item__cat">Produto</span><span class="marquee-item__name">Item 06</span></div>
+        </a>
+
+      </div><!-- /track rev -->
+    </div><!-- /row rev -->
+
+  </div><!-- /dual-marquee -->
+
+</section>
+
+<script>
+  /*
+    Hover cycling de fotos no marquee
+    ──────────────────────────────────
+    Cada .marquee-item pode ter data-imgs='["url1","url2","url3"]'
+    Ao fazer hover, cicla automaticamente entre as fotos (1.4s por foto).
+    Ao sair do hover, volta para a foto original.
+  */
+  document.querySelectorAll('.marquee-item').forEach(function(item) {
+    var imgs = [];
+    try { imgs = JSON.parse(item.dataset.imgs || '[]'); } catch(_) {}
+    if (imgs.length < 2) return;
+
+    var img = item.querySelector('.marquee-item__img');
+    if (!img) return;
+
+    var idx = 0, timer = null;
+
+    item.addEventListener('mouseenter', function() {
+      idx = 0;
+      timer = setInterval(function() {
+        idx = (idx + 1) % imgs.length;
+        img.style.opacity = '0';
+        setTimeout(function() {
+          img.src = imgs[idx];
+          img.style.opacity = '1';
+        }, 200);
+      }, 1400);
+    });
+
+    item.addEventListener('mouseleave', function() {
+      clearInterval(timer);
+      img.src = imgs[0];
+      img.style.opacity = '1';
+    });
+  });
+</script>
+
+</body>
+</html>

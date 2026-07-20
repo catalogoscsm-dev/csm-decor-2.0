@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fale com a CSM Decor — Campinas Shopping Móveis. Entre em contato com nossa equipe ou envie seu currículo." />
+  <title>Fale Conosco — CSM Decor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Fale Conosco — estilos exclusivos da página ── */
+    .fc-page {
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--gray-dark);
+      padding-top: 80px; /* altura do header */
+    }
+
+    /* Hero da página */
+    .fc-hero {
+      padding: 5rem 0 3.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-light, #ECEAE5);
+    }
+    .fc-hero__eyebrow {
+      font-family: var(--font-sans);
+      font-size: .55rem;
+      font-weight: 600;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+    .fc-hero__title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 300;
+      letter-spacing: -.01em;
+      line-height: 1.1;
+      color: var(--dark, #111);
+    }
+    .fc-hero__sub {
+      margin-top: 1rem;
+      font-family: var(--font-sans);
+      font-size: .9rem;
+      font-weight: 300;
+      color: var(--gray-mid, #6B6B6B);
+      max-width: 44ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* Layout principal */
+    .fc-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+
+    /* Abas */
+    .fc-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--gray-light, #ECEAE5);
+      margin-bottom: 3.5rem;
+    }
+    .fc-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 1rem 1.5rem;
+      font-family: var(--font-sans);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gray-mid, #6B6B6B);
+      cursor: pointer;
+      position: relative;
+      transition: color .2s ease;
+    }
+    .fc-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform .25s ease;
+    }
+    .fc-tab.is-active {
+      color: var(--dark, #111);
+    }
+    .fc-tab.is-active::after {
+      transform: scaleX(1);
+    }
+    .fc-tab:hover:not(.is-active) {
+      color: var(--dark, #111);
+    }
+
+    /* Painel de formulário */
+    .fc-panel { display: none; }
+    .fc-panel.is-active { display: block; }
+
+    /* Formulário */
+    .fc-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+    .fc-form__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 600px) {
+      .fc-form__row { grid-template-columns: 1fr; }
+    }
+    .fc-form__field {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+    }
+    .fc-form__label {
+      font-family: var(--font-sans);
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gray-mid, #6B6B6B);
+    }
+    .fc-form__input,
+    .fc-form__select,
+    .fc-form__textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--gray-light, #ECEAE5);
+      padding: .65rem 0;
+      font-family: var(--font-sans);
+      font-size: .9rem;
+      font-weight: 300;
+      color: var(--dark, #111);
+      outline: none;
+      transition: border-color .2s ease;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+    .fc-form__input::placeholder,
+    .fc-form__textarea::placeholder {
+      color: var(--gray-mid, #6B6B6B);
+      font-weight: 300;
+    }
+    .fc-form__input:focus,
+    .fc-form__select:focus,
+    .fc-form__textarea:focus {
+      border-bottom-color: var(--orange);
+    }
+    .fc-form__textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+    .fc-form__select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .5rem center;
+      padding-right: 1.5rem;
+    }
+
+    /* Checkbox privacidade */
+    .fc-form__check {
+      display: flex;
+      align-items: flex-start;
+      gap: .65rem;
+      font-family: var(--font-sans);
+      font-size: .82rem;
+      font-weight: 300;
+      color: var(--gray-mid, #6B6B6B);
+      line-height: 1.5;
+    }
+    .fc-form__check input[type="checkbox"] {
+      flex-shrink: 0;
+      width: 14px;
+      height: 14px;
+      margin-top: .15rem;
+      accent-color: var(--orange);
+      cursor: pointer;
+    }
+    .fc-form__check a {
+      color: var(--orange);
+      text-decoration: none;
+    }
+    .fc-form__check a:hover { text-decoration: underline; }
+
+    /* Área de upload */
+    .fc-form__upload {
+      border: 1px dashed var(--gray-light, #ECEAE5);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s ease;
+    }
+    .fc-form__upload:hover { border-color: var(--orange); }
+    .fc-form__upload-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      cursor: pointer;
+    }
+    .fc-form__upload-icon { color: var(--orange); opacity: .7; }
+    .fc-form__upload-text {
+      font-family: var(--font-sans);
+      font-size: .75rem;
+      font-weight: 400;
+      color: var(--gray-mid, #6B6B6B);
+    }
+    .fc-form__upload-text span {
+      color: var(--orange);
+      font-weight: 500;
+    }
+    .fc-form__upload-hint {
+      font-size: .62rem;
+      color: var(--gray-mid, #6B6B6B);
+      opacity: .6;
+    }
+    .fc-form__file-input { display: none; }
+
+    /* Botão submit */
+    .fc-form__submit {
+      align-self: flex-start;
+      margin-top: .5rem;
+    }
+
+    /* Mensagem de sucesso */
+    .fc-success {
+      text-align: center;
+      padding: 3rem 0;
+    }
+    .fc-success__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.2rem;
+    }
+    .fc-success__title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--dark, #111);
+      margin-bottom: .75rem;
+    }
+    .fc-success__text {
+      font-family: var(--font-sans);
+      font-size: .9rem;
+      font-weight: 300;
+      color: var(--gray-mid, #6B6B6B);
+      max-width: 38ch;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .fc-success { display: none; }
+    .fc-success.is-visible { display: block; }
+
+    /* Dark mode */
+    [data-theme="dark"] .fc-form__input,
+    [data-theme="dark"] .fc-form__select,
+    [data-theme="dark"] .fc-form__textarea {
+      color: #f0ece4;
+    }
+    [data-theme="dark"] .fc-form__input::placeholder,
+    [data-theme="dark"] .fc-form__textarea::placeholder {
+      color: rgba(240,236,228,.4);
+    }
+    /* Força o dropdown nativo a usar esquema escuro — resolve opções invisíveis */
+    [data-theme="dark"] .fc-form__select {
+      color-scheme: dark;
+      background-color: #1e1e1e;
+    }
+    [data-theme="dark"] .fc-form__select option {
+      background-color: #1e1e1e;
+      color: #f0ece4;
+    }
+
+    /* ── Botão Voltar — animação hover/touch ── */
+    .fc-back-btn {
+      overflow: hidden;
+    }
+    .fc-back-btn__arrow {
+      transition: transform .32s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+    .fc-back-btn__label {
+      font-family: var(--font-sans);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: transform .32s cubic-bezier(0.16, 1, 0.3, 1) .04s;
+    }
+    .fc-back-btn:hover .fc-back-btn__arrow {
+      transform: translateX(-4px);
+    }
+    .fc-back-btn:hover .fc-back-btn__label {
+      transform: translateX(-2px);
+    }
+    /* Touch: ativa no press */
+    @media (hover: none) {
+      .fc-back-btn:active .fc-back-btn__arrow { transform: translateX(-4px); }
+      .fc-back-btn:active .fc-back-btn__label { transform: translateX(-2px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cortina de transição entre páginas -->
+  <div id="page-curtain" class="page-curtain" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       HEADER — espelho simplificado do index.html
+  ============================================================ -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+
+      <div class="header__left">
+        <a href="index.html" class="header-icon fc-back-btn" aria-label="Voltar ao início" style="gap:.45rem;">
+          <svg class="fc-back-btn__arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          <span class="fc-back-btn__label">Voltar</span>
+        </a>
+      </div>
+
+      <a href="index.html" class="header__logo" aria-label="CSM — Campinas Shopping Móveis">
+        <img src="imagens/logo/csm-logo.png" alt="CSM — Campinas Shopping Móveis"
+          class="header__logo-img" width="160" height="48" />
+      </a>
+
+      <div class="header__right">
+        <button class="header-icon header__theme-toggle" id="theme-toggle"
+          data-label="Tema" aria-label="Alternar tema claro/escuro">
+          <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22"  x2="5.64"  y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
+            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL
+  ============================================================ -->
+  <main class="fc-page">
+
+    <!-- Hero -->
+    <section class="fc-hero">
+      <div class="container">
+        <span class="fc-hero__eyebrow">CSM Decor · Atendimento</span>
+        <h1 class="fc-hero__title">Fale Conosco</h1>
+        <p class="fc-hero__sub">Nossa equipe está pronta para atender você. Escolha o assunto e envie sua mensagem.</p>
+      </div>
+    </section>
+
+    <!-- Formulários -->
+    <div class="fc-content">
+
+      <!-- Navegação por abas -->
+      <nav class="fc-tabs" role="tablist" aria-label="Tipo de contato">
+        <button class="fc-tab is-active" id="tab-btn-loja"
+          role="tab" aria-selected="true" aria-controls="panel-loja">
+          Fale com a Loja
+        </button>
+        <button class="fc-tab" id="tab-btn-curriculo"
+          role="tab" aria-selected="false" aria-controls="panel-curriculo">
+          Envie seu Currículo
+        </button>
+      </nav>
+
+      <!-- Painel: Fale com a Loja -->
+      <div class="fc-panel is-active" id="panel-loja" role="tabpanel" aria-labelledby="tab-btn-loja">
+
+        <form class="fc-form" id="form-loja" onsubmit="submitContact(event, 'loja')">
+
+          <div class="fc-form__row">
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="loja-nome">Nome completo *</label>
+              <input class="fc-form__input" type="text" id="loja-nome" name="nome"
+                placeholder="Seu nome completo" required autocomplete="name" />
+            </div>
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="loja-email">E-mail *</label>
+              <input class="fc-form__input" type="email" id="loja-email" name="email"
+                placeholder="seu@email.com" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="fc-form__row">
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="loja-tel">Telefone / WhatsApp</label>
+              <input class="fc-form__input" type="tel" id="loja-tel" name="telefone"
+                placeholder="(19) 9 0000-0000" autocomplete="tel" />
+            </div>
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="loja-assunto">Assunto *</label>
+              <select class="fc-form__select" id="loja-assunto" name="assunto" required>
+                <option value="" disabled selected>Selecione…</option>
+                <option value="produtos">Informações sobre produtos</option>
+                <option value="orcamento">Solicitar orçamento</option>
+                <option value="entrega">Entrega e logística</option>
+                <option value="troca">Troca ou garantia</option>
+                <option value="showroom">Visitar o showroom</option>
+                <option value="outro">Outro assunto</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fc-form__field">
+            <label class="fc-form__label" for="loja-msg">Sua mensagem *</label>
+            <textarea class="fc-form__textarea" id="loja-msg" name="mensagem"
+              placeholder="Descreva como podemos ajudá-lo…" rows="6" required></textarea>
+          </div>
+
+          <div class="fc-form__check">
+            <input type="checkbox" id="loja-privacidade" name="privacidade" required />
+            <label for="loja-privacidade">
+              Li e concordo com a <a href="#">Política de Privacidade</a> da CSM Decor.
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary fc-form__submit">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Enviar mensagem
+          </button>
+
+        </form>
+
+        <div class="fc-success" id="success-loja" aria-live="polite">
+          <div class="fc-success__icon" aria-hidden="true">✓</div>
+          <h2 class="fc-success__title">Mensagem enviada!</h2>
+          <p class="fc-success__text">Recebemos seu contato. Nossa equipe retornará em até 24 horas úteis.</p>
+        </div>
+
+      </div>
+
+      <!-- Painel: Envie seu Currículo -->
+      <div class="fc-panel" id="panel-curriculo" role="tabpanel" aria-labelledby="tab-btn-curriculo" hidden>
+
+        <form class="fc-form" id="form-curriculo" onsubmit="submitContact(event, 'curriculo')">
+
+          <div class="fc-form__row">
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="cv-nome">Nome completo *</label>
+              <input class="fc-form__input" type="text" id="cv-nome" name="nome"
+                placeholder="Seu nome completo" required autocomplete="name" />
+            </div>
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="cv-email">E-mail *</label>
+              <input class="fc-form__input" type="email" id="cv-email" name="email"
+                placeholder="seu@email.com" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="fc-form__row">
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="cv-tel">Telefone / WhatsApp</label>
+              <input class="fc-form__input" type="tel" id="cv-tel" name="telefone"
+                placeholder="(19) 9 0000-0000" autocomplete="tel" />
+            </div>
+            <div class="fc-form__field">
+              <label class="fc-form__label" for="cv-cargo">Cargo pretendido *</label>
+              <select class="fc-form__select" id="cv-cargo" name="cargo" required>
+                <option value="" disabled selected>Selecione…</option>
+                <option value="consultor">Consultor de Vendas</option>
+                <option value="designer">Designer de Interiores</option>
+                <option value="almoxarife">Almoxarifado / Logística</option>
+                <option value="caixa">Financeiro / Caixa</option>
+                <option value="ti">TI / Marketing Digital</option>
+                <option value="outro">Outro cargo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fc-form__field">
+            <label class="fc-form__label" for="cv-exp">Fale sobre suas experiências *</label>
+            <textarea class="fc-form__textarea" id="cv-exp" name="experiencias"
+              placeholder="Descreva brevemente sua trajetória profissional e principais habilidades…"
+              rows="5" required></textarea>
+          </div>
+
+          <div class="fc-form__field">
+            <label class="fc-form__label">Currículo (PDF ou Word)</label>
+            <div class="fc-form__upload">
+              <label class="fc-form__upload-label" for="cv-arquivo">
+                <svg class="fc-form__upload-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span class="fc-form__upload-text">
+                  <span>Clique para selecionar</span> ou arraste o arquivo aqui
+                </span>
+                <span class="fc-form__upload-hint">PDF, DOC ou DOCX · máx. 5 MB</span>
+              </label>
+              <input class="fc-form__file-input" type="file" id="cv-arquivo" name="arquivo"
+                accept=".pdf,.doc,.docx" />
+            </div>
+            <span class="fc-form__file-name" id="cv-file-name"
+              style="font-size:.72rem;color:var(--orange);margin-top:.4rem;display:none;"></span>
+          </div>
+
+          <button type="submit" class="btn btn--primary fc-form__submit">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Enviar currículo
+          </button>
+
+        </form>
+
+        <div class="fc-success" id="success-curriculo" aria-live="polite">
+          <div class="fc-success__icon" aria-hidden="true">✓</div>
+          <h2 class="fc-success__title">Currículo recebido!</h2>
+          <p class="fc-success__text">Obrigado pelo interesse. Analisaremos seu perfil e entraremos em contato se houver uma vaga compatível.</p>
+        </div>
+
+      </div>
+
+    <!-- Bloco de informações da loja -->
+    <div class="fc-content">
+      <div class="fc-info-block">
+        <h2 class="fc-info-block__title">Como nos encontrar</h2>
+
+        <div class="fc-info-grid">
+
+          <div class="fc-info-item">
+            <div class="fc-info-item__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span class="fc-info-item__label">Endereço</span>
+            <p class="fc-info-item__value">
+              Av. Dr. Moraes Sales, 1575<br>
+              Cambuí – Campinas – SP<br>
+              CEP: 13010-002
+            </p>
+          </div>
+
+          <div class="fc-info-item">
+            <div class="fc-info-item__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l.73-.73a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.28 16z"/></svg>
+            </div>
+            <span class="fc-info-item__label">Telefones</span>
+            <p class="fc-info-item__value">
+              <a href="tel:+5519990034068">WhatsApp (19) 99003-4068</a><br>
+              <a href="tel:+551937538988">(19) 3753-8988</a><br>
+              <a href="tel:+551937538999">Fax (19) 3753-8999</a>
+            </p>
+          </div>
+
+          <div class="fc-info-item">
+            <div class="fc-info-item__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="fc-info-item__label">Horários</span>
+            <p class="fc-info-item__value">
+              Seg–Sex: 9h às 19h<br>
+              Sábado: 9h às 18h<br>
+              Dom &amp; Feriados: 10h às 18h
+            </p>
+          </div>
+
+        </div>
+
+        <div class="fc-info-map">
+          <iframe
+            src="https://maps.google.com/maps?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP,+13010-002&hl=pt-BR&output=embed&z=16"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização da CSM Decor em Campinas"
+            aria-label="Mapa com localização da loja CSM Decor">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // ── Dark mode ────────────────────────────────────────────────
+    (function () {
+      var saved = localStorage.getItem('csm-theme');
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+
+      function updateLabel() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        btn.setAttribute('data-label', isDark ? 'Tema claro' : 'Tema escuro');
+      }
+      updateLabel();
+
+      btn.addEventListener('click', function () {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('csm-theme', isDark ? 'light' : 'dark');
+        updateLabel();
+      });
+    }());
+
+    // ── Header scroll ────────────────────────────────────────────
+    (function () {
+      var header = document.getElementById('header');
+      function onScroll() { header.classList.toggle('header--scrolled', window.scrollY > 50); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }());
+
+    // ── Abas ─────────────────────────────────────────────────────
+    (function () {
+      var tabs   = document.querySelectorAll('.fc-tab');
+      var panels = document.querySelectorAll('.fc-panel');
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var target = tab.getAttribute('aria-controls');
+
+          tabs.forEach(function (t) {
+            t.classList.remove('is-active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          panels.forEach(function (p) {
+            p.classList.remove('is-active');
+            p.setAttribute('hidden', '');
+          });
+
+          tab.classList.add('is-active');
+          tab.setAttribute('aria-selected', 'true');
+          var panel = document.getElementById(target);
+          if (panel) { panel.classList.add('is-active'); panel.removeAttribute('hidden'); }
+        });
+      });
+    }());
+
+    // ── Exibir nome do arquivo selecionado ───────────────────────
+    (function () {
+      var input    = document.getElementById('cv-arquivo');
+      var nameSpan = document.getElementById('cv-file-name');
+      if (!input || !nameSpan) return;
+      input.addEventListener('change', function () {
+        if (input.files && input.files[0]) {
+          nameSpan.textContent = '✓ ' + input.files[0].name;
+          nameSpan.style.display = 'block';
+        }
+      });
+    }());
+
+    // ── Submissão dos formulários ────────────────────────────────
+    function submitContact(e, tipo) {
+      e.preventDefault();
+      var form    = e.target;
+      var success = document.getElementById('success-' + tipo);
+      if (!success) return;
+      form.style.display = 'none';
+      success.classList.add('is-visible');
+    }
+  </script>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__top">
+
+      <div class="footer__brand">
+        <a href="index.html" aria-label="CSM — Campinas Shopping Móveis">
+          <img src="imagens/logo/csm-logo.png" alt="CSM — Campinas Shopping Móveis" class="footer__logo" width="140" height="42" />
+        </a>
+        <p class="footer__tagline">
+          Transformando ambientes com sofisticação<br />há mais de 30 anos em Campinas.
+        </p>
+        <div class="footer__socials" aria-label="Redes sociais">
+          <a href="https://www.instagram.com/csmdecor/" class="social-link" aria-label="Instagram CSM" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/csmdecor" class="social-link" aria-label="Facebook CSM" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@csmdecor" class="social-link" aria-label="YouTube CSM" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="footer__nav" aria-label="Links do rodapé">
+
+        <div class="footer__col footer__col--sitemap">
+          <h3 class="footer__col-title">Mapa do Site</h3>
+          <ul>
+            <li><a href="index.html#inicio" rel="index">Início</a></li>
+            <li><a href="index.html#ambientes">Ambientes</a></li>
+            <li><a href="produtos.html?categoria=corporativo">Corporativo</a></li>
+            <li><a href="index.html#historia">Sobre Nós</a></li>
+            <li><a href="index.html#showroom">Showroom</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h3 class="footer__col-title">Contato</h3>
+          <ul>
+            <li><a href="https://wa.me/5519990034068?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20consultor." target="_blank" rel="noopener noreferrer">(19) 99003-4068</a></li>
+            <li><a href="tel:+551937538988">(19) 3753-8988</a></li>
+            <li><a href="mailto:contato@csmdecor.com.br">contato@csmdecor.com.br</a></li>
+            <li><a href="https://maps.google.com/?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP" target="_blank" rel="noopener noreferrer">Av. Dr. Moraes Sales, 1575 — Cambuí</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h3 class="footer__col-title">Horários</h3>
+          <ul class="footer__hours">
+            <li><span>Seg — Sex</span><span>9h às 19h</span></li>
+            <li><span>Sábado</span><span>9h às 18h</span></li>
+            <li><span>Dom e Feriados</span><span>10h às 18h</span></li>
+          </ul>
+        </div>
+
+        <div class="footer__col footer__col--trust">
+          <h3 class="footer__col-title">Pagamento</h3>
+          <ul class="footer__trust-list">
+            <li class="footer__pay-item">
+              <span class="footer__pay-chip footer__pay-chip--pix">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm5.66 6.59-2.2 2.2a3.06 3.06 0 0 1-4.32 0l-.35-.35a.77.77 0 0 0-1.09 0l-2.56 2.56 2.56 2.56a.77.77 0 0 0 1.09 0l.35-.35a3.06 3.06 0 0 1 4.32 0l2.2 2.2A7.94 7.94 0 0 0 12 4a7.94 7.94 0 0 0-5.71 2.39L8.82 8.9a.77.77 0 0 0 1.09 0l.35-.35a3.06 3.06 0 0 1 4.32 0l2.2 2.2ZM12 20a7.94 7.94 0 0 0 5.66-2.39l-2.2-2.2a3.06 3.06 0 0 1-4.32 0l-.35-.35a.77.77 0 0 0-1.09 0l-2.53 2.53A7.94 7.94 0 0 0 12 20Z"/></svg>
+                PIX
+              </span>
+            </li>
+            <li class="footer__pay-item">
+              <span class="footer__pay-chip">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></svg>
+                CARTÃO
+              </span>
+              <span style="font-size:.68rem;color:rgba(255,255,255,.28);margin-left:.25rem">crédito&nbsp;e&nbsp;débito</span>
+            </li>
+            <li class="footer__trust-seal">Satisfação Assegurada CSM</li>
+            <li class="footer__trust-seal">Qualidade Alta Marcenaria</li>
+          </ul>
+        </div>
+
+      </nav>
+
+    </div>
+
+    <!-- ── Como nos encontrar — Mapa no Rodapé ── -->
+    <div class="footer__location">
+      <div class="container footer__location-inner">
+        <div class="footer__location-info">
+          <h3 class="footer__col-title">Como nos encontrar</h3>
+          <address class="footer__location-address">
+            Av. Dr. Moraes Sales, 1575 — Cambuí<br />
+            Campinas, SP · CEP 13010-002
+          </address>
+          <ul class="footer__hours footer__location-hours">
+            <li><span>Seg — Sex</span><span>9h às 19h</span></li>
+            <li><span>Sábado</span><span>9h às 18h</span></li>
+            <li><span>Dom e Feriados</span><span>10h às 18h</span></li>
+          </ul>
+          <div class="footer__location-ctas">
+            <a href="https://wa.me/5519990034068?text=Quero%20agendar%20uma%20visita%20ao%20showroom%20CSM."
+               class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">Agendar visita</a>
+            <a href="https://maps.google.com/?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP"
+               class="btn btn--ghost btn--sm" target="_blank" rel="noopener noreferrer">Como chegar</a>
+          </div>
+        </div>
+        <div class="footer__location-map" aria-label="Localização CSM Decor no mapa">
+          <iframe src="https://maps.google.com/maps?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP,+13010-002,+Brazil&output=embed&hl=pt-BR&z=16"
+            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização CSM Decor"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>© <span id="ano-footer"></span> CSM — Campinas Shopping Móveis. Todos os direitos reservados.</p>
+        <p>
+          <a href="#">Política de Privacidade</a>
+          <span aria-hidden="true"> · </span>
+          <a href="#">Termos de Uso</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    var anoFooter = document.getElementById('ano-footer');
+    if (anoFooter) anoFooter.textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Transição de página -->
+  <script>
+  (function () {
+    var curtain = document.getElementById('page-curtain');
+    if (!curtain) return;
+    var ease = 'cubic-bezier(.77,0,.175,1)';
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        curtain.style.transition = 'transform .72s ' + ease;
+        curtain.style.transform  = 'translateY(-100%)';
+        curtain.addEventListener('transitionend', function () {
+          curtain.style.pointerEvents = 'none';
+        }, { once: true });
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (/^(https?:\/\/|\/\/|mailto:|tel:)/.test(href)) return;
+      if (link.target === '_blank') return;
+      if (href.indexOf('.html') === -1) return;
+
+      e.preventDefault();
+      try { sessionStorage.setItem('csm-pt', '1'); } catch (_) {}
+
+      curtain.style.transition    = 'none';
+      curtain.style.transform     = 'translateY(100%)';
+      curtain.style.pointerEvents = 'all';
+      curtain.offsetHeight;
+      curtain.style.transition = 'transform .65s ' + ease;
+      curtain.style.transform  = 'translateY(0)';
+      curtain.addEventListener('transitionend', function () {
+        window.location.href = href;
+      }, { once: true });
+    });
+  }());
+  </script>
+
+</body>
+</html>

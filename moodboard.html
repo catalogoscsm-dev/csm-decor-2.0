@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Moodboard — CSM Decor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="moodboard.css" />
+</head>
+<body>
+
+  <!-- Cortina de transição entre páginas -->
+  <div id="page-curtain" style="position:fixed;inset:0;z-index:99998;background:#0c0c0c;transform:translateY(0);pointer-events:all;will-change:transform;" aria-hidden="true"></div>
+
+  <!-- ── Toast ── -->
+  <div class="mb-toast" id="mb-toast" role="status" aria-live="polite"></div>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="mb-header">
+    <div class="container mb-header__inner">
+
+      <a href="index.html" class="mb-header__back btn--back" aria-label="Voltar ao catálogo">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Catálogo</span>
+      </a>
+
+      <div class="mb-header__logo">
+        <a href="index.html" aria-label="CSM Decor — Página inicial">
+          <img src="imagens/logo/csm-logo.png" alt="CSM Decor" width="120" height="36" />
+        </a>
+      </div>
+
+      <div class="mb-header__actions">
+        <button class="btn btn--icon btn--share" id="share-btn" title="Compartilhar moodboard" aria-label="Compartilhar moodboard">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
+        <button class="btn btn--primary btn--print" id="print-btn" aria-label="Exportar como PDF">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Exportar PDF</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO — Dados do projeto (editável)
+  ============================================================ -->
+  <div class="mb-hero">
+    <div class="container mb-hero__inner">
+      <span class="mb-hero__eyebrow">Board de Inspiração</span>
+      <input
+        type="text"
+        class="mb-hero__title"
+        id="project-name"
+        placeholder="Nome do Projeto"
+        aria-label="Nome do projeto"
+        maxlength="80"
+        spellcheck="false"
+      />
+      <div class="mb-hero__meta">
+        <div class="mb-hero__meta-field">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input
+            type="text"
+            class="mb-hero__meta-input"
+            id="architect-name"
+            placeholder="Arquiteto / Designer"
+            aria-label="Nome do arquiteto"
+            maxlength="60"
+          />
+        </div>
+        <div class="mb-hero__meta-field">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="project-date" style="color:rgba(255,255,255,.4);font-size:.75rem;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN
+  ============================================================ -->
+  <main class="mb-main">
+    <div class="container">
+
+      <!-- Section header -->
+      <div class="mb-section-hd">
+        <h2 class="mb-section-hd__title">Itens Selecionados</h2>
+        <span class="mb-section-hd__count" id="items-count">0 itens</span>
+      </div>
+
+      <!-- Empty state -->
+      <div class="mb-empty-page" id="empty-state" hidden>
+        <div class="mb-empty-page__icon">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".8" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 class="mb-empty-page__title">Seu moodboard está vazio</h3>
+        <p class="mb-empty-page__text">Acesse o catálogo e clique no ícone de marcador nos produtos para adicioná-los aqui.</p>
+        <a href="produtos.html" class="btn btn--primary">Explorar Catálogo</a>
+      </div>
+
+      <!-- Products grid -->
+      <div class="mb-grid" id="mb-grid"></div>
+
+      <!-- Notes -->
+      <div class="mb-notes" id="notes-section" hidden>
+        <h3 class="mb-notes__title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Notas do Projeto
+        </h3>
+        <textarea
+          class="mb-notes__textarea"
+          id="project-notes"
+          placeholder="Observações, preferências de materiais, paleta de cores, prazos do cliente..."
+          aria-label="Notas do projeto"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <!-- Hidden print notes (shown only on print) -->
+      <div class="mb-print-notes" id="print-notes-section" style="display:none;">
+        <p class="mb-print-notes__title">Notas do Projeto</p>
+        <p class="mb-print-notes__content" id="print-notes-content"></p>
+      </div>
+
+      <!-- CTA -->
+      <div class="mb-cta" id="cta-section" hidden>
+        <div>
+          <h3 class="mb-cta__title">Pronto para dar vida<br /><em>a este projeto?</em></h3>
+          <p class="mb-cta__sub">Agende uma visita ao showroom ou converse agora com um de nossos consultores especializados.</p>
+        </div>
+        <div class="mb-cta__actions">
+          <a
+            href="https://wa.me/5519990034068?text=Olá!%20Montei%20um%20moodboard%20no%20site%20da%20CSM%20e%20gostaria%20de%20orçamento%20para%20os%20produtos%20selecionados."
+            class="btn btn--primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar Orçamento via WhatsApp
+          </a>
+          <a
+            href="https://wa.me/5519990034068?text=Sou%20arquiteto(a)%20e%20gostaria%20de%20agendar%20uma%20visita%20ao%20showroom%20CSM."
+            class="btn btn--outline"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.2);"
+          >Agendar visita ao showroom</a>
+        </div>
+      </div>
+
+      <!-- Print footer (only visible on print) -->
+      <div class="mb-print-footer" id="print-footer">
+        <span>CSM — Campinas Shopping Móveis | csmdecor.com.br | (19) 99003-4068</span>
+        <span id="print-date-footer"></span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="mb-footer">
+    <div class="container mb-footer__inner">
+      <a href="index.html" class="mb-footer__logo" aria-label="CSM Decor">
+        <img src="imagens/logo/csm-logo.png" alt="CSM Decor" width="100" height="30" />
+      </a>
+      <p class="mb-footer__copy">© <span id="ano"></span> CSM — Campinas Shopping Móveis</p>
+      <a href="index.html" class="mb-footer__link">← Voltar ao site</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // ── Data do projeto ──────────────────────────────────────────
+    const now = new Date();
+    document.getElementById('project-date').textContent =
+      now.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('print-date-footer').textContent =
+      'Gerado em ' + now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    // ── Storage keys ─────────────────────────────────────────────
+    const ITEMS_KEY  = 'csm-moodboard';
+    const NAME_KEY   = 'csm-mb-project-name';
+    const ARCH_KEY   = 'csm-mb-architect';
+    const NOTES_KEY  = 'csm-mb-notes';
+
+    // ── Load saved text fields ────────────────────────────────────
+    const nameInput  = document.getElementById('project-name');
+    const archInput  = document.getElementById('architect-name');
+    const notesInput = document.getElementById('project-notes');
+
+    nameInput.value  = localStorage.getItem(NAME_KEY)  || '';
+    archInput.value  = localStorage.getItem(ARCH_KEY)  || '';
+    notesInput.value = localStorage.getItem(NOTES_KEY) || '';
+
+    nameInput.addEventListener('input',  () => localStorage.setItem(NAME_KEY,  nameInput.value));
+    archInput.addEventListener('input',  () => localStorage.setItem(ARCH_KEY,  archInput.value));
+    notesInput.addEventListener('input', () => {
+      localStorage.setItem(NOTES_KEY, notesInput.value);
+      document.getElementById('print-notes-content').textContent = notesInput.value;
+    });
+
+    document.getElementById('print-notes-content').textContent = notesInput.value;
+
+    // ── Load items from localStorage ─────────────────────────────
+    function getItems() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(ITEMS_KEY)) || [];
+        return raw.map(i => ({
+          id:      i.id      || (i.name||'').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''),
+          name:    i.name    || '',
+          type:    i.type    || i.tipo || '',
+          tagline: i.tagline || '',
+          img:     i.img     || '',
+          wpp:     i.wpp     || '',
+          tipo:    i.tipo    || i.type || '',
+        }));
+      } catch(e) { return []; }
+    }
+    function saveItems(items) {
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
+    }
+    function removeItem(id) {
+      saveItems(getItems().filter(i => i.id !== id));
+    }
+
+    // ── Render ────────────────────────────────────────────────────
+    function render() {
+      const items = getItems();
+      const grid  = document.getElementById('mb-grid');
+      const empty = document.getElementById('empty-state');
+      const countEl = document.getElementById('items-count');
+      const notesSection = document.getElementById('notes-section');
+      const ctaSection   = document.getElementById('cta-section');
+      const printNotes   = document.getElementById('print-notes-section');
+
+      grid.innerHTML = '';
+      countEl.textContent = `${items.length} ${items.length === 1 ? 'item' : 'itens'}`;
+
+      if (items.length === 0) {
+        empty.hidden = false;
+        notesSection.hidden = true;
+        ctaSection.hidden   = true;
+        printNotes.style.display = 'none';
+        return;
+      }
+
+      empty.hidden = true;
+      notesSection.hidden = false;
+      ctaSection.hidden   = false;
+      printNotes.style.display = 'none';
+
+      items.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'mb-card';
+        card.innerHTML = `
+          <div class="mb-card__img-wrap">
+            <img class="mb-card__img" src="${item.img}" alt="${item.name}" loading="lazy" />
+            <span class="mb-card__type">${item.type}</span>
+            <button class="mb-card__remove" aria-label="Remover ${item.name}" data-id="${item.id}" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="mb-card__body">
+            <h3 class="mb-card__name">${item.name}</h3>
+            <p class="mb-card__tagline">${item.tagline}</p>
+            <div class="mb-card__footer">
+              <a href="${item.wpp}" class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Orçamento
+              </a>
+            </div>
+          </div>`;
+
+        card.querySelector('.mb-card__remove').addEventListener('click', (e) => {
+          const id = e.currentTarget.dataset.id;
+          removeItem(id);
+          card.style.transition = 'opacity .22s, transform .22s';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(.96)';
+          setTimeout(() => { card.remove(); render(); }, 220);
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    render();
+
+    // ── Sync notes content to print area (sem exibir na tela) ────
+    notesInput.addEventListener('input', () => {
+      document.getElementById('print-notes-content').textContent = notesInput.value;
+    });
+
+    // ── Share ─────────────────────────────────────────────────────
+    document.getElementById('share-btn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const url = window.location.href;
+      const title = nameInput.value || 'Moodboard CSM Decor';
+
+      // Tenta Web Share API (funciona em mobile e em alguns navegadores desktop)
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, text: 'Confira os móveis que selecionei na CSM Decor!', url });
+          return;
+        } catch(_) { /* share cancelado ou não suportado — cai no clipboard */ }
+      }
+
+      // Tenta Clipboard API moderna
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast('Link copiado para a área de transferência!');
+          return;
+        } catch(_) { /* sem permissão — cai no fallback */ }
+      }
+
+      // Fallback para navegadores antigos ou contexto não-seguro
+      try {
+        const tmp = document.createElement('textarea');
+        tmp.value = url;
+        tmp.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+        document.body.appendChild(tmp);
+        tmp.focus();
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+        showToast('Link copiado!');
+      } catch(_) {
+        showToast('Copie o link da barra de endereço do navegador.');
+      }
+    });
+
+    // ── Print / Export PDF ────────────────────────────────────────
+    document.getElementById('print-btn').addEventListener('click', () => {
+      const notes = notesInput.value;
+      const pn = document.getElementById('print-notes-section');
+      document.getElementById('print-notes-content').textContent = notes;
+      if (notes) pn.style.display = '';
+      setTimeout(() => {
+        window.print();
+        pn.style.display = 'none';
+      }, 80);
+    });
+
+    // ── Toast helper ──────────────────────────────────────────────
+    function showToast(msg, duration = 2800) {
+      const toast = document.getElementById('mb-toast');
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), duration);
+    }
+  </script>
+
+  <script>
+  (function () {
+    var curtain = document.getElementById('page-curtain');
+    if (!curtain) return;
+    var ease = 'cubic-bezier(.77,0,.175,1)';
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        curtain.style.transition = 'transform .72s ' + ease;
+        curtain.style.transform  = 'translateY(-100%)';
+        curtain.addEventListener('transitionend', function () {
+          curtain.style.pointerEvents = 'none';
+        }, { once: true });
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (/^(https?:\/\/|\/\/|mailto:|tel:)/.test(href)) return;
+      if (link.target === '_blank') return;
+      if (href.indexOf('.html') === -1) return;
+
+      e.preventDefault();
+      try { sessionStorage.setItem('csm-pt', '1'); } catch (_) {}
+
+      curtain.style.transition    = 'none';
+      curtain.style.transform     = 'translateY(100%)';
+      curtain.style.pointerEvents = 'all';
+      curtain.offsetHeight;
+      curtain.style.transition = 'transform .65s ' + ease;
+      curtain.style.transform  = 'translateY(0)';
+      curtain.addEventListener('transitionend', function () {
+        window.location.href = href;
+      }, { once: true });
+    });
+  }());
+  </script>
+
+</body>
+</html>

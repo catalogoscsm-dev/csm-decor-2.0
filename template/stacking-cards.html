@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<!--
+  TEMPLATE: Stacking Featured Cards (position: sticky)
+  =====================================================
+  Cards escuros que se sobrepõem ao rolar a página — efeito "pilha" editorial.
+  Cada card gruda no topo com position:sticky e fica visível até o próximo card
+  começar a cobri-lo. GSAP anima uma leve redução de escala no card anterior.
+
+  COMO USAR:
+  1. Adicione/remova .stack-card conforme necessário
+  2. Para N cards: o último tem --cidx:N-1 e z-index:N
+  3. Atualize o texto, imagens e links de cada card
+  4. Ajuste CARD_OFFSET_BASE (px) para mudar a distância do 1º card ao topo
+     da viewport, e CARD_REVEAL (px) para mudar quanto do card anterior
+     "espia" atrás do próximo (mantenha esse valor baixo — o suficiente só
+     para sugerir que há algo atrás, sem expor texto ou botões clicáveis)
+  5. padding-bottom: 50vh no .card-stack é necessário para o último card ter
+     scroll suficiente para o efeito completar antes do final da página
+
+  DEPENDÊNCIAS:
+  - GSAP + ScrollTrigger  (CDN incluído abaixo)
+  - Sem outros frameworks
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Template — Stacking Cards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset mínimo ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ── Variáveis ── */
+    :root {
+      --accent:     #F07800;
+      --bg-section: #141414;  /* fundo da seção (sempre escuro) */
+      --bg-card:    #1c1c1c;  /* fundo do card */
+      --card-offset: 80px;    /* distância do 1º card ao topo da viewport (respiro p/ header fixo) */
+      --card-reveal: 16px;    /* quanto do card anterior fica visível atrás do próximo — mantenha baixo */
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(.4, 0, .2, 1);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: #f7f6f3;
+      /* CRÍTICO: overflow-x: clip (não hidden) — clip não cria scroll container,
+         o que evita quebrar position:sticky nos cards filhos */
+      overflow-x: clip;
+    }
+
+    /* ── Seção principal ── */
+    .stack-section {
+      background: var(--bg-section);
+      padding-block: clamp(5rem, 10vw, 9rem);
+      border-radius: 2.5rem 2.5rem 0 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Cabeçalho da seção ── */
+    .stack-section__head {
+      max-width: 1260px;
+      margin-inline: auto;
+      padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: var(--font-sans);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .section-title em { font-style: italic; }
+    .section-sub {
+      font-family: var(--font-sans);
+      font-size: clamp(.85rem, 1.4vw, 1rem);
+      color: rgba(255,255,255,.5);
+      margin-top: .9rem;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       STACK CONTAINER
+       Os cards DEVEM ser filhos diretos deste elemento.
+       Não use wrappers (slots) entre .card-stack e .stack-card
+       — isso quebraria o sticky: cada card ficaria contido no
+       seu wrapper e nunca se sobreporia ao anterior.
+    ────────────────────────────────────────────────────────── */
+    .card-stack {
+      max-width: 1100px;
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 4vw, 2.5rem);
+      padding-top: 3rem;
+      /* 50vh de folga após o último card para o scroll completar o efeito */
+      padding-bottom: 50vh;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       CARD STICKY
+       --cidx: índice zero-based do card (0, 1, 2...)
+       top = card-offset + cidx * card-reveal
+       Cada card ocupa um "andar" um pouco mais alto que o anterior —
+       só o suficiente (--card-reveal) para uma tira fina do card de
+       trás aparecer, sem revelar texto ou botões clicáveis.
+
+       overflow: clip (não hidden!) — o clip não cria scroll
+       container, então não cancela o position:sticky dos filhos.
+    ────────────────────────────────────────────────────────── */
+    .stack-card {
+      position: sticky;
+      top: calc(var(--card-offset) + var(--cidx, 0) * var(--card-reveal));
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 2rem;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      transform-origin: top center;
+      overflow: clip;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Topo do card: badge + número + nome + botão ── */
+    .stack-card__top {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .stack-card__meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .25rem;
+      flex-shrink: 0;
+    }
+    .stack-card__badge {
+      font-family: var(--font-sans);
+      font-size: .5rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(240,120,0,.12);
+      border: 1px solid rgba(240,120,0,.3);
+      padding: .2rem .6rem;
+      border-radius: 99px;
+    }
+    .stack-card__num {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      color: rgba(255,255,255,.08);  /* número fantasma / marca d'água */
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .stack-card__name-wrap { flex: 1; min-width: 0; }
+    .stack-card__name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      font-weight: 300;
+      color: #f5f5f5;
+      line-height: 1.1;
+      letter-spacing: -.01em;
+    }
+    .stack-card__name em { font-style: italic; }
+
+    .stack-card__link {
+      flex-shrink: 0;
+      align-self: center;
+      font-family: var(--font-sans);
+      font-size: .72rem;
+      padding: .5rem 1rem;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 99px;
+      color: rgba(255,255,255,.7);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      transition: border-color .25s, color .25s;
+    }
+    .stack-card__link:hover { border-color: rgba(255,255,255,.88); color: rgba(255,255,255,.88); }
+
+    /* ── Tagline ── */
+    .stack-card__tagline {
+      font-family: var(--font-sans);
+      font-size: clamp(.8rem, 1.3vw, .95rem);
+      color: rgba(255,255,255,.5);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* ── Body: grid de imagens + painel lateral ── */
+    .stack-card__body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .stack-card__body { grid-template-columns: 3fr 2fr; }
+    }
+
+    /* Grade de imagens (1 grande + 2 pequenas) */
+    .stack-card__imgs {
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      gap: .75rem;
+      min-height: 320px;
+    }
+    .stack-card__imgs-sm {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .stack-card__imgs-sm img,
+    .stack-card__imgs-lg img {
+      width: 100%;
+      border-radius: 1.1rem;
+      object-fit: cover;
+    }
+    .stack-card__imgs-sm img { flex: 1; min-height: 0; }
+    .stack-card__imgs-sm img:first-child { flex: 0.55; }
+    .stack-card__imgs-sm img:last-child  { flex: 0.45; }
+    .stack-card__imgs-lg img { height: 100%; }
+
+    /* Painel lateral */
+    .stack-card__side {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      justify-content: space-between;
+    }
+
+    /* Specs accordion */
+    .stack-card__specs-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .85rem 1rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      color: rgba(255,255,255,.82);
+      font-family: var(--font-sans);
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: background .25s, border-color .25s;
+    }
+    .stack-card__specs-btn:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.2); }
+    .stack-card__specs-btn svg { transition: transform .3s var(--ease); flex-shrink: 0; }
+    .stack-card__specs-btn.is-open svg { transform: rotate(180deg); }
+    .stack-card__specs-btn.is-open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: transparent;
+    }
+    .stack-card__specs-panel {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .45s cubic-bezier(.4,0,.2,1);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+    }
+    .stack-card__specs-panel.is-open { max-height: 320px; }
+    .stack-card__specs-list {
+      padding: .85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+    }
+    .stack-card__specs-row {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: .5rem;
+      font-size: .75rem;
+    }
+    .stack-card__specs-row dt { color: rgba(255,255,255,.45); font-weight: 500; }
+    .stack-card__specs-row dd { color: rgba(255,255,255,.85); }
+
+    /* CTAs */
+    .stack-card__ctas {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      margin-top: auto;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      font-family: var(--font-sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 99px;
+      padding: .75rem 1.5rem;
+      transition: background .25s, border-color .25s, color .25s;
+    }
+    .btn--primary {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent);
+    }
+    .btn--primary:hover { background: #C86200; border-color: #C86200; }
+    .btn--outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.7);
+    }
+    .btn--outline:hover { border-color: rgba(255,255,255,.88); color: rgba(255,255,255,.88); }
+
+    /* ── Mobile: desativa sticky, empilha normalmente ── */
+    @media (max-width: 640px) {
+      .stack-section { border-radius: 1.5rem 1.5rem 0 0; }
+      .stack-card { position: relative; top: auto; margin-bottom: 1.25rem; }
+      .card-stack { padding-bottom: 2rem; }
+      .stack-card__imgs { grid-template-columns: 1fr; min-height: auto; }
+      .stack-card__imgs-sm { flex-direction: row; }
+      .stack-card__imgs-sm img { height: 140px; }
+      .stack-card__imgs-lg img { height: 220px; }
+      .stack-card__body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Espaço antes da seção para o scroll fazer sentido -->
+<div style="height:50vh; background:#f7f6f3; display:flex; align-items:center; justify-content:center;">
+  <p style="font-family:sans-serif; color:#888; font-size:.9rem;">↓ Role para ver o efeito de stacking ↓</p>
+</div>
+
+<section class="stack-section">
+
+  <!-- Cabeçalho da seção -->
+  <div class="stack-section__head">
+    <p class="eyebrow">Produtos</p>
+    <h2 class="section-title">
+      Peças que definem<br /><em>um ambiente</em>
+    </h2>
+    <p class="section-sub">
+      Cada produto selecionado com rigor editorial — materiais de primeira linha,
+      acabamento artesanal e design que atravessa tendências. Role para explorar.
+    </p>
+  </div>
+
+  <!--
+    STACK CONTAINER
+    REGRA CRÍTICA: .stack-card deve ser FILHO DIRETO de .card-stack.
+    Não adicione divs wrapper (slots) entre eles — quebraria o sticky.
+  -->
+  <div class="card-stack" id="card-stack">
+
+    <!-- ── Card 01 ── -->
+    <div class="stack-card" style="--cidx:0; z-index:1">
+
+      <div class="stack-card__top">
+        <div class="stack-card__meta">
+          <span class="stack-card__badge">Categoria</span>
+          <span class="stack-card__num">01</span>
+        </div>
+        <div class="stack-card__name-wrap">
+          <h3 class="stack-card__name">Nome do <em>Produto Um</em></h3>
+        </div>
+        <a href="#" class="stack-card__link">
+          Ver página completa
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <p class="stack-card__tagline">Descrição curta e impactante do produto — materiais, diferenciais, sensação que evoca.</p>
+
+      <div class="stack-card__body">
+        <div class="stack-card__imgs">
+          <div class="stack-card__imgs-sm">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" alt="Produto 01 — detalhe" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=600&q=80" alt="Produto 01 — ambiente" loading="lazy" />
+          </div>
+          <div class="stack-card__imgs-lg">
+            <img src="https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=800&q=80" alt="Produto 01 — principal" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="stack-card__side">
+          <div class="stack-card__specs">
+            <button type="button" class="stack-card__specs-btn" onclick="toggleSpecs(this)" aria-expanded="false">
+              <span>Especificações técnicas</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="stack-card__specs-panel">
+              <dl class="stack-card__specs-list">
+                <div class="stack-card__specs-row"><dt>Material</dt><dd>Descrição do material principal</dd></div>
+                <div class="stack-card__specs-row"><dt>Estrutura</dt><dd>Descrição da estrutura</dd></div>
+                <div class="stack-card__specs-row"><dt>Dimensões</dt><dd>X,XXm × X,XXm × X,XXm</dd></div>
+                <div class="stack-card__specs-row"><dt>Acabamento</dt><dd>Opções disponíveis</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="stack-card__ctas">
+            <a href="https://wa.me/NUMERO?text=Interesse+no+Produto+01" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+              Pedir orçamento
+            </a>
+            <a href="#" class="btn btn--outline">Mais detalhes</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /card 01 -->
+
+    <!-- ── Card 02 ── -->
+    <div class="stack-card" style="--cidx:1; z-index:2">
+
+      <div class="stack-card__top">
+        <div class="stack-card__meta">
+          <span class="stack-card__badge">Categoria</span>
+          <span class="stack-card__num">02</span>
+        </div>
+        <div class="stack-card__name-wrap">
+          <h3 class="stack-card__name">Nome do <em>Produto Dois</em></h3>
+        </div>
+        <a href="#" class="stack-card__link">
+          Ver no catálogo
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <p class="stack-card__tagline">Outra descrição curta — explore o diferencial único deste segundo produto.</p>
+
+      <div class="stack-card__body">
+        <div class="stack-card__imgs">
+          <div class="stack-card__imgs-sm">
+            <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=600&q=80" alt="Produto 02 — detalhe" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=600&q=80" alt="Produto 02 — ambiente" loading="lazy" />
+          </div>
+          <div class="stack-card__imgs-lg">
+            <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=800&q=80" alt="Produto 02 — principal" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="stack-card__side">
+          <div class="stack-card__specs">
+            <button type="button" class="stack-card__specs-btn" onclick="toggleSpecs(this)" aria-expanded="false">
+              <span>Especificações técnicas</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="stack-card__specs-panel">
+              <dl class="stack-card__specs-list">
+                <div class="stack-card__specs-row"><dt>Material</dt><dd>Descrição do material principal</dd></div>
+                <div class="stack-card__specs-row"><dt>Estrutura</dt><dd>Descrição da estrutura</dd></div>
+                <div class="stack-card__specs-row"><dt>Dimensões</dt><dd>X,XXm × X,XXm × X,XXm</dd></div>
+                <div class="stack-card__specs-row"><dt>Revestimento</dt><dd>Opções disponíveis</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="stack-card__ctas">
+            <a href="https://wa.me/NUMERO?text=Interesse+no+Produto+02" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+              Pedir orçamento
+            </a>
+            <a href="#" class="btn btn--outline">Ver catálogo</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /card 02 -->
+
+    <!-- ── Card 03 ── -->
+    <div class="stack-card" style="--cidx:2; z-index:3">
+
+      <div class="stack-card__top">
+        <div class="stack-card__meta">
+          <span class="stack-card__badge">Categoria</span>
+          <span class="stack-card__num">03</span>
+        </div>
+        <div class="stack-card__name-wrap">
+          <h3 class="stack-card__name">Nome do <em>Produto Três</em></h3>
+        </div>
+        <a href="#" class="stack-card__link">
+          Ver no catálogo
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <p class="stack-card__tagline">Terceiro produto — design exclusivo, presença marcante em qualquer composição de interiores.</p>
+
+      <div class="stack-card__body">
+        <div class="stack-card__imgs">
+          <div class="stack-card__imgs-sm">
+            <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=600&q=80" alt="Produto 03 — detalhe" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=600&q=80" alt="Produto 03 — ambiente" loading="lazy" />
+          </div>
+          <div class="stack-card__imgs-lg">
+            <img src="https://images.unsplash.com/photo-1524758631624-e2822132143e?auto=format&fit=crop&w=800&q=80" alt="Produto 03 — principal" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="stack-card__side">
+          <div class="stack-card__specs">
+            <button type="button" class="stack-card__specs-btn" onclick="toggleSpecs(this)" aria-expanded="false">
+              <span>Especificações técnicas</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="stack-card__specs-panel">
+              <dl class="stack-card__specs-list">
+                <div class="stack-card__specs-row"><dt>Design</dt><dd>Formas exclusivas</dd></div>
+                <div class="stack-card__specs-row"><dt>Conforto</dt><dd>Alta densidade ergonômica</dd></div>
+                <div class="stack-card__specs-row"><dt>Acabamento</dt><dd>Tecidos e couros premium à escolha</dd></div>
+                <div class="stack-card__specs-row"><dt>AR</dt><dd>Visualização em Realidade Aumentada</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="stack-card__ctas">
+            <a href="https://wa.me/NUMERO?text=Interesse+no+Produto+03" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+              Pedir orçamento
+            </a>
+            <a href="#" class="btn btn--outline">Ver catálogo</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /card 03 -->
+
+    <!--
+      Para adicionar CARD 04:
+      <div class="stack-card" style="--cidx:3; z-index:4"> ... </div>
+      E no JS, atualizar var cards = gsap.utils.toArray('.stack-card');
+      (o loop já funciona automaticamente para N cards)
+    -->
+
+  </div><!-- /card-stack -->
+
+</section>
+
+<!-- Espaço após para o scroll ter sentido -->
+<div style="height:40vh; background:#f7f6f3;"></div>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  /* ──────────────────────────────────────────────────────────
+     Accordion de specs
+     Fecha todos os painéis abertos antes de abrir o novo.
+  ────────────────────────────────────────────────────────── */
+  function toggleSpecs(btn) {
+    var panel = btn.nextElementSibling;
+    if (!panel) return;
+    var isOpen = panel.classList.contains('is-open');
+
+    // fecha todos
+    document.querySelectorAll('.stack-card__specs-panel.is-open').forEach(function(p) {
+      p.classList.remove('is-open');
+      if (p.previousElementSibling) {
+        p.previousElementSibling.classList.remove('is-open');
+        p.previousElementSibling.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // abre o clicado (se estava fechado)
+    if (!isOpen) {
+      panel.classList.add('is-open');
+      btn.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────
+     GSAP — Escala do card anterior quando o próximo chega
+
+     CARD_OFFSET_BASE/CARD_REVEAL devem bater com --card-offset e
+     --card-reveal no CSS. O trigger de cada card começa quando o
+     PRÓXIMO card entra em cena, e termina quando ele ocupa sua
+     posição sticky.
+  ────────────────────────────────────────────────────────── */
+  gsap.registerPlugin(ScrollTrigger);
+
+  var CARD_OFFSET_BASE = 80; // px — igual a --card-offset no CSS
+  var CARD_REVEAL      = 16; // px — igual a --card-reveal no CSS
+
+  var cards = gsap.utils.toArray('.stack-card');
+
+  cards.forEach(function(card, i) {
+    if (i === cards.length - 1) return; // último card não escala
+
+    var nextCard = cards[i + 1];
+    var nextTop  = CARD_OFFSET_BASE + (i + 1) * CARD_REVEAL;
+
+    gsap.to(card, {
+      scale: 0.9,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: nextCard,
+        start: 'top 95%',
+        end: 'top ' + nextTop + 'px',
+        scrub: true,
+      },
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3299 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CSM Decor — Campinas Shopping Móveis. Mais de 30 anos transformando ambientes com móveis e decoração de alto padrão. Showroom exclusivo de 6.000 m²." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CSM — Campinas Shopping Móveis" />
+  <meta property="og:description" content="6.000 m² de ambientes de alto padrão. Visite nosso showroom." />
+  <meta property="og:type" content="website" />
+
+  <title>CSM — Campinas Shopping Móveis | Alto Padrão</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <!-- Animate.css — efeitos de entrada no carregamento da página -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- model-viewer — AR / 3D para produtos -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       LOADING SCREEN — Reveal da marca CSM
+  ============================================================ -->
+  <div id="loading-screen" aria-hidden="true">
+    <div class="ls__inner">
+      <img src="imagens/logo/csm-logo.png" alt="" class="ls__logo" width="180" height="54" draggable="false" />
+      <div class="ls__line" aria-hidden="true"></div>
+      <p class="ls__tagline">Campinas Shopping Móveis</p>
+    </div>
+  </div>
+
+  <!-- Cortina de transição entre páginas (z-index 99998, abaixo do loading screen 99999) -->
+  <div id="page-curtain" class="page-curtain" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+
+      <!-- ── ESQUERDA: Menu + Cadastro + Fale Conosco ── -->
+      <div class="header__left">
+
+        <!-- 1. Menu -->
+        <button class="header-icon header__menu-btn" id="menu-toggle-btn"
+          aria-label="Abrir menu de navegação"
+          aria-expanded="false"
+          aria-controls="menu-overlay">
+          <div class="header__menu-icon" aria-hidden="true">
+            <span class="header__menu-line"></span>
+            <span class="header__menu-line"></span>
+          </div>
+          <span class="header__menu-label">Menu</span>
+        </button>
+
+        <!-- 2. Cadastro -->
+        <button type="button" class="header-icon header__cadastro-btn"
+          aria-label="Cadastrar-se"
+          onclick="openModal('modal-arquiteto')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <line x1="19" y1="8" x2="19" y2="14"/>
+            <line x1="22" y1="11" x2="16" y2="11"/>
+          </svg>
+          <span class="header__icon-label">Cadastro</span>
+        </button>
+
+        <!-- 3. Fale Conosco -->
+        <a class="header-icon header__wpp-btn"
+          href="fale-conosco.html"
+          aria-label="Fale conosco">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="header__icon-label">Fale Conosco</span>
+        </a>
+
+      </div>
+
+      <!-- ── CENTRO: Logo ── -->
+      <a href="#" class="header__logo" aria-label="CSM — Campinas Shopping Móveis">
+        <img
+          src="imagens/logo/csm-logo.png"
+          alt="CSM — Campinas Shopping Móveis"
+          class="header__logo-img"
+          width="160"
+          height="48"
+        />
+      </a>
+
+      <!-- ── DIREITA: Minha Conta + Favoritos + Tema ── -->
+      <div class="header__right">
+
+        <!-- 5. Pesquisar -->
+        <button type="button" class="header-icon header__search-btn" id="header-search-btn"
+          data-label="Pesquisar"
+          aria-label="Pesquisar produtos"
+          aria-expanded="false"
+          aria-controls="search-overlay">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
+        <!-- 6. Favoritos / Moodboard (sem círculo) -->
+        <button class="header-icon header__moodboard-btn" id="moodboard-header-btn"
+          data-label="Favoritos"
+          aria-label="Meu Moodboard — Favoritos"
+          aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="header__moodboard-badge" id="moodboard-badge" hidden>0</span>
+        </button>
+
+        <!-- 7. Tema Light / Dark (sem círculo) -->
+        <button class="header-icon header__theme-toggle" id="theme-toggle"
+          data-label="Tema"
+          aria-label="Alternar tema claro/escuro">
+          <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22"  x2="5.64"  y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
+            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MENU OVERLAY — Estilo Louis Vuitton
+  ============================================================ -->
+  <div class="menu-overlay" id="menu-overlay" role="dialog" aria-modal="true" aria-label="Menu de navegação" hidden>
+
+    <!-- Barra do topo (espelha o header enquanto aberto) -->
+    <div class="menu-overlay__topbar">
+      <div class="container menu-overlay__topbar-inner">
+        <div class="header__left">
+          <button class="header__menu-btn is-open" id="menu-close-btn" aria-label="Fechar menu">
+            <div class="header__menu-icon" aria-hidden="true">
+              <span class="header__menu-line"></span>
+              <span class="header__menu-line"></span>
+            </div>
+            <span class="header__menu-label">Fechar</span>
+          </button>
+        </div>
+        <a href="#" class="header__logo" aria-label="CSM">
+          <img src="imagens/logo/csm-logo.png" alt="CSM" class="header__logo-img menu-overlay__logo" width="160" height="48" />
+        </a>
+        <div class="header__right"></div>
+      </div>
+    </div>
+
+    <!-- Conteúdo principal do menu -->
+    <div class="menu-overlay__body">
+      <div class="container menu-overlay__inner">
+
+        <!-- Navegação principal (esquerda) -->
+        <nav class="menu-nav" aria-label="Navegação principal">
+          <ul class="menu-nav__list">
+            <li class="menu-nav__item">
+              <a href="#inicio" class="menu-nav__link" data-menu-link data-num="01"><span class="menu-nav__link-text">Início</span></a>
+            </li>
+            <li class="menu-nav__item">
+              <a href="#ambientes" class="menu-nav__link" data-menu-link data-num="02"><span class="menu-nav__link-text">Ambientes</span></a>
+            </li>
+            <li class="menu-nav__item">
+              <a href="#produtos" class="menu-nav__link" data-menu-link data-num="03"><span class="menu-nav__link-text">Produtos</span></a>
+            </li>
+            <li class="menu-nav__item">
+              <a href="#historia" class="menu-nav__link" data-menu-link data-num="04"><span class="menu-nav__link-text">Nossa História</span></a>
+            </li>
+            <li class="menu-nav__item">
+              <a href="#depoimentos" class="menu-nav__link" data-menu-link data-num="05"><span class="menu-nav__link-text">Depoimentos</span></a>
+            </li>
+            <li class="menu-nav__item">
+              <a href="#arquitetos" class="menu-nav__link" data-menu-link data-num="06"><span class="menu-nav__link-text">Arquitetos</span></a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Painel lateral (direita) -->
+        <aside class="menu-aside">
+          <div class="menu-aside__block">
+            <p class="menu-aside__label">Showroom</p>
+            <p class="menu-aside__text">Av. Dr. Moraes Sales, 1575<br />Cambuí, Campinas — SP</p>
+          </div>
+          <div class="menu-aside__block">
+            <p class="menu-aside__label">Atendimento</p>
+            <a href="https://wa.me/5519990034068" class="menu-aside__text menu-aside__link" target="_blank" rel="noopener noreferrer">(19) 99003-4068 — WhatsApp</a>
+            <a href="mailto:contato@csmdecor.com.br" class="menu-aside__text menu-aside__link">contato@csmdecor.com.br</a>
+          </div>
+          <div class="menu-aside__block menu-aside__block--socials">
+            <a href="https://www.instagram.com/csmdecor/" target="_blank" rel="noopener noreferrer" class="menu-aside__social">Instagram</a>
+            <span class="menu-aside__dot" aria-hidden="true">·</span>
+            <a href="https://web.facebook.com/CampinasShoppingMoveis/" target="_blank" rel="noopener noreferrer" class="menu-aside__social">Facebook</a>
+          </div>
+          <a
+            href="https://wa.me/5519990034068?text=Quero%20agendar%20uma%20visita%20ao%20showroom%20CSM."
+            class="btn btn--primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Agendar visita ao showroom</a>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- Rodapé do overlay -->
+    <div class="menu-overlay__footer">
+      <div class="container">
+        <p class="menu-overlay__tagline">6.000 m² de Inspiração &nbsp;·&nbsp; 200+ Marcas Parceiras &nbsp;·&nbsp; 30+ Anos de Tradição</p>
+      </div>
+    </div>
+
+  </div>
+
+  <main>
+
+    <!-- ============================================================
+         HERO — Carrossel Premium
+    ============================================================ -->
+    <section class="hero" id="inicio" aria-label="Apresentação CSM">
+
+      <!-- Vídeo de fundo -->
+      <div class="hero__video-wrap" aria-hidden="true">
+        <video class="hero__video"
+          autoplay muted loop playsinline preload="auto"
+          poster="apresentacao/mesa-centro-liu.webp">
+          <source src="gemini.mp4" type="video/mp4" />
+        </video>
+        <div class="hero__bg-overlay"></div>
+      </div>
+
+      <!-- Conteúdo sobreposto -->
+      <div class="container hero__body">
+        <p class="eyebrow" id="hero-eyebrow">Campinas Shopping Móveis</p>
+        <h1 class="hero__headline" id="hero-headline">
+          O ambiente que você<br />
+          <em>sempre imaginou</em>,<br />
+          finalmente realizado.
+        </h1>
+        <p class="hero__sub" id="hero-sub">
+          Móveis e decoração de alto padrão.<br />
+          Mais de 30 anos de tradição. 6.000 m² de inspiração.
+        </p>
+        <div class="hero__actions" id="hero-actions">
+          <a
+            href="https://wa.me/5519990034068?text=Quero%20agendar%20uma%20visita%20ao%20showroom%20CSM."
+            class="btn btn--primary btn--lg"
+            target="_blank" rel="noopener noreferrer"
+          >Agendar visita ao showroom</a>
+          <a href="#ambientes" class="btn btn--ghost btn--lg">Explorar ambientes</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         AMBIENTES — Dual Marquee
+    ============================================================ -->
+    <section class="ambientes" id="ambientes" aria-label="Galeria de ambientes CSM Decor">
+
+      <div class="container">
+        <p class="eyebrow">Ambientes</p>
+        <h2 class="section-title">
+          Cada espaço tem<br /><em>a sua linguagem</em>
+        </h2>
+        <p class="section-sub">
+          <span class="hide-touch">Passe o mouse em qualquer ambiente para explorar o espaço. Clique para ver os produtos daquela categoria.</span>
+          <span class="show-touch">Toque em qualquer ambiente para explorar o espaço e ver os produtos daquela categoria.</span>
+        </p>
+      </div>
+
+      <div class="amb-marquee">
+
+        <!-- Fileira 1 → Ambientes (esquerda) -->
+        <div class="amb-marquee__row">
+        <span class="amb-row-label amb-row-label--fwd" aria-hidden="true"><em>Ambientes</em></span>
+        <div class="amb-marquee__track amb-marquee__track--fwd">
+
+          <!-- Set A -->
+          <a href="produtos.html?categoria=area-gourmet" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909172-a6c5b78452e5?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Externo</span><span class="amb-marquee__name">Área Gourmet</span></div>
+          </a>
+          <a href="produtos.html?categoria=living" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sala de Estar</span><span class="amb-marquee__name">Living</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">30<sup>+</sup></strong>
+              <span class="amb-stat-card__label">Anos de mercado</span>
+              <p class="amb-stat-card__desc">Tradição familiar com evolução constante em design e atendimento.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Estofados</span><span class="amb-marquee__name">Linha Couro</span></div>
+          </a>
+          <a href="produtos.html?categoria=quarto" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1522771739844-6a9136b5c672?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1540518614-38b0c56b29c0?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Dormitório</span><span class="amb-marquee__name">Quartos e Colchões</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">6.000<sup>m²</sup></strong>
+              <span class="amb-stat-card__label">Showroom exclusivo</span>
+              <p class="amb-stat-card__desc">O maior espaço de ambientes montados para você viver antes de comprar.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sala-jantar" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1551269901-5c2f24a3ac4a?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Jantar</span><span class="amb-marquee__name">Sala de Jantar</span></div>
+          </a>
+          <a href="produtos.html?categoria=corporativo" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1541746972996-4e0b0f43b32e?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Escritório</span><span class="amb-marquee__name">Corporativo</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">5k<sup>+</sup></strong>
+              <span class="amb-stat-card__label">Projetos entregues</span>
+              <p class="amb-stat-card__desc">Lares e escritórios transformados com excelência e exclusividade.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=poltrona" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Estofados</span><span class="amb-marquee__name">Poltronas Reclináveis</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1574375927443-fe27dd4d49f7?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Entretenimento</span><span class="amb-marquee__name">Sala de TV</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">200<sup>+</sup></strong>
+              <span class="amb-stat-card__label">Marcas parceiras</span>
+              <p class="amb-stat-card__desc">Curadoria rigorosa das melhores linhas nacionais e importadas.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=complemento" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1524758631624-e2822132143e?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1614030423694-989d5f6bba04?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Decoração</span><span class="amb-marquee__name">Complementos</span></div>
+          </a>
+
+          <!-- Set B — duplicado para loop sem corte -->
+          <a href="produtos.html?categoria=area-gourmet" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909172-a6c5b78452e5?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Externo</span><span class="amb-marquee__name">Área Gourmet</span></div>
+          </a>
+          <a href="produtos.html?categoria=living" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sala de Estar</span><span class="amb-marquee__name">Living</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">30<sup>+</sup></strong>
+              <span class="amb-stat-card__label">Anos de mercado</span>
+              <p class="amb-stat-card__desc">Tradição familiar com evolução constante em design e atendimento.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Estofados</span><span class="amb-marquee__name">Linha Couro</span></div>
+          </a>
+          <a href="produtos.html?categoria=quarto" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1522771739844-6a9136b5c672?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1540518614-38b0c56b29c0?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Dormitório</span><span class="amb-marquee__name">Quartos e Colchões</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">6.000<sup>m²</sup></strong>
+              <span class="amb-stat-card__label">Showroom exclusivo</span>
+              <p class="amb-stat-card__desc">O maior espaço de ambientes montados para você viver antes de comprar.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sala-jantar" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1551269901-5c2f24a3ac4a?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Jantar</span><span class="amb-marquee__name">Sala de Jantar</span></div>
+          </a>
+          <a href="produtos.html?categoria=corporativo" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1541746972996-4e0b0f43b32e?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Escritório</span><span class="amb-marquee__name">Corporativo</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">5k<sup>+</sup></strong>
+              <span class="amb-stat-card__label">Projetos entregues</span>
+              <p class="amb-stat-card__desc">Lares e escritórios transformados com excelência e exclusividade.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=poltrona" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Estofados</span><span class="amb-marquee__name">Poltronas Reclináveis</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1574375927443-fe27dd4d49f7?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Entretenimento</span><span class="amb-marquee__name">Sala de TV</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--stat">
+            <div class="amb-stat-card">
+              <strong class="amb-stat-card__num">200<sup>+</sup></strong>
+              <span class="amb-stat-card__label">Marcas parceiras</span>
+              <p class="amb-stat-card__desc">Curadoria rigorosa das melhores linhas nacionais e importadas.</p>
+              <span class="amb-stat-card__deco" aria-hidden="true">CSM</span>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=complemento" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1524758631624-e2822132143e?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1614030423694-989d5f6bba04?auto=format&fit=crop&w=700&q=80"]'>
+            <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Decoração</span><span class="amb-marquee__name">Complementos</span></div>
+          </a>
+
+        </div><!-- /track fwd -->
+        </div><!-- /row fwd -->
+
+        <div class="amb-marquee__divider">
+          <span class="amb-row-label amb-row-label--rev" aria-hidden="true"><em>Produtos</em></span>
+        </div>
+
+        <!-- Fileira 2 ← Produtos (direita) -->
+        <div class="amb-marquee__row">
+        <div class="amb-marquee__track amb-marquee__track--rev">
+
+          <!-- Set A -->
+          <a href="produto.html" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-1.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Chesterfield I</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza2.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza3.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Ibiza</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#C86200" aria-hidden="true">A</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Ana Lima</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"A experiência na CSM transformou completamente a minha relação com o espaço que habito."</blockquote>
+              <p class="amb-dep-card__context">Campinas, SP &nbsp;·&nbsp; Projeto Residencial</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=poltrona" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/allure-scaled.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/allure-scaled.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Poltrona</span><span class="amb-marquee__name">Allure</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/portland.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/portland.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Portland</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#1c5f8a" aria-hidden="true">R</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Ricardo Mendes</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"É o tipo de qualidade que os clientes percebem antes mesmo de você mencionar a origem dos móveis."</blockquote>
+              <p class="amb-dep-card__context">São Paulo, SP &nbsp;·&nbsp; Projeto Comercial</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/rubi.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/rubi.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Rubi</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Chesterfield II</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#6b4c8a" aria-hidden="true">F</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Fernanda Sousa</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"Cada decisão foi pensada para o meu espaço. É uma parceria, não uma venda."</blockquote>
+              <p class="amb-dep-card__context">Campinas, SP &nbsp;·&nbsp; Projeto Residencial</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/apgar.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/apgar-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/apgar.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Apgar</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-1.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-1.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Premium</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#2d6a4f" aria-hidden="true">M</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Mariana Carvalho</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"Em 20 anos como arquiteta, poucos fornecedores me surpreenderam com esse nível de comprometimento."</blockquote>
+              <p class="amb-dep-card__context">Campinas, SP &nbsp;·&nbsp; Arquiteta Parceira</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-1.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-1.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Seul</span></div>
+          </a>
+
+          <!-- Set B — duplicado para loop sem corte -->
+          <a href="produto.html" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-1.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Chesterfield I</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza2.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza3.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Ibiza</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#C86200" aria-hidden="true">A</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Ana Lima</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"A experiência na CSM transformou completamente a minha relação com o espaço que habito."</blockquote>
+              <p class="amb-dep-card__context">Campinas, SP &nbsp;·&nbsp; Projeto Residencial</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=poltrona" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/allure-scaled.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/allure-scaled.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Poltrona</span><span class="amb-marquee__name">Allure</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/portland.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/portland.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Portland</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#1c5f8a" aria-hidden="true">R</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Ricardo Mendes</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"É o tipo de qualidade que os clientes percebem antes mesmo de você mencionar a origem dos móveis."</blockquote>
+              <p class="amb-dep-card__context">São Paulo, SP &nbsp;·&nbsp; Projeto Comercial</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/rubi.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/rubi.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Rubi</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Chesterfield II</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#6b4c8a" aria-hidden="true">F</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Fernanda Sousa</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"Cada decisão foi pensada para o meu espaço. É uma parceria, não uma venda."</blockquote>
+              <p class="amb-dep-card__context">Campinas, SP &nbsp;·&nbsp; Projeto Residencial</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/apgar.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/apgar-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/apgar.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Apgar</span></div>
+          </a>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-1.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-1.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Premium</span></div>
+          </a>
+          <div class="amb-marquee__item amb-marquee__item--dep">
+            <div class="amb-dep-card">
+              <div class="amb-dep-card__header">
+                <div class="amb-dep-card__avatar" style="background:#2d6a4f" aria-hidden="true">M</div>
+                <div class="amb-dep-card__meta">
+                  <span class="amb-dep-card__name">Mariana Carvalho</span>
+                  <span class="amb-dep-card__stars" aria-label="5 estrelas">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="amb-dep-card__quote">"Em 20 anos como arquiteta, poucos fornecedores me surpreenderam com esse nível de comprometimento."</blockquote>
+              <p class="amb-dep-card__context">Campinas, SP &nbsp;·&nbsp; Arquiteta Parceira</p>
+            </div>
+          </div>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-1.jpg","https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-2.jpg"]'>
+            <img class="amb-marquee__img" src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-1.jpg" alt="" loading="lazy" />
+            <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Seul</span></div>
+          </a>
+
+        </div><!-- /track rev -->
+        </div><!-- /row rev -->
+
+      </div><!-- /amb-marquee -->
+
+      <div class="container ambientes__footer">
+        <a href="produtos.html" class="btn btn--outline">
+          Explorar todos os ambientes
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ─── Divisor: Produtos ─── -->
+    <div class="sec-divider" role="marquee" aria-label="Coleção de produtos CSM">
+      <div class="sec-divider__track">
+        <span class="sec-divider__item">ALTA MARCENARIA &amp; ESTOFADOS PREMIUM</span>
+        <span class="sec-divider__sep" aria-hidden="true">✦</span>
+        <span class="sec-divider__item">200+ MARCAS CURADAS</span>
+        <span class="sec-divider__sep" aria-hidden="true">✦</span>
+        <span class="sec-divider__item">DESIGN EXCLUSIVO ASSINADO</span>
+        <span class="sec-divider__sep" aria-hidden="true">✦</span>
+        <span class="sec-divider__item" aria-hidden="true">ALTA MARCENARIA &amp; ESTOFADOS PREMIUM</span>
+        <span class="sec-divider__sep" aria-hidden="true">✦</span>
+        <span class="sec-divider__item" aria-hidden="true">200+ MARCAS CURADAS</span>
+        <span class="sec-divider__sep" aria-hidden="true">✦</span>
+        <span class="sec-divider__item" aria-hidden="true">DESIGN EXCLUSIVO ASSINADO</span>
+        <span class="sec-divider__sep" aria-hidden="true">✦</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PRODUTOS — Stacking Featured Cards
+    ============================================================ -->
+    <section class="destaque" id="produtos" aria-label="Produtos em destaque CSM Decor">
+
+      <div class="container destaque__head">
+        <p class="eyebrow">Coleção em Destaque</p>
+        <h2 class="section-title">
+          Peças selecionadas<br /><em>para este mês</em>
+        </h2>
+        <p class="section-sub">
+          Sofás e poltronas em destaque especial — disponíveis sob encomenda e em estoque. Condições diferenciadas por tempo limitado. Solicite seu orçamento via WhatsApp.
+        </p>
+      </div>
+
+      <div class="destaque__stack" id="destaque-stack">
+
+        <!-- ─── CARD 01 — Sofá Chesterfield I ─── -->
+          <div class="destaque__card" style="--cidx:0; z-index:1">
+
+            <div class="destaque__card-top">
+              <div class="destaque__meta">
+                <span class="destaque__badge">Sofá</span>
+                <span class="destaque__num">01</span>
+              </div>
+              <div class="destaque__name-wrap">
+                <h3 class="destaque__name">Sofá <em>Chesterfield I</em></h3>
+              </div>
+              <a href="produto.html" class="btn btn--outline destaque__link">
+                Ver página completa
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+
+            <p class="destaque__tagline">Design britânico atemporal com capitonê manual e couro natural selecionado. Uma peça que define ambientes.</p>
+
+            <div class="destaque__body">
+              <div class="destaque__imgs">
+                <div class="destaque__imgs-sm">
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-1.jpg" alt="Sofá Chesterfield I — detalhe" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=600&q=80" alt="Ambiente living com sofá Chesterfield" loading="lazy" />
+                </div>
+                <div class="destaque__imgs-lg">
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg" alt="Sofá Chesterfield I — vista principal" loading="lazy" />
+                </div>
+              </div>
+
+              <div class="destaque__side">
+                <div class="destaque__specs">
+                  <button type="button" class="destaque__specs-btn" onclick="toggleDestaqueSpecs(this)" aria-expanded="false">
+                    <span>Especificações técnicas</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  </button>
+                  <div class="destaque__specs-panel">
+                    <dl class="destaque__specs-list">
+                      <div class="destaque__specs-row"><dt>Encosto</dt><dd>Espuma D26 soft com molas zig zag</dd></div>
+                      <div class="destaque__specs-row"><dt>Assento</dt><dd>Espuma D26 soft c/ manta plumante · almofadas soltas</dd></div>
+                      <div class="destaque__specs-row"><dt>Estrutura</dt><dd>Madeira eucalipto reflorestado e MDF</dd></div>
+                      <div class="destaque__specs-row"><dt>Pés</dt><dd>Madeira torneada</dd></div>
+                      <div class="destaque__specs-row"><dt>Dimensões</dt><dd>2,40m × 1,00m × 0,80m</dd></div>
+                    </dl>
+                  </div>
+                </div>
+
+                <div class="destaque__ctas">
+                  <a href="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sofá%20Chesterfield%20I.%20Pode%20me%20enviar%20mais%20informações%3F"
+                     class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.655 17.89C4.036 16.027 3 13.621 3 11c0-4.971 4.029-9 9-9s9 4.029 9 9-4.029 9-9 9c-1.59 0-3.083-.415-4.375-1.143L3 21l1.655-3.11z"/></svg>
+                    Pedir orçamento
+                  </a>
+                  <a href="produto.html" class="btn btn--outline btn--sm">Mais detalhes</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        <!-- ─── CARD 02 — Sofá Ibiza ─── -->
+          <div class="destaque__card" style="--cidx:1; z-index:2">
+
+            <div class="destaque__card-top">
+              <div class="destaque__meta">
+                <span class="destaque__badge">Sofá</span>
+                <span class="destaque__num">02</span>
+              </div>
+              <div class="destaque__name-wrap">
+                <h3 class="destaque__name">Sofá <em>Ibiza</em></h3>
+              </div>
+              <a href="produto.html?id=4771" class="btn btn--outline destaque__link" onclick="event.preventDefault();goToDestaqueCard(this.closest('.destaque__card'),'4771')">
+                Ver página completa
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+
+            <p class="destaque__tagline">Retrátil com acionamento elétrico touch — conforto automatizado com design contemporâneo de alto padrão.</p>
+
+            <div class="destaque__body">
+              <div class="destaque__imgs">
+                <div class="destaque__imgs-sm">
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza2.jpg" alt="Sofá Ibiza — detalhe retrátil" loading="lazy" />
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza3.jpg" alt="Sofá Ibiza — mecanismo" loading="lazy" />
+                </div>
+                <div class="destaque__imgs-lg">
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg" alt="Sofá Ibiza — vista principal" loading="lazy" />
+                </div>
+              </div>
+
+              <div class="destaque__side">
+                <div class="destaque__specs">
+                  <button type="button" class="destaque__specs-btn" onclick="toggleDestaqueSpecs(this)" aria-expanded="false">
+                    <span>Especificações técnicas</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  </button>
+                  <div class="destaque__specs-panel">
+                    <dl class="destaque__specs-list">
+                      <div class="destaque__specs-row"><dt>Encosto</dt><dd>Espuma D30 soft c/ manta de fibra siliconada</dd></div>
+                      <div class="destaque__specs-row"><dt>Braços</dt><dd>Espuma D26 dura</dd></div>
+                      <div class="destaque__specs-row"><dt>Assento</dt><dd>Espuma D30 soft · acionamento elétrico touch</dd></div>
+                      <div class="destaque__specs-row"><dt>Pés</dt><dd>Aço escovado</dd></div>
+                      <div class="destaque__specs-row"><dt>Revestimento</dt><dd>Tecidos e couros à escolha</dd></div>
+                    </dl>
+                  </div>
+                </div>
+
+                <div class="destaque__ctas">
+                  <a href="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sofá%20Ibiza.%20Pode%20me%20enviar%20mais%20informações%3F"
+                     class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.655 17.89C4.036 16.027 3 13.621 3 11c0-4.971 4.029-9 9-9s9 4.029 9 9-4.029 9-9 9c-1.59 0-3.083-.415-4.375-1.143L3 21l1.655-3.11z"/></svg>
+                    Pedir orçamento
+                  </a>
+                  <a href="produto.html?id=4771" class="btn btn--outline btn--sm" onclick="event.preventDefault();goToDestaqueCard(this.closest('.destaque__card'),'4771')">Ver página completa</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        <!-- ─── CARD 03 — Poltrona Aura ─── -->
+          <div class="destaque__card" style="--cidx:2; z-index:3">
+
+            <div class="destaque__card-top">
+              <div class="destaque__meta">
+                <span class="destaque__badge">Poltrona</span>
+                <span class="destaque__num">03</span>
+              </div>
+              <div class="destaque__name-wrap">
+                <h3 class="destaque__name">Poltrona <em>Aura</em></h3>
+              </div>
+              <a href="produto.html?id=4661" class="btn btn--outline destaque__link" onclick="event.preventDefault();goToDestaqueCard(this.closest('.destaque__card'),'4661')">
+                Ver página completa
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+
+            <p class="destaque__tagline">Formas fluidas e envolventes com design exclusivo — presença marcante em qualquer composição de interiores.</p>
+
+            <div class="destaque__body">
+              <div class="destaque__imgs">
+                <div class="destaque__imgs-sm">
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/aura_01.png" alt="Poltrona Aura — ângulo lateral" loading="lazy" />
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/poltrona-aura-ii.jpg" alt="Poltrona Aura — composição de ambiente" loading="lazy" />
+                </div>
+                <div class="destaque__imgs-lg">
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/poltrona-aura.jpg" alt="Poltrona Aura — vista principal" loading="lazy" />
+                </div>
+              </div>
+
+              <div class="destaque__side">
+                <div class="destaque__specs">
+                  <button type="button" class="destaque__specs-btn" onclick="toggleDestaqueSpecs(this)" aria-expanded="false">
+                    <span>Especificações técnicas</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  </button>
+                  <div class="destaque__specs-panel">
+                    <dl class="destaque__specs-list">
+                      <div class="destaque__specs-row"><dt>Design</dt><dd>Contornos envolventes e formas orgânicas exclusivas</dd></div>
+                      <div class="destaque__specs-row"><dt>Conforto</dt><dd>Linhas suaves com sensação de acolhimento total</dd></div>
+                      <div class="destaque__specs-row"><dt>Acabamento</dt><dd>Tecidos e couros premium à escolha</dd></div>
+                      <div class="destaque__specs-row"><dt>3D · AR</dt><dd>Visualização em Realidade Aumentada disponível</dd></div>
+                    </dl>
+                  </div>
+                </div>
+
+                <div class="destaque__ctas">
+                  <a href="https://wa.me/5519990034068?text=Tenho%20interesse%20na%20Poltrona%20Aura.%20Pode%20me%20enviar%20mais%20informações%3F"
+                     class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.655 17.89C4.036 16.027 3 13.621 3 11c0-4.971 4.029-9 9-9s9 4.029 9 9-4.029 9-9 9c-1.59 0-3.083-.415-4.375-1.143L3 21l1.655-3.11z"/></svg>
+                    Pedir orçamento
+                  </a>
+                  <a href="produto.html?id=4661" class="btn btn--outline btn--sm" onclick="event.preventDefault();goToDestaqueCard(this.closest('.destaque__card'),'4661')">Ver página completa</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+      </div><!-- /destaque__stack -->
+
+      <div class="container destaque__rodape">
+        <p class="destaque__nota">Produtos fabricados sob encomenda; revestimentos, dimensões e acabamentos customizáveis. Ampla oferta de produtos em estoque — consulte prazos e condições.</p>
+        <a href="produtos.html" class="btn btn--outline">
+          Ver catálogo completo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         HISTÓRIA / CREDIBILIDADE
+    ============================================================ -->
+    <section class="historia" id="historia" aria-label="Nossa história e números">
+      <div class="container">
+
+        <p class="eyebrow">Nossa História</p>
+        <h2 class="section-title">
+          Décadas construindo<br /><em>referência em alto padrão</em>
+        </h2>
+        <p class="section-sub">
+          Da madeira bruta ao ambiente finalizado, cada peça passa pelo critério que
+          nos tornou referência em Campinas e região.
+        </p>
+
+        <div class="stats">
+
+          <div class="stat" data-animate>
+            <strong class="stat__num">30<sup>+</sup></strong>
+            <span class="stat__label">Anos de mercado</span>
+            <p class="stat__desc">Tradição familiar com evolução constante em design e atendimento.</p>
+          </div>
+
+          <div class="stat stat--featured" data-animate>
+            <strong class="stat__num">6.000<sup>m²</sup></strong>
+            <span class="stat__label">Showroom exclusivo</span>
+            <p class="stat__desc">O maior espaço de ambientes montados para você viver a experiência antes de comprar.</p>
+          </div>
+
+          <div class="stat" data-animate>
+            <strong class="stat__num">5k<sup>+</sup></strong>
+            <span class="stat__label">Projetos entregues</span>
+            <p class="stat__desc">Lares e escritórios transformados com excelência e exclusividade.</p>
+          </div>
+
+          <div class="stat" data-animate>
+            <strong class="stat__num">200<sup>+</sup></strong>
+            <span class="stat__label">Marcas parceiras</span>
+            <p class="stat__desc">Curadoria rigorosa das melhores linhas nacionais e importadas.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DEPOIMENTOS
+    ============================================================ -->
+    <section class="dep" id="depoimentos" aria-label="Depoimentos de clientes">
+
+      <!-- Cabeçalho -->
+      <div class="container dep__header">
+        <p class="eyebrow">Depoimentos</p>
+        <h2 class="section-title">
+          O que dizem sobre<br /><em>a experiência CSM</em>
+        </h2>
+      </div>
+
+      <!-- Carousel -->
+      <div class="dep__carousel" id="dep-carousel" aria-live="polite">
+
+        <div class="dep__track" id="dep-track">
+
+          <!-- Slide 1 -->
+          <article class="dep__slide" role="group" aria-label="Depoimento 1 de 4">
+            <div class="container dep__slide-inner">
+              <span class="dep__mark" aria-hidden="true">"</span>
+              <blockquote class="dep__quote">
+                <p class="dep__text">A experiência no showroom da CSM transformou completamente a minha relação com o espaço que habito. Cada ambiente é uma declaração de intenção — e os consultores têm o talento raro de ouvir antes de sugerir.</p>
+                <footer class="dep__footer">
+                  <div class="dep__rule" aria-hidden="true"></div>
+                  <cite class="dep__cite">
+                    <span class="dep__name">Ana Lima</span>
+                    <span class="dep__context">Campinas, SP &nbsp;·&nbsp; Projeto Residencial</span>
+                  </cite>
+                </footer>
+              </blockquote>
+            </div>
+          </article>
+
+          <!-- Slide 2 -->
+          <article class="dep__slide" role="group" aria-label="Depoimento 2 de 4">
+            <div class="container dep__slide-inner">
+              <span class="dep__mark" aria-hidden="true">"</span>
+              <blockquote class="dep__quote">
+                <p class="dep__text">Trouxe a equipe CSM para o meu projeto de escritório e o resultado vai além do que imaginei. É o tipo de qualidade que os clientes percebem antes mesmo de você mencionar a origem dos móveis.</p>
+                <footer class="dep__footer">
+                  <div class="dep__rule" aria-hidden="true"></div>
+                  <cite class="dep__cite">
+                    <span class="dep__name">Ricardo Mendes</span>
+                    <span class="dep__context">São Paulo, SP &nbsp;·&nbsp; Projeto Comercial</span>
+                  </cite>
+                </footer>
+              </blockquote>
+            </div>
+          </article>
+
+          <!-- Slide 3 -->
+          <article class="dep__slide" role="group" aria-label="Depoimento 3 de 4">
+            <div class="container dep__slide-inner">
+              <span class="dep__mark" aria-hidden="true">"</span>
+              <blockquote class="dep__quote">
+                <p class="dep__text">O atendimento é tão cuidadoso quanto os próprios móveis. Cada decisão foi pensada para o meu espaço — nunca senti que estavam empurrando o que tinham em estoque. É uma parceria, não uma venda.</p>
+                <footer class="dep__footer">
+                  <div class="dep__rule" aria-hidden="true"></div>
+                  <cite class="dep__cite">
+                    <span class="dep__name">Fernanda Sousa</span>
+                    <span class="dep__context">Campinas, SP &nbsp;·&nbsp; Projeto Residencial</span>
+                  </cite>
+                </footer>
+              </blockquote>
+            </div>
+          </article>
+
+          <!-- Slide 4 -->
+          <article class="dep__slide" role="group" aria-label="Depoimento 4 de 4">
+            <div class="container dep__slide-inner">
+              <span class="dep__mark" aria-hidden="true">"</span>
+              <blockquote class="dep__quote">
+                <p class="dep__text">Em 20 anos como arquiteta, poucos fornecedores me surpreenderam com esse nível de comprometimento. A CSM entende que um móvel de alto padrão é também uma responsabilidade — e leva isso a sério do projeto à entrega.</p>
+                <footer class="dep__footer">
+                  <div class="dep__rule" aria-hidden="true"></div>
+                  <cite class="dep__cite">
+                    <span class="dep__name">Mariana Carvalho</span>
+                    <span class="dep__context">Campinas, SP &nbsp;·&nbsp; Arquiteta Parceira</span>
+                  </cite>
+                </footer>
+              </blockquote>
+            </div>
+          </article>
+
+        </div><!-- /dep__track -->
+
+        <!-- Navegação -->
+        <div class="dep__controls container">
+
+          <button class="dep__arrow dep__arrow--prev" id="dep-prev" aria-label="Depoimento anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          <div class="dep__dots" role="group" aria-label="Navegar entre depoimentos">
+            <button class="dep__dot dep__dot--active" aria-label="Depoimento 1" data-dep="0"></button>
+            <button class="dep__dot" aria-label="Depoimento 2" data-dep="1"></button>
+            <button class="dep__dot" aria-label="Depoimento 3" data-dep="2"></button>
+            <button class="dep__dot" aria-label="Depoimento 4" data-dep="3"></button>
+          </div>
+
+          <button class="dep__arrow dep__arrow--next" id="dep-next" aria-label="Próximo depoimento">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+
+        </div>
+
+        <!-- CTA Google -->
+        <div class="dep__google container">
+          <a href="https://g.page/r/PLACEHOLDER/review" class="dep__google-link" target="_blank" rel="noopener noreferrer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            <span><strong>4,9</strong> / 5 &nbsp;·&nbsp; +300 avaliações no Google</span>
+          </a>
+        </div>
+
+      </div><!-- /dep__carousel -->
+
+    </section>
+
+    <!-- ============================================================
+         ÁREA PARA ARQUITETOS
+    ============================================================ -->
+    <section class="arquitetos" id="arquitetos" aria-label="Programa exclusivo para arquitetos e decoradores">
+      <div class="arquitetos__bg" aria-hidden="true"></div>
+      <div class="container arquitetos__inner">
+
+        <div class="arquitetos__content">
+          <p class="eyebrow eyebrow--light">Para Profissionais</p>
+          <h2 class="section-title section-title--light">
+            Parceria exclusiva para<br /><em>arquitetos e decoradores</em>
+          </h2>
+          <p class="arquitetos__body">
+            Na CSM, profissionais de design têm acesso a condições diferenciadas,
+            showroom reservado para apresentações e uma equipe dedicada para apoiar
+            cada projeto do briefing à entrega.
+          </p>
+
+          <ul class="arquitetos__list">
+            <li>Comissão de parceria sobre projetos indicados</li>
+            <li>Acesso antecipado a novas coleções e lançamentos</li>
+            <li>Espaço exclusivo no showroom para seus clientes</li>
+            <li>Suporte técnico de medição e especificação</li>
+            <li>Condições e prazos de pagamento diferenciados</li>
+          </ul>
+
+          <a
+            href="https://wa.me/5519990034068?text=Sou%20arquiteto(a)%20e%20quero%20conhecer%20a%20parceria%20CSM."
+            class="btn btn--primary btn--lg"
+            target="_blank" rel="noopener noreferrer"
+          >Cadastrar como parceiro profissional</a>
+        </div>
+
+        <div class="arquitetos__visual" aria-hidden="true">
+          <div class="arquitetos__img-card">
+            <div class="arquitetos__img" style="background-image: url('apresentacao/poltrona-ada6.jpg');"></div>
+          </div>
+          <div class="arquitetos__badge">
+            <span class="arquitetos__badge-num">200+</span>
+            <span class="arquitetos__badge-label">profissionais parceiros</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA FINAL
+    ============================================================ -->
+    <section class="cta-final" aria-label="Convite final para visita ou contato">
+      <div class="container cta-final__inner">
+        <p class="eyebrow">Dê o próximo passo</p>
+        <h2 class="cta-final__title">
+          Pronto para transformar<br /><em>o seu ambiente?</em>
+        </h2>
+        <p class="cta-final__sub">
+          Agende uma visita ao showroom ou fale agora com um de nossos consultores.
+        </p>
+        <a
+          href="https://wa.me/5519990034068?text=Quero%20transformar%20meu%20ambiente%20com%20a%20CSM."
+          class="btn btn--primary btn--xl"
+          target="_blank" rel="noopener noreferrer"
+        >Falar com consultor no WhatsApp</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__top">
+
+      <div class="footer__brand">
+        <a href="#" aria-label="CSM — Campinas Shopping Móveis">
+          <img src="imagens/logo/csm-logo.png" alt="CSM — Campinas Shopping Móveis" class="footer__logo" width="140" height="42" />
+        </a>
+        <p class="footer__tagline">
+          Transformando ambientes com sofisticação<br />há mais de 30 anos em Campinas.
+        </p>
+        <div class="footer__socials" aria-label="Redes sociais">
+          <a href="https://www.instagram.com/csmdecor/" class="social-link" aria-label="Instagram CSM" target="_blank" rel="noopener noreferrer">
+            <!-- Instagram icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/csmdecor" class="social-link" aria-label="Facebook CSM" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@csmdecor" class="social-link" aria-label="YouTube CSM" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="footer__nav" aria-label="Links do rodapé">
+
+        <!-- Coluna 1: Mapa do Site (Sitemap) -->
+        <div class="footer__col footer__col--sitemap">
+          <h3 class="footer__col-title">Mapa do Site</h3>
+          <ul>
+            <li><a href="#inicio" rel="index">Início</a></li>
+            <li><a href="#ambientes">Ambientes</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#historia">Nossa História</a></li>
+            <li><a href="#depoimentos">Depoimentos</a></li>
+            <li><a href="#arquitetos">Para Profissionais</a></li>
+            <li><a href="fale-conosco.html">Fale Conosco</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 2: Contato -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Contato</h3>
+          <ul>
+            <li><a href="https://wa.me/5519990034068?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20consultor." target="_blank" rel="noopener noreferrer">(19) 99003-4068</a></li>
+            <li><a href="tel:+551937538988">(19) 3753-8988</a></li>
+            <li><a href="mailto:contato@csmdecor.com.br">contato@csmdecor.com.br</a></li>
+            <li><a href="https://maps.google.com/?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP" target="_blank" rel="noopener noreferrer">Av. Dr. Moraes Sales, 1575 — Cambuí</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Horários -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Horários</h3>
+          <ul class="footer__hours">
+            <li><span>Seg — Sex</span><span>9h às 19h</span></li>
+            <li><span>Sábado</span><span>9h às 18h</span></li>
+            <li><span>Dom e Feriados</span><span>10h às 18h</span></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: Credibilidade & Pagamento -->
+        <div class="footer__col footer__col--trust">
+          <h3 class="footer__col-title">Pagamento</h3>
+          <ul class="footer__trust-list">
+            <li class="footer__pay-item">
+              <span class="footer__pay-chip footer__pay-chip--pix">
+                <!-- Pix mark — 4 losangos em cruz -->
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M11.37 16.18 7.18 12l4.19-4.18 1.06 1.06L9.3 12l3.13 3.12-1.06 1.06Zm1.26 0 1.06-1.06L16.82 12l-3.13-3.12 1.06-1.06L18.94 12l-4.31 4.18Zm-3.6 4.84A10 10 0 1 1 22 12 10 10 0 0 1 9.03 21.02Z" opacity=".0001"/>
+                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm5.66 6.59-2.2 2.2a3.06 3.06 0 0 1-4.32 0l-.35-.35a.77.77 0 0 0-1.09 0l-2.56 2.56 2.56 2.56a.77.77 0 0 0 1.09 0l.35-.35a3.06 3.06 0 0 1 4.32 0l2.2 2.2A7.94 7.94 0 0 0 12 4a7.94 7.94 0 0 0-5.71 2.39L8.82 8.9a.77.77 0 0 0 1.09 0l.35-.35a3.06 3.06 0 0 1 4.32 0l2.2 2.2ZM12 20a7.94 7.94 0 0 0 5.66-2.39l-2.2-2.2a3.06 3.06 0 0 1-4.32 0l-.35-.35a.77.77 0 0 0-1.09 0l-2.53 2.53A7.94 7.94 0 0 0 12 20Z"/>
+                </svg>
+                PIX
+              </span>
+            </li>
+            <li class="footer__pay-item">
+              <span class="footer__pay-chip">
+                <!-- Credit card icon -->
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/>
+                  <line x1="2" y1="10" x2="22" y2="10"/>
+                  <line x1="6" y1="15" x2="10" y2="15"/>
+                </svg>
+                CARTÃO
+              </span>
+              <span style="font-size:.68rem;color:rgba(255,255,255,.28);margin-left:.25rem">crédito&nbsp;e&nbsp;débito</span>
+            </li>
+            <li class="footer__trust-seal">Satisfação Assegurada CSM</li>
+            <li class="footer__trust-seal">Qualidade Alta Marcenaria</li>
+          </ul>
+        </div>
+
+      </nav>
+
+    </div>
+
+    <!-- ── Como nos encontrar — Mapa no Rodapé ── -->
+    <div class="footer__location">
+      <div class="container footer__location-inner">
+
+        <div class="footer__location-info">
+          <h3 class="footer__col-title">Como nos encontrar</h3>
+          <address class="footer__location-address">
+            Av. Dr. Moraes Sales, 1575 — Cambuí<br />
+            Campinas, SP · CEP 13010-002
+          </address>
+          <ul class="footer__hours footer__location-hours">
+            <li><span>Seg — Sex</span><span>9h às 19h</span></li>
+            <li><span>Sábado</span><span>9h às 18h</span></li>
+            <li><span>Dom e Feriados</span><span>10h às 18h</span></li>
+          </ul>
+          <div class="footer__location-ctas">
+            <a href="https://wa.me/5519990034068?text=Quero%20agendar%20uma%20visita%20ao%20showroom%20CSM."
+               class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">Agendar visita</a>
+            <a href="https://maps.google.com/?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP"
+               class="btn btn--ghost btn--sm" target="_blank" rel="noopener noreferrer">Como chegar</a>
+          </div>
+        </div>
+
+        <div class="footer__location-map" aria-label="Localização CSM Decor no mapa">
+          <iframe
+            src="https://maps.google.com/maps?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP,+13010-002,+Brazil&output=embed&hl=pt-BR&z=16"
+            width="100%" height="100%"
+            style="border:0;" allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localização CSM Decor — Av. Dr. Moraes Sales, 1575, Cambuí, Campinas/SP"
+          ></iframe>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>© <span id="ano">2026</span> CSM — Campinas Shopping Móveis. Todos os direitos reservados.</p>
+        <p>
+          <a href="#">Política de Privacidade</a>
+          <span aria-hidden="true"> · </span>
+          <a href="#">Termos de Uso</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Modal: Produto ── -->
+  <div class="modal-overlay" id="modal-produto" role="dialog" aria-modal="true" aria-labelledby="modal-produto-title" hidden>
+    <div class="modal" role="document">
+      <button class="modal__close" aria-label="Fechar" onclick="closeModal('modal-produto')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal__layout">
+        <div class="modal__gallery">
+          <div class="modal__img-wrap">
+            <img id="modal-img-main" src="" alt="" class="modal__img-main" />
+          </div>
+          <div class="modal__thumbs" id="modal-thumbs"></div>
+        </div>
+        <div class="modal__info">
+          <span class="modal__badge" id="modal-badge">Sofá</span>
+          <h2 class="modal__title" id="modal-produto-title"></h2>
+          <p class="modal__tagline" id="modal-tagline"></p>
+          <div class="modal__specs" id="modal-specs"></div>
+          <a id="modal-wpp-btn" href="#" class="btn btn--primary modal__cta" target="_blank" rel="noopener noreferrer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar Orçamento via WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Modal: Cadastro / Login ── -->
+  <div class="modal-overlay" id="modal-arquiteto" role="dialog" aria-modal="true" aria-labelledby="modal-arq-title" hidden>
+    <div class="modal modal--sm" role="document">
+      <button class="modal__close" aria-label="Fechar" onclick="closeModal('modal-arquiteto')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- ── Estado: formulários ── -->
+      <div id="arq-form-wrap">
+
+        <div class="modal__arq-header">
+          <img src="imagens/logo/csm-logo.png" alt="CSM Decor" class="modal__arq-logo" />
+          <h2 id="modal-arq-title" class="modal__arq-title">Bem-vindo à CSM</h2>
+          <p class="modal__arq-sub">Crie sua conta para acompanhar projetos e receber novidades exclusivas.</p>
+        </div>
+
+        <!-- Google Login -->
+        <button class="btn-google" onclick="simulateGoogleLogin()">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Entrar com o Google
+        </button>
+
+        <div class="modal__divider"><span>ou complete seu cadastro</span></div>
+
+        <!-- Área de formulários (alterna conforme a aba ativa) -->
+        <div id="modal-form-area">
+
+          <!-- Padrão: Cliente comum -->
+          <div id="form-cliente-wrap">
+            <form class="arq-form" onsubmit="submitArqForm(event)">
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="cli-nome">Nome completo</label>
+                <input class="arq-form__input" type="text" id="cli-nome" name="nome" placeholder="Seu nome" required />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="cli-email">E-mail</label>
+                <input class="arq-form__input" type="email" id="cli-email" name="email" placeholder="seu@email.com" required />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="cli-tel">Telefone / WhatsApp</label>
+                <input class="arq-form__input" type="tel" id="cli-tel" name="telefone" placeholder="(19) 9 0000-0000" />
+              </div>
+              <button type="submit" class="btn btn--primary arq-form__submit">Criar minha conta</button>
+            </form>
+          </div>
+
+          <!-- Aba: Arquiteto Parceiro -->
+          <div id="form-arq-wrap" hidden>
+            <form class="arq-form" onsubmit="submitArqForm(event)">
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="arq-nome">Nome completo</label>
+                <input class="arq-form__input" type="text" id="arq-nome" name="nome" placeholder="Seu nome" required />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="arq-email">E-mail profissional</label>
+                <input class="arq-form__input" type="email" id="arq-email" name="email" placeholder="seu@email.com" required />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="arq-cau">Registro CAU / CFT</label>
+                <input class="arq-form__input" type="text" id="arq-cau" name="cau" placeholder="CAU A 000000-0" />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="arq-empresa">Escritório / Empresa</label>
+                <input class="arq-form__input" type="text" id="arq-empresa" name="empresa" placeholder="Nome do escritório" />
+              </div>
+              <button type="submit" class="btn btn--primary arq-form__submit">Solicitar acesso profissional</button>
+            </form>
+          </div>
+
+          <!-- Aba: Fornecedor -->
+          <div id="form-forn-wrap" hidden>
+            <form class="arq-form" onsubmit="submitArqForm(event)">
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="forn-empresa">Empresa / Fábrica</label>
+                <input class="arq-form__input" type="text" id="forn-empresa" name="empresa" placeholder="Nome da empresa" required />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="forn-cnpj">CNPJ</label>
+                <input class="arq-form__input" type="text" id="forn-cnpj" name="cnpj" placeholder="00.000.000/0000-00" />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="forn-segmento">Segmento</label>
+                <select class="arq-form__input arq-form__select" id="forn-segmento" name="segmento">
+                  <option value="" disabled selected>Selecione o segmento</option>
+                  <option value="estofados">Estofados</option>
+                  <option value="iluminacao">Iluminação</option>
+                  <option value="planejados">Planejados</option>
+                  <option value="decoracao">Decoração</option>
+                  <option value="tapetes">Tapetes e Revestimentos</option>
+                  <option value="outros">Outros</option>
+                </select>
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="forn-email">E-mail comercial</label>
+                <input class="arq-form__input" type="email" id="forn-email" name="email" placeholder="comercial@empresa.com.br" required />
+              </div>
+              <div class="arq-form__row">
+                <label class="arq-form__label" for="forn-tel">Telefone</label>
+                <input class="arq-form__input" type="tel" id="forn-tel" name="telefone" placeholder="(19) 9 0000-0000" />
+              </div>
+              <button type="submit" class="btn btn--primary arq-form__submit">Solicitar parceria como fornecedor</button>
+            </form>
+          </div>
+
+        </div><!-- /modal-form-area -->
+
+        <!-- Abas de acesso profissional -->
+        <div class="modal__pro-section">
+          <div class="modal__pro-header"><span>Sou Profissional</span></div>
+          <div class="modal__pro-tabs">
+            <button type="button" class="pro-tab" id="tab-arq" data-target="arq" onclick="switchProTab(this)">
+              Sou Arquiteto<br />Parceiro
+            </button>
+            <button type="button" class="pro-tab" id="tab-forn" data-target="forn" onclick="switchProTab(this)">
+              Seja um<br />Fornecedor
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /arq-form-wrap -->
+
+      <!-- ── Estado: sucesso ── -->
+      <div id="arq-success" hidden class="arq-success">
+        <div class="arq-success__icon" aria-hidden="true">✓</div>
+        <h3 class="arq-success__title">Cadastro realizado!</h3>
+        <p class="arq-success__text">Nossa equipe entrará em contato em até 24 horas para confirmar seu acesso.</p>
+        <button class="btn btn--outline" onclick="closeModal('modal-arquiteto')" style="margin-top:1.5rem;">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Botão Flutuante de Atendimento ── -->
+  <div class="fab-cluster" id="fab-cluster" role="complementary" aria-label="Canais de atendimento">
+    <div class="fab-subs" id="fab-subs" aria-hidden="true">
+      <!-- Produtos -->
+      <a href="produtos.html"
+         class="fab-sub fab-sub--products" aria-label="Ver catálogo de produtos">
+        <span class="fab-sub__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </span>
+        <span class="fab-sub__label">Produtos</span>
+      </a>
+      <!-- Facebook -->
+      <a href="https://web.facebook.com/CampinasShoppingMoveis/?_rdc=1&_rdr#"
+         class="fab-sub fab-sub--fb" aria-label="Visitar Facebook da CSM"
+         target="_blank" rel="noopener noreferrer">
+        <span class="fab-sub__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </span>
+        <span class="fab-sub__label">Facebook</span>
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/csmdecor/"
+         class="fab-sub fab-sub--ig" aria-label="Seguir Instagram da CSM"
+         target="_blank" rel="noopener noreferrer">
+        <span class="fab-sub__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </span>
+        <span class="fab-sub__label">Instagram</span>
+      </a>
+      <!-- WhatsApp -->
+      <a href="https://wa.me/5519990034068?text=Olá%2C%20vim%20pelo%20site%20CSM%20e%20gostaria%20de%20falar%20com%20um%20consultor."
+         class="fab-sub fab-sub--wpp" aria-label="Falar no WhatsApp"
+         target="_blank" rel="noopener noreferrer">
+        <span class="fab-sub__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </span>
+        <span class="fab-sub__label">WhatsApp</span>
+      </a>
+    </div>
+    <button class="fab-main" id="fab-main" aria-expanded="false" aria-controls="fab-subs">
+      <span class="fab-main__icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </span>
+      <span class="fab-main__label">Atendimento</span>
+    </button>
+  </div>
+
+  <!-- GSAP + ScrollTrigger — motor de animação ao rolar -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    // Helpers globais: travar/destravar scroll
+    function lockScroll()   { document.body.style.overflow = 'hidden'; }
+    function unlockScroll() { document.body.style.overflow = ''; }
+
+    // Scroll suave para elemento com offset de cabeçalho
+    function smoothScrollTo(target, offset) {
+      var top = target.getBoundingClientRect().top + window.scrollY + (offset || -80);
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    // ── Loading Screen — dismiss e reveal ───────────────────────
+    (function () {
+      var ls = document.getElementById('loading-screen');
+      if (!ls) return;
+
+      // Vindo de outra página via transição de cortina: pula o loading screen
+      if (sessionStorage.getItem('csm-pt')) {
+        sessionStorage.removeItem('csm-pt');
+        ls.remove();
+        unlockScroll();
+        // heroTl ainda não foi criado aqui (GSAP carrega depois); usamos flag
+        window.heroShouldPlay = true;
+        return;
+      }
+
+      // Reduced motion: pula tudo instantaneamente
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        ls.remove();
+        return;
+      }
+
+      // Mantém scroll travado durante o loading
+      lockScroll();
+
+      function dismiss() {
+        ls.classList.add('ls--done');
+        ls.addEventListener('transitionend', function (e) {
+          if (e.propertyName !== 'opacity') return;
+          ls.remove();
+          unlockScroll();
+          // Dispara a animação hero após o reveal
+          if (window.heroTl) window.heroTl.play();
+        }, { once: true });
+      }
+
+      // Animações do loader terminam em ~1.45s → dismiss em 1.5s
+      setTimeout(dismiss, 1500);
+    }());
+
+    // ── Âncoras internas → scroll suave ─────────────────────────
+    document.addEventListener('click', function (e) {
+      var anchor = e.target.closest('a[href^="#"]');
+      if (!anchor) return;
+      var id = anchor.getAttribute('href');
+      if (id === '#') return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      // Só intercepta se o menu overlay não estiver aberto
+      var overlay = document.getElementById('menu-overlay');
+      if (overlay && !overlay.hasAttribute('hidden')) return;
+      e.preventDefault();
+      smoothScrollTo(target, -80);
+    });
+
+    // ── Utilitários ──────────────────────────────────────────────
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    function imgFallback(img, url) {
+      if (!img.dataset.fb) {
+        img.dataset.fb = '1';
+        img.src = url;
+      } else {
+        img.closest('figure').classList.add('img-fallback');
+      }
+    }
+
+    // ── Header scroll ────────────────────────────────────────────
+    const header = document.getElementById('header');
+    const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ── Menu Overlay (LV-style) ──────────────────────────────────
+    (function () {
+      const toggleBtn = document.getElementById('menu-toggle-btn');
+      const closeBtn  = document.getElementById('menu-close-btn');
+      const overlay   = document.getElementById('menu-overlay');
+      if (!toggleBtn || !overlay) return;
+
+      const navLinks = overlay.querySelectorAll('.menu-nav__link');
+      let isOpen = false;
+      let openRAF = null;
+
+      // Aplica delays escalonados em cada link
+      navLinks.forEach((link, i) => {
+        link.style.transitionDelay = (0.08 + i * 0.055) + 's';
+      });
+
+      function openMenu() {
+        isOpen = true;
+        overlay.removeAttribute('hidden');
+        overlay.removeAttribute('aria-hidden');
+        lockScroll();
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toggleBtn.classList.add('is-open');
+        cancelAnimationFrame(openRAF);
+        openRAF = requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            overlay.classList.add('is-open');
+          });
+        });
+      }
+
+      function closeMenu() {
+        isOpen = false;
+        overlay.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.classList.remove('is-open');
+        unlockScroll();
+        // Aguarda transição antes de esconder
+        overlay.addEventListener('transitionend', function hide(e) {
+          if (e.propertyName !== 'clip-path') return;
+          overlay.setAttribute('hidden', '');
+          overlay.removeEventListener('transitionend', hide);
+        });
+      }
+
+      toggleBtn.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+      closeBtn?.addEventListener('click', closeMenu);
+
+      // Fecha ao clicar em um link do menu + scroll suave via Lenis
+      overlay.querySelectorAll('[data-menu-link]').forEach(link => {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          var target = href && href !== '#' ? document.querySelector(href) : null;
+          e.preventDefault();
+          closeMenu();
+          if (target) {
+            setTimeout(function () {
+              smoothScrollTo(target, -80);
+            }, 680);
+          }
+        });
+      });
+
+      // Escape fecha
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && isOpen) closeMenu();
+      });
+    }());
+
+    // ── Carrossel Ambientes — Center Mode Infinite ───────────────
+    (function () {
+      var CLONE_N      = 3;        // clones em cada lado
+      var AUTOPLAY_MS  = 5000;
+      var TRANS_MS     = 650;
+      var easing       = 'cubic-bezier(0.25, 1, 0.5, 1)';
+
+      var carousel  = document.getElementById('amb-carousel');
+      var track     = document.getElementById('amb-track');
+      var dotsWrap  = document.getElementById('amb-dots');
+      if (!carousel || !track) return;
+
+      // Slides originais
+      var origSlides = Array.from(track.querySelectorAll('.amb-slide'));
+      var n          = origSlides.length;
+
+      // Clona head + tail para loop infinito
+      var headClones = origSlides.slice(-CLONE_N).map(function (s) {
+        var c = s.cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c;
+      });
+      var tailClones = origSlides.slice(0, CLONE_N).map(function (s) {
+        var c = s.cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c;
+      });
+      headClones.forEach(function (c) { track.insertBefore(c, track.firstChild); });
+      tailClones.forEach(function (c) { track.appendChild(c); });
+
+      var allSlides = Array.from(track.querySelectorAll('.amb-slide'));
+      var total     = allSlides.length; // n + 2*CLONE_N
+
+      var current   = CLONE_N; // índice do primeiro slide real
+      var locked    = false;
+      var timer     = null;
+
+      // ─── Dots
+      origSlides.forEach(function (s, i) {
+        var dot = document.createElement('button');
+        dot.className = 'amb-dot';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Categoria ' + (i + 1));
+        dot.dataset.idx = String(i);
+        dot.addEventListener('click', function () { goTo(CLONE_N + i, true); resetAutoplay(); });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = Array.from(dotsWrap.querySelectorAll('.amb-dot'));
+
+      // ─── Cálculo do offset para centralizar o slide
+      function offset(idx) {
+        var vw     = carousel.offsetWidth;
+        var slide  = allSlides[idx] || allSlides[0];
+        var sw     = slide.offsetWidth;
+        var gap    = parseFloat(getComputedStyle(track).gap) || 0;
+        var center = (vw - sw) / 2;
+        return -(idx * (sw + gap)) + center;
+      }
+
+      // ─── Hooks preenchidos pelos módulos abaixo (parallax, crossfade, filtros)
+      var resetParallax  = function () {};
+      var syncFilterBtns = function () {};
+      var onCardChange   = function () {};
+
+      // ─── Atualiza classes ativas
+      function updateState() {
+        allSlides.forEach(function (s, i) { s.classList.toggle('is-active', i === current); });
+        var realIdx = ((current - CLONE_N) % n + n) % n;
+        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === realIdx); });
+        resetParallax();
+        syncFilterBtns(realIdx);
+        onCardChange(realIdx);
+      }
+
+      // ─── Navega para índice
+      function goTo(idx, animate) {
+        if (animate === undefined) animate = true;
+        if (animate) {
+          track.style.transition = 'transform ' + TRANS_MS + 'ms ' + easing;
+        } else {
+          track.style.transition = 'none';
+        }
+        current = idx;
+        track.style.transform = 'translateX(' + offset(idx) + 'px)';
+        updateState();
+        if (!animate) {
+          // Força reflow para que a próxima transição funcione
+          void track.offsetWidth;
+        }
+      }
+
+      // ─── Loop infinito: ao terminar a transição, salta silenciosamente
+      track.addEventListener('transitionend', function () {
+        if (current < CLONE_N) {
+          goTo(current + n, false);
+        } else if (current >= CLONE_N + n) {
+          goTo(current - n, false);
+        }
+        locked = false;
+      });
+
+      function next() {
+        if (locked) return;
+        locked = true;
+        goTo(current + 1, true);
+      }
+      function prev() {
+        if (locked) return;
+        locked = true;
+        goTo(current - 1, true);
+      }
+
+      // ─── Autoplay
+      function startAutoplay() {
+        stopAutoplay();
+        timer = setInterval(next, AUTOPLAY_MS);
+      }
+      function stopAutoplay() { clearInterval(timer); }
+      function resetAutoplay() { stopAutoplay(); startAutoplay(); }
+
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', startAutoplay);
+
+      // ─── Setas
+      var btnPrev = document.getElementById('amb-prev');
+      var btnNext = document.getElementById('amb-next');
+      if (btnPrev) btnPrev.addEventListener('click', function () { prev(); resetAutoplay(); });
+      if (btnNext) btnNext.addEventListener('click', function () { next(); resetAutoplay(); });
+
+      // ─── Swipe touch
+      var tx0 = 0, ty0 = 0;
+      carousel.addEventListener('touchstart', function (e) {
+        tx0 = e.touches[0].clientX;
+        ty0 = e.touches[0].clientY;
+        stopAutoplay();
+      }, { passive: true });
+      carousel.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx0;
+        var dy = e.changedTouches[0].clientY - ty0;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+          dx < 0 ? next() : prev();
+        }
+        startAutoplay();
+      }, { passive: true });
+
+      // ─── Filtros → scroll para primeiro card + sincronização bidirecional
+      var filterBtns = Array.from(document.querySelectorAll('.ambientes__filters .filter'));
+
+      // syncFilterBtns: chamado pelo updateState a cada troca de card (autoplay/swipe/seta)
+      syncFilterBtns = function (realIdx) {
+        var cat = origSlides[realIdx] ? origSlides[realIdx].dataset.cat : null;
+        filterBtns.forEach(function (b) {
+          var matches = b.dataset.filter === cat;
+          b.classList.toggle('active', matches);
+          b.setAttribute('aria-selected', matches ? 'true' : 'false');
+        });
+      };
+
+      // Clique no filtro → navega e marca ativo
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach(function (b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          var f = btn.dataset.filter;
+          if (f === 'all') {
+            goTo(CLONE_N, true);
+          } else {
+            var idx = origSlides.findIndex(function (s) { return s.dataset.cat === f; });
+            if (idx >= 0) goTo(CLONE_N + idx, true);
+          }
+          resetAutoplay();
+        });
+      });
+
+      // ─── Navegação por clique no card ativo
+      track.addEventListener('click', function (e) {
+        var slide = e.target.closest('.amb-slide');
+        if (!slide) return;
+        if (!slide.classList.contains('is-active')) return;
+        var card  = slide.querySelector('.amb-card');
+        if (!card) return;
+        if (e.target.closest('.amb-card__btn')) return;
+        window.location.href = card.dataset.href;
+      });
+
+      // ─── Inicialização
+      goTo(CLONE_N, false);
+      startAutoplay();
+
+      // Recalcula posição ao redimensionar
+      window.addEventListener('resize', function () { goTo(current, false); });
+
+      // ── PARALLAX 3D — Microinteração no card ativo ───────────────
+      (function () {
+        var MAX_PX   = 16;    // deslocamento máximo em px (~ 4% de 400px)
+        var SCALE    = 1.08;  // escala de buffer anti-borda-branca
+        var LERP_T   = 0.08;  // suavidade do lerp (0 = parado, 1 = instantâneo)
+
+        var pxTarget = 0, pyTarget = 0;
+        var pxCur    = 0, pyCur    = 0;
+        var pActive  = false;   // true enquanto há input de mouse / gyro
+        var prafId   = null;
+        var pPrevImg = null;    // referência ao <img> do último card ativo
+
+        function lerp(a, b, t) { return a + (b - a) * t; }
+
+        function getActiveImg() {
+          var s = track.querySelector('.amb-slide.is-active');
+          if (!s) return null;
+          var shown = s.querySelector('.amb-card__img.is-shown img');
+          return shown || s.querySelector('.amb-card__img img');
+        }
+
+        function applyPx(img, x, y) {
+          img.style.transform =
+            'scale(' + SCALE + ') translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px)';
+        }
+
+        // RAF loop — lerp suave até o target; para quando próximo de zero sem input
+        function prafLoop() {
+          var img = getActiveImg();
+
+          // Detecta troca de card ativo → reseta posição
+          if (img !== pPrevImg) {
+            if (pPrevImg) pPrevImg.style.transform = '';
+            pxCur = 0; pyCur = 0;
+            pPrevImg = img;
+          }
+
+          if (!img) { prafId = null; return; }
+
+          pxCur = lerp(pxCur, pxTarget, LERP_T);
+          pyCur = lerp(pyCur, pyTarget, LERP_T);
+          applyPx(img, pxCur, pyCur);
+
+          // Encerra o loop quando próximo de zero e sem input
+          if (!pActive && Math.abs(pxCur) < 0.06 && Math.abs(pyCur) < 0.06) {
+            img.style.transform = '';
+            pxCur = 0; pyCur = 0;
+            prafId = null;
+            return;
+          }
+          prafId = requestAnimationFrame(prafLoop);
+        }
+
+        function ensurePRAF() {
+          if (!prafId) prafId = requestAnimationFrame(prafLoop);
+        }
+
+        // Expõe o reset para o hook de updateState (troca de slide)
+        resetParallax = function () {
+          pActive  = false;
+          pxTarget = 0;
+          pyTarget = 0;
+          if (pPrevImg) { pPrevImg.style.transform = ''; pPrevImg = null; }
+          pxCur = 0; pyCur = 0;
+        };
+
+        // ── Desktop: mousemove sobre o carrossel ─────────────────────
+        carousel.addEventListener('mousemove', function (e) {
+          var img = getActiveImg();
+          if (!img) return;
+          var card = img.closest('.amb-card');
+          if (!card) return;
+          var r  = card.getBoundingClientRect();
+          var nx = Math.max(-1, Math.min(1, (e.clientX - r.left - r.width  / 2) / (r.width  / 2)));
+          var ny = Math.max(-1, Math.min(1, (e.clientY - r.top  - r.height / 2) / (r.height / 2)));
+          pxTarget = -nx * MAX_PX;
+          pyTarget = -ny * MAX_PX;
+          pActive  = true;
+          ensurePRAF();
+        });
+
+        carousel.addEventListener('mouseleave', function () {
+          pActive  = false;
+          pxTarget = 0;
+          pyTarget = 0;
+          ensurePRAF(); // continua o lerp de retorno ao centro
+        });
+
+        // ── Mobile: deviceorientation (giroscópio) ───────────────────
+        function onOrientation(e) {
+          var img = getActiveImg();
+          if (!img) return;
+          // gamma: inclinação esquerda/direita  (−90° a +90°)
+          // beta:  inclinação frente/trás       (−180° a +180°)
+          var gx = Math.max(-25, Math.min(25, e.gamma || 0)) / 25;
+          var gy = Math.max(-30, Math.min(30, e.beta  || 0)) / 30;
+          pxTarget = -gx * MAX_PX * 0.65;
+          pyTarget = -gy * MAX_PX * 0.45;
+          pActive  = true;
+          ensurePRAF();
+        }
+
+        function setupGyro() {
+          if (typeof DeviceOrientationEvent === 'undefined') return;
+          function start() { window.addEventListener('deviceorientation', onOrientation, true); }
+          // iOS 13+ exige permissão explícita
+          if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            carousel.addEventListener('touchend', function askOnce() {
+              DeviceOrientationEvent.requestPermission()
+                .then(function (s) { if (s === 'granted') start(); })
+                .catch(function () {});
+              carousel.removeEventListener('touchend', askOnce);
+            }, { once: true });
+          } else if (window.matchMedia('(hover: none)').matches) {
+            // Android e outros browsers sem API de permissão
+            start();
+          }
+        }
+
+        setupGyro();
+      }());
+
+      // ── CROSSFADE INTERNO — alterna até 3 imagens no card centralizado ──
+      (function () {
+        var FADE_MS     = 3500;  // ms entre cada imagem
+        var cfTimer     = null;
+        var cfIdx       = 0;
+        var prevRealIdx = -1;    // rastreia qual card estava ativo antes
+
+        // Retorna os .amb-card__img do slide real indicado
+        function imgItems(realIdx) {
+          var slide = origSlides[realIdx];
+          return slide ? Array.from(slide.querySelectorAll('.amb-card__img')) : [];
+        }
+
+        // Troca qual imagem está visível dentro do slide
+        function showImg(items, idx) {
+          items.forEach(function (el, i) { el.classList.toggle('is-shown', i === idx); });
+        }
+
+        // Pausa o timer e reseta o card indicado para a 1ª imagem
+        function resetCard(realIdx) {
+          if (realIdx < 0) return;
+          var items = imgItems(realIdx);
+          if (items.length) showImg(items, 0);
+        }
+
+        function stopCF() { clearInterval(cfTimer); cfTimer = null; }
+
+        function startCF(realIdx) {
+          stopCF();
+          var items = imgItems(realIdx);
+          if (items.length <= 1) return;
+          cfIdx = 0;
+          showImg(items, 0);
+          cfTimer = setInterval(function () {
+            cfIdx = (cfIdx + 1) % items.length;
+            showImg(imgItems(realIdx), cfIdx);
+          }, FADE_MS);
+        }
+
+        // Hook chamado pelo updateState a cada troca de card ativo
+        onCardChange = function (realIdx) {
+          // 1. Para o timer e reseta o card que acabou de sair do centro
+          if (prevRealIdx >= 0 && prevRealIdx !== realIdx) {
+            stopCF();
+            resetCard(prevRealIdx);
+          }
+          prevRealIdx = realIdx;
+          // 2. Inicia crossfade no novo card central
+          startCF(realIdx);
+        };
+
+        // Inicializa no card 0
+        onCardChange(0);
+      }());
+
+    }());
+
+    // ── Marquee — ciclo de fotos no hover ───────────────────────
+    document.querySelectorAll('.amb-marquee__item').forEach(function(item) {
+      var imgs = [];
+      try { imgs = JSON.parse(item.dataset.imgs || '[]'); } catch(_) {}
+      if (imgs.length < 2) return;
+      var img = item.querySelector('.amb-marquee__img');
+      if (!img) return;
+      var idx = 0, timer = null;
+      item.addEventListener('mouseenter', function() {
+        idx = 0;
+        timer = setInterval(function() {
+          idx = (idx + 1) % imgs.length;
+          img.style.opacity = '0';
+          setTimeout(function() { img.src = imgs[idx]; img.style.opacity = '1'; }, 200);
+        }, 1400);
+      });
+      item.addEventListener('mouseleave', function() {
+        clearInterval(timer);
+        img.src = imgs[0];
+        img.style.opacity = '1';
+      });
+    });
+
+    // ── Cinematic Drag — dual marquee ────────────────────────────
+    (function () {
+      var CFG = [
+        { sel: '.amb-marquee__track--fwd', anim: 'csm-gallery-fwd', dur: 55, fwd: true  },
+        { sel: '.amb-marquee__track--rev', anim: 'csm-gallery-rev', dur: 62, fwd: false }
+      ];
+      CFG.forEach(function (c) {
+        var el = document.querySelector(c.sel);
+        if (!el) return;
+
+        var FRICTION = 0.91, RESIST = 0.78, MIN_VEL = 0.35;
+        var isDown = false, didMove = false, prevX = 0, curX = 0, vel = 0, rafId = null;
+
+        function hw()      { return el.scrollWidth / 2; }
+        function norm(x)   { var h = hw(); while (x < -h) x += h; while (x > 0) x -= h; return x; }
+        function readX()   { return new DOMMatrix(getComputedStyle(el).transform).m41; }
+        function applyX(x) { curX = norm(x); el.style.transform = 'translateX(' + curX + 'px)'; }
+
+        function freeze() {
+          curX = readX();
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.transform = 'translateX(' + curX + 'px)';
+        }
+
+        function thaw() {
+          var x = norm(curX);
+          var progress = c.fwd ? Math.abs(x) / hw() : (x / hw() + 1);
+          var delay    = -(progress * c.dur);
+          el.style.transform = '';
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation          = c.anim + ' ' + c.dur + 's linear infinite ' + delay + 's';
+          el.style.animationPlayState = ''; // allow CSS :hover rule to take effect
+        }
+
+        function tick() {
+          vel *= FRICTION;
+          if (Math.abs(vel) < MIN_VEL) { rafId = null; thaw(); return; }
+          applyX(curX + vel);
+          rafId = requestAnimationFrame(tick);
+        }
+
+        el.addEventListener('pointerdown', function (e) {
+          if (e.button !== 0 && e.pointerType === 'mouse') return;
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+          isDown = true; didMove = false; prevX = e.clientX; vel = 0;
+          freeze();
+          el.setPointerCapture(e.pointerId);
+          el.classList.add('is-dragging');
+        });
+
+        el.addEventListener('pointermove', function (e) {
+          if (!isDown) return;
+          var dx = e.clientX - prevX;
+          if (Math.abs(dx) > 2) didMove = true;
+          vel = dx * RESIST;
+          applyX(curX + vel);
+          prevX = e.clientX;
+        });
+
+        function release() {
+          if (!isDown) return;
+          isDown = false;
+          el.classList.remove('is-dragging');
+          rafId = requestAnimationFrame(tick);
+        }
+        el.addEventListener('pointerup',     release);
+        el.addEventListener('pointercancel', function () {
+          isDown = false;
+          el.classList.remove('is-dragging');
+          thaw();
+        });
+
+        // Block link clicks that were actually drags
+        el.addEventListener('click', function (e) { if (didMove) e.preventDefault(); }, true);
+      });
+    }());
+
+    // ── Scroll reveal ────────────────────────────────────────────
+    const revealEls = document.querySelectorAll('[data-animate], .stat, .review'); /* .cat-card removido — gerenciado pelo GSAP */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // ── Modais ───────────────────────────────────────────────────
+    function openModal(id) {
+      const el = document.getElementById(id);
+      el.removeAttribute('hidden');
+      lockScroll();
+      el.querySelector('.modal__close').focus();
+      if (id === 'modal-arquiteto') {
+        document.getElementById('header-login-btn')?.classList.add('is-active');
+        document.querySelector('.header__cadastro-btn')?.classList.add('is-active');
+      }
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).setAttribute('hidden', '');
+      unlockScroll();
+      if (id === 'modal-arquiteto') {
+        document.getElementById('header-login-btn')?.classList.remove('is-active');
+        document.querySelector('.header__cadastro-btn')?.classList.remove('is-active');
+        document.getElementById('arq-form-wrap').hidden = false;
+        document.getElementById('arq-success').hidden = true;
+        document.querySelectorAll('.pro-tab').forEach(t => t.classList.remove('pro-tab--active'));
+        document.getElementById('form-cliente-wrap').hidden = false;
+        document.getElementById('form-arq-wrap').hidden     = true;
+        document.getElementById('form-forn-wrap').hidden    = true;
+        document.querySelectorAll('#modal-arquiteto .arq-form').forEach(f => f.reset());
+      }
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(overlay.id); });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay:not([hidden])').forEach(m => closeModal(m.id));
+      }
+    });
+
+    // ── Navega para página do produto (salva dados no localStorage) ─
+    function goToProduct(card) {
+      var name    = (card.querySelector('.cat-card__name') || {}).textContent || '';
+      var badge   = (card.querySelector('.cat-card__badge') || {}).textContent || 'Sofá';
+      var tipo    = card.dataset.tipo || 'sofa';
+      var tagline = (card.querySelector('.cat-card__tagline') || {}).textContent || '';
+      var imgs    = JSON.parse(card.dataset.imgs || '[]');
+      var wpp     = card.dataset.wpp || '';
+      var glb     = card.dataset.model || card.dataset.glb || '';
+      var specs   = [];
+      card.querySelectorAll('.cat-specs__row').forEach(function (row) {
+        var key = (row.querySelector('dt') || {}).textContent || '';
+        var val = (row.querySelector('dd') || {}).textContent || '';
+        if (key) specs.push({ key: key, val: val });
+      });
+      try {
+        localStorage.setItem('csm-produto-current', JSON.stringify({
+          id: 'csm-index', name: name, badge: badge, tipo: tipo, tagline: tagline,
+          imgs: imgs, wpp: wpp, glb: glb, specs: specs
+        }));
+      } catch (_) {}
+      window.location.href = 'produto.html?id=csm-index';
+    }
+
+    // ── Navega para produto a partir de um destaque card ────────
+    function goToDestaqueCard(card, id) {
+      var nameEl  = card.querySelector('.destaque__name');
+      var badgeEl = card.querySelector('.destaque__badge');
+      var name    = nameEl  ? nameEl.textContent.trim()  : '';
+      var badge   = badgeEl ? badgeEl.textContent.trim() : '';
+      var tipo    = badge.toLowerCase() === 'poltrona' ? 'poltrona' : 'sofa';
+      var tagline = (card.querySelector('.destaque__tagline') || {}).textContent || '';
+      var imgs    = [];
+      card.querySelectorAll('.destaque__imgs img').forEach(function(img) { if (img.src) imgs.push(img.src); });
+      var wppEl   = card.querySelector('.destaque__ctas .btn--primary');
+      var wpp     = wppEl ? wppEl.href : '';
+      var specs   = [];
+      card.querySelectorAll('.destaque__specs-row').forEach(function(row) {
+        var k = (row.querySelector('dt') || {}).textContent || '';
+        var v = (row.querySelector('dd') || {}).textContent || '';
+        if (k) specs.push({ key: k, val: v });
+      });
+      try {
+        localStorage.setItem('csm-produto-current', JSON.stringify({
+          id: id, name: name, badge: badge, tipo: tipo, tagline: tagline,
+          imgs: imgs, wpp: wpp, glb: '', specs: specs
+        }));
+      } catch(_) {}
+      window.location.href = 'produto.html?id=' + id;
+    }
+
+    // ── Marquee produtos (fileira 2) — navega para página do produto
+    (function() {
+      var MAP = {
+        'Ibiza':           { id:'4771', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Ibiza.' },
+        'Allure':          { id:'4676', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20na%20Poltrona%20Allure.' },
+        'Portland':        { id:'4784', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Portland.' },
+        'Rubi':            { id:'4765', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Rubi.' },
+        'Chesterfield II': { id:'4762', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Chesterfield%20II.' },
+        'Apgar':           { id:'4759', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Apgar.' },
+        'Premium':         { id:'4775', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Premium.' },
+        'Seul':            { id:'4767', wpp:'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20Sof%C3%A1%20Seul.' }
+      };
+      document.querySelectorAll('.amb-marquee__track--rev .amb-marquee__item').forEach(function(item) {
+        var nameEl = item.querySelector('.amb-marquee__name');
+        var catEl  = item.querySelector('.amb-marquee__cat');
+        if (!nameEl) return;
+        var pname = nameEl.textContent.trim();
+        var info  = MAP[pname];
+        if (!info) return;
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          var badge = catEl ? catEl.textContent.trim() : 'Sofá';
+          var tipo  = badge.toLowerCase() === 'poltrona' ? 'poltrona' : 'sofa';
+          var imgs  = [];
+          try { imgs = JSON.parse(item.dataset.imgs || '[]'); } catch(_) {}
+          try {
+            localStorage.setItem('csm-produto-current', JSON.stringify({
+              id: info.id, name: badge + ' ' + pname, badge: badge, tipo: tipo,
+              tagline: badge + ' · Design exclusivo · Alto padrão',
+              imgs: imgs, wpp: info.wpp, glb: '', specs: []
+            }));
+          } catch(_) {}
+          window.location.href = 'produto.html?id=' + info.id;
+        });
+      });
+    }());
+
+    // ── Modal de produto ─────────────────────────────────────────
+    function openProductModal(card) {
+      const fig     = card.querySelector('.cat-card__fig');
+      const img     = card.querySelector('img');
+      const badge   = card.querySelector('.cat-card__badge');
+      const name    = card.querySelector('.cat-card__name').textContent;
+      const tagline = card.querySelector('.cat-card__tagline').textContent;
+      const specsDl = card.querySelector('.cat-specs__list');
+      const wpp     = card.dataset.wpp;
+      const isPolt  = card.dataset.tipo === 'poltrona';
+
+      document.getElementById('modal-produto-title').textContent = name;
+      document.getElementById('modal-tagline').textContent = tagline;
+      document.getElementById('modal-wpp-btn').href = wpp;
+
+      const modalBadge = document.getElementById('modal-badge');
+      modalBadge.textContent = badge.textContent;
+      modalBadge.className = 'modal__badge' + (isPolt ? ' modal__badge--poltrona' : '');
+
+      const mainImg = document.getElementById('modal-img-main');
+      mainImg.src   = img.src;
+      mainImg.alt   = img.alt;
+
+      const specsContainer = document.getElementById('modal-specs');
+      specsContainer.innerHTML = '';
+      if (specsDl) specsContainer.appendChild(specsDl.cloneNode(true));
+
+      const thumbsContainer = document.getElementById('modal-thumbs');
+      thumbsContainer.innerHTML = '';
+      const galleryImgs = JSON.parse(card.dataset.imgs || 'null') || [img.src];
+      galleryImgs.forEach((src, i) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'modal__thumb' + (i === 0 ? ' active' : '');
+        const ti = document.createElement('img');
+        ti.src = src;
+        ti.alt = name + ' — vista ' + (i + 1);
+        ti.loading = 'lazy';
+        thumb.appendChild(ti);
+        thumb.addEventListener('click', () => {
+          thumbsContainer.querySelectorAll('.modal__thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+          mainImg.src = src;
+        });
+        thumbsContainer.appendChild(thumb);
+      });
+
+      openModal('modal-produto');
+    }
+
+    // ── Modal arquiteto ──────────────────────────────────────────
+    function simulateGoogleLogin() { showArqSuccess(); }
+
+    function submitArqForm(e) {
+      e.preventDefault();
+      showArqSuccess();
+    }
+
+    function showArqSuccess() {
+      document.getElementById('arq-form-wrap').hidden = true;
+      document.getElementById('arq-success').hidden = false;
+    }
+
+    // ── Abas profissionais (modal cadastro) ─────────────────────
+    function switchProTab(btn) {
+      const target   = btn.dataset.target;
+      const isActive = btn.classList.contains('pro-tab--active');
+
+      document.querySelectorAll('.pro-tab').forEach(t => t.classList.remove('pro-tab--active'));
+      document.getElementById('form-cliente-wrap').hidden = false;
+      document.getElementById('form-arq-wrap').hidden     = true;
+      document.getElementById('form-forn-wrap').hidden    = true;
+
+      if (!isActive) {
+        btn.classList.add('pro-tab--active');
+        document.getElementById('form-cliente-wrap').hidden              = true;
+        document.getElementById('form-' + target + '-wrap').hidden       = false;
+      }
+    }
+
+    // ── FAB expansível ───────────────────────────────────────────
+    const fabCluster = document.getElementById('fab-cluster');
+    const fabMain    = document.getElementById('fab-main');
+    const fabSubs    = document.getElementById('fab-subs');
+
+    fabMain.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = fabCluster.classList.toggle('fab-open');
+      fabMain.setAttribute('aria-expanded', String(open));
+      fabSubs.setAttribute('aria-hidden', String(!open));
+    });
+
+    document.addEventListener('click', e => {
+      if (!fabCluster.contains(e.target) && fabCluster.classList.contains('fab-open')) {
+        fabCluster.classList.remove('fab-open');
+        fabMain.setAttribute('aria-expanded', 'false');
+        fabSubs.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // ── Hero vídeo: pausa ao sair do viewport (economia de recursos) ──
+    (function () {
+      var video = document.querySelector('.hero__video');
+      if (!video) return;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            e.isIntersecting ? video.play() : video.pause();
+          });
+        }, { threshold: 0.25 }).observe(video);
+      }
+    }());
+
+    // ── Carousel Depoimentos ─────────────────────────────────
+    (function () {
+      var track  = document.getElementById('dep-track');
+      var slides = document.querySelectorAll('.dep__slide');
+      var dots   = document.querySelectorAll('.dep__dot');
+      var prev   = document.getElementById('dep-prev');
+      var next   = document.getElementById('dep-next');
+      if (!track || !slides.length) return;
+
+      var current = 0;
+      var total   = slides.length;
+      var timer   = null;
+      var DELAY   = 6000;
+
+      function goTo(n) {
+        slides[current].classList.remove('dep__slide--active');
+        dots[current].classList.remove('dep__dot--active');
+        dots[current].removeAttribute('aria-current');
+        current = (n + total) % total;
+        slides[current].classList.add('dep__slide--active');
+        dots[current].classList.add('dep__dot--active');
+        dots[current].setAttribute('aria-current', 'true');
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      }
+
+      function startTimer() { timer = setInterval(function () { goTo(current + 1); }, DELAY); }
+      function resetTimer()  { clearInterval(timer); startTimer(); }
+
+      // Estado inicial
+      slides[0].classList.add('dep__slide--active');
+      dots[0].classList.add('dep__dot--active');
+      dots[0].setAttribute('aria-current', 'true');
+
+      prev.addEventListener('click', function () { goTo(current - 1); resetTimer(); });
+      next.addEventListener('click', function () { goTo(current + 1); resetTimer(); });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); resetTimer(); });
+      });
+
+      // Pausa ao hover / foco
+      var carousel = document.getElementById('dep-carousel');
+      carousel.addEventListener('mouseenter', function () { clearInterval(timer); });
+      carousel.addEventListener('mouseleave', startTimer);
+      carousel.addEventListener('focusin',    function () { clearInterval(timer); });
+      carousel.addEventListener('focusout',   startTimer);
+
+      startTimer();
+    }());
+
+    // ── Dark Mode ─────────────────────────────────────────────
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const html   = document.documentElement;
+      function setTheme(dark) {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        localStorage.setItem('csm-theme', dark ? 'dark' : 'light');
+        toggle.setAttribute('aria-label', dark ? 'Ativar modo claro' : 'Ativar modo escuro');
+      }
+      if (localStorage.getItem('csm-theme') === 'dark') setTheme(true);
+      toggle.addEventListener('click', () => setTheme(html.getAttribute('data-theme') !== 'dark'));
+    }());
+
+    // ── Shimmer nos links de navegação ────────────────────────
+    // Clique: shimmer imediato. Enquanto ativo: repete a cada 10 s.
+    (function () {
+      let shimmerTimer = null;
+
+      function triggerShimmer(link) {
+        link.classList.remove('nav-link--shimmer');
+        void link.offsetWidth; // força reflow para reiniciar a animação CSS
+        link.classList.add('nav-link--shimmer');
+        link.addEventListener('animationend', () => {
+          link.classList.remove('nav-link--shimmer');
+        }, { once: true });
+      }
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function () {
+          if (shimmerTimer) clearInterval(shimmerTimer);
+
+          document.querySelectorAll('.nav-link').forEach(l => {
+            l.classList.remove('nav-link--active', 'nav-link--shimmer');
+          });
+
+          const activeLink = this;
+          activeLink.classList.add('nav-link--active');
+          triggerShimmer(activeLink);
+
+          shimmerTimer = setInterval(() => {
+            if (activeLink.classList.contains('nav-link--active')) {
+              triggerShimmer(activeLink);
+            } else {
+              clearInterval(shimmerTimer);
+            }
+          }, 10000);
+        });
+      });
+    }());
+
+    // ── Busca Preditiva ──────────────────────────────────────
+    (function () {
+      'use strict';
+      var DB = [
+        { name: 'Sofá Chesterfield I',   cat: 'Sofá',           img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=96&q=80',  href: 'produto.html',                         tags: ['sofa','sofá','chester','chesterfield','couro','estofado'] },
+        { name: 'Sofá Portland',          cat: 'Sofá',           img: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=sofa',         tags: ['sofa','sofá','portland','estofado'] },
+        { name: 'Sofá Premium',           cat: 'Sofá',           img: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=96&q=80',  href: 'produtos.html?categoria=sofa',         tags: ['sofa','sofá','premium','estofado'] },
+        { name: 'Living',                 cat: 'Ambiente',       img: 'https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=96&q=80',  href: 'produtos.html?categoria=sofa',         tags: ['living','sala','sala de estar','sofa','sofá'] },
+        { name: 'Sala de Jantar',         cat: 'Ambiente',       img: 'https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=sala-jantar',  tags: ['jantar','sala de jantar','mesa','cadeira','sala'] },
+        { name: 'Quartos e Colchões',     cat: 'Dormitório',     img: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=quarto',       tags: ['quarto','quartos','cama','colchao','colchão','dormitorio'] },
+        { name: 'Linha Couro',            cat: 'Estofados',      img: 'https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=sofa',         tags: ['couro','linha couro','poltrona','estofado','sofa','sofá'] },
+        { name: 'Área Gourmet',           cat: 'Externo',        img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=area-gourmet', tags: ['gourmet','area gourmet','area','externo','varanda','churrasco'] },
+        { name: 'Poltronas Reclináveis',  cat: 'Estofados',      img: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=sala-tv',      tags: ['poltrona','poltronas','reclinavel','reclinável'] },
+        { name: 'Corporativo',            cat: 'Escritório',     img: 'https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=corporativo',  tags: ['corporativo','escritorio','escritório','empresa','mesa'] },
+        { name: 'Sala de TV',             cat: 'Entretenimento', img: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=sala-tv',      tags: ['tv','sala de tv','home theater','televisao','televisão'] },
+        { name: 'Complementos',           cat: 'Decoração',      img: 'https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=96&q=80', href: 'produtos.html?categoria=complemento',  tags: ['complemento','complementos','decoracao','decoração','aparador'] },
+      ];
+
+      function norm(s) {
+        return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      }
+
+      function highlight(text, q) {
+        var nt = norm(text), nq = norm(q);
+        var i = nt.indexOf(nq);
+        if (i < 0 || nq.length < 2) return text;
+        return text.slice(0, i) + '<mark>' + text.slice(i, i + nq.length) + '</mark>' + text.slice(i + nq.length);
+      }
+
+      function doSearch(q) {
+        if (!q || q.length < 2) return [];
+        var nq = norm(q);
+        return DB.filter(function (item) {
+          return norm(item.name).indexOf(nq) !== -1 ||
+                 item.tags.some(function (t) { return norm(t).indexOf(nq) !== -1; });
+        }).slice(0, 5);
+      }
+
+      var openBtn = document.getElementById('header-search-btn');
+      if (!openBtn) return;
+
+      var kbdIdx = -1;
+      var wired  = false;
+
+      function $(id) { return document.getElementById(id); }
+
+      function openSearch() {
+        var ov = $('search-overlay');
+        if (!ov || !ov.hasAttribute('hidden')) return;
+        ov.removeAttribute('hidden');
+        openBtn.setAttribute('aria-expanded', 'true');
+        openBtn.classList.add('is-active');
+        lockScroll();
+        setTimeout(function () { var el = $('search-input'); if (el) el.focus(); }, 60);
+        kbdIdx = -1;
+      }
+
+      function closeSearch() {
+        var ov = $('search-overlay');
+        if (!ov || ov.hasAttribute('hidden')) return;
+        ov.classList.add('is-closing');
+        setTimeout(function () {
+          ov.setAttribute('hidden', '');
+          ov.classList.remove('is-closing');
+          var inp = $('search-input');        if (inp) inp.value = '';
+          var clr = $('search-clear');        if (clr) clr.hidden = true;
+          var lst = $('search-results-list'); if (lst) { lst.hidden = true; lst.innerHTML = ''; }
+          var tr  = $('search-trending');     if (tr)  tr.hidden = false;
+        }, 280);
+        openBtn.setAttribute('aria-expanded', 'false');
+        openBtn.classList.remove('is-active');
+        unlockScroll();
+        kbdIdx = -1;
+      }
+
+      function renderResults(q) {
+        var lst = $('search-results-list');
+        var tr  = $('search-trending');
+        if (!lst) return;
+        lst.innerHTML = '';
+        kbdIdx = -1;
+        if (!q || q.length < 2) {
+          lst.hidden = true;
+          if (tr) tr.hidden = false;
+          return;
+        }
+        if (tr) tr.hidden = true;
+        var results = doSearch(q);
+        if (results.length === 0) {
+          var li = document.createElement('li');
+          li.className = 'search-noresults';
+          li.innerHTML = 'Nenhum resultado para “<strong>' + q + '</strong>”';
+          lst.appendChild(li);
+        } else {
+          results.forEach(function (item, i) {
+            var li = document.createElement('li');
+            li.style.animationDelay = (i * 45) + 'ms';
+            li.innerHTML =
+              '<a class="search-result-item" href="' + item.href + '">' +
+                '<img class="search-result-item__thumb" src="' + item.img + '" alt="" width="52" height="52" loading="lazy"/>' +
+                '<div class="search-result-item__info">' +
+                  '<span class="search-result-item__name">' + highlight(item.name, q) + '</span>' +
+                  '<span class="search-result-item__cat">' + item.cat + '</span>' +
+                '</div>' +
+                '<svg class="search-result-item__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>' +
+              '</a>';
+            lst.appendChild(li);
+          });
+        }
+        lst.hidden = false;
+      }
+
+      function kbdMove(dir) {
+        var lst = $('search-results-list');
+        if (!lst) return;
+        var items = lst.querySelectorAll('li');
+        if (!items.length) return;
+        items.forEach(function (el) { el.classList.remove('is-kbd-active'); });
+        kbdIdx = Math.max(-1, Math.min(kbdIdx + dir, items.length - 1));
+        if (kbdIdx < 0) {
+          var inp = $('search-input'); if (inp) inp.focus();
+        } else {
+          items[kbdIdx].classList.add('is-kbd-active');
+          var a = items[kbdIdx].querySelector('a'); if (a) a.focus();
+        }
+      }
+
+      function ensureWired() {
+        if (wired) return;
+        wired = true;
+        var close    = $('search-close');
+        var backdrop = $('search-backdrop');
+        var input    = $('search-input');
+        var clrBtn   = $('search-clear');
+        if (close)    close.addEventListener('click', closeSearch);
+        if (backdrop) backdrop.addEventListener('click', closeSearch);
+        if (input) {
+          input.addEventListener('input', function () {
+            var q = input.value.trim();
+            var clr = $('search-clear'); if (clr) clr.hidden = !q;
+            renderResults(q);
+          });
+          input.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeSearch(); return; }
+            if (e.key === 'ArrowDown') { e.preventDefault(); kbdMove(1); }
+            if (e.key === 'ArrowUp')   { e.preventDefault(); kbdMove(-1); }
+            if (e.key === 'Enter') {
+              var lst = $('search-results-list');
+              if (lst && kbdIdx >= 0) {
+                var its = lst.querySelectorAll('li');
+                if (its[kbdIdx]) { var a = its[kbdIdx].querySelector('a'); if (a) a.click(); }
+              }
+            }
+          });
+        }
+        if (clrBtn) {
+          clrBtn.addEventListener('click', function () {
+            var inp = $('search-input'); if (inp) { inp.value = ''; inp.focus(); }
+            var clr = $('search-clear'); if (clr) clr.hidden = true;
+            var lst = $('search-results-list'); if (lst) { lst.hidden = true; lst.innerHTML = ''; }
+            var tr  = $('search-trending'); if (tr) tr.hidden = false;
+            kbdIdx = -1;
+          });
+        }
+        document.querySelectorAll('.search-trending__tag').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var q = btn.dataset.search;
+            var inp = $('search-input'); if (inp) { inp.value = q; inp.focus(); }
+            var clr = $('search-clear'); if (clr) clr.hidden = false;
+            renderResults(q);
+          });
+        });
+        document.addEventListener('keydown', function (e) {
+          var ov = $('search-overlay');
+          if (e.key === 'Escape' && ov && !ov.hasAttribute('hidden')) closeSearch();
+        });
+      }
+
+      openBtn.addEventListener('click', function () {
+        ensureWired();
+        openSearch();
+      });
+    }());
+
+    // ── MOODBOARD ─────────────────────────────────────────────────
+    const moodboard = (function () {
+      const KEY = 'csm-moodboard';
+
+      function getItems() {
+        try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e) { return []; }
+      }
+      function saveItems(items) {
+        localStorage.setItem(KEY, JSON.stringify(items));
+      }
+      function hasItem(id) {
+        return getItems().some(i => i.id === id);
+      }
+      function addItem(item) {
+        const items = getItems();
+        if (!items.find(i => i.id === item.id)) { items.push(item); saveItems(items); return true; }
+        return false;
+      }
+      function removeItem(id) {
+        saveItems(getItems().filter(i => i.id !== id));
+      }
+
+      function genId(card) {
+        const name = (card.querySelector('.cat-card__name')?.textContent || '').trim();
+        const type = (card.querySelector('.cat-card__badge')?.textContent || '').trim();
+        const full = type ? `${type} ${name}` : name;
+        return full.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+      }
+
+      function extractItem(card) {
+        const imgs = JSON.parse(card.dataset.imgs || 'null') || [];
+        const imgEl = card.querySelector('img');
+        const name = (card.querySelector('.cat-card__name')?.textContent || '').trim();
+        const type = (card.querySelector('.cat-card__badge')?.textContent || '').trim();
+        return {
+          id:      genId(card),
+          name:    type ? `${type} ${name}` : name,
+          type:    type,
+          tagline: card.querySelector('.cat-card__tagline')?.textContent.trim() || '',
+          img:     imgs[0] || imgEl?.src || '',
+          wpp:     card.dataset.wpp || '',
+        };
+      }
+
+      function toggle(card) {
+        const id = genId(card);
+        if (hasItem(id)) { removeItem(id); return false; }
+        return addItem(extractItem(card));
+      }
+
+      function updateBadge() {
+        const n = getItems().length;
+        const badge = document.getElementById('moodboard-badge');
+        if (!badge) return;
+        badge.textContent = n;
+        badge.hidden = n === 0;
+        if (n > 0) {
+          badge.classList.remove('pop');
+          void badge.offsetWidth;
+          badge.classList.add('pop');
+        }
+      }
+
+      function updateSaveButtons() {
+        document.querySelectorAll('.cat-card__save').forEach(btn => {
+          const card = btn.closest('.cat-card');
+          const id = genId(card);
+          const saved = hasItem(id);
+          btn.classList.toggle('is-saved', saved);
+          btn.setAttribute('aria-label', saved ? 'Remover dos Favoritos' : 'Salvar aos Favoritos');
+          btn.title = saved ? 'Remover dos Favoritos' : 'Salvar aos Favoritos';
+        });
+      }
+
+      // [nome] — lido do localStorage 'csm-user-nome'.
+      // Quando o cadastro de clientes for implementado, basta gravar:
+      //   localStorage.setItem('csm-user-nome', 'João Silva')
+      // e a saudação já aparecerá automaticamente em todas as mensagens.
+      function getClienteNome() {
+        return localStorage.getItem('csm-user-nome') || '';
+      }
+
+      function buildWppUrl() {
+        const items = getItems();
+        if (!items.length) return '#';
+        const nome = getClienteNome();
+        const saudacao = nome ? `Olá, sou ${nome}!` : 'Olá!';
+        const lista = items.map(i => `• ${i.type}: ${i.name}`).join('\n');
+        const msg = `${saudacao} Tenho interesse nos seguintes produtos CSM Decor:\n\n${lista}\n\nPoderia me enviar informações e orçamento?`;
+        return `https://wa.me/5519990034068?text=${encodeURIComponent(msg)}`;
+      }
+
+      function renderPanel() {
+        const items = getItems();
+        const listEl = document.getElementById('moodboard-list');
+        const countEl = document.getElementById('moodboard-count-label');
+        const wppBtn = document.getElementById('moodboard-wpp-btn');
+        const secRow = document.getElementById('moodboard-secondary-row');
+        if (!listEl) return;
+
+        listEl.innerHTML = '';
+
+        if (items.length === 0) {
+          listEl.innerHTML = `
+            <div class="moodboard-empty">
+              <div class="moodboard-empty__icon">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <p class="moodboard-empty__title">Nenhum favorito ainda</p>
+              <p class="moodboard-empty__text">Passe o mouse sobre um produto e clique no marcador para salvar na sua lista.</p>
+            </div>`;
+          if (wppBtn) wppBtn.hidden = true;
+          if (secRow) secRow.hidden = true;
+        } else {
+          items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'moodboard-item';
+            div.innerHTML = `
+              <img class="moodboard-item__img" src="${item.img}" alt="${item.name}" loading="lazy" />
+              <div class="moodboard-item__info">
+                <span class="moodboard-item__type">${item.type}</span>
+                <p class="moodboard-item__name">${item.name}</p>
+                <p class="moodboard-item__tagline">${item.tagline}</p>
+              </div>
+              <button class="moodboard-item__remove" aria-label="Remover ${item.name}" data-id="${item.id}" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>`;
+            div.querySelector('.moodboard-item__remove').addEventListener('click', () => {
+              removeItem(item.id);
+              div.classList.add('removing');
+              setTimeout(() => { div.remove(); renderPanel(); updateBadge(); updateSaveButtons(); }, 220);
+            });
+            listEl.appendChild(div);
+          });
+          if (wppBtn) { wppBtn.href = buildWppUrl(); wppBtn.hidden = false; }
+          if (secRow) secRow.hidden = false;
+        }
+
+        if (countEl) {
+          const n = items.length;
+          countEl.textContent = n === 0 ? 'Nenhum item salvo' : `${n} ${n === 1 ? 'item na lista' : 'itens na lista'}`;
+        }
+      }
+
+      function openPanel() {
+        const panel = document.getElementById('moodboard-panel');
+        const backdrop = document.getElementById('moodboard-backdrop');
+        if (!panel) return;
+        renderPanel();
+        panel.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        backdrop?.classList.add('is-visible');
+        document.querySelector('.fab-cluster')?.classList.add('panel-open');
+        lockScroll();
+        const hBtn = document.getElementById('moodboard-header-btn');
+        hBtn?.setAttribute('aria-expanded', 'true');
+        hBtn?.classList.add('is-active');
+        // Focus com pequeno delay para garantir que a animação iniciou
+        setTimeout(() => document.getElementById('moodboard-close-btn')?.focus(), 80);
+      }
+
+      function closePanel() {
+        const panel = document.getElementById('moodboard-panel');
+        const backdrop = document.getElementById('moodboard-backdrop');
+        panel?.classList.remove('is-open');
+        panel?.setAttribute('aria-hidden', 'true');
+        backdrop?.classList.remove('is-visible');
+        document.querySelector('.fab-cluster')?.classList.remove('panel-open');
+        unlockScroll();
+        const hBtn = document.getElementById('moodboard-header-btn');
+        hBtn?.setAttribute('aria-expanded', 'false');
+        hBtn?.classList.remove('is-active');
+      }
+
+      function init() {
+        // Injeta botão de save em todos os cat-cards (exceto "ambiente")
+        document.querySelectorAll('.cat-card').forEach(card => {
+          if (card.dataset.tipo === 'ambiente') return;
+          const fig = card.querySelector('.cat-card__fig');
+          if (!fig || fig.querySelector('.cat-card__save')) return;
+          const id = genId(card);
+          const saved = hasItem(id);
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'cat-card__save' + (saved ? ' is-saved' : '');
+          btn.setAttribute('aria-label', saved ? 'Remover dos Favoritos' : 'Salvar aos Favoritos');
+          btn.title = btn.getAttribute('aria-label');
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+
+          btn.addEventListener('click', e => {
+            e.stopPropagation();
+            e.preventDefault();
+            const wasSaved = hasItem(genId(card));
+            const nowSaved = toggle(card);
+            btn.classList.toggle('is-saved', nowSaved);
+            btn.setAttribute('aria-label', nowSaved ? 'Remover dos Favoritos' : 'Salvar aos Favoritos');
+            btn.title = btn.getAttribute('aria-label');
+            btn.querySelector('svg').setAttribute('fill', nowSaved ? 'currentColor' : 'none');
+            updateBadge();
+            if (nowSaved) {
+              btn.animate(
+                [{ transform:'scale(1)' },{ transform:'scale(1.45)' },{ transform:'scale(1)' }],
+                { duration: 320, easing: 'cubic-bezier(.4,0,.2,1)' }
+              );
+            }
+          });
+          fig.appendChild(btn);
+        });
+
+        updateBadge();
+
+        // Moodboard exclusivo para Arquitetos Parceiros cadastrados
+        // Em Phase 1 (estático): abre modal de cadastro de arquiteto
+        document.getElementById('moodboard-header-btn')?.addEventListener('click', function () {
+          openModal('modal-arquiteto');
+          // Seleciona automaticamente a aba "Arquiteto Parceiro"
+          setTimeout(function () {
+            document.getElementById('tab-arq')?.click();
+          }, 80);
+        });
+
+        // Delegação de evento — funciona mesmo que os elementos existam após este script
+        document.addEventListener('click', e => {
+          if (e.target.closest('#moodboard-close-btn')) { closePanel(); return; }
+          if (e.target.id === 'moodboard-backdrop') { closePanel(); return; }
+          if (e.target.id === 'moodboard-clear-btn' || e.target.closest('#moodboard-clear-btn')) {
+            if (!confirm('Limpar todos os itens da sua lista?')) return;
+            saveItems([]);
+            renderPanel();
+            updateBadge();
+            updateSaveButtons();
+          }
+        });
+
+        // Fechar com Escape
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape' && document.getElementById('moodboard-panel')?.classList.contains('is-open')) {
+            closePanel();
+          }
+        });
+      }
+
+      return { init, openPanel, closePanel, getItems, toggle, hasItem };
+    })();
+
+    moodboard.init();
+
+    // ── GSAP — animações de entrada e revelação ao rolar ─────────
+    (function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      var motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!motionOK) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── 1. Hero — timeline pausado, dispara após loading screen
+      window.heroTl = gsap.timeline({ paused: true });
+      window.heroTl
+        .from('#hero-eyebrow',       { y: 22,  opacity: 0, duration: 0.55, ease: 'power2.out' })
+        .from('#hero-headline',      { y: 60,  opacity: 0, duration: 0.9,  ease: 'power3.out' }, '-=0.35')
+        .from('#hero-sub',           { y: 40,  opacity: 0, duration: 0.75, ease: 'power2.out' }, '-=0.5')
+        .from('#hero-actions .btn',  { y: 26,  opacity: 0, duration: 0.65, ease: 'power2.out', stagger: 0.15 }, '-=0.4');
+
+      // Dispara imediatamente se a flag foi levantada pela loading screen (back-navigation)
+      if (window.heroShouldPlay) {
+        window.heroTl.play();
+        window.heroShouldPlay = false;
+      }
+
+      // ── 2. Eyebrows de seção (excluindo hero)
+      gsap.utils.toArray('.eyebrow').forEach(function (el) {
+        if (el.closest('#inicio')) return;
+        gsap.from(el, {
+          y: 22, opacity: 0, duration: 0.9, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        });
+      });
+
+      // ── 3. Títulos de seção — movimento bem visível
+      gsap.utils.toArray('.section-title').forEach(function (el) {
+        gsap.from(el, {
+          y: 65, opacity: 0, duration: 1.35, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 87%', once: true },
+        });
+      });
+
+      gsap.utils.toArray('.section-sub').forEach(function (el) {
+        gsap.from(el, {
+          y: 38, opacity: 0, duration: 1.15, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+        });
+      });
+
+      // ── 4. Destaque — escala quando o próximo card chega à posição sticky
+      var destaqueCards = gsap.utils.toArray('.destaque__card');
+      destaqueCards.forEach(function(card, i) {
+        if (i === destaqueCards.length - 1) return;
+        var nextCard = destaqueCards[i + 1];
+        if (!nextCard) return;
+        var nextTop = 80 + (i + 1) * 80; // top do próximo card
+        gsap.to(card, {
+          scale: 0.9,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: nextCard,
+            start: 'top 95%',
+            end: 'top ' + nextTop + 'px',
+            scrub: true,
+          },
+        });
+      });
+
+      // ── 4b. Destaque — fade-in do cabeçalho
+      var destaqueHead = document.querySelector('.destaque__head');
+      if (destaqueHead) {
+        gsap.from(destaqueHead.children, {
+          y: 36, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.18,
+          scrollTrigger: { trigger: destaqueHead, start: 'top 85%', once: true },
+        });
+      }
+
+      // ── 6. Showroom — slides sequenciais da esquerda
+      var showroomInner = document.querySelector('.showroom__inner');
+      if (showroomInner) {
+        gsap.from(showroomInner.querySelectorAll('.showroom__body, .showroom__features, .showroom__ctas'), {
+          y: 50, opacity: 0, duration: 1.2, ease: 'power3.out', stagger: 0.2,
+          scrollTrigger: { trigger: showroomInner, start: 'top 82%', once: true },
+        });
+      }
+
+    }());
+
+
+  </script>
+
+  <script>
+  function openCatSpecs(specs) {
+    var body = specs.querySelector('.cat-specs__body');
+    var rows = specs.querySelectorAll('.cat-specs__row');
+    if (!body) return;
+    rows.forEach(function (row) {
+      row.style.transition = 'none';
+      row.style.opacity = '0';
+      row.style.transform = 'translateY(7px)';
+      row.style.transitionDelay = '0ms';
+    });
+    specs.classList.add('is-open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    rows.forEach(function (row, i) {
+      setTimeout(function () {
+        row.style.transition = 'opacity 0.30s ease, transform 0.30s ease';
+        row.style.opacity = '1';
+        row.style.transform = 'none';
+      }, 45 + i * 55);
+    });
+  }
+  function closeCatSpecs(specs) {
+    var body = specs.querySelector('.cat-specs__body');
+    var rows = specs.querySelectorAll('.cat-specs__row');
+    if (!body) return;
+    rows.forEach(function (row, i) {
+      row.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+      row.style.transitionDelay = i * 15 + 'ms';
+      row.style.opacity = '0';
+      row.style.transform = 'translateY(4px)';
+    });
+    setTimeout(function () {
+      body.style.maxHeight = '0';
+      specs.classList.remove('is-open');
+    }, 70);
+  }
+  function toggleCatSpecs(btn) {
+    var specs = btn.closest('.cat-specs');
+    if (!specs) return;
+    var isOpen = specs.classList.contains('is-open');
+    document.querySelectorAll('.cat-specs.is-open').forEach(function (other) {
+      if (other !== specs) closeCatSpecs(other);
+    });
+    if (isOpen) { closeCatSpecs(specs); } else { openCatSpecs(specs); }
+  }
+
+  // ── Destaque — accordion de especificações ──────────────────
+  function toggleDestaqueSpecs(btn) {
+    var panel = btn.nextElementSibling;
+    if (!panel) return;
+    var isOpen = panel.classList.contains('is-open');
+    document.querySelectorAll('.destaque__specs-panel.is-open').forEach(function(p) {
+      p.classList.remove('is-open');
+      if (p.previousElementSibling) {
+        p.previousElementSibling.classList.remove('is-open');
+        p.previousElementSibling.setAttribute('aria-expanded', 'false');
+      }
+    });
+    if (!isOpen) {
+      panel.classList.add('is-open');
+      btn.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  }
+  </script>
+
+  <!-- ============================================================
+       SEARCH OVERLAY
+  ============================================================ -->
+  <div class="search-overlay" id="search-overlay" role="search" aria-label="Busca de produtos" hidden>
+    <div class="search-overlay__panel">
+      <div class="container">
+
+        <div class="search-overlay__field">
+          <svg class="search-overlay__lupa" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input
+            type="search"
+            id="search-input"
+            class="search-overlay__input"
+            placeholder="Buscar sofás, ambientes, decoração..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="search-overlay__clear" id="search-clear" aria-label="Limpar" hidden>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <ul class="search-results__list" id="search-results-list" role="listbox" hidden></ul>
+
+        <div class="search-trending" id="search-trending">
+          <span class="search-trending__label">Termos mais buscados:</span>
+          <button class="search-trending__tag" data-search="Living">Living</button>
+          <span class="search-trending__dot" aria-hidden="true">•</span>
+          <button class="search-trending__tag" data-search="Linha Couro">Linha Couro</button>
+          <span class="search-trending__dot" aria-hidden="true">•</span>
+          <button class="search-trending__tag" data-search="Sala de Jantar">Sala de Jantar</button>
+        </div>
+
+      </div>
+
+      <button class="search-overlay__close" id="search-close" aria-label="Fechar busca">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="search-overlay__backdrop" id="search-backdrop"></div>
+  </div>
+
+  <!-- ============================================================
+       MOODBOARD — Painel lateral + backdrop
+  ============================================================ -->
+  <div class="moodboard-backdrop" id="moodboard-backdrop"></div>
+
+  <aside class="moodboard-panel" id="moodboard-panel" role="dialog" aria-modal="true" aria-labelledby="moodboard-panel-title" aria-hidden="true">
+
+    <div class="moodboard-panel__header">
+      <div class="moodboard-panel__hd">
+        <h2 class="moodboard-panel__title" id="moodboard-panel-title">Minha Lista</h2>
+        <span class="moodboard-panel__sub">Seus produtos favoritos</span>
+      </div>
+      <button class="moodboard-panel__close" id="moodboard-close-btn" aria-label="Fechar lista de favoritos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="moodboard-panel__items" id="moodboard-list"></div>
+
+    <div class="moodboard-panel__footer" id="moodboard-footer">
+      <p class="moodboard-panel__count" id="moodboard-count-label">Nenhum item salvo</p>
+
+      <!-- CTA principal — Enviar lista para WhatsApp -->
+      <a href="#" class="btn btn--primary moodboard-panel__wpp-btn" id="moodboard-wpp-btn"
+         target="_blank" rel="noopener noreferrer" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar lista para WhatsApp
+      </a>
+
+      <!-- Linha secundária — limpar + link board visual -->
+      <div class="moodboard-panel__secondary" id="moodboard-secondary-row" hidden>
+        <button class="moodboard-panel__clear" id="moodboard-clear-btn">Limpar tudo</button>
+        <a href="moodboard.html" class="moodboard-panel__board-link" id="moodboard-go-btn">
+          Ver board visual →
+        </a>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ============================================================
+       AR VIEWER MODAL — Visualizador 3D / Realidade Aumentada
+  ============================================================ -->
+  <div class="ar-modal" id="ar-modal" hidden role="dialog" aria-modal="true" aria-label="Visualizador 3D e Realidade Aumentada">
+
+    <div class="ar-modal__panel">
+
+      <!-- Header -->
+      <div class="ar-modal__header">
+        <div class="ar-modal__header-info">
+          <span class="ar-modal__eyebrow">CSM · Visualizador 3D</span>
+          <h2 class="ar-modal__product-name" id="ar-product-name">Sofá Chesterfield I</h2>
+        </div>
+        <button class="ar-modal__close" id="ar-modal-close" aria-label="Fechar visualizador">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Viewer 3D -->
+      <div class="ar-modal__viewer">
+
+        <!-- Loading state -->
+        <div class="ar-modal__loading" id="ar-loading">
+          <div class="ar-modal__loading-ring"></div>
+          <p class="ar-modal__loading-text">Carregando modelo 3D…</p>
+        </div>
+
+        <model-viewer
+          id="csm-model-viewer"
+          src=""
+          alt="Modelo 3D do produto CSM Decor"
+          shadow-intensity="1.4"
+          shadow-softness="0.6"
+          camera-controls
+          auto-rotate
+          auto-rotate-delay="2000"
+          rotation-per-second="18deg"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          ar-scale="auto"
+          environment-image="neutral"
+          exposure="1.1"
+          tone-mapping="commerce"
+          loading="eager"
+          reveal="interaction"
+        >
+          <!-- Botão AR nativo (aparece só em dispositivos com suporte) -->
+          <button slot="ar-button" class="ar-modal__ar-btn">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+            Ver no seu espaço
+          </button>
+        </model-viewer>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="ar-modal__footer">
+        <p class="ar-modal__hint">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Arraste para girar &nbsp;·&nbsp; Pinça para zoom &nbsp;·&nbsp; "Ver no seu espaço" abre AR
+        </p>
+        <a id="ar-wpp-link" href="https://wa.me/5519990034068?text=Tenho%20interesse%20neste%20produto." class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Tenho interesse
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AR JS -->
+  <script>
+  (function () {
+    var modal   = document.getElementById('ar-modal');
+    var viewer  = document.getElementById('csm-model-viewer');
+    var loading = document.getElementById('ar-loading');
+    var nameEl  = document.getElementById('ar-product-name');
+    var closeBtn= document.getElementById('ar-modal-close');
+    var wppLink = document.getElementById('ar-wpp-link');
+    if (!modal || !viewer) return;
+
+    function openAR(modelSrc, productName, wppHref) {
+      nameEl.textContent = productName || '3D · AR';
+      viewer.src = modelSrc;
+      if (wppHref) wppLink.href = wppHref;
+      loading.classList.remove('is-hidden');
+      modal.removeAttribute('hidden');
+      lockScroll();
+
+      viewer.addEventListener('load', function onLoad() {
+        loading.classList.add('is-hidden');
+        viewer.removeEventListener('load', onLoad);
+      });
+    }
+
+    function closeAR() {
+      modal.setAttribute('hidden', '');
+      unlockScroll();
+      viewer.src = '';
+      loading.classList.remove('is-hidden');
+    }
+
+    // Expõe openAR globalmente para botões inline nos cards
+    window.openAR = openAR;
+
+    closeBtn.addEventListener('click', closeAR);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeAR();
+    });
+
+    // Injetar badges 3D/AR nos cards com data-model
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.cat-card[data-model]').forEach(function (card) {
+        var fig = card.querySelector('.cat-card__fig');
+        if (!fig) return;
+        var badge = document.createElement('button');
+        badge.type = 'button';
+        badge.className = 'cat-card__ar-badge';
+        badge.setAttribute('aria-label', 'Ver em 3D e Realidade Aumentada');
+        badge.innerHTML =
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>' +
+          '3D · AR';
+        badge.addEventListener('click', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          openAR(
+            card.dataset.model,
+            card.dataset.modelName || card.querySelector('.cat-card__name')?.textContent,
+            card.dataset.wpp
+          );
+        });
+        fig.appendChild(badge);
+      });
+    });
+  }());
+  </script>
+
+  <!-- ============================================================
+       TRANSIÇÕES DE PÁGINA — Cortina cinematográfica
+  ============================================================ -->
+  <script>
+  (function () {
+    var curtain = document.getElementById('page-curtain');
+    if (!curtain) return;
+    var ease = 'cubic-bezier(.77,0,.175,1)';
+
+    // Revela a página: cortina sobe para fora da tela
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        curtain.style.transition = 'transform .72s ' + ease;
+        curtain.style.transform  = 'translateY(-100%)';
+        curtain.addEventListener('transitionend', function () {
+          curtain.style.pointerEvents = 'none';
+        }, { once: true });
+      });
+    });
+
+    // Cobre a página ao clicar num link .html interno, depois navega
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (/^(https?:\/\/|\/\/|mailto:|tel:)/.test(href)) return;
+      if (link.target === '_blank') return;
+      if (href.indexOf('.html') === -1) return;
+
+      e.preventDefault();
+      try { sessionStorage.setItem('csm-pt', '1'); } catch (_) {}
+
+      curtain.style.transition    = 'none';
+      curtain.style.transform     = 'translateY(100%)';
+      curtain.style.pointerEvents = 'all';
+      curtain.offsetHeight; // força reflow
+      curtain.style.transition = 'transform .65s ' + ease;
+      curtain.style.transform  = 'translateY(0)';
+      curtain.addEventListener('transitionend', function () {
+        window.location.href = href;
+      }, { once: true });
+    });
+  }());
+  </script>
+
+</body>
+</html>
