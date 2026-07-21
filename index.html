@@ -187,7 +187,7 @@
               <a href="#ambientes" class="menu-nav__link" data-menu-link data-num="02"><span class="menu-nav__link-text">Ambientes</span></a>
             </li>
             <li class="menu-nav__item">
-              <a href="#produtos" class="menu-nav__link" data-menu-link data-num="03"><span class="menu-nav__link-text">Produtos</span></a>
+              <a href="#produtos" class="menu-nav__link" data-menu-link data-num="03"><span class="menu-nav__link-text">Curadoria</span></a>
             </li>
             <li class="menu-nav__item">
               <a href="#historia" class="menu-nav__link" data-menu-link data-num="04"><span class="menu-nav__link-text">Nossa História</span></a>
@@ -680,12 +680,20 @@
       <div class="container destaque__head">
         <p class="eyebrow">Seleção Editorial</p>
         <p class="destaque__editorial-meta">3 peças · Julho 2025</p>
-        <h2 class="section-title">
-          Peças selecionadas<br /><em>para este mês</em>
-        </h2>
-        <p class="section-sub">
-          Sofás e poltronas em destaque especial — disponíveis sob encomenda e em estoque. Condições diferenciadas por tempo limitado. Solicite seu orçamento via WhatsApp.
-        </p>
+        <div class="destaque__head-grid">
+          <div>
+            <h2 class="section-title">
+              Curadoria do Mês<br /><em>Três peças que elevam qualquer ambiente</em>
+            </h2>
+            <p class="section-sub">
+              Uma seleção exclusiva do nosso curador — sofá, poltrona e composição de ambiente escolhidos com atenção a cada detalhe. Disponíveis sob encomenda e em estoque, com condições especiais por tempo limitado.
+            </p>
+          </div>
+          <div class="destaque__head-stats">
+            <span class="destaque__head-stat-num">3</span>
+            <span class="destaque__head-stat-label">Peças desta edição</span>
+          </div>
+        </div>
       </div>
 
       <div class="destaque__stack" id="destaque-stack">
@@ -751,7 +759,7 @@
           </div>
 
         <!-- ─── CARD 02 — Sofá Ibiza ─── -->
-          <div class="destaque__card" style="--cidx:1; z-index:2; --card-a1:#1B6CA8; --card-a2:#3BA3E8; --card-glow:rgba(27,108,168,.5)">
+          <div class="destaque__card" style="--cidx:1; z-index:2; --card-a1:#9A6B28; --card-a2:#C4883E; --card-glow:rgba(154,107,40,.5)">
             <span class="destaque__cat-sig" aria-hidden="true">RETRÁTEIS ELÉTRICOS</span>
             <div class="destaque__card-top">
               <div class="destaque__meta">
@@ -773,7 +781,7 @@
               <div class="destaque__imgs">
                 <div class="destaque__imgs-sm">
                   <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza2.jpg" alt="Sofá Ibiza — detalhe retrátil" loading="lazy" />
-                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza3.jpg" alt="Sofá Ibiza — mecanismo" loading="lazy" />
+                  <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-ibiza3.jpg" alt="Sofá Ibiza — mecanismo elétrico" loading="lazy" />
                 </div>
                 <div class="destaque__imgs-lg">
                   <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg" alt="Sofá Ibiza — vista principal" loading="lazy" />
@@ -811,11 +819,11 @@
           </div>
 
         <!-- ─── CARD 03 — Poltrona Aura ─── -->
-          <div class="destaque__card" style="--cidx:2; z-index:3; --card-a1:#1A6B42; --card-a2:#2ECC71; --card-glow:rgba(26,107,66,.5)">
+          <div class="destaque__card" style="--cidx:2; z-index:3; --card-a1:#6B3F14; --card-a2:#9A5C22; --card-glow:rgba(107,63,20,.5)">
             <span class="destaque__cat-sig" aria-hidden="true">POLTRONAS EXCLUSIVAS</span>
             <div class="destaque__card-top">
               <div class="destaque__meta">
-                <span class="destaque__chip"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/></svg> Promoção do Mês</span>
+                <span class="destaque__chip"><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/></svg> Promoção do Mês · 20% OFF</span>
                 <span class="destaque__num">03</span>
               </div>
               <div class="destaque__name-wrap">
@@ -2978,8 +2986,8 @@
       var destaqueHead = document.querySelector('.destaque__head');
       if (destaqueHead) {
         gsap.from(destaqueHead.children, {
-          y: 36, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.18,
-          scrollTrigger: { trigger: destaqueHead, start: 'top 85%', once: true },
+          y: 28, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
+          scrollTrigger: { trigger: destaqueHead, start: 'top bottom', once: true },
         });
       }
 
