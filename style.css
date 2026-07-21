@@ -900,6 +900,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   object-fit: cover;
   display: block;
   transition: transform .65s var(--ease), opacity .2s ease;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none; /* clicks passam para o <a> pai */
 }
 .amb-marquee__item:hover .amb-marquee__img { transform: scale(1.05); }
 
@@ -945,8 +948,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ── Stat cards (Nossa História) no marquee de ambientes ── */
 .amb-marquee__item--stat {
-  background: #0f0f0f;
-  border: 1px solid rgba(240,120,0,.18);
+  background: #f5f1ea;
+  border: 1px solid rgba(240,120,0,.22);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
   cursor: default;
 }
 .amb-stat-card {
@@ -976,13 +980,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-weight: 700;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.42);
+  color: rgba(30,30,30,.60);
   margin-bottom: .7rem;
 }
 .amb-stat-card__desc {
   font-size: .77rem;
   line-height: 1.6;
-  color: rgba(255,255,255,.27);
+  color: rgba(30,30,30,.52);
   max-width: 24ch;
   margin: 0;
 }
@@ -992,27 +996,38 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-family: var(--font-serif);
   font-size: clamp(3rem, 7vw, 5rem);
   font-weight: 300;
-  color: rgba(240,120,0,.055);
+  color: rgba(240,120,0,.08);
   letter-spacing: .05em;
   pointer-events: none;
   user-select: none;
   line-height: 1;
 }
+[data-theme="dark"] .amb-marquee__item--stat {
+  background: #141414;
+  border-color: rgba(240,120,0,.18);
+  box-shadow: none;
+}
+[data-theme="dark"] .amb-stat-card__label { color: rgba(255,255,255,.42); }
+[data-theme="dark"] .amb-stat-card__desc  { color: rgba(255,255,255,.27); }
+[data-theme="dark"] .amb-stat-card__deco  { color: rgba(240,120,0,.055); }
 
 /* ── Dep cards (Depoimentos) no marquee de produtos ── */
 .amb-marquee__item--dep {
-  background: #faf9f7;
-  border: 1px solid rgba(20,20,20,.06);
+  background: #f5f1ea;
+  border: 1px solid rgba(20,20,20,.11);
+  box-shadow: 0 2px 14px rgba(0,0,0,.07);
   cursor: default;
 }
 [data-theme="dark"] .amb-marquee__item--dep {
-  background: #1a1a1a;
-  border-color: rgba(255,255,255,.07);
+  background: #141414;
+  border-color: rgba(255,255,255,.10);
+  box-shadow: 0 2px 14px rgba(0,0,0,.28);
 }
 .amb-dep-card {
   width: 100%; height: 100%;
   display: flex; flex-direction: column;
   padding: 1.25rem 1.4rem;
+  position: relative; overflow: hidden;
 }
 .amb-dep-card__header {
   display: flex; align-items: center; gap: .7rem;
@@ -1031,9 +1046,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .amb-dep-card__name {
   font-family: var(--font-sans);
   font-size: .72rem; font-weight: 700;
-  color: #1a1a1a; letter-spacing: .02em;
+  color: #111; letter-spacing: .02em;
 }
-[data-theme="dark"] .amb-dep-card__name { color: rgba(255,255,255,.88); }
+[data-theme="dark"] .amb-dep-card__name { color: rgba(255,255,255,.92); }
 .amb-dep-card__stars {
   font-size: .6rem;
   color: var(--orange);
@@ -1043,20 +1058,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-family: var(--font-serif);
   font-size: clamp(.8rem, 1.3vw, .92rem);
   font-style: italic; font-weight: 400;
-  color: #3a3a3a;
+  color: #252525;
   line-height: 1.55;
   flex: 1; margin: 0;
   display: flex; align-items: center;
 }
-[data-theme="dark"] .amb-dep-card__quote { color: rgba(255,255,255,.68); }
+[data-theme="dark"] .amb-dep-card__quote { color: rgba(255,255,255,.75); }
 .amb-dep-card__context {
   margin-top: .75rem;
   font-family: var(--font-sans);
   font-size: .56rem; font-weight: 600;
   letter-spacing: .14em; text-transform: uppercase;
-  color: #aaa;
+  color: #888;
 }
-[data-theme="dark"] .amb-dep-card__context { color: rgba(255,255,255,.32); }
+[data-theme="dark"] .amb-dep-card__context { color: rgba(255,255,255,.35); }
+.amb-dep-card__deco {
+  position: absolute;
+  bottom: -.4rem; right: .7rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  color: rgba(240,120,0,.08);
+  letter-spacing: .05em;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+[data-theme="dark"] .amb-dep-card__deco { color: rgba(240,120,0,.055); }
 
 /* ── Row wrapper ── */
 .amb-marquee__row {
@@ -1466,6 +1494,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: rgba(255,255,255,.65);
   margin-bottom: 1.5rem; /* sobrescreve os 3rem globais */
 }
+.destaque__editorial-meta {
+  font-family: var(--font-sans);
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-top: -.3rem;
+  margin-bottom: 1.2rem;
+}
 
 /* Container dos cards — filhos diretos para stacking funcionar */
 .destaque__stack {
@@ -1490,6 +1528,55 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform-origin: top center;
   overflow: clip; /* clip não cria scroll container — não quebra sticky */
   margin-bottom: 1.5rem;
+}
+.destaque__card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2rem;
+  bottom: 2rem;
+  width: 4px;
+  background: linear-gradient(180deg, var(--card-a1, rgba(240,120,0,.8)), var(--card-a2, var(--orange)));
+  box-shadow: 2px 0 14px var(--card-glow, rgba(240,120,0,.35));
+  border-radius: 0 3px 3px 0;
+}
+.destaque__card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, var(--card-a1, transparent) 0%, transparent 28%);
+  opacity: .05;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.destaque__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .28rem .7rem;
+  border-radius: 99px;
+  background: linear-gradient(135deg, var(--card-a1, #C8920A), var(--card-a2, var(--orange)));
+  font-family: var(--font-sans);
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+}
+.destaque__cat-sig {
+  position: absolute;
+  top: 1.6rem;
+  right: 1.8rem;
+  font-family: var(--font-sans);
+  font-size: .48rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.14);
+  pointer-events: none;
+  user-select: none;
 }
 
 /* Topo do card — badge + número + nome + botão */
@@ -2293,7 +2380,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .footer__nav {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
@@ -2302,7 +2389,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-weight: 600;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--white);
+  color: rgba(255,255,255,.88);
   margin-bottom: 1.2rem;
 }
 
@@ -6911,6 +6998,7 @@ html { scroll-padding-top: 80px; }
    FOOTER LOCATION — Como nos encontrar (mapa no rodapé)
 ---------------------------------------------------------- */
 .footer__location {
+  background: var(--darker);
   border-top: 1px solid rgba(255,255,255,.07);
   padding-block: 2.5rem 2rem;
 }
@@ -6978,6 +7066,97 @@ html { scroll-padding-top: 80px; }
   }
   .footer__location-map {
     height: 200px;
+  }
+}
+
+/* ----------------------------------------------------------
+   SHOWROOM MAP — Mapa full-width + barra de informações
+---------------------------------------------------------- */
+.showroom-map { display: flex; flex-direction: column; }
+
+.showroom-map__embed {
+  width: 100%;
+  height: clamp(240px, 32vw, 380px);
+}
+.showroom-map__embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(20%) brightness(.88);
+}
+.showroom-map__bar {
+  background: var(--darker);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 1.6rem 0;
+}
+.showroom-map__bar-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1.4fr auto;
+  gap: clamp(.75rem, 3vw, 2.5rem);
+  align-items: center;
+}
+.showroom-map__label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: .52rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: .5rem;
+}
+.showroom-map__val {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: .8rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.55);
+  line-height: 1.6;
+  text-decoration: none;
+  font-style: normal;
+}
+a.showroom-map__val:hover { color: var(--white); }
+.showroom-map__item p { margin: 0; }
+.showroom-map__item--end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .75rem;
+}
+.showroom-map__ctas {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.showroom-map__ctas .btn--ghost {
+  color: rgba(255,255,255,.6);
+  border-color: rgba(255,255,255,.25);
+}
+.showroom-map__ctas .btn--ghost:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.5);
+  color: var(--white);
+}
+@media (max-width: 900px) {
+  .showroom-map__bar-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 2rem;
+  }
+  .showroom-map__item--end {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .showroom-map__ctas { justify-content: flex-start; }
+}
+@media (max-width: 520px) {
+  .showroom-map__bar-inner { grid-template-columns: 1fr; }
+  .showroom-map__item--end {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
