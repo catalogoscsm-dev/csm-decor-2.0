@@ -31,6 +31,7 @@
 
   --white:        #FFFFFF;
   --off-white:    #F7F6F3;
+  --cream:        #EFE9DF;
   --gray-line:    #ECEAE5;
   --gray-light:   #D8D5CE;
   --gray-mid:     #6B6B6B;
@@ -531,7 +532,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 ---------------------------------------------------------- */
 .historia {
   padding-block: var(--gap-section);
-  background: var(--white);
+  background: var(--cream);
 }
 
 .stats {
@@ -3965,6 +3966,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 [data-theme="dark"] {
   --white:      #0d0d0d;
   --off-white:  #141414;
+  --cream:      #1c1916;
   --gray-line:  #2a2a2a;
   --gray-light: #505050;
   --gray-mid:   #9a9a9a;
