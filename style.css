@@ -1224,6 +1224,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-color: var(--dark);
 }
 
+.filter.filter--promo {
+  border-color: rgba(240, 120, 0, .4);
+  color: #B05500;
+}
+.filter.filter--promo:hover,
+.filter.filter--promo.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+[data-theme="dark"] .filter.filter--promo {
+  color: #F07800;
+  border-color: rgba(240, 120, 0, .35);
+}
+[data-theme="dark"] .filter.filter--promo:hover,
+[data-theme="dark"] .filter.filter--promo.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
 /* ── Carrossel Center Mode ─────────────────────────────────── */
 .amb-carousel {
   position: relative;
@@ -1864,7 +1885,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .destaque__imgs-lg img { height: 220px; }
   .destaque__body { grid-template-columns: 1fr; }
   .destaque__stack { padding-bottom: 2rem; }
-  .destaque__card { position: relative; top: auto; margin-bottom: 1.25rem; min-height: auto; }
+  .destaque__card {
+    top: calc(60px + var(--cidx, 0) * 12px);
+    min-height: calc(100dvh - 60px - var(--cidx, 0) * 12px);
+    margin-bottom: 0;
+  }
   /* Botão do header do card duplica os CTAs abaixo — esconde em mobile */
   .destaque__link { display: none; }
 }
@@ -2819,6 +2844,38 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card__badge--poltrona {
   background: rgba(240, 120, 0, .85);
   border-color: rgba(255,255,255,.15);
+}
+
+/* ── Status badges (bottom-left) ─────────────────────────────── */
+.cat-card__status {
+  position: absolute;
+  bottom: .9rem;
+  left: .9rem;
+  font-family: var(--font-sans);
+  font-size: .57rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: .28rem .65rem;
+  border-radius: 100px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+  pointer-events: none;
+}
+.cat-card__status--promocao {
+  background: rgba(160, 30, 10, .82);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
+}
+.cat-card__status--lancamento {
+  background: rgba(200, 146, 10, .88);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
+}
+.cat-card__status--mais-vendido {
+  background: rgba(20, 20, 20, .82);
+  color: rgba(240, 175, 60, .95);
+  border: 1px solid rgba(240, 175, 60, .3);
 }
 
 /* ── Corpo do card ── */

@@ -148,6 +148,7 @@
         <button class="filter"        role="tab" aria-selected="false" data-cat="area-gourmet">Área Gourmet</button>
         <button class="filter"        role="tab" aria-selected="false" data-cat="corporativo">Corporativo</button>
         <button class="filter"        role="tab" aria-selected="false" data-cat="complemento">Complementos</button>
+        <button class="filter filter--promo" role="tab" aria-selected="false" data-cat="promocao">Em Promoção</button>
       </div>
     </div>
 
@@ -5133,9 +5134,12 @@
         if (k) specs.push({ key: k, val: v });
       });
     }
+    var statusEl = card.querySelector('.cat-card__status');
     try {
       localStorage.setItem('csm-produto-current', JSON.stringify({
         id: card.dataset.id || '', name: name, badge: badge ? badge.textContent : '',
+        status: card.dataset.status || '',
+        statusLabel: statusEl ? statusEl.textContent.trim() : '',
         tipo: tipo, tagline: tag, imgs: imgs, wpp: wpp, glb: glb, specs: specs
       }));
     } catch(_) {}
@@ -5322,7 +5326,7 @@
     var empty = document.getElementById('cat-empty');
     var vis   = 0;
     btns.forEach(function(b){ var a=b.dataset.cat===cat; b.classList.toggle('active',a); b.setAttribute('aria-selected',a?'true':'false'); });
-    cards.forEach(function(c){ var m=cat==='all'||c.dataset.tipo===cat; c.style.display=m?'':'none'; if(m) vis++; });
+    cards.forEach(function(c){ var m=cat==='all'||c.dataset.tipo===cat||(cat==='promocao'&&c.dataset.status==='promocao'); c.style.display=m?'':'none'; if(m) vis++; });
     if (empty) empty.hidden = vis > 0;
     var url = new URL(window.location);
     if (cat==='all') url.searchParams.delete('categoria'); else url.searchParams.set('categoria',cat);
@@ -5336,6 +5340,31 @@
   }());
 
   document.querySelectorAll('[data-cat]').forEach(function(b){ b.addEventListener('click', function(){ setFilter(b.dataset.cat); }); });
+
+  /* ── Badge de Status ────────────────────────────────────────── */
+  (function(){
+    /* Mapa: id do produto → { type: 'promocao'|'lancamento'|'mais-vendido', label: texto exibido } */
+    var STATUS = {
+      '4778': { type: 'mais-vendido', label: '★ Mais Vendido' },
+      '4784': { type: 'lancamento',   label: '✦ Novo Lançamento' },
+      '4771': { type: 'lancamento',   label: '✦ Novo Lançamento' },
+      '4759': { type: 'promocao',     label: '15% OFF' },
+      '4661': { type: 'promocao',     label: '20% OFF' },
+      '4781': { type: 'mais-vendido', label: '★ Mais Vendido' }
+    };
+    document.querySelectorAll('.cat-card').forEach(function(card){
+      var id = card.dataset.id;
+      if (!STATUS[id]) return;
+      var s = STATUS[id];
+      card.dataset.status = s.type;
+      var fig = card.querySelector('.cat-card__fig');
+      if (!fig) return;
+      var span = document.createElement('span');
+      span.className = 'cat-card__status cat-card__status--' + s.type;
+      span.textContent = s.label;
+      fig.appendChild(span);
+    });
+  }());
 
   (function(){
     if (typeof gsap==='undefined'||typeof ScrollTrigger==='undefined') return;

@@ -951,6 +951,16 @@
     var eyebrow = document.querySelector('.product-panel__eyebrow');
     if (eyebrow) eyebrow.textContent = cat.eyebrow;
 
+    // ── Status chip
+    var oldChip = document.querySelector('.product-panel__status-chip');
+    if (oldChip) oldChip.remove();
+    if (p.statusLabel && p.status) {
+      var chip = document.createElement('span');
+      chip.className = 'product-panel__status-chip product-panel__status-chip--' + p.status;
+      chip.textContent = p.statusLabel;
+      if (eyebrow) eyebrow.insertAdjacentElement('afterend', chip);
+    }
+
     // ── H1
     var h1 = document.querySelector('.product-panel__name');
     if (h1) {

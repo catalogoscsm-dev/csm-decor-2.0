@@ -162,6 +162,51 @@
   margin-bottom: .6rem;
 }
 
+/* Status chip on product detail page */
+.product-panel__status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: var(--font-sans);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: .3rem .8rem;
+  border-radius: 100px;
+  margin-bottom: .9rem;
+}
+.product-panel__status-chip--promocao {
+  background: rgba(160, 30, 10, .1);
+  color: #B02000;
+  border: 1px solid rgba(160, 30, 10, .25);
+}
+.product-panel__status-chip--lancamento {
+  background: rgba(200, 146, 10, .1);
+  color: #9A6B00;
+  border: 1px solid rgba(200, 146, 10, .28);
+}
+.product-panel__status-chip--mais-vendido {
+  background: rgba(240, 175, 60, .1);
+  color: #8A5C00;
+  border: 1px solid rgba(240, 175, 60, .28);
+}
+[data-theme="dark"] .product-panel__status-chip--promocao {
+  background: rgba(160, 30, 10, .22);
+  color: #FF6B4A;
+  border-color: rgba(160, 30, 10, .4);
+}
+[data-theme="dark"] .product-panel__status-chip--lancamento {
+  background: rgba(200, 146, 10, .18);
+  color: #F0AA20;
+  border-color: rgba(200, 146, 10, .35);
+}
+[data-theme="dark"] .product-panel__status-chip--mais-vendido {
+  background: rgba(240, 175, 60, .12);
+  color: #F0AF3C;
+  border-color: rgba(240, 175, 60, .3);
+}
+
 .product-panel__name {
   font-family: var(--font-serif);
   font-size: clamp(1.7rem, 3.2vw, 2.2rem);
