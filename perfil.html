@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Meu Perfil — CSM Decor</title>
+
+  <link rel="icon" type="image/png" href="fav11.PNG" />
+  <link rel="apple-touch-icon" href="fav11.PNG" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="perfil-page">
+
+  <div id="page-curtain" class="page-curtain" aria-hidden="true"></div>
+
+  <!-- ── Header simplificado ── -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <div class="header__left">
+        <a href="index.html" class="header-icon" aria-label="Voltar ao início" style="gap:.45rem;text-decoration:none;color:inherit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          <span class="header__icon-label">Início</span>
+        </a>
+        <button type="button" class="header-icon header__cadastro-btn" aria-label="Perfil">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span class="header__icon-label">Perfil</span>
+        </button>
+      </div>
+
+      <a href="index.html" class="header__logo" aria-label="CSM — Campinas Shopping Móveis">
+        <img src="imagens/logo/csm-logo.png" alt="CSM" class="header__logo-img" width="160" height="48" />
+      </a>
+
+      <div class="header__right">
+        <button type="button" class="header-icon header__theme-toggle" id="theme-toggle" data-label="Tema" aria-label="Alternar tema claro/escuro">
+          <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Perfil: Hero ── -->
+  <section class="perfil-hero" id="perfil-hero">
+    <div class="container">
+      <div class="perfil-hero__inner">
+        <!-- Avatar -->
+        <div class="perfil-hero__avatar-col">
+          <div class="perfil-hero__avatar-wrap" id="js-avatar-wrap" onclick="avatarClick()" title="Trocar foto">
+            <div class="perfil-hero__avatar-initial" id="js-avatar-initial">?</div>
+            <div class="perfil-avatar-overlay" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+          </div>
+          <button type="button" class="perfil-avatar-remove" id="js-btn-remove-photo" onclick="removePhoto()" hidden>Remover foto</button>
+          <input type="file" id="edit-photo" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handlePhotoUpload(this)" />
+        </div>
+        <!-- Info -->
+        <div class="perfil-hero__info">
+          <span class="perfil-role-badge" id="js-role-badge">Cliente</span>
+          <h1 class="perfil-hero__name" id="js-perfil-name">Carregando...</h1>
+          <p class="perfil-hero__email" id="js-perfil-email"></p>
+          <p class="perfil-hero__bio" id="js-perfil-bio"></p>
+          <div class="perfil-hero__social" id="js-perfil-social"></div>
+          <div class="perfil-hero__stats">
+            <div class="perfil-stat">
+              <span class="perfil-stat__val" id="js-stat-avaliacoes">0</span>
+              <small class="perfil-stat__lbl">Avaliações</small>
+            </div>
+            <div class="perfil-stat">
+              <span class="perfil-stat__val" id="js-stat-favoritos">0</span>
+              <small class="perfil-stat__lbl">Favoritos</small>
+            </div>
+            <div class="perfil-stat" id="js-stat-moodboard-wrap" style="display:none">
+              <span class="perfil-stat__val" id="js-stat-moodboard">0</span>
+              <small class="perfil-stat__lbl">Moodboard</small>
+            </div>
+          </div>
+          <div class="perfil-hero__ctas">
+            <button class="btn btn--outline btn--sm" id="js-btn-edit" onclick="toggleEditPanel()">Editar perfil</button>
+            <button class="btn btn--ghost btn--sm" onclick="CSMAuth.doLogout()">Sair</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Perfil: Edit Panel ── -->
+  <section class="perfil-edit-section" id="js-edit-panel" hidden>
+    <div class="container">
+      <p class="eyebrow" style="margin-bottom:1rem">Editar informações</p>
+      <div class="perfil-edit-grid">
+        <div class="perfil-edit-row">
+          <label class="perfil-edit-label" for="edit-name">Nome</label>
+          <input class="perfil-edit-input" type="text" id="edit-name" />
+        </div>
+        <div class="perfil-edit-row perfil-edit-row--full">
+          <label class="perfil-edit-label" for="edit-bio">Descrição / Bio</label>
+          <textarea class="perfil-edit-textarea" id="edit-bio" placeholder="Conte um pouco sobre você..." rows="3"></textarea>
+        </div>
+        <div class="perfil-edit-row">
+          <label class="perfil-edit-label" for="edit-instagram">Instagram</label>
+          <input class="perfil-edit-input" type="text" id="edit-instagram" placeholder="@seu.usuario" />
+        </div>
+        <div class="perfil-edit-row" id="js-edit-cau-row" style="display:none">
+          <label class="perfil-edit-label" for="edit-cau">Registro CAU / CFT</label>
+          <input class="perfil-edit-input" type="text" id="edit-cau" placeholder="CAU A 000000-0" />
+        </div>
+        <div class="perfil-edit-row" id="js-edit-cnpj-row" style="display:none">
+          <label class="perfil-edit-label" for="edit-cnpj">CNPJ</label>
+          <input class="perfil-edit-input" type="text" id="edit-cnpj" placeholder="00.000.000/0001-00" />
+        </div>
+      </div>
+      <div class="perfil-edit-actions">
+        <button class="btn btn--primary btn--sm" onclick="saveProfile()">Salvar alterações</button>
+        <button class="btn btn--ghost btn--sm" onclick="toggleEditPanel()">Cancelar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tabs ── -->
+  <div class="perfil-tabs-bar">
+    <div class="container">
+      <button class="perfil-tab-btn active" data-tab="avaliacoes" onclick="switchPerfilTab('avaliacoes')">Avaliações</button>
+      <button class="perfil-tab-btn" data-tab="favoritos" onclick="switchPerfilTab('favoritos')">Favoritos</button>
+      <button class="perfil-tab-btn perfil-tab-btn--arq" id="js-tab-moodboard" data-tab="moodboard" onclick="switchPerfilTab('moodboard')">Moodboard</button>
+    </div>
+  </div>
+
+  <!-- ── Content Panels ── -->
+  <div class="container">
+
+    <!-- Avaliações -->
+    <div class="perfil-panel active" id="panel-avaliacoes">
+      <div id="js-avaliacoes-list"></div>
+    </div>
+
+    <!-- Favoritos -->
+    <div class="perfil-panel" id="panel-favoritos">
+      <div id="js-favoritos-grid" class="perfil-fav-grid"></div>
+    </div>
+
+    <!-- Moodboard (arquitetos) -->
+    <div class="perfil-panel" id="panel-moodboard">
+      <div id="js-moodboard-list" class="perfil-fav-grid"></div>
+    </div>
+
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>© <span id="ano"></span> CSM — Campinas Shopping Móveis. Todos os direitos reservados.</p>
+        <p>
+          <a href="privacidade.html">Política de Privacidade</a>
+          <span aria-hidden="true"> · </span>
+          <a href="termos.html">Termos de Uso</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Auth Modal (padrão) ── -->
+  <div class="modal-overlay" id="modal-auth" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
+    <div class="modal modal--sm modal--auth" role="document">
+      <button class="modal__close" aria-label="Fechar" onclick="CSMAuth.closeAuthModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal__arq-header">
+        <img src="imagens/logo/csm-logo.png" alt="CSM Decor" class="modal__arq-logo" />
+        <h2 id="auth-modal-title" class="modal__arq-title">Entrar na sua conta</h2>
+        <p class="modal__arq-sub" id="auth-modal-sub">Faça login ou crie sua conta CSM.</p>
+      </div>
+      <div class="auth-modal-tabs">
+        <button class="auth-tab active" data-panel="login" onclick="CSMAuth.switchAuthTab('login')">Entrar</button>
+        <button class="auth-tab" data-panel="register" onclick="CSMAuth.switchAuthTab('register')">Criar conta</button>
+      </div>
+      <div class="auth-panel active" id="auth-panel-login">
+        <div class="arq-form__row"><label class="arq-form__label" for="auth-login-email">E-mail</label><input class="arq-form__input" type="email" id="auth-login-email" placeholder="seu@email.com" /></div>
+        <div class="arq-form__row"><label class="arq-form__label" for="auth-login-pass">Senha</label><input class="arq-form__input" type="password" id="auth-login-pass" placeholder="••••••••" /></div>
+        <p class="arq-form__error" id="auth-login-error" style="display:none;"></p>
+        <button type="button" class="btn btn--primary arq-form__submit" onclick="CSMAuth.doLogin()">Entrar</button>
+      </div>
+      <div class="auth-panel" id="auth-panel-register">
+        <div class="arq-form__row"><label class="arq-form__label" for="auth-reg-name">Nome</label><input class="arq-form__input" type="text" id="auth-reg-name" placeholder="Seu nome" /></div>
+        <div class="arq-form__row"><label class="arq-form__label" for="auth-reg-email">E-mail</label><input class="arq-form__input" type="email" id="auth-reg-email" placeholder="seu@email.com" /></div>
+        <div class="arq-form__row"><label class="arq-form__label" for="auth-reg-pass">Senha</label><input class="arq-form__input" type="password" id="auth-reg-pass" placeholder="Mín. 6 caracteres" /></div>
+        <div class="arq-form__row"><label class="arq-form__label">Tratamento</label><div class="auth-genero__opts"><button type="button" class="auth-genero__opt" data-genero="masculino" onclick="CSMAuth.switchGenero('masculino')">Sr.</button><button type="button" class="auth-genero__opt" data-genero="feminino" onclick="CSMAuth.switchGenero('feminino')">Sra.</button><button type="button" class="auth-genero__opt" data-genero="neutro" onclick="CSMAuth.switchGenero('neutro')">Neutro</button></div></div>
+        <p class="arq-form__error" id="auth-reg-error" style="display:none;"></p>
+        <button type="button" class="btn btn--primary arq-form__submit" onclick="CSMAuth.doRegister()">Criar conta</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+  /* Revela a página (remove cortina preta) */
+  (function () {
+    var curtain = document.getElementById('page-curtain');
+    if (!curtain) return;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        curtain.style.transition = 'transform .72s cubic-bezier(.77,0,.175,1)';
+        curtain.style.transform  = 'translateY(-100%)';
+        curtain.addEventListener('transitionend', function () {
+          curtain.style.pointerEvents = 'none';
+        }, { once: true });
+      });
+    });
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+      e.preventDefault();
+      curtain.style.transition = 'transform .45s cubic-bezier(.77,0,.175,1)';
+      curtain.style.transform  = 'translateY(0)';
+      curtain.style.pointerEvents = 'all';
+      curtain.addEventListener('transitionend', function () {
+        window.location.href = href;
+      }, { once: true });
+    });
+  }());
+  </script>
+  <script>
+  'use strict';
+
+  document.getElementById('ano').textContent = new Date().getFullYear();
+
+  // ── Tema ─────────────────────────────────────────────────────────
+  (function () {
+    var saved = localStorage.getItem('csm-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('csm-theme', next);
+    });
+  }());
+
+  // ── Redireciona se não logado ─────────────────────────────────────
+  var _session = CSMAuth.getSession();
+  if (!_session) {
+    window.location.replace('index.html');
+  }
+
+  // ── Inicializa perfil ─────────────────────────────────────────────
+  function initPerfil() {
+    var session = CSMAuth.getSession();
+    if (!session) return;
+
+    // Busca dados completos do usuário
+    var users = CSMAuth.getUsers();
+    var user  = users.find(function(u){ return u.email === session.email; }) || session;
+
+    // Avatar e header
+    renderAvatar(user);
+
+    // Role badge
+    var badge   = document.getElementById('js-role-badge');
+    var roleMap = { admin: 'Admin', arquiteto: 'Arquiteto', fornecedor: 'Fornecedor', comum: 'Cliente' };
+    var color   = CSMAuth.ROLE_COLORS[user.tipo] || CSMAuth.ROLE_COLORS.comum;
+    badge.textContent = roleMap[user.tipo] || 'Cliente';
+    badge.style.background = color;
+    if (user.tipo && user.tipo !== 'comum') badge.classList.add('perfil-role-badge--' + user.tipo);
+
+    // Infos
+    document.getElementById('js-perfil-name').textContent  = user.name || session.name;
+    document.getElementById('js-perfil-email').textContent = user.email || session.email;
+
+    var bioEl = document.getElementById('js-perfil-bio');
+    if (user.bio) bioEl.textContent = user.bio;
+    else bioEl.hidden = true;
+
+    // Social
+    var socialEl = document.getElementById('js-perfil-social');
+    if (user.instagram) {
+      var instaHandle = user.instagram.replace(/^@/, '');
+      socialEl.innerHTML =
+        '<a class="perfil-social-link" href="https://instagram.com/' + instaHandle + '" target="_blank" rel="noopener">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>' +
+        '@' + instaHandle + '</a>';
+    } else {
+      socialEl.hidden = true;
+    }
+
+    // Stats
+    var reviews   = getUserReviews(user.email);
+    var favorites = getFavorites();
+    var moodboard = getMoodboardItems();
+
+    document.getElementById('js-stat-avaliacoes').textContent = reviews.length;
+    document.getElementById('js-stat-favoritos').textContent  = favorites.length;
+    document.getElementById('js-stat-moodboard').textContent  = moodboard.length;
+
+    // Moodboard tab: visível apenas para arquitetos
+    if (user.tipo === 'arquiteto' || user.tipo === 'admin') {
+      document.getElementById('js-tab-moodboard').classList.add('visible');
+      document.getElementById('js-stat-moodboard-wrap').style.display = '';
+    }
+
+    // Edit form: pré-preenche
+    document.getElementById('edit-name').value      = user.name || '';
+    document.getElementById('edit-bio').value       = user.bio || '';
+    document.getElementById('edit-instagram').value = user.instagram || '';
+    document.getElementById('edit-cau').value       = user.cau || '';
+    document.getElementById('edit-cnpj').value      = user.cnpj || '';
+    setPhotoUI(user.photoUrl || null);
+
+    if (user.tipo === 'arquiteto')  document.getElementById('js-edit-cau-row').style.display  = '';
+    if (user.tipo === 'fornecedor') document.getElementById('js-edit-cnpj-row').style.display = '';
+
+    // Renderiza paineis
+    renderAvaliacoes(reviews);
+    renderFavoritos(favorites);
+    renderMoodboard(moodboard);
+  }
+
+  // ── Avatar ────────────────────────────────────────────────────────
+  function renderAvatar(user) {
+    var wrap    = document.getElementById('js-avatar-wrap');
+    var initial = document.getElementById('js-avatar-initial');
+    var color   = CSMAuth.ROLE_COLORS[user.tipo] || CSMAuth.ROLE_COLORS.comum;
+    wrap.style.borderColor = color;
+    if (user.photoUrl) {
+      wrap.innerHTML = '<img src="' + user.photoUrl + '" alt="' + user.name + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML=\'<div class=perfil-hero__avatar-initial style=background:' + color + '>' + (user.name||'U')[0].toUpperCase() + '</div>\'" />';
+    } else {
+      initial.textContent = (user.name || 'U')[0].toUpperCase();
+      initial.style.background = color;
+    }
+  }
+
+  // ── Dados ─────────────────────────────────────────────────────────
+  function getUserReviews(email) {
+    var all = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (!key || !key.startsWith('csm-reviews-')) continue;
+      try {
+        var arr = JSON.parse(localStorage.getItem(key) || '[]');
+        arr.forEach(function(r) {
+          if (r.email === email) all.push(Object.assign({}, r, { _storageKey: key }));
+        });
+      } catch(_) {}
+    }
+    return all.sort(function(a, b){ return b.id - a.id; });
+  }
+
+  function getFavorites() {
+    try { return JSON.parse(localStorage.getItem('csm-moodboard') || '[]'); } catch(_) { return []; }
+  }
+
+  function getMoodboardItems() {
+    return getFavorites();
+  }
+
+  // ── Renderiza avaliações ──────────────────────────────────────────
+  function renderAvaliacoes(reviews) {
+    var container = document.getElementById('js-avaliacoes-list');
+    if (!reviews.length) {
+      container.innerHTML = '<div class="perfil-empty">'
+        + '<div class="perfil-empty__icon">★</div>'
+        + '<p class="perfil-empty__title">Nenhuma avaliação ainda</p>'
+        + '<p class="perfil-empty__sub">Visite a <a href="produtos.html">página de produtos</a> e compartilhe sua experiência.</p>'
+        + '</div>';
+      return;
+    }
+    container.innerHTML = reviews.map(function(r) {
+      var stars = Array.from({length: 5}, function(_, i) {
+        return i < r.stars
+          ? '<svg class="star-icon" width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+          : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+      }).join('');
+      return '<article class="google-review-card" style="margin-bottom:1rem">'
+        + '<div class="google-review-card__header">'
+        + '<div class="google-review-card__meta"><div class="google-review-card__name">' + esc(r.product || 'Produto') + '</div><div class="google-review-card__date">' + esc(r.date || '') + '</div></div>'
+        + '<div class="google-review-card__stars">' + stars + '</div>'
+        + '</div>'
+        + '<p class="google-review-card__text" style="-webkit-line-clamp:unset">' + esc(r.text) + '</p>'
+        + '</article>';
+    }).join('');
+  }
+
+  // ── Renderiza favoritos ───────────────────────────────────────────
+  function renderFavoritos(items) {
+    var container = document.getElementById('js-favoritos-grid');
+    if (!items.length) {
+      container.innerHTML = '<div class="perfil-empty">'
+        + '<div class="perfil-empty__icon">♡</div>'
+        + '<p class="perfil-empty__title">Nenhum favorito salvo</p>'
+        + '<p class="perfil-empty__sub">Clique no ícone de favorito nos produtos para salvá-los aqui.</p>'
+        + '</div>';
+      return;
+    }
+    container.innerHTML = items.map(function(item) {
+      return '<a href="' + (item.href || 'produtos.html') + '" class="perfil-fav-card">'
+        + (item.img ? '<img class="perfil-fav-card__img" src="' + esc(item.img) + '" alt="' + esc(item.name) + '" loading="lazy" />' : '')
+        + '<div class="perfil-fav-card__name">' + esc(item.name) + '</div>'
+        + '</a>';
+    }).join('');
+  }
+
+  // ── Renderiza moodboard ───────────────────────────────────────────
+  function renderMoodboard(items) {
+    var container = document.getElementById('js-moodboard-list');
+    if (!items.length) {
+      container.innerHTML = '<div class="perfil-empty">'
+        + '<div class="perfil-empty__icon">⊞</div>'
+        + '<p class="perfil-empty__title">Moodboard vazio</p>'
+        + '<p class="perfil-empty__sub">Adicione produtos ao seu moodboard profissional para montar projetos.</p>'
+        + '</div>';
+      return;
+    }
+    container.innerHTML = items.map(function(item) {
+      return '<a href="' + (item.href || 'produtos.html') + '" class="perfil-fav-card">'
+        + (item.img ? '<img class="perfil-fav-card__img" src="' + esc(item.img) + '" alt="' + esc(item.name) + '" loading="lazy" />' : '')
+        + '<div class="perfil-fav-card__name">' + esc(item.name) + '</div>'
+        + '</a>';
+    }).join('');
+  }
+
+  // ── Tabs ──────────────────────────────────────────────────────────
+  function switchPerfilTab(tab) {
+    document.querySelectorAll('.perfil-tab-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.tab === tab);
+    });
+    document.querySelectorAll('.perfil-panel').forEach(function(p) {
+      p.classList.toggle('active', p.id === 'panel-' + tab);
+    });
+  }
+
+  // ── Edit panel ────────────────────────────────────────────────────
+  var _editOpen = false;
+  function toggleEditPanel() {
+    _editOpen = !_editOpen;
+    var panel = document.getElementById('js-edit-panel');
+    var btn   = document.getElementById('js-btn-edit');
+    var wrap  = document.getElementById('js-avatar-wrap');
+    panel.hidden = !_editOpen;
+    btn.textContent = _editOpen ? 'Cancelar' : 'Editar perfil';
+    wrap.classList.toggle('perfil-avatar--editable', _editOpen);
+    if (!_editOpen) {
+      // Cancelar: descarta pending e restaura estado salvo
+      _pendingPhotoBase64 = null;
+      _removePhoto        = false;
+      initPerfil();
+    }
+  }
+
+  // ── Upload de foto (via avatar do hero) ──────────────────────────
+  var _pendingPhotoBase64 = null;
+  var _removePhoto        = false;
+  var _savedPhotoUrl      = '';
+
+  function avatarClick() {
+    if (!_editOpen) return;
+    document.getElementById('edit-photo').click();
+  }
+
+  function setPhotoUI(savedSrc) {
+    _savedPhotoUrl = savedSrc || '';
+    var wrap      = document.getElementById('js-avatar-wrap');
+    var initial   = document.getElementById('js-avatar-initial');
+    var btnRemove = document.getElementById('js-btn-remove-photo');
+
+    if (savedSrc) {
+      wrap.innerHTML =
+        '<img src="' + savedSrc + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />'
+        + '<div class="perfil-avatar-overlay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
+      btnRemove.hidden = false;
+    } else {
+      if (!wrap.querySelector('.perfil-avatar-overlay')) {
+        wrap.insertAdjacentHTML('beforeend', '<div class="perfil-avatar-overlay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>');
+      }
+      btnRemove.hidden = true;
+    }
+  }
+
+  function handlePhotoUpload(input) {
+    var file = input.files && input.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Imagem muito grande. Escolha uma com até 2 MB.');
+      input.value = '';
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      _pendingPhotoBase64 = e.target.result;
+      _removePhoto        = false;
+      // Mostra preview no avatar imediatamente
+      var wrap = document.getElementById('js-avatar-wrap');
+      wrap.innerHTML =
+        '<img src="' + _pendingPhotoBase64 + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />'
+        + '<div class="perfil-avatar-overlay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removePhoto() {
+    _pendingPhotoBase64 = null;
+    _removePhoto        = true;
+    document.getElementById('edit-photo').value = '';
+    // Volta para avatar de inicial
+    var session = CSMAuth.getSession();
+    var color   = CSMAuth.ROLE_COLORS[(session && session.tipo) || 'comum'];
+    var initial = ((session && session.name) || 'U')[0].toUpperCase();
+    var wrap    = document.getElementById('js-avatar-wrap');
+    wrap.innerHTML =
+      '<div class="perfil-hero__avatar-initial" id="js-avatar-initial" style="background:' + color + '">' + initial + '</div>'
+      + '<div class="perfil-avatar-overlay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
+    document.getElementById('js-btn-remove-photo').hidden = true;
+  }
+
+  function saveProfile() {
+    var session = CSMAuth.getSession();
+    if (!session) return;
+    var users = CSMAuth.getUsers();
+    var idx   = users.findIndex(function(u){ return u.email === session.email; });
+    if (idx < 0) return;
+
+    users[idx].name      = document.getElementById('edit-name').value.trim() || users[idx].name;
+    users[idx].bio       = document.getElementById('edit-bio').value.trim();
+    users[idx].instagram = document.getElementById('edit-instagram').value.trim();
+    users[idx].cau       = document.getElementById('edit-cau').value.trim();
+    users[idx].cnpj      = document.getElementById('edit-cnpj').value.trim();
+    if (_pendingPhotoBase64)   users[idx].photoUrl = _pendingPhotoBase64;
+    else if (_removePhoto)     users[idx].photoUrl = '';
+
+    CSMAuth.saveUsers(users);
+    CSMAuth.setSession(users[idx]);
+    CSMAuth.updateHeaderAuth();
+    _pendingPhotoBase64 = null;
+    _removePhoto        = false;
+    toggleEditPanel();
+    initPerfil();
+  }
+
+  // ── Escape ────────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── Run ───────────────────────────────────────────────────────────
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPerfil);
+  } else {
+    initPerfil();
+  }
+
+  </script>
+</body>
+</html>
