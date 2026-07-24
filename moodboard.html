@@ -189,7 +189,8 @@
       'Gerado em ' + now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
     // ── Storage keys ─────────────────────────────────────────────
-    const ITEMS_KEY  = 'csm-moodboard';
+    function getMbKey(){ try{ var s=JSON.parse(localStorage.getItem('csm-session')||'null'); return s&&s.email?'csm-moodboard-'+s.email:'csm-moodboard-guest'; }catch(_){return'csm-moodboard-guest';} }
+    const ITEMS_KEY  = getMbKey();
     const NAME_KEY   = 'csm-mb-project-name';
     const ARCH_KEY   = 'csm-mb-architect';
     const NOTES_KEY  = 'csm-mb-notes';

