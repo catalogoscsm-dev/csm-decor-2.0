@@ -1599,6 +1599,22 @@
   var _selectedStars  = 0;
   var _editingReview  = null; // { key, id } quando em modo editar
 
+  function luxuryConfirm(title, sub, onConfirm) {
+    var overlay = document.getElementById('luxury-confirm');
+    document.getElementById('luxury-confirm-title').textContent = title;
+    document.getElementById('luxury-confirm-sub').textContent = sub;
+    overlay.classList.add('is-open');
+    var ok = document.getElementById('luxury-confirm-ok');
+    var cancel = document.getElementById('luxury-confirm-cancel');
+    function close() {
+      overlay.classList.remove('is-open');
+      ok.onclick = null; cancel.onclick = null; overlay.onclick = null;
+    }
+    ok.onclick = function() { close(); onConfirm(); };
+    cancel.onclick = close;
+    overlay.onclick = function(e) { if (e.target === overlay) close(); };
+  }
+
   function highlightStars(n) {
     document.querySelectorAll('.star-rating__star').forEach(function(s) {
       s.classList.toggle('filled', parseInt(s.dataset.val, 10) <= n);
@@ -1695,6 +1711,7 @@
     var starSvg   = '<svg class="star-icon" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
     var trashSvg  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>';
     var pencilSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    // trashSvg / pencilSvg agora usados nas review-actions (abaixo de cada card)
     container.innerHTML = '<div style="margin-top:2rem"><p class="eyebrow">Avaliações dos Usuários</p><h3 class="section-title" style="font-size:1.4rem;margin-bottom:1.5rem">O que os <em>clientes dizem</em></h3></div>' +
       reviews.map(function(r) {
         var reviewer = usersMap[(r.email || '').toLowerCase()] || {};
@@ -1716,17 +1733,13 @@
         var isOwn = sessionEmail && (r.email || '').toLowerCase() === sessionEmail;
         var safeKey = key.replace(/'/g,"\\'");
         var rId = Number(r.id);
-        var editBtn = isOwn
-          ? '<button onclick="openEditReview(\'' + safeKey + '\',' + rId + ')" title="Editar avaliação"'
-            + ' style="position:absolute;top:.5rem;right:2.4rem;background:none;border:none;cursor:pointer;padding:.3rem;opacity:0;transition:opacity .2s;color:var(--orange,#F07800);"'
-            + ' onmouseenter="this.style.opacity=\'1\'" onmouseleave="this.style.opacity=\'0\'">' + pencilSvg + '</button>'
+        var actionsHtml = isOwn
+          ? '<div class="review-actions" style="margin-top:.25rem;">'
+            + '<button class="review-action-btn review-action-btn--edit" onclick="openEditReview(\'' + safeKey + '\',' + rId + ')">' + pencilSvg + ' Editar</button>'
+            + '<button class="review-action-btn review-action-btn--delete" onclick="deleteReview(\'' + safeKey + '\',' + rId + ')">' + trashSvg + ' Excluir</button>'
+            + '</div>'
           : '';
-        var deleteBtn = isOwn
-          ? '<button onclick="deleteReview(\'' + safeKey + '\',' + rId + ')" title="Excluir avaliação"'
-            + ' style="position:absolute;top:.5rem;right:.5rem;background:none;border:none;cursor:pointer;padding:.3rem;opacity:0;transition:opacity .2s;color:#EF4444;"'
-            + ' onmouseenter="this.style.opacity=\'1\'" onmouseleave="this.style.opacity=\'0\'">' + trashSvg + '</button>'
-          : '';
-        return '<div style="position:relative">' +
+        return '<div style="margin-bottom:1.25rem;">' +
           '<article class="review-card">' +
             '<div class="review-card__header">' +
               '<div class="review-card__avatar" style="overflow:hidden;padding:0;" aria-hidden="true">' + avatarHtml + '</div>' +
@@ -1738,18 +1751,19 @@
             '</div>' +
             '<p class="review-card__text">' + r.text.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>' +
           '</article>' +
-          editBtn + deleteBtn +
+          actionsHtml +
         '</div>';
       }).join('');
   }
 
   function deleteReview(key, id) {
-    if (!confirm('Excluir esta avaliação permanentemente?')) return;
-    try {
-      var arr = JSON.parse(localStorage.getItem(key) || '[]');
-      localStorage.setItem(key, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
-    } catch(_) {}
-    renderLocalReviews();
+    luxuryConfirm('Excluir avaliação?', 'Esta ação não poderá ser desfeita.', function() {
+      try {
+        var arr = JSON.parse(localStorage.getItem(key) || '[]');
+        localStorage.setItem(key, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
+      } catch(_) {}
+      renderLocalReviews();
+    });
   }
 
   renderLocalReviews();
@@ -2131,5 +2145,22 @@
     </div>
   </aside>
 
+  <!-- ── Luxury Confirm Modal ── -->
+  <div class="luxury-confirm-overlay" id="luxury-confirm" role="dialog" aria-modal="true" aria-labelledby="luxury-confirm-title">
+    <div class="luxury-confirm-box">
+      <div class="luxury-confirm-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+        </svg>
+      </div>
+      <h3 class="luxury-confirm-title" id="luxury-confirm-title">Excluir?</h3>
+      <p class="luxury-confirm-sub" id="luxury-confirm-sub">Esta ação não poderá ser desfeita.</p>
+      <div class="luxury-confirm-actions">
+        <button class="luxury-confirm-cancel" id="luxury-confirm-cancel">Cancelar</button>
+        <button class="luxury-confirm-ok" id="luxury-confirm-ok">Excluir</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

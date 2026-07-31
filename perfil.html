@@ -392,6 +392,22 @@
     return getFavorites();
   }
 
+  function luxuryConfirm(title, sub, onConfirm) {
+    var overlay = document.getElementById('luxury-confirm');
+    document.getElementById('luxury-confirm-title').textContent = title;
+    document.getElementById('luxury-confirm-sub').textContent = sub;
+    overlay.classList.add('is-open');
+    var ok = document.getElementById('luxury-confirm-ok');
+    var cancel = document.getElementById('luxury-confirm-cancel');
+    function close() {
+      overlay.classList.remove('is-open');
+      ok.onclick = null; cancel.onclick = null; overlay.onclick = null;
+    }
+    ok.onclick = function() { close(); onConfirm(); };
+    cancel.onclick = close;
+    overlay.onclick = function(e) { if (e.target === overlay) close(); };
+  }
+
   var _editStars = 0;
 
   // ── Renderiza avaliações ──────────────────────────────────────────
@@ -405,6 +421,8 @@
         + '</div>';
       return;
     }
+    var pencilSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    var trashSvg  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>';
     container.innerHTML = reviews.map(function(r) {
       var productId = (r._storageKey || '').replace('csm-reviews-', '');
       var stars = Array.from({length: 5}, function(_, i) {
@@ -414,25 +432,19 @@
       }).join('');
       var sKey = esc(r._storageKey || '');
       var rId  = Number(r.id);
-      return '<div class="perfil-review-wrap" data-review-id="' + rId + '" style="position:relative;margin-bottom:1rem">'
+      return '<div class="perfil-review-wrap" data-review-id="' + rId + '" style="margin-bottom:1rem;border:1px solid var(--gray-line);border-radius:var(--r-lg);overflow:hidden;">'
         + '<a href="' + (productId ? 'produto.html?id=' + productId : 'produtos.html') + '" class="perfil-review-link" style="text-decoration:none;display:block;color:inherit">'
-        + '<article class="google-review-card" style="margin-bottom:0">'
+        + '<article class="google-review-card" style="margin-bottom:0;border:none;border-radius:0;">'
         + '<div class="google-review-card__header">'
         + '<div class="google-review-card__meta"><div class="google-review-card__name">' + esc(r.product || 'Produto') + '</div><div class="google-review-card__date">' + esc(r.date || '') + '</div></div>'
         + '<div class="google-review-card__stars">' + stars + '</div>'
         + '</div>'
         + '<p class="google-review-card__text" style="-webkit-line-clamp:unset">' + esc(r.text) + '</p>'
         + '</article></a>'
-        + '<button onclick="event.stopPropagation();openEditProfileReview(\'' + sKey + '\',' + rId + ')" title="Editar avaliação"'
-        + ' style="position:absolute;top:.5rem;right:2.2rem;background:none;border:none;cursor:pointer;padding:.25rem;opacity:0;transition:opacity .2s;color:var(--orange,#F07800);"'
-        + ' onmouseenter="this.style.opacity=\'1\'" onmouseleave="this.style.opacity=\'0\'">'
-        + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
-        + '</button>'
-        + '<button onclick="event.stopPropagation();deleteProfileReview(\'' + sKey + '\',' + rId + ')" title="Excluir avaliação"'
-        + ' style="position:absolute;top:.5rem;right:.5rem;background:none;border:none;cursor:pointer;padding:.25rem;opacity:0;transition:opacity .2s;color:#EF4444;"'
-        + ' onmouseenter="this.style.opacity=\'1\'" onmouseleave="this.style.opacity=\'0\'">'
-        + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
-        + '</button>'
+        + '<div class="review-actions" style="border-top:1px solid var(--gray-line);">'
+        + '<button class="review-action-btn review-action-btn--edit" onclick="event.stopPropagation();openEditProfileReview(\'' + sKey + '\',' + rId + ')">' + pencilSvg + ' Editar</button>'
+        + '<button class="review-action-btn review-action-btn--delete" onclick="event.stopPropagation();deleteProfileReview(\'' + sKey + '\',' + rId + ')">' + trashSvg + ' Excluir</button>'
+        + '</div>'
         + '</div>';
     }).join('');
   }
@@ -453,13 +465,13 @@
         + '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
     }).join('');
     var safeKey = storageKey.replace(/'/g,"\\'");
-    wrap.innerHTML = '<div style="padding:1rem 1.25rem;background:var(--surface,#fff);border-radius:12px;border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 8px rgba(0,0,0,.06)">'
-      + '<p style="font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted,#888);margin:0 0 .5rem">Editar avaliação</p>'
-      + '<div id="pedit-stars-wrap" style="display:flex;gap:.3rem;margin-bottom:.75rem">' + starsHtml + '</div>'
-      + '<textarea id="pedit-text" rows="4" style="width:100%;padding:.6rem .75rem;border:1px solid rgba(0,0,0,.15);border-radius:8px;font-size:.85rem;resize:vertical;font-family:inherit;box-sizing:border-box">' + esc(review.text) + '</textarea>'
-      + '<div style="display:flex;gap:.5rem;margin-top:.6rem;justify-content:flex-end">'
-      + '<button onclick="initPerfil()" style="padding:.4rem 1rem;border:1px solid rgba(0,0,0,.2);background:none;border-radius:6px;cursor:pointer;font-size:.8rem;font-family:inherit">Cancelar</button>'
-      + '<button onclick="saveEditProfileReview(\'' + safeKey + '\',' + id + ')" style="padding:.4rem 1rem;background:var(--orange,#F07800);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.8rem;font-weight:600;font-family:inherit">Salvar</button>'
+    wrap.innerHTML = '<div style="padding:1.25rem 1.25rem 1rem;background:var(--white,#fff);border-left:3px solid var(--orange,#F07800);">'
+      + '<p style="font-family:var(--font-serif,serif);font-size:1rem;font-weight:400;letter-spacing:.02em;color:var(--dark,#1E1E1E);margin:0 0 .75rem">Editar avaliação</p>'
+      + '<div id="pedit-stars-wrap" style="display:flex;gap:.3rem;margin-bottom:.85rem">' + starsHtml + '</div>'
+      + '<textarea id="pedit-text" rows="4" style="width:100%;padding:.6rem .75rem;border:1px solid var(--gray-line,rgba(0,0,0,.12));border-radius:8px;font-size:.85rem;resize:vertical;font-family:inherit;box-sizing:border-box;background:var(--off-white,#F7F6F3);color:var(--dark,#1E1E1E);">' + esc(review.text) + '</textarea>'
+      + '<div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end">'
+      + '<button onclick="initPerfil()" class="review-action-btn" style="border-color:var(--gray-line);color:var(--gray-dark);">Cancelar</button>'
+      + '<button onclick="saveEditProfileReview(\'' + safeKey + '\',' + id + ')" style="padding:.35rem 1.1rem;background:var(--orange,#F07800);color:#fff;border:none;border-radius:20px;cursor:pointer;font-size:.7rem;font-weight:600;font-family:var(--font-sans,sans-serif);letter-spacing:.04em;text-transform:uppercase;transition:background .2s;" onmouseover="this.style.background=\'var(--orange-dark,#C86200)\'" onmouseout="this.style.background=\'var(--orange,#F07800)\'">Salvar</button>'
       + '</div>'
       + '</div>';
   }
@@ -490,12 +502,13 @@
   }
 
   function deleteProfileReview(storageKey, id) {
-    if (!confirm('Excluir esta avaliação permanentemente?')) return;
-    try {
-      var arr = JSON.parse(localStorage.getItem(storageKey) || '[]');
-      localStorage.setItem(storageKey, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
-    } catch(_) {}
-    initPerfil();
+    luxuryConfirm('Excluir avaliação?', 'Esta ação não poderá ser desfeita.', function() {
+      try {
+        var arr = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        localStorage.setItem(storageKey, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
+      } catch(_) {}
+      initPerfil();
+    });
   }
 
   // ── Renderiza favoritos ───────────────────────────────────────────
@@ -509,18 +522,17 @@
         + '</div>';
       return;
     }
+    var xSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
     container.innerHTML = items.map(function(item) {
       var itemId = esc(item.id || item.name || '');
-      return '<div class="perfil-fav-wrap" style="position:relative">'
+      return '<div class="perfil-fav-wrap">'
         + '<a href="' + (item.href || 'produtos.html') + '" class="perfil-fav-card">'
         + (item.img ? '<img class="perfil-fav-card__img" src="' + esc(item.img) + '" alt="' + esc(item.name) + '" loading="lazy" />' : '')
         + '<div class="perfil-fav-card__name">' + esc(item.name) + '</div>'
         + '</a>'
-        + '<button onclick="event.preventDefault();removeFavorite(\'' + itemId + '\')" title="Remover favorito"'
-        + ' style="position:absolute;top:.4rem;right:.4rem;background:rgba(0,0,0,.55);border:none;cursor:pointer;padding:.3rem;border-radius:50%;opacity:0;transition:opacity .2s;color:#fff;display:flex;align-items:center;justify-content:center;"'
-        + ' onmouseenter="this.style.opacity=\'1\'" onmouseleave="this.style.opacity=\'0\'">'
-        + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
-        + '</button>'
+        + '<div class="perfil-fav-footer">'
+        + '<button class="perfil-fav-remove-btn" onclick="event.preventDefault();removeFavorite(\'' + itemId + '\')">' + xSvg + ' Remover</button>'
+        + '</div>'
         + '</div>';
     }).join('');
   }
@@ -711,5 +723,23 @@
   }
 
   </script>
+
+  <!-- ── Luxury Confirm Modal ── -->
+  <div class="luxury-confirm-overlay" id="luxury-confirm" role="dialog" aria-modal="true" aria-labelledby="luxury-confirm-title">
+    <div class="luxury-confirm-box">
+      <div class="luxury-confirm-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+        </svg>
+      </div>
+      <h3 class="luxury-confirm-title" id="luxury-confirm-title">Excluir?</h3>
+      <p class="luxury-confirm-sub" id="luxury-confirm-sub">Esta ação não poderá ser desfeita.</p>
+      <div class="luxury-confirm-actions">
+        <button class="luxury-confirm-cancel" id="luxury-confirm-cancel">Cancelar</button>
+        <button class="luxury-confirm-ok" id="luxury-confirm-ok">Excluir</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
