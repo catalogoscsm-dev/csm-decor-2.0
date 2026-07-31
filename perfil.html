@@ -408,6 +408,26 @@
     overlay.onclick = function(e) { if (e.target === overlay) close(); };
   }
 
+  // Animação de remoção de card em 2 fases: fade → colapso de altura
+  function animateRemoveCard(wrap, callback) {
+    if (!wrap) { callback(); return; }
+    wrap.style.transition   = 'opacity .22s ease, transform .22s ease';
+    wrap.style.opacity      = '0';
+    wrap.style.transform    = 'scale(.97) translateY(-6px)';
+    wrap.style.pointerEvents = 'none';
+    setTimeout(function() {
+      var h = wrap.offsetHeight;
+      wrap.style.transition = 'none';
+      wrap.style.overflow   = 'hidden';
+      wrap.style.maxHeight  = h + 'px';
+      void wrap.offsetHeight;
+      wrap.style.transition   = 'max-height .28s ease, margin-bottom .28s ease';
+      wrap.style.maxHeight    = '0';
+      wrap.style.marginBottom = '0';
+      setTimeout(callback, 300);
+    }, 230);
+  }
+
   var _editStars = 0;
 
   // ── Renderiza avaliações ──────────────────────────────────────────
@@ -447,6 +467,12 @@
         + '</div>'
         + '</div>';
     }).join('');
+
+    // Animação escalonada de entrada nos cards
+    container.querySelectorAll('.perfil-review-wrap').forEach(function(w, i) {
+      w.style.animationDelay = (i * 0.07) + 's';
+      w.classList.add('review-entering');
+    });
   }
 
   function openEditProfileReview(storageKey, id) {
@@ -503,11 +529,28 @@
 
   function deleteProfileReview(storageKey, id) {
     luxuryConfirm('Excluir avaliação?', 'Esta ação não poderá ser desfeita.', function() {
-      try {
-        var arr = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        localStorage.setItem(storageKey, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
-      } catch(_) {}
-      initPerfil();
+      var wrap = document.querySelector('.perfil-review-wrap[data-review-id="' + id + '"]');
+      animateRemoveCard(wrap, function() {
+        // Remove o nó do DOM sem re-renderizar a lista inteira
+        if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
+        // Atualiza localStorage
+        try {
+          var arr = JSON.parse(localStorage.getItem(storageKey) || '[]');
+          localStorage.setItem(storageKey, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
+        } catch(_) {}
+        // Decrementa badge do contador
+        var countEl = document.getElementById('js-stat-avaliacoes');
+        if (countEl) countEl.textContent = Math.max(0, (parseInt(countEl.textContent, 10) || 0) - 1);
+        // Se não houver mais cards, exibe estado vazio
+        var container = document.getElementById('js-avaliacoes-list');
+        if (container && !container.querySelector('.perfil-review-wrap')) {
+          container.innerHTML = '<div class="perfil-empty">'
+            + '<div class="perfil-empty__icon">★</div>'
+            + '<p class="perfil-empty__title">Nenhuma avaliação ainda</p>'
+            + '<p class="perfil-empty__sub">Visite a <a href="produtos.html">página de produtos</a> e compartilhe sua experiência.</p>'
+            + '</div>';
+        }
+      });
     });
   }
 

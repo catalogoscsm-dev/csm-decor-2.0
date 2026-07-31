@@ -1615,6 +1615,29 @@
     overlay.onclick = function(e) { if (e.target === overlay) close(); };
   }
 
+  // Animação de remoção de card em 2 fases: fade → colapso de altura
+  function animateRemoveCard(wrap, callback) {
+    if (!wrap) { callback(); return; }
+    // Fase 1: fade out + leve elevação
+    wrap.style.transition = 'opacity .22s ease, transform .22s ease';
+    wrap.style.opacity    = '0';
+    wrap.style.transform  = 'scale(.97) translateY(-6px)';
+    wrap.style.pointerEvents = 'none';
+    setTimeout(function() {
+      // Fase 2: colapso suave de altura
+      var h = wrap.offsetHeight;
+      wrap.style.transition = 'none';
+      wrap.style.overflow   = 'hidden';
+      wrap.style.maxHeight  = h + 'px';
+      // Força reflow antes de animar para 0
+      void wrap.offsetHeight;
+      wrap.style.transition    = 'max-height .28s ease, margin-bottom .28s ease';
+      wrap.style.maxHeight     = '0';
+      wrap.style.marginBottom  = '0';
+      setTimeout(callback, 300);
+    }, 230);
+  }
+
   function highlightStars(n) {
     document.querySelectorAll('.star-rating__star').forEach(function(s) {
       s.classList.toggle('filled', parseInt(s.dataset.val, 10) <= n);
@@ -1684,15 +1707,16 @@
       try { localStorage.setItem(key, JSON.stringify(reviews)); } catch(_) {}
     }
 
+    var _wasNew = !_editingReview;
     closeModal('modal-review');
     document.getElementById('review-text').value = '';
     _selectedStars = 0;
     highlightStars(0);
-    renderLocalReviews();
+    renderLocalReviews(_wasNew ? { highlight: true } : null);
   }
 
   // ── Renderizar reviews do localStorage ────────────────────────
-  function renderLocalReviews() {
+  function renderLocalReviews(opts) {
     var p = window.__produto;
     var key = 'csm-reviews-' + (p ? p.id : 'generic');
     var reviews = [];
@@ -1739,7 +1763,7 @@
             + '<button class="review-action-btn review-action-btn--delete" onclick="deleteReview(\'' + safeKey + '\',' + rId + ')">' + trashSvg + ' Excluir</button>'
             + '</div>'
           : '';
-        return '<div style="margin-bottom:1.25rem;">' +
+        return '<div class="review-card-wrap" data-review-id="' + rId + '" style="margin-bottom:1.25rem;">' +
           '<article class="review-card">' +
             '<div class="review-card__header">' +
               '<div class="review-card__avatar" style="overflow:hidden;padding:0;" aria-hidden="true">' + avatarHtml + '</div>' +
@@ -1754,19 +1778,41 @@
           actionsHtml +
         '</div>';
       }).join('');
+
+    // Animação escalonada de entrada nos cards
+    container.querySelectorAll('.review-card-wrap').forEach(function(w, i) {
+      w.style.animationDelay = (i * 0.07) + 's';
+      w.classList.add(opts && opts.highlight && i === 0 ? 'review-new' : 'review-entering');
+    });
   }
 
   function deleteReview(key, id) {
     luxuryConfirm('Excluir avaliação?', 'Esta ação não poderá ser desfeita.', function() {
-      try {
-        var arr = JSON.parse(localStorage.getItem(key) || '[]');
-        localStorage.setItem(key, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
-      } catch(_) {}
-      renderLocalReviews();
+      var wrap = document.querySelector('.review-card-wrap[data-review-id="' + id + '"]');
+      animateRemoveCard(wrap, function() {
+        // Remove o nó do DOM sem re-renderizar tudo (demais cards ficam no lugar)
+        if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
+        // Atualiza localStorage
+        try {
+          var arr = JSON.parse(localStorage.getItem(key) || '[]');
+          localStorage.setItem(key, JSON.stringify(arr.filter(function(r){ return r.id !== id; })));
+        } catch(_) {}
+        // Limpa container se não sobrou nenhum card
+        var container = document.getElementById('local-reviews-list');
+        if (container && !container.querySelector('.review-card-wrap')) {
+          container.innerHTML = '';
+        }
+      });
     });
   }
 
-  renderLocalReviews();
+  // Adia o render inicial para DOMContentLoaded, garantindo que auth.js
+  // (carregado após este bloco de script) já foi executado antes de checar a sessão
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderLocalReviews);
+  } else {
+    renderLocalReviews();
+  }
 
   // ── Tags dinâmicas por produto ────────────────────────────────
   (function renderTags() {

@@ -8149,6 +8149,25 @@ a.showroom-map__val:hover { color: var(--white); }
 [data-theme="dark"] .luxury-confirm-cancel { border-color: rgba(255,255,255,.12); color: rgba(255,255,255,.7); }
 [data-theme="dark"] .luxury-confirm-cancel:hover { background: rgba(255,255,255,.06); }
 
+/* ── Review card entrance / exit animations (luxury) ── */
+@keyframes reviewIn {
+  from { opacity: 0; transform: translateY(14px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes reviewNewGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(240,120,0,.0); }
+  30%  { box-shadow: 0 0 0 3px rgba(240,120,0,.42), 0 6px 28px rgba(240,120,0,.14); }
+  100% { box-shadow: 0 0 0 0 rgba(240,120,0,.0); }
+}
+.review-entering {
+  animation: reviewIn .48s cubic-bezier(.22,1,.36,1) both;
+}
+.review-new {
+  border-radius: var(--r-lg);
+  animation: reviewIn .48s cubic-bezier(.22,1,.36,1) both,
+             reviewNewGlow 1.8s ease .3s both;
+}
+
 @media (max-width: 640px) {
   .perfil-hero { padding: 2.5rem 0 2rem; }
   .perfil-hero__inner { flex-direction: column; align-items: center; text-align: center; }
