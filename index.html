@@ -2978,7 +2978,7 @@
 
         updateBadge();
 
-        // Moodboard: abre auth modal na aba "Arquiteto" se não logado
+        // Moodboard: abre painel se logado, ou modal de auth se não logado
         document.getElementById('moodboard-header-btn')?.addEventListener('click', function () {
           var session = (window.CSMAuth && CSMAuth.getSession()) || null;
           if (!session) {
@@ -2987,6 +2987,8 @@
               CSMAuth.switchAuthTab('register');
               CSMAuth.switchRegisterTipo('arquiteto');
             }, 140);
+          } else {
+            openPanel();
           }
         });
 
@@ -3002,6 +3004,11 @@
             updateSaveButtons();
           }
         });
+
+        // Fechar com toque fora (mobile)
+        document.addEventListener('touchend', e => {
+          if (e.target.id === 'moodboard-backdrop') { e.preventDefault(); closePanel(); }
+        }, { passive: false });
 
         // Fechar com Escape
         document.addEventListener('keydown', e => {
