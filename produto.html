@@ -1414,6 +1414,7 @@
     }());
 
     btnFav.addEventListener('click', () => {
+      if (!CSMAuth.requireMoodboard()) return;
       const p = window.__produto; if (!p) return;
       const id = genMbId(p.name);
       let items = getMbItems();
@@ -1519,7 +1520,10 @@
     });
 
     const mbHeaderBtn = document.getElementById('moodboard-header-btn');
-    if (mbHeaderBtn) mbHeaderBtn.addEventListener('click', openPanel);
+    if (mbHeaderBtn) mbHeaderBtn.addEventListener('click', function () {
+      if (!CSMAuth.requireMoodboard()) return;
+      openPanel();
+    });
     updateMbBadge();
 
     // ── Compartilhar: tratado no bloco Auth+Review ──

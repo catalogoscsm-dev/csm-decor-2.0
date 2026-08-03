@@ -2801,6 +2801,7 @@
         const imgEl = card.querySelector('img');
         const name = (card.querySelector('.cat-card__name')?.textContent || '').trim();
         const type = (card.querySelector('.cat-card__badge')?.textContent || '').trim();
+        const pid  = card.dataset.id || '';
         return {
           id:      genId(card),
           name:    type ? `${type} ${name}` : name,
@@ -2808,6 +2809,7 @@
           tagline: card.querySelector('.cat-card__tagline')?.textContent.trim() || '',
           img:     imgs[0] || imgEl?.src || '',
           wpp:     card.dataset.wpp || '',
+          href:    pid ? 'produto.html?id=' + pid : '',
         };
       }
 
@@ -2882,19 +2884,56 @@
           if (secRow) secRow.hidden = true;
         } else {
           items.forEach(item => {
+            const href = item.href || '';
             const div = document.createElement('div');
             div.className = 'moodboard-item';
             div.innerHTML = `
-              <img class="moodboard-item__img" src="${item.img}" alt="${item.name}" loading="lazy" />
-              <div class="moodboard-item__info">
-                <span class="moodboard-item__type">${item.type}</span>
-                <p class="moodboard-item__name">${item.name}</p>
-                <p class="moodboard-item__tagline">${item.tagline}</p>
+              <div class="moodboard-item__link" role="${href ? 'link' : 'presentation'}"
+                   tabindex="${href ? '0' : '-1'}" aria-label="Ver ${item.name}"
+                   style="${href ? 'cursor:pointer' : ''}">
+                <img class="moodboard-item__img" src="${item.img}" alt="${item.name}" loading="lazy" />
+                <div class="moodboard-item__info">
+                  <span class="moodboard-item__type">${item.type}</span>
+                  <p class="moodboard-item__name">${item.name}</p>
+                  <p class="moodboard-item__tagline">${item.tagline}</p>
+                </div>
               </div>
               <button class="moodboard-item__remove" aria-label="Remover ${item.name}" data-id="${item.id}" type="button">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>`;
-            div.querySelector('.moodboard-item__remove').addEventListener('click', () => {
+
+            if (href) {
+              const linkEl = div.querySelector('.moodboard-item__link');
+              linkEl.addEventListener('click', (function(h) {
+                return function() {
+                  var m = h.match(/produto\.html\?id=(\d+)/);
+                  if (m) {
+                    var numId = m[1];
+                    var c = document.querySelector('.cat-card[data-id="' + numId + '"]');
+                    if (c) {
+                      var imgs = []; try { imgs = JSON.parse(c.dataset.imgs || '[]'); } catch(_) {}
+                      try { localStorage.setItem('csm-produto-current', JSON.stringify({
+                        id: numId,
+                        name: (c.querySelector('.cat-card__name') || {textContent:''}).textContent.trim(),
+                        badge: (c.querySelector('.cat-card__badge') || {textContent:''}).textContent.trim(),
+                        tipo: c.dataset.tipo || '',
+                        tagline: (c.querySelector('.cat-card__tagline') || {textContent:''}).textContent.trim(),
+                        imgs: imgs, wpp: c.dataset.wpp || '', glb: c.dataset.glb || ''
+                      })); } catch(_) {}
+                    }
+                  }
+                  window.location.href = h;
+                };
+              }(href)));
+              linkEl.addEventListener('keydown', (function(h) {
+                return function(e) {
+                  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = h; }
+                };
+              }(href)));
+            }
+
+            div.querySelector('.moodboard-item__remove').addEventListener('click', e => {
+              e.stopPropagation();
               removeItem(item.id);
               div.classList.add('removing');
               setTimeout(() => { div.remove(); renderPanel(); updateBadge(); updateSaveButtons(); }, 220);
@@ -2959,6 +2998,7 @@
           btn.addEventListener('click', e => {
             e.stopPropagation();
             e.preventDefault();
+            if (!CSMAuth.requireMoodboard()) return;
             const wasSaved = hasItem(genId(card));
             const nowSaved = toggle(card);
             btn.classList.toggle('is-saved', nowSaved);
@@ -2978,18 +3018,10 @@
 
         updateBadge();
 
-        // Moodboard: abre painel se logado, ou modal de auth se não logado
+        // Moodboard: abre painel se autorizado, pede login/avisa se não
         document.getElementById('moodboard-header-btn')?.addEventListener('click', function () {
-          var session = (window.CSMAuth && CSMAuth.getSession()) || null;
-          if (!session) {
-            CSMAuth.openAuthModal({ subtitle: 'Crie sua conta de Arquiteto para acessar o Moodboard profissional.' });
-            setTimeout(function () {
-              CSMAuth.switchAuthTab('register');
-              CSMAuth.switchRegisterTipo('arquiteto');
-            }, 140);
-          } else {
-            openPanel();
-          }
+          if (!CSMAuth.requireMoodboard()) return;
+          openPanel();
         });
 
         // Delegação de evento — funciona mesmo que os elementos existam após este script

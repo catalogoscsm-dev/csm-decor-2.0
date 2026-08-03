@@ -227,6 +227,8 @@
     if (!email) return showErr(errEl, 'Preencha seu e-mail.');
     if (!EMAIL_RE.test(email)) return showErr(errEl, 'Informe um endereço de e-mail válido (ex: nome@dominio.com).');
     if (pass.length < 6) return showErr(errEl, 'Senha deve ter ao menos 6 caracteres.');
+    if (tipo === 'arquiteto' && !cau) return showErr(errEl, 'Preencha seu Registro CAU / CFT.');
+    if (tipo === 'fornecedor' && !cnpj) return showErr(errEl, 'Preencha o CNPJ da empresa.');
     var users = getUsers();
     if (users.find(function (u) { return u.email.toLowerCase() === email; })) {
       return showErr(errEl, 'E-mail já cadastrado. Faça login.');
@@ -597,6 +599,47 @@
     init();
   }
 
+  // ── Controle de acesso ao Moodboard ──────────────────────────────
+  function canUseMoodboard() {
+    var s = getSession();
+    if (!s) return false;
+    var t = s.tipo || 'comum';
+    return t === 'comum' || t === 'arquiteto' || t === 'admin';
+  }
+
+  function requireMoodboard(opts) {
+    var s = getSession();
+    if (!s) {
+      openAuthModal(opts || { subtitle: 'Crie sua conta gratuita para salvar seus favoritos.' });
+      return false;
+    }
+    if (!canUseMoodboard()) {
+      _showMbNotice('Favoritos disponíveis apenas para Clientes e Arquitetos.');
+      return false;
+    }
+    return true;
+  }
+
+  function _showMbNotice(msg) {
+    var el = document.getElementById('csm-mb-notice');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'csm-mb-notice';
+      el.style.cssText = [
+        'position:fixed', 'bottom:1.5rem', 'left:50%', 'transform:translateX(-50%)',
+        'background:#1a1a1a', 'color:#fff', 'padding:.65rem 1.25rem',
+        'border-radius:8px', 'font-size:.78rem', 'letter-spacing:.03em',
+        'z-index:99999', 'pointer-events:none', 'opacity:0',
+        'transition:opacity .25s', 'white-space:nowrap'
+      ].join(';');
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.opacity = '1';
+    clearTimeout(el._t);
+    el._t = setTimeout(function () { el.style.opacity = '0'; }, 3000);
+  }
+
   // ── API pública ───────────────────────────────────────────────────
   window.CSMAuth = {
     getSession:         getSession,
@@ -623,6 +666,8 @@
     showForgotPanel:    showForgotPanel,
     doForgotRequest:    doForgotRequest,
     doResetPassword:    doResetPassword,
-    ROLE_COLORS:        ROLE_COLORS
+    ROLE_COLORS:        ROLE_COLORS,
+    canUseMoodboard:    canUseMoodboard,
+    requireMoodboard:   requireMoodboard
   };
 }());

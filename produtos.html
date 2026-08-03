@@ -5272,13 +5272,15 @@
 
       if (_favBtn._favHandler) _favBtn.removeEventListener('click', _favBtn._favHandler);
       _favBtn._favHandler = function() {
+        if (!CSMAuth.requireMoodboard()) return;
         var mb = window._csmMB; if (!mb) return;
         var idx = mb.saved.findIndex(function(s){ return s.name === _mName; });
         if (idx > -1) {
           mb.saved.splice(idx, 1);
         } else {
           var _slugId = _mName.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
-          mb.saved.push({ id: _slugId, name: _mName, type: badge ? badge.textContent.trim() : '', tagline: tag || '', img: _mImg, wpp: wpp || '', tipo: _mTipo, href: 'produto.html?id=' + _slugId });
+          var _pid = card.dataset.id || '';
+          mb.saved.push({ id: _slugId, name: _mName, type: badge ? badge.textContent.trim() : '', tagline: tag || '', img: _mImg, wpp: wpp || '', tipo: _mTipo, href: _pid ? 'produto.html?id=' + _pid : 'produto.html?id=' + _slugId });
         }
         function _mbKey(){ try{ var s=JSON.parse(localStorage.getItem('csm-session')||'null'); return s&&s.email?'csm-moodboard-'+s.email:'csm-moodboard-guest'; }catch(_){return'csm-moodboard-guest';} }
         try { localStorage.setItem(_mbKey(), JSON.stringify(mb.saved)); } catch(_){}
@@ -5500,9 +5502,32 @@
           var linkEl=div.querySelector('.moodboard-item__link');
           if(href){
             linkEl.style.cursor='pointer';
-            function makeNav(h){ return function(){ window.location.href=h; }; }
-            linkEl.addEventListener('click', makeNav(href));
-            linkEl.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); window.location.href=href; } });
+            // IIFE captura href por valor — evita problemas com declarações de
+            // função em bloco (strict mode) em loops com múltiplos itens.
+            linkEl.addEventListener('click', (function(h){
+              return function(){
+                var m=h.match(/produto\.html\?id=(\d+)/);
+                if(m){
+                  var numId=m[1];
+                  var c=document.querySelector('.cat-card[data-id="'+numId+'"]');
+                  if(c){
+                    var imgs=[]; try{ imgs=JSON.parse(c.dataset.imgs||'[]'); }catch(_){}
+                    try{ localStorage.setItem('csm-produto-current', JSON.stringify({
+                      id:numId,
+                      name:(c.querySelector('.cat-card__name')||{textContent:''}).textContent.trim(),
+                      badge:(c.querySelector('.cat-card__badge')||{textContent:''}).textContent.trim(),
+                      tipo:c.dataset.tipo||'',
+                      tagline:(c.querySelector('.cat-card__tagline')||{textContent:''}).textContent.trim(),
+                      imgs:imgs, wpp:c.dataset.wpp||'', glb:c.dataset.glb||''
+                    })); }catch(_){}
+                  }
+                }
+                window.location.href=h;
+              };
+            }(href)));
+            linkEl.addEventListener('keydown', (function(h){
+              return function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); window.location.href=h; } };
+            }(href)));
           }
           div.querySelector('.moodboard-item__remove').addEventListener('click', function(e){
             e.stopPropagation();
@@ -5568,6 +5593,7 @@
       fig.appendChild(btn);
       btn.addEventListener('click', function(e){
         e.stopPropagation();
+        if(!CSMAuth.requireMoodboard()) return;
         var cur=getItems(); var idx=cur.findIndex(function(s){ return s.id===_id||s.name===n; });
         if(idx>-1){ cur.splice(idx,1); saveItems(cur); btn.classList.remove('is-saved'); btn.setAttribute('aria-pressed','false'); btn.querySelector('svg').setAttribute('fill','none'); }
         else{ var pid=card.dataset.id||''; var phref=pid?'produto.html?id='+pid:'produto.html'; cur.push({id:_id,name:n,type:(card.querySelector('.cat-card__badge')||{textContent:''}).textContent.trim(),tagline:(card.querySelector('.cat-card__tagline')||{textContent:''}).textContent.trim(),img:src,wpp:card.dataset.wpp||'',tipo:card.dataset.tipo||'',href:phref}); saveItems(cur); btn.classList.add('is-saved'); btn.setAttribute('aria-pressed','true'); btn.querySelector('svg').setAttribute('fill','currentColor'); if(typeof btn.animate==='function') btn.animate([{transform:'scale(1)'},{transform:'scale(1.5)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.4,0,.2,1)'}); }
@@ -5578,7 +5604,10 @@
     updateBadge();
 
     var mb=document.getElementById('moodboard-header-btn');
-    if(mb) mb.addEventListener('click', openPanel);
+    if(mb) mb.addEventListener('click', function(){
+      if(!CSMAuth.requireMoodboard()) return;
+      openPanel();
+    });
 
     document.addEventListener('click', function(e){
       if(e.target.closest('#moodboard-close-btn')){ closePanel(); return; }
