@@ -321,7 +321,7 @@
             <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Externo</span><span class="amb-marquee__name">Área Gourmet</span></div>
           </a>
-          <a href="produtos.html?categoria=living" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80"]'>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80"]'>
             <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Sala de Estar</span><span class="amb-marquee__name">Living</span></div>
           </a>
@@ -391,7 +391,7 @@
             <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Externo</span><span class="amb-marquee__name">Área Gourmet</span></div>
           </a>
-          <a href="produtos.html?categoria=living" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80"]'>
+          <a href="produtos.html?categoria=sofa" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1618220179428-22790b461be2?auto=format&fit=crop&w=700&q=80"]'>
             <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Sala de Estar</span><span class="amb-marquee__name">Living</span></div>
           </a>
@@ -1666,6 +1666,8 @@
       var resetParallax  = function () {};
       var syncFilterBtns = function () {};
       var onCardChange   = function () {};
+      var pauseCF        = function () {};   // pausar crossfade interno do card
+      var resumeCF       = function () {};   // retomar crossfade
 
       // ─── Atualiza classes ativas
       function updateState() {
@@ -1723,8 +1725,8 @@
       function stopAutoplay() { clearInterval(timer); }
       function resetAutoplay() { stopAutoplay(); startAutoplay(); }
 
-      carousel.addEventListener('mouseenter', stopAutoplay);
-      carousel.addEventListener('mouseleave', startAutoplay);
+      carousel.addEventListener('mouseenter', function () { stopAutoplay(); pauseCF(); });
+      carousel.addEventListener('mouseleave', function () { startAutoplay(); resumeCF(); });
 
       // ─── Setas
       var btnPrev = document.getElementById('amb-prev');
@@ -1738,6 +1740,7 @@
         tx0 = e.touches[0].clientX;
         ty0 = e.touches[0].clientY;
         stopAutoplay();
+        pauseCF();
       }, { passive: true });
       carousel.addEventListener('touchend', function (e) {
         var dx = e.changedTouches[0].clientX - tx0;
@@ -1746,6 +1749,7 @@
           dx < 0 ? next() : prev();
         }
         startAutoplay();
+        resumeCF();
       }, { passive: true });
 
       // ─── Filtros → scroll para primeiro card + sincronização bidirecional
@@ -1974,8 +1978,65 @@
 
         // Inicializa no card 0
         onCardChange(0);
+
+        // Expõe controle de pause para o hover e touch do carrossel externo
+        pauseCF  = stopCF;
+        resumeCF = function () { startCF(prevRealIdx); };
       }());
 
+    }());
+
+    // ── Marquee — desaceleração suave no hover e touch ──────────
+    (function () {
+      var marquee = document.querySelector('.amb-marquee');
+      if (!marquee) return;
+
+      var tracks  = Array.from(marquee.querySelectorAll('.amb-marquee__track'));
+      var rafId   = null;
+      var SLOW_MS = 700;   // ms para flutuar até parar
+      var FAST_MS = 450;   // ms para retomar velocidade
+
+      function getAnims() {
+        var list = [];
+        tracks.forEach(function (t) {
+          t.getAnimations().forEach(function (a) { list.push(a); });
+        });
+        return list;
+      }
+
+      function animateTo(target, dur) {
+        if (rafId) cancelAnimationFrame(rafId);
+        var anims = getAnims();
+        if (!anims.length) return;
+        var from  = anims[0].playbackRate;
+        var start = null;
+
+        function tick(now) {
+          if (!start) start = now;
+          var t = Math.min((now - start) / dur, 1);
+          // ease-out quart ao parar (flutua até zero); ease-in-out cubic ao retomar
+          var e = target === 0
+            ? 1 - Math.pow(1 - t, 4)
+            : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          var rate = from + (target - from) * e;
+          getAnims().forEach(function (a) { a.playbackRate = rate; });
+          if (t < 1) {
+            rafId = requestAnimationFrame(tick);
+          } else {
+            rafId = null;
+          }
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      // Desktop
+      marquee.addEventListener('mouseenter', function () { animateTo(0, SLOW_MS); });
+      marquee.addEventListener('mouseleave', function () { animateTo(1, FAST_MS); });
+
+      // Mobile
+      marquee.addEventListener('touchstart',  function () { animateTo(0, SLOW_MS); }, { passive: true });
+      marquee.addEventListener('touchend',    function () { animateTo(1, FAST_MS); }, { passive: true });
+      marquee.addEventListener('touchcancel', function () { animateTo(1, FAST_MS); }, { passive: true });
     }());
 
     // ── Marquee — ciclo de fotos no hover ───────────────────────
@@ -2420,8 +2481,9 @@
         track.style.transform = 'translateX(-' + (current * 100) + '%)';
       }
 
-      function startTimer() { timer = setInterval(function () { goTo(current + 1); }, DELAY); }
-      function resetTimer()  { clearInterval(timer); startTimer(); }
+      function stopTimer()   { clearInterval(timer); timer = null; }
+      function startTimer()  { stopTimer(); timer = setInterval(function () { goTo(current + 1); }, DELAY); }
+      function resetTimer()  { startTimer(); }
 
       // Estado inicial
       slides[0].classList.add('dep__slide--active');
@@ -2436,10 +2498,22 @@
 
       // Pausa ao hover / foco
       var carousel = document.getElementById('dep-carousel');
-      carousel.addEventListener('mouseenter', function () { clearInterval(timer); });
+      carousel.addEventListener('mouseenter', stopTimer);
       carousel.addEventListener('mouseleave', startTimer);
-      carousel.addEventListener('focusin',    function () { clearInterval(timer); });
+      carousel.addEventListener('focusin',    stopTimer);
       carousel.addEventListener('focusout',   startTimer);
+
+      // Mobile: pausa no toque e navega por swipe
+      var depTx = 0;
+      carousel.addEventListener('touchstart', function (e) {
+        depTx = e.touches[0].clientX;
+        stopTimer();
+      }, { passive: true });
+      carousel.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - depTx;
+        if (Math.abs(dx) > 44) dx < 0 ? goTo(current + 1) : goTo(current - 1);
+        startTimer();
+      }, { passive: true });
 
       startTimer();
     }());

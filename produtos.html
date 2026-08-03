@@ -5385,11 +5385,24 @@
     var empty = document.getElementById('cat-empty');
     var vis   = 0;
     btns.forEach(function(b){ var a=b.dataset.cat===cat; b.classList.toggle('active',a); b.setAttribute('aria-selected',a?'true':'false'); });
-    cards.forEach(function(c){ var m=cat==='all'||c.dataset.tipo===cat||(cat==='promocao'&&c.dataset.status==='promocao'); c.style.display=m?'':'none'; if(m) vis++; });
+    cards.forEach(function(c){
+      var m=cat==='all'||c.dataset.tipo===cat||(cat==='promocao'&&c.dataset.status==='promocao');
+      c.style.display=m?'':'none';
+      if(m){
+        vis++;
+        // If GSAP froze this card at opacity:0 before its scroll trigger fired,
+        // clear the inline styles so it becomes immediately visible.
+        if(c.style.opacity==='0'){ c.style.opacity=''; c.style.transform=''; }
+      }
+    });
     if (empty) empty.hidden = vis > 0;
     var url = new URL(window.location);
     if (cat==='all') url.searchParams.delete('categoria'); else url.searchParams.set('categoria',cat);
     history.replaceState(null,'',url);
+    // Let GSAP recalculate trigger positions after layout change.
+    requestAnimationFrame(function(){
+      if(typeof ScrollTrigger!=='undefined') ScrollTrigger.refresh();
+    });
   }
 
   (function(){

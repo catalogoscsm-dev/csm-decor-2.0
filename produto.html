@@ -482,7 +482,7 @@
                 aria-label="Solicitar orçamento do Sofá Chesterfield I via WhatsApp"
               >
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Solicitar Orçamento via WhatsApp
+                Solicitar Orçamento
               </a>
               <a
                 href="https://maps.google.com/?q=Av.+Dr.+Moraes+Sales,+1575,+Cambu%C3%AD,+Campinas,+SP"
@@ -513,14 +513,6 @@
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                 Compartilhar
-              </button>
-              <button
-                class="product-action-btn"
-                id="btn-comparar"
-                aria-label="Comparar com outro produto"
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
-                Comparar
               </button>
             </div>
 
@@ -1527,7 +1519,7 @@
     if (mbHeaderBtn) mbHeaderBtn.addEventListener('click', openPanel);
     updateMbBadge();
 
-    // ── Compartilhar e Comparar: tratados no bloco Auth+Review ──
+    // ── Compartilhar: tratado no bloco Auth+Review ──
 
     // ── Carrossel de sugestões ───────────────────────────────
     const track   = document.getElementById('sugg-track');
@@ -1574,11 +1566,9 @@
 
   </script>
 
-  <!-- ── Review + Comparar System (auth via auth.js) ───────────── -->
+  <!-- ── Review System (auth via auth.js) ───────────────────────── -->
   <script>
   'use strict';
-
-  var COMPARE_KEY = 'csm-compare';
 
   // ── Botão "Deixar minha avaliação" ────────────────────────────
   document.getElementById('btn-avaliar').addEventListener('click', function() {
@@ -1895,84 +1885,6 @@
     }
   });
 
-  // ── Comparar ──────────────────────────────────────────────────
-  var _compareList = [];
-  try { _compareList = JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]'); } catch(_) {}
-
-  function saveCompare() { localStorage.setItem(COMPARE_KEY, JSON.stringify(_compareList)); }
-
-  function updateCompareBar() {
-    var bar   = document.getElementById('compare-bar');
-    var count = document.getElementById('compare-bar-count');
-    if (!bar) return;
-    count.textContent = _compareList.length;
-    bar.classList.toggle('visible', _compareList.length >= 1);
-  }
-
-  updateCompareBar();
-
-  document.getElementById('btn-comparar').addEventListener('click', function() {
-    var p = window.__produto;
-    if (!p) return;
-    var btn = this;
-
-    // Verifica se já está na lista
-    var exists = _compareList.find(function(c){ return String(c.id) === String(p.id); });
-    if (exists) {
-      _compareList = _compareList.filter(function(c){ return String(c.id) !== String(p.id); });
-      btn.innerHTML = btn.innerHTML.replace('Adicionado ✓', 'Comparar');
-      saveCompare(); updateCompareBar(); return;
-    }
-
-    if (_compareList.length >= 3) {
-      alert('Você pode comparar até 3 produtos. Remova um da lista antes de adicionar outro.');
-      return;
-    }
-
-    _compareList.push({
-      id: p.id, name: p.name, tipo: p.tipo, badge: p.badge,
-      imgs: p.imgs, specs: p.specs, wpp: p.wpp
-    });
-    saveCompare();
-    updateCompareBar();
-
-    var orig = btn.innerHTML;
-    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Adicionado ✓';
-    setTimeout(function(){ btn.innerHTML = orig; }, 2500);
-  });
-
-  function clearCompare() {
-    _compareList = [];
-    saveCompare();
-    updateCompareBar();
-    document.getElementById('btn-comparar').innerHTML = document.getElementById('btn-comparar').innerHTML.replace('Adicionado ✓', 'Comparar');
-  }
-
-  function openCompareModal() {
-    if (_compareList.length < 2) {
-      alert('Adicione pelo menos 2 produtos para comparar. Navegue pelos produtos e clique em "Comparar" em cada um.');
-      return;
-    }
-    var body = document.getElementById('compare-modal-body');
-    var n = _compareList.length;
-    body.className = 'compare-modal__grid compare-modal__grid--' + n;
-
-    body.innerHTML = _compareList.map(function(p) {
-      var img  = (p.imgs && p.imgs[0]) ? p.imgs[0] : '';
-      var specs = (p.specs || []).slice(0, 6);
-      var rows = specs.map(function(s) {
-        return '<div class="compare-col__spec-row"><span class="compare-col__spec-key">' + s.key + '</span><span class="compare-col__spec-val">' + s.val + '</span></div>';
-      }).join('');
-      return '<div class="compare-col">' +
-        (img ? '<img class="compare-col__img" src="' + img + '" alt="' + p.name + '" loading="lazy" />' : '') +
-        '<p class="compare-col__name">' + p.name + '</p>' +
-        rows +
-        '<a href="produto.html?id=' + p.id + '" class="btn btn--outline btn--sm" style="margin-top:.75rem">Ver produto</a>' +
-      '</div>';
-    }).join('');
-
-    openModal('modal-compare');
-  }
 
   </script>
 
@@ -2142,28 +2054,6 @@
     });
   }());
   </script>
-
-  <!-- ── Modal Comparar ── -->
-  <div class="modal-overlay" id="modal-compare" role="dialog" aria-modal="true" aria-labelledby="compare-title" hidden>
-    <div class="modal" style="max-width:860px;width:95vw" role="document">
-      <button class="modal__close" aria-label="Fechar" onclick="closeModal('modal-compare')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <div style="margin-bottom:1.5rem">
-        <p class="eyebrow">Comparativo</p>
-        <h2 id="compare-title" class="modal__arq-title" style="font-size:1.5rem">Comparar Produtos</h2>
-      </div>
-      <div id="compare-modal-body" class="compare-modal__grid compare-modal__grid--2"></div>
-    </div>
-  </div>
-
-  <!-- ── Barra de comparação flutuante ── -->
-  <div class="compare-bar" id="compare-bar" role="status" aria-live="polite">
-    <span class="compare-bar__count" id="compare-bar-count">0</span>
-    <span>produto(s) para comparar</span>
-    <button class="compare-bar__btn" onclick="openCompareModal()">Comparar agora</button>
-    <button class="compare-bar__clear" onclick="clearCompare()">Limpar</button>
-  </div>
 
   <!-- Auth compartilhado — deve vir antes dos scripts de produto -->
   <script src="auth.js"></script>
