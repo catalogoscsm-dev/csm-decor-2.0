@@ -1760,14 +1760,19 @@
             + '<button class="review-action-btn review-action-btn--delete" onclick="deleteReview(\'' + safeKey + '\',' + rId + ')">' + trashSvg + ' Excluir</button>'
             + '</div>'
           : '';
+        var profileHref = isOwn
+          ? 'perfil.html'
+          : 'perfil.html?user=' + encodeURIComponent((r.email || '').toLowerCase());
         return '<div class="review-card-wrap" data-review-id="' + rId + '" style="margin-bottom:1.25rem;">' +
           '<article class="review-card">' +
             '<div class="review-card__header">' +
-              '<div class="review-card__avatar" style="overflow:hidden;padding:0;" aria-hidden="true">' + avatarHtml + '</div>' +
-              '<div class="review-card__meta">' +
-                '<div class="review-card__name">' + displayName + badge + '</div>' +
-                '<div class="review-card__date">' + r.date + '</div>' +
-              '</div>' +
+              '<a href="' + profileHref + '" class="review-card__author-link" title="Ver perfil de ' + r.author + '">' +
+                '<div class="review-card__avatar" style="overflow:hidden;padding:0;" aria-hidden="true">' + avatarHtml + '</div>' +
+                '<div class="review-card__meta">' +
+                  '<div class="review-card__name">' + displayName + badge + '</div>' +
+                  '<div class="review-card__date">' + r.date + '</div>' +
+                '</div>' +
+              '</a>' +
               '<div class="review-card__stars" aria-label="' + r.stars + ' de 5 estrelas">' + stars + '</div>' +
             '</div>' +
             '<p class="review-card__text">' + r.text.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>' +

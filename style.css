@@ -7865,6 +7865,198 @@ a.showroom-map__val:hover { color: var(--white); }
 .perfil-role-badge--arquiteto  { background: #1a4f8a; }
 .perfil-role-badge--fornecedor { background: #1a7a4a; }
 .perfil-role-badge--admin      { background: #8b5cf6; }
+
+/* ── Partner badge ── */
+.perfil-partner-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  position: relative; overflow: hidden;
+  font-family: var(--font-sans); font-size: .58rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: .25rem .8rem; border-radius: 100px;
+  margin-left: .45rem; vertical-align: middle;
+  cursor: default; user-select: none;
+}
+.perfil-partner-badge--ativo {
+  background: linear-gradient(105deg, #a86c18 0%, #d4952e 35%, #f0c060 55%, #d4952e 75%, #a86c18 100%);
+  background-size: 200% 100%;
+  color: #fff; border: 1px solid rgba(240,184,74,.35);
+  box-shadow: 0 2px 12px rgba(200,146,42,.35);
+  animation: partner-shimmer 3s ease-in-out infinite, partner-glow 2.8s ease-in-out infinite;
+}
+.perfil-partner-badge__shimmer {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 20%, rgba(255,255,255,.0) 38%,
+    rgba(255,255,255,.38) 50%, rgba(255,255,255,.0) 62%, transparent 80%
+  );
+  background-size: 220% 100%;
+  animation: partner-sweep 3s ease-in-out infinite;
+  pointer-events: none; border-radius: inherit;
+}
+@keyframes partner-shimmer {
+  0%,100% { background-position: 100% 0; }
+  50%      { background-position:   0% 0; }
+}
+@keyframes partner-sweep {
+  0%   { background-position: 180% 0; opacity: 0; }
+  15%  { opacity: 1; }
+  55%  { background-position: -60% 0; opacity: 1; }
+  70%  { opacity: 0; }
+  100% { background-position: -60% 0; opacity: 0; }
+}
+@keyframes partner-glow {
+  0%,100% { box-shadow: 0 2px 12px rgba(200,146,42,.3); }
+  50%      { box-shadow: 0 2px 22px rgba(200,146,42,.65), 0 0 8px rgba(240,192,96,.4); }
+}
+.perfil-partner-badge--inativo {
+  background: transparent;
+  border: 1px dashed rgba(150,140,130,.4);
+  color: rgba(150,140,130,.6);
+  font-style: italic; font-weight: 500; letter-spacing: .07em;
+}
+[data-theme="dark"] .perfil-partner-badge--inativo {
+  border-color: rgba(200,190,180,.2);
+  color: rgba(200,190,180,.35);
+}
+
+/* ── Tab fornecedor ── */
+.perfil-tab-btn--forn { display: none; }
+.perfil-tab-btn--forn.visible { display: block; }
+
+/* ── Password show/hide toggle ── */
+.perfil-pass-wrap {
+  position: relative; display: flex; align-items: center;
+}
+.perfil-pass-wrap .perfil-edit-input {
+  flex: 1; padding-right: 2.6rem;
+}
+.perfil-pass-curtain {
+  position: absolute;
+  top: 2px; bottom: 2px; left: 2px;
+  right: 2.8rem;
+  background: var(--white);
+  border-radius: calc(var(--r-md) - 2px);
+  pointer-events: none;
+  z-index: 1;
+  transform: translateX(110%);
+}
+[data-theme="dark"] .perfil-pass-curtain {
+  background: #1c1c1c;
+}
+.perfil-pass-eye {
+  position: absolute; right: .65rem;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--gray-mid);
+  transition: color .2s;
+}
+.perfil-pass-eye:hover { color: var(--orange); }
+.eye-icon {
+  width: 18px; height: 18px;
+  display: block; overflow: visible;
+}
+/* pupil: escala de 0 a 1 ao revelar */
+.eye-pupil {
+  transform-origin: 12px 12px;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+}
+/* slash: aparece quando senha está oculta (estado padrão), some ao revelar */
+.eye-slash {
+  stroke-dasharray: 25;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset .35s cubic-bezier(.4,0,.2,1), opacity .25s ease;
+}
+/* ball: leve squeeze vertical ao revelar */
+.eye-ball {
+  transition: ry .3s cubic-bezier(.4,0,.2,1);
+}
+/* estado: revelando (is-visible) */
+.perfil-pass-eye.is-visible .eye-slash {
+  stroke-dashoffset: 25;
+}
+.perfil-pass-eye.is-visible .eye-pupil {
+  transform: scale(1.15);
+}
+.perfil-pass-eye.is-visible .eye-ball {
+  /* via attr — CSS puro não anima attr rx/ry, usamos filter como proxy */
+}
+.perfil-pass-eye.is-visible { color: var(--orange); }
+
+/* ── Password fields expand ── */
+.perfil-pass-fields {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .38s cubic-bezier(.4,0,.2,1), opacity .28s ease;
+}
+.perfil-pass-fields.is-open {
+  max-height: 320px;
+  opacity: 1;
+}
+
+/* ── Catálogo panel ── */
+.perfil-catalogo-wrap { padding: 2rem 0; }
+.perfil-catalogo-upload {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .5rem; padding: 2rem 1.5rem;
+  border: 1.5px dashed rgba(150,140,130,.35); border-radius: var(--r-lg);
+  cursor: pointer; transition: border-color .2s, background .2s;
+  text-align: center; color: var(--gray-mid);
+  margin-bottom: 1.75rem;
+}
+.perfil-catalogo-upload:hover,
+.perfil-catalogo-upload.is-dragover {
+  border-color: var(--orange);
+  background: rgba(240,120,0,.04);
+  color: var(--orange);
+}
+.perfil-catalogo-upload__text { font-family: var(--font-sans); font-size: .85rem; font-weight: 600; }
+.perfil-catalogo-upload__hint { font-family: var(--font-sans); font-size: .72rem; opacity: .65; }
+.perfil-catalogo-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+}
+.perfil-catalogo-card {
+  position: relative; border-radius: var(--r-lg);
+  border: 1px solid var(--gray-line); overflow: hidden;
+  background: var(--white); transition: box-shadow .2s;
+}
+.perfil-catalogo-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+.perfil-catalogo-card__thumb {
+  width: 100%; height: 120px; object-fit: cover; display: block;
+}
+.perfil-catalogo-card__icon {
+  width: 100%; height: 100px; display: flex; align-items: center; justify-content: center;
+  background: var(--off-white); color: var(--gray-mid);
+}
+.perfil-catalogo-card__body { padding: .75rem .9rem .85rem; }
+.perfil-catalogo-card__name {
+  font-family: var(--font-sans); font-size: .8rem; font-weight: 600;
+  color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin: 0 0 .2rem;
+}
+.perfil-catalogo-card__meta {
+  font-family: var(--font-sans); font-size: .7rem; color: var(--gray-mid); margin: 0;
+}
+.perfil-catalogo-card__remove {
+  position: absolute; top: .5rem; right: .5rem;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,.45); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; opacity: 0; transition: opacity .2s;
+}
+.perfil-catalogo-card:hover .perfil-catalogo-card__remove { opacity: 1; }
+.perfil-catalogo-card__remove:hover { background: #EF4444; }
+[data-theme="dark"] .perfil-catalogo-card { background: #1a1a1a; border-color: rgba(255,255,255,.1); }
+[data-theme="dark"] .perfil-catalogo-card__icon { background: #111; }
+[data-theme="dark"] .perfil-catalogo-card__name { color: #f0ece4; }
+[data-theme="dark"] .perfil-catalogo-upload { border-color: rgba(255,255,255,.15); color: rgba(255,255,255,.4); }
+[data-theme="dark"] .perfil-catalogo-upload:hover { border-color: var(--orange); color: var(--orange); background: rgba(240,120,0,.06); }
+@media (max-width: 640px) {
+  .perfil-catalogo-grid { grid-template-columns: 1fr; }
+}
+
 .perfil-hero__name {
   font-family: var(--font-serif);
   font-size: clamp(1.6rem, 3vw, 2.2rem);

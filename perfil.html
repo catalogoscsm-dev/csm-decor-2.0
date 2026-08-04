@@ -64,6 +64,7 @@
         <!-- Info -->
         <div class="perfil-hero__info">
           <span class="perfil-role-badge" id="js-role-badge">Cliente</span>
+          <span class="perfil-partner-badge" id="js-partner-badge" hidden></span>
           <h1 class="perfil-hero__name" id="js-perfil-name">Carregando...</h1>
           <p class="perfil-hero__email" id="js-perfil-email"></p>
           <p class="perfil-hero__bio" id="js-perfil-bio"></p>
@@ -114,7 +115,7 @@
         </div>
         <div class="perfil-edit-row" id="js-edit-cnpj-row" style="display:none">
           <label class="perfil-edit-label" for="edit-cnpj">CNPJ</label>
-          <input class="perfil-edit-input" type="text" id="edit-cnpj" placeholder="00.000.000/0001-00" />
+          <input class="perfil-edit-input" type="text" id="edit-cnpj" placeholder="00.000.000/0001-00" inputmode="numeric" maxlength="18" oninput="formatCNPJInput(this)" />
         </div>
       </div>
       <div class="perfil-edit-actions">
@@ -124,22 +125,60 @@
 
       <!-- Alterar senha -->
       <div class="perfil-edit-fields" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-line)">
-        <p style="font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:1rem">Alterar senha</p>
-        <div class="perfil-edit-row">
-          <label class="perfil-edit-label" for="edit-pass-current">Senha atual</label>
-          <input class="perfil-edit-input" type="password" id="edit-pass-current" placeholder="Sua senha atual" autocomplete="current-password" />
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem">
+          <p style="font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin:0">Alterar senha</p>
+          <button class="btn btn--outline btn--sm" id="js-btn-toggle-pass" onclick="togglePassFields()">Alterar senha</button>
         </div>
-        <div class="perfil-edit-row">
-          <label class="perfil-edit-label" for="edit-pass-new">Nova senha</label>
-          <input class="perfil-edit-input" type="password" id="edit-pass-new" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
-        </div>
-        <div class="perfil-edit-row">
-          <label class="perfil-edit-label" for="edit-pass-confirm">Confirmar nova senha</label>
-          <input class="perfil-edit-input" type="password" id="edit-pass-confirm" placeholder="Repita a nova senha" autocomplete="new-password" />
-        </div>
-        <p id="perfil-pass-error" style="display:none;color:#c0392b;font-size:.8rem;margin:.25rem 0"></p>
-        <div style="margin-top:.75rem">
-          <button class="btn btn--outline btn--sm" onclick="handleChangePassword()">Alterar senha</button>
+        <div id="js-pass-fields" class="perfil-pass-fields">
+          <div style="margin-top:1rem">
+            <div class="perfil-edit-row">
+              <label class="perfil-edit-label" for="edit-pass-current">Senha atual</label>
+              <div class="perfil-pass-wrap">
+                <input class="perfil-edit-input" type="password" id="edit-pass-current" placeholder="Sua senha atual" autocomplete="current-password" />
+                <div class="perfil-pass-curtain" aria-hidden="true"></div>
+                <button type="button" class="perfil-pass-eye" onclick="togglePassVis('edit-pass-current',this)" aria-label="Mostrar senha" tabindex="-1">
+                  <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <ellipse class="eye-ball" cx="12" cy="12" rx="9" ry="5.5"/>
+                    <circle class="eye-pupil" cx="12" cy="12" r="2.4"/>
+                    <line class="eye-slash" x1="3" y1="3" x2="21" y2="21"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="perfil-edit-row">
+              <label class="perfil-edit-label" for="edit-pass-new">Nova senha</label>
+              <div class="perfil-pass-wrap">
+                <input class="perfil-edit-input" type="password" id="edit-pass-new" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+                <div class="perfil-pass-curtain" aria-hidden="true"></div>
+                <button type="button" class="perfil-pass-eye" onclick="togglePassVis('edit-pass-new',this)" aria-label="Mostrar senha" tabindex="-1">
+                  <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <ellipse class="eye-ball" cx="12" cy="12" rx="9" ry="5.5"/>
+                    <circle class="eye-pupil" cx="12" cy="12" r="2.4"/>
+                    <line class="eye-slash" x1="3" y1="3" x2="21" y2="21"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="perfil-edit-row">
+              <label class="perfil-edit-label" for="edit-pass-confirm">Confirmar nova senha</label>
+              <div class="perfil-pass-wrap">
+                <input class="perfil-edit-input" type="password" id="edit-pass-confirm" placeholder="Repita a nova senha" autocomplete="new-password" />
+                <div class="perfil-pass-curtain" aria-hidden="true"></div>
+                <button type="button" class="perfil-pass-eye" onclick="togglePassVis('edit-pass-confirm',this)" aria-label="Mostrar senha" tabindex="-1">
+                  <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <ellipse class="eye-ball" cx="12" cy="12" rx="9" ry="5.5"/>
+                    <circle class="eye-pupil" cx="12" cy="12" r="2.4"/>
+                    <line class="eye-slash" x1="3" y1="3" x2="21" y2="21"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <p id="perfil-pass-error" style="display:none;color:#c0392b;font-size:.8rem;margin:.25rem 0"></p>
+            <div style="margin-top:.75rem;display:flex;gap:.5rem">
+              <button class="btn btn--outline btn--sm" onclick="handleChangePassword()">Confirmar</button>
+              <button class="btn btn--ghost btn--sm" onclick="togglePassFields()">Cancelar</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,6 +190,7 @@
       <button class="perfil-tab-btn active" data-tab="avaliacoes" onclick="switchPerfilTab('avaliacoes')">Avaliações</button>
       <button class="perfil-tab-btn" data-tab="favoritos" onclick="switchPerfilTab('favoritos')">Favoritos</button>
       <button class="perfil-tab-btn perfil-tab-btn--arq" id="js-tab-moodboard" data-tab="moodboard" onclick="switchPerfilTab('moodboard')">Moodboard</button>
+      <button class="perfil-tab-btn perfil-tab-btn--forn" id="js-tab-catalogo" data-tab="catalogo" onclick="switchPerfilTab('catalogo')">Catálogo</button>
     </div>
   </div>
 
@@ -170,6 +210,11 @@
     <!-- Moodboard (arquitetos) -->
     <div class="perfil-panel" id="panel-moodboard">
       <div id="js-moodboard-list" class="perfil-fav-grid"></div>
+    </div>
+
+    <!-- Catálogo (fornecedores) -->
+    <div class="perfil-panel" id="panel-catalogo">
+      <div class="perfil-catalogo-wrap" id="js-catalogo-content"></div>
     </div>
 
   </div>
@@ -267,9 +312,10 @@
     });
   }());
 
-  // ── Redireciona se não logado ─────────────────────────────────────
+  // ── Redireciona se não logado (exceto em perfis públicos) ─────────
+  var _publicEmail = new URLSearchParams(location.search).get('user') || '';
   var _session = CSMAuth.getSession();
-  if (!_session) {
+  if (!_session && !_publicEmail) {
     window.location.replace('index.html');
   }
 
@@ -293,17 +339,29 @@
     badge.style.background = color;
     if (user.tipo && user.tipo !== 'comum') badge.classList.add('perfil-role-badge--' + user.tipo);
 
+    // Partner badge
+    var partnerBadge = document.getElementById('js-partner-badge');
+    if (user.isPartner) {
+      partnerBadge.innerHTML = '<span class="perfil-partner-badge__shimmer" aria-hidden="true"></span>&#10022; Parceiro Oficial';
+      partnerBadge.classList.add('perfil-partner-badge--ativo');
+    } else {
+      partnerBadge.textContent = 'Solicitar Parceria';
+      partnerBadge.classList.add('perfil-partner-badge--inativo');
+    }
+    partnerBadge.removeAttribute('hidden');
+
     // Infos
     var namePrefix = user.genero === 'masculino' ? 'Sr. ' : user.genero === 'feminino' ? 'Sra. ' : '';
     document.getElementById('js-perfil-name').textContent  = namePrefix + (user.name || session.name);
     document.getElementById('js-perfil-email').textContent = user.email || session.email;
 
     var bioEl = document.getElementById('js-perfil-bio');
-    if (user.bio) bioEl.textContent = user.bio;
-    else bioEl.hidden = true;
+    bioEl.hidden = !user.bio;
+    bioEl.textContent = user.bio || '';
 
     // Social
     var socialEl = document.getElementById('js-perfil-social');
+    socialEl.hidden = false;
     if (user.instagram) {
       var instaHandle = user.instagram.replace(/^@/, '');
       socialEl.innerHTML =
@@ -327,6 +385,12 @@
     if (user.tipo === 'arquiteto' || user.tipo === 'admin') {
       document.getElementById('js-tab-moodboard').classList.add('visible');
       document.getElementById('js-stat-moodboard-wrap').style.display = '';
+    }
+
+    // Catálogo tab: visível apenas para fornecedores (e admin)
+    if (user.tipo === 'fornecedor' || user.tipo === 'admin') {
+      document.getElementById('js-tab-catalogo').classList.add('visible');
+      renderCatalogo(user.email);
     }
 
     // Edit form: pré-preenche
@@ -609,6 +673,175 @@
     }).join('');
   }
 
+  // ── Catálogo (fornecedores) ───────────────────────────────────────
+  var _catalogEmail = '';
+
+  function getCatalogKey(email) { return 'csm-catalogs-' + email.toLowerCase(); }
+
+  function getCatalogItems(email) {
+    try { return JSON.parse(localStorage.getItem(getCatalogKey(email)) || '[]'); } catch(e) { return []; }
+  }
+
+  function saveCatalogItems(email, items) {
+    localStorage.setItem(getCatalogKey(email), JSON.stringify(items));
+  }
+
+  function renderCatalogo(email) {
+    _catalogEmail = email;
+    var container = document.getElementById('js-catalogo-content');
+    var items     = getCatalogItems(email);
+    var uploadId  = 'catalog-upload-input';
+    var html = '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem">'
+      + '<p class="eyebrow" style="margin:0">Meus Catálogos'
+      + (items.length ? ' <small style="font-size:.7rem;opacity:.55;text-transform:none;letter-spacing:0">(' + items.length + ')</small>' : '')
+      + '</p>'
+      + (items.length ? '<button class="btn btn--primary btn--sm" onclick="sendCatalogByEmail()">&#9993; Enviar para CSM</button>' : '')
+      + '</div>'
+      + '<label class="perfil-catalogo-upload" for="' + uploadId + '">'
+      + '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'
+      + '<span class="perfil-catalogo-upload__text">Arraste ou clique para enviar</span>'
+      + '<span class="perfil-catalogo-upload__hint">PDF, JPG, PNG — máx 5 MB por arquivo</span>'
+      + '<input type="file" id="' + uploadId + '" accept=".pdf,image/jpeg,image/png,image/webp" multiple style="display:none" onchange="handleCatalogUpload(this)" />'
+      + '</label>';
+
+    if (items.length) {
+      html += '<div class="perfil-catalogo-grid">'
+        + items.map(function(item) {
+            var isPdf = item.type === 'application/pdf';
+            var thumb = !isPdf && item.dataUrl
+              ? '<img class="perfil-catalogo-card__thumb" src="' + item.dataUrl + '" alt="' + esc(item.name) + '" />'
+              : '<div class="perfil-catalogo-card__icon">'
+                + (isPdf
+                    ? '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg>'
+                    : '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>')
+                + '</div>';
+            var date = new Date(item.date).toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' });
+            var size = item.size < 1024*1024
+              ? Math.round(item.size/1024) + ' KB'
+              : (item.size/(1024*1024)).toFixed(1) + ' MB';
+            return '<div class="perfil-catalogo-card">'
+              + thumb
+              + '<div class="perfil-catalogo-card__body">'
+              + '<p class="perfil-catalogo-card__name" title="' + esc(item.name) + '">' + esc(item.name) + '</p>'
+              + '<p class="perfil-catalogo-card__meta">' + size + ' · ' + date + '</p>'
+              + '</div>'
+              + '<button class="perfil-catalogo-card__remove" onclick="removeCatalogItem(\'' + esc(item.id) + '\')" title="Remover" aria-label="Remover arquivo">'
+              + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+              + '</button>'
+              + '</div>';
+          }).join('')
+        + '</div>';
+    } else {
+      html += '<div class="perfil-empty" style="margin-top:1.5rem">'
+        + '<div class="perfil-empty__icon">&#128196;</div>'
+        + '<p class="perfil-empty__title">Nenhum catálogo enviado</p>'
+        + '<p class="perfil-empty__sub">Envie seus catálogos e fichas técnicas para nossa equipe avaliar.</p>'
+        + '</div>';
+    }
+
+    container.innerHTML = html;
+
+    // Drag & drop
+    var uploadArea = container.querySelector('.perfil-catalogo-upload');
+    uploadArea.addEventListener('dragover', function(e) { e.preventDefault(); uploadArea.classList.add('is-dragover'); });
+    uploadArea.addEventListener('dragleave', function() { uploadArea.classList.remove('is-dragover'); });
+    uploadArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      uploadArea.classList.remove('is-dragover');
+      handleCatalogFiles(e.dataTransfer.files);
+    });
+  }
+
+  function handleCatalogUpload(input) {
+    handleCatalogFiles(input.files);
+    input.value = '';
+  }
+
+  function handleCatalogFiles(fileList) {
+    var files   = Array.prototype.slice.call(fileList);
+    var email   = _catalogEmail;
+    var items   = getCatalogItems(email);
+    var pending = files.length;
+
+    if (!pending) return;
+
+    files.forEach(function(file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert('O arquivo "' + file.name + '" excede 5 MB e não foi adicionado.');
+        pending--;
+        if (!pending) renderCatalogo(email);
+        return;
+      }
+      var item = {
+        id:   Date.now() + '-' + Math.random().toString(36).slice(2),
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        date: Date.now(),
+        dataUrl: null
+      };
+      var isImage = file.type.startsWith('image/');
+      if (isImage) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          item.dataUrl = e.target.result;
+          items.unshift(item);
+          pending--;
+          try {
+            saveCatalogItems(email, items);
+          } catch(ex) {
+            items[0].dataUrl = null;
+            try { saveCatalogItems(email, items); } catch(ex2) {
+              alert('Espaço insuficiente no armazenamento local. Remova itens antigos.');
+              items.shift();
+            }
+          }
+          if (!pending) renderCatalogo(email);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        items.unshift(item);
+        pending--;
+        try { saveCatalogItems(email, items); } catch(ex) {
+          alert('Espaço insuficiente no armazenamento local. Remova itens antigos.');
+          items.shift();
+        }
+        if (!pending) renderCatalogo(email);
+      }
+    });
+  }
+
+  function sendCatalogByEmail() {
+    var session = CSMAuth.getSession();
+    var items   = getCatalogItems(_catalogEmail);
+    if (!items.length) return;
+
+    var nome  = (session && session.name) || 'Fornecedor';
+    var email = (session && session.email) || '';
+    var lista = items.map(function(it, i) {
+      var size = it.size < 1024*1024
+        ? Math.round(it.size/1024) + ' KB'
+        : (it.size/(1024*1024)).toFixed(1) + ' MB';
+      return (i+1) + '. ' + it.name + ' (' + size + ')';
+    }).join('\n');
+
+    var texto = encodeURIComponent(
+      'Olá, equipe CSM Decor! 👋\n\n'
+      + 'Sou ' + nome + ' (' + email + ') e gostaria de enviar meus catálogos para avaliação de parceria:\n\n'
+      + lista + '\n\n'
+      + 'Por favor, me orientem sobre como enviar os arquivos. Obrigado(a)!'
+    );
+
+    window.open('https://wa.me/5519990034068?text=' + texto, '_blank');
+  }
+
+  function removeCatalogItem(id) {
+    var email = _catalogEmail;
+    var items = getCatalogItems(email).filter(function(i) { return i.id !== id; });
+    saveCatalogItems(email, items);
+    renderCatalogo(email);
+  }
+
   // ── Tabs ──────────────────────────────────────────────────────────
   function switchPerfilTab(tab) {
     document.querySelectorAll('.perfil-tab-btn').forEach(function(btn) {
@@ -620,6 +853,56 @@
   }
 
   // ── Edit panel ────────────────────────────────────────────────────
+  function togglePassVis(inputId, btn) {
+    var input   = document.getElementById(inputId);
+    var curtain = input.parentElement.querySelector('.perfil-pass-curtain');
+    var showing = input.type === 'text';
+
+    btn.classList.toggle('is-visible', !showing);
+    btn.setAttribute('aria-label', showing ? 'Mostrar senha' : 'Ocultar senha');
+
+    if (!showing) {
+      // Revelar: posiciona cortina cobrindo o input, troca para text, desliza para fora à direita
+      curtain.style.transition = 'none';
+      curtain.style.transform  = 'translateX(0)';
+      input.type = 'text';
+      void curtain.offsetWidth;
+      curtain.style.transition = 'transform .75s cubic-bezier(.4,0,.2,1)';
+      curtain.style.transform  = 'translateX(110%)';
+    } else {
+      // Ocultar: cortina entra pela esquerda cobrindo o texto, depois troca para password e some
+      curtain.style.transition = 'none';
+      curtain.style.transform  = 'translateX(-110%)';
+      void curtain.offsetWidth;
+      curtain.style.transition = 'transform .75s cubic-bezier(.4,0,.2,1)';
+      curtain.style.transform  = 'translateX(0)';
+      var done = function() {
+        curtain.removeEventListener('transitionend', done);
+        input.type = 'password';
+        curtain.style.transition = 'none';
+        curtain.style.transform  = 'translateX(110%)';
+      };
+      curtain.addEventListener('transitionend', done);
+    }
+  }
+
+  function togglePassFields() {
+    var fields = document.getElementById('js-pass-fields');
+    var btn    = document.getElementById('js-btn-toggle-pass');
+    var open   = fields.classList.contains('is-open');
+    if (!open) {
+      ['edit-pass-current','edit-pass-new','edit-pass-confirm'].forEach(function(id){
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('perfil-pass-error').style.display = 'none';
+      fields.classList.add('is-open');
+      btn.textContent = 'Cancelar';
+    } else {
+      fields.classList.remove('is-open');
+      btn.textContent = 'Alterar senha';
+    }
+  }
+
   var _editOpen = false;
   function toggleEditPanel() {
     _editOpen = !_editOpen;
@@ -758,11 +1041,114 @@
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  // ── Perfil público (somente leitura) ─────────────────────────────
+  function initPublicPerfil(targetEmail) {
+    var allUsers = CSMAuth.getUsers ? CSMAuth.getUsers() : [];
+    var user     = allUsers.find(function(u){ return (u.email||'').toLowerCase() === targetEmail.toLowerCase(); });
+
+    if (!user) {
+      document.getElementById('perfil-hero').innerHTML =
+        '<div class="container" style="padding:4rem 0;text-align:center">'
+        + '<p style="font-size:1.1rem;color:var(--gray-mid)">Perfil não encontrado.</p>'
+        + '<a href="javascript:history.back()" class="btn btn--outline btn--sm" style="margin-top:1rem">← Voltar</a>'
+        + '</div>';
+      return;
+    }
+
+    // Oculta elementos que não fazem sentido no modo público
+    ['js-edit-panel','js-edit-panel'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.hidden = true;
+    });
+    var editPanel = document.getElementById('js-edit-panel');
+    if (editPanel) editPanel.hidden = true;
+    var tabBar = document.querySelector('.perfil-tabs-bar');
+    if (tabBar) tabBar.hidden = true;
+    var panels = document.querySelectorAll('.perfil-panel');
+    panels.forEach(function(p){ p.hidden = true; });
+
+    // Avatar e avatar overlay (remove botão de troca)
+    var avatarWrap = document.getElementById('js-avatar-wrap');
+    if (avatarWrap) {
+      avatarWrap.onclick  = null;
+      avatarWrap.title    = '';
+      avatarWrap.style.cursor = 'default';
+      var overlay = avatarWrap.querySelector('.perfil-avatar-overlay');
+      if (overlay) overlay.hidden = true;
+    }
+    var removeBtn = document.getElementById('js-btn-remove-photo');
+    if (removeBtn) removeBtn.hidden = true;
+
+    // Renderiza dados do usuário-alvo
+    renderAvatar(user);
+
+    var badge    = document.getElementById('js-role-badge');
+    var roleMap  = { admin: 'Admin', arquiteto: 'Arquiteto', fornecedor: 'Fornecedor', comum: 'Cliente' };
+    var color    = CSMAuth.ROLE_COLORS[user.tipo] || CSMAuth.ROLE_COLORS.comum;
+    badge.textContent = roleMap[user.tipo] || 'Cliente';
+    badge.style.background = color;
+    if (user.tipo && user.tipo !== 'comum') badge.classList.add('perfil-role-badge--' + user.tipo);
+
+    var partnerBadge = document.getElementById('js-partner-badge');
+    if (partnerBadge) {
+      if (user.isPartner) {
+        partnerBadge.innerHTML = '<span class="perfil-partner-badge__shimmer" aria-hidden="true"></span>&#10022; Parceiro Oficial';
+        partnerBadge.classList.add('perfil-partner-badge--ativo');
+      } else {
+        partnerBadge.hidden = true;
+      }
+      partnerBadge.removeAttribute('hidden');
+      if (!user.isPartner) partnerBadge.hidden = true;
+    }
+
+    var namePrefix = user.genero === 'masculino' ? 'Sr. ' : user.genero === 'feminino' ? 'Sra. ' : '';
+    document.getElementById('js-perfil-name').textContent  = namePrefix + user.name;
+    document.getElementById('js-perfil-email').hidden = true;
+
+    var bioEl = document.getElementById('js-perfil-bio');
+    bioEl.hidden = !user.bio;
+    bioEl.textContent = user.bio || '';
+
+    var socialEl = document.getElementById('js-perfil-social');
+    socialEl.hidden = false;
+    if (user.instagram) {
+      var instaHandle = user.instagram.replace(/^@/, '');
+      socialEl.innerHTML = '<a class="perfil-social-link" href="https://instagram.com/' + instaHandle + '" target="_blank" rel="noopener">'
+        + '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'
+        + '@' + instaHandle + '</a>';
+    } else { socialEl.hidden = true; }
+
+    // Stats: apenas avaliações
+    var reviews = getUserReviews(user.email);
+    document.getElementById('js-stat-avaliacoes').textContent = reviews.length;
+    document.getElementById('js-stat-favoritos').parentElement.hidden = true;
+    var moodWrap = document.getElementById('js-stat-moodboard-wrap');
+    if (moodWrap) moodWrap.hidden = true;
+
+    // CTAs: só "Voltar"
+    var ctasEl = document.querySelector('.perfil-hero__ctas');
+    if (ctasEl) ctasEl.innerHTML = '<a href="javascript:history.back()" class="btn btn--outline btn--sm">← Voltar</a>';
+
+    // Painel de avaliações público
+    var panelAval = document.getElementById('panel-avaliacoes');
+    if (panelAval) {
+      panelAval.hidden = false;
+      panelAval.classList.add('active');
+      renderAvaliacoes(reviews);
+      // Remove botões de editar/excluir dos cards (são avaliações de outro usuário)
+      panelAval.querySelectorAll('.review-action-btn').forEach(function(b){ b.closest('.perfil-review-actions') && (b.closest('.perfil-review-actions').hidden = true); });
+    }
+
+    // Título da página
+    document.title = 'Perfil de ' + user.name + ' — CSM Decor';
+  }
+
   // ── Run ───────────────────────────────────────────────────────────
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPerfil);
+    document.addEventListener('DOMContentLoaded', function() {
+      _publicEmail ? initPublicPerfil(_publicEmail) : initPerfil();
+    });
   } else {
-    initPerfil();
+    _publicEmail ? initPublicPerfil(_publicEmail) : initPerfil();
   }
 
   </script>

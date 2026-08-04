@@ -690,6 +690,18 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
+.review-card__author-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+  transition: opacity .18s;
+}
+.review-card__author-link:hover { opacity: .72; }
+.review-card__author-link:hover .review-card__name { color: var(--orange); }
 .review-card__avatar {
   width: 44px;
   height: 44px;

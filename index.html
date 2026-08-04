@@ -1391,7 +1391,7 @@
         </div>
         <div class="auth-tipo__extra arq-form__row" data-tipo="fornecedor" hidden>
           <label class="arq-form__label" for="auth-reg-cnpj">CNPJ da empresa</label>
-          <input class="arq-form__input" type="text" id="auth-reg-cnpj" placeholder="00.000.000/0001-00" />
+          <input class="arq-form__input" type="text" id="auth-reg-cnpj" placeholder="00.000.000/0001-00" inputmode="numeric" maxlength="18" oninput="formatCNPJInput(this)" />
         </div>
         <p class="arq-form__error" id="auth-reg-error" style="display:none;"></p>
         <button type="button" class="btn btn--primary arq-form__submit" onclick="CSMAuth.doRegister()">Criar minha conta</button>

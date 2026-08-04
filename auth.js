@@ -99,7 +99,7 @@
       users.unshift({
         name: 'Admin CSM', email: 'admin@csmdecor.com.br', password: 'CSMAdmin2026',
         role: 'admin', tipo: 'comum', genero: 'masculino',
-        photoUrl: '', bio: '', created: Date.now(), verified: true
+        photoUrl: '', bio: '', created: Date.now(), verified: true, isPartner: true
       });
       saveUsers(users);
     }
@@ -228,7 +228,7 @@
     if (!EMAIL_RE.test(email)) return showErr(errEl, 'Informe um endereço de e-mail válido (ex: nome@dominio.com).');
     if (pass.length < 6) return showErr(errEl, 'Senha deve ter ao menos 6 caracteres.');
     if (tipo === 'arquiteto' && !cau) return showErr(errEl, 'Preencha seu Registro CAU / CFT.');
-    if (tipo === 'fornecedor' && !cnpj) return showErr(errEl, 'Preencha o CNPJ da empresa.');
+    if (tipo === 'fornecedor' && cnpj.replace(/\D/g,'').length !== 14) return showErr(errEl, 'CNPJ inválido. Digite os 14 dígitos.');
     var users = getUsers();
     if (users.find(function (u) { return u.email.toLowerCase() === email; })) {
       return showErr(errEl, 'E-mail já cadastrado. Faça login.');
@@ -239,7 +239,7 @@
       name: name, email: email, password: pass,
       role: 'user', tipo: tipo, genero: genero, cau: cau, cnpj: cnpj,
       photoUrl: '', bio: '', instagram: '', created: Date.now(),
-      verified: false, verificationCode: code
+      verified: false, verificationCode: code, isPartner: false
     };
     users.push(newUser);
     saveUsers(users);
@@ -639,6 +639,18 @@
     clearTimeout(el._t);
     el._t = setTimeout(function () { el.style.opacity = '0'; }, 3000);
   }
+
+  // ── Utilidade: máscara CNPJ ──────────────────────────────────────
+  function formatCNPJInput(input) {
+    var d = input.value.replace(/\D/g, '').slice(0, 14);
+    var v = d;
+    if (d.length > 12)      v = d.slice(0,2)+'.'+d.slice(2,5)+'.'+d.slice(5,8)+'/'+d.slice(8,12)+'-'+d.slice(12);
+    else if (d.length > 8)  v = d.slice(0,2)+'.'+d.slice(2,5)+'.'+d.slice(5,8)+'/'+d.slice(8);
+    else if (d.length > 5)  v = d.slice(0,2)+'.'+d.slice(2,5)+'.'+d.slice(5);
+    else if (d.length > 2)  v = d.slice(0,2)+'.'+d.slice(2);
+    input.value = v;
+  }
+  window.formatCNPJInput = formatCNPJInput;
 
   // ── API pública ───────────────────────────────────────────────────
   window.CSMAuth = {
