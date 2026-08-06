@@ -209,6 +209,12 @@
 
     <!-- Moodboard (arquitetos) -->
     <div class="perfil-panel" id="panel-moodboard">
+      <div style="margin-bottom:1.25rem;display:flex;justify-content:flex-end;">
+        <a href="moodboard.html" class="btn btn--outline" style="font-size:.75rem;padding:.4rem 1rem;border-color:var(--orange);color:var(--orange);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Abrir moodboard completo
+        </a>
+      </div>
       <div id="js-moodboard-list" class="perfil-fav-grid"></div>
     </div>
 
@@ -494,68 +500,6 @@
 
   var _editStars = 0;
 
-  // ── Reações (like / dislike / compartilhar) ───────────────────────
-  function getReactData(storageKey, reviewId) {
-    try { return JSON.parse(localStorage.getItem('csm-react-' + storageKey + '-' + reviewId) || '{"l":[],"d":[]}'); }
-    catch(_) { return {l:[], d:[]}; }
-  }
-  function saveReactData(storageKey, reviewId, data) {
-    localStorage.setItem('csm-react-' + storageKey + '-' + reviewId, JSON.stringify(data));
-  }
-  function handleReaction(storageKey, reviewId, type) {
-    var session = CSMAuth.getSession ? CSMAuth.getSession() : null;
-    if (!session) { alert('Faça login para reagir às avaliações.'); return; }
-    var email = session.email.toLowerCase();
-    var data  = getReactData(storageKey, reviewId);
-    var other = type === 'l' ? 'd' : 'l';
-    data[other] = data[other].filter(function(e){ return e !== email; });
-    var idx = data[type].indexOf(email);
-    if (idx >= 0) data[type].splice(idx, 1); else data[type].push(email);
-    saveReactData(storageKey, reviewId, data);
-    var pid = 'preact-' + storageKey + '-' + reviewId;
-    var lBtn = document.getElementById(pid + '-l');
-    var dBtn = document.getElementById(pid + '-d');
-    if (lBtn) { lBtn.querySelector('.rct').textContent = data.l.length || ''; lBtn.classList.toggle('is-active', data.l.indexOf(email) >= 0); }
-    if (dBtn) { dBtn.querySelector('.rct').textContent = data.d.length || ''; dBtn.classList.toggle('is-active', data.d.indexOf(email) >= 0); }
-  }
-  function handleShare(text, product) {
-    var msg = '"' + text + '"\n— Sobre ' + product + ' · CSM Decor';
-    var done = function(btn) {
-      if (!btn) return;
-      var orig = btn.innerHTML; btn.innerHTML = '✓ Copiado!'; btn.classList.add('is-active');
-      setTimeout(function(){ btn.innerHTML = orig; btn.classList.remove('is-active'); }, 1800);
-    };
-    var btn = event && event.currentTarget;
-    if (navigator.clipboard) { navigator.clipboard.writeText(msg).then(function(){ done(btn); }); return; }
-    try {
-      var ta = document.createElement('textarea'); ta.value = msg;
-      ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta);
-      ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(btn);
-    } catch(_) {}
-  }
-  function reactBarHtml(storageKey, reviewId, text, product) {
-    var data = getReactData(storageKey, reviewId);
-    var session = CSMAuth.getSession ? CSMAuth.getSession() : null;
-    var email   = session ? session.email.toLowerCase() : '';
-    var pid = 'preact-' + storageKey + '-' + reviewId;
-    var sKey = storageKey.replace(/'/g,"\\'");
-    var safeText = (text||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    var safeProd = (product||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    var isLiked    = email && data.l.indexOf(email) >= 0;
-    var isDisliked = email && data.d.indexOf(email) >= 0;
-    var thumbUp   = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>';
-    var thumbDown = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>';
-    var shareSvg  = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
-    return '<div class="review-react-bar">'
-      + '<button id="' + pid + '-l" class="review-react-btn' + (isLiked    ? ' is-active' : '') + '" onclick="handleReaction(\'' + sKey + '\',' + reviewId + ',\'l\')" title="Útil">'
-      + thumbUp + '<span class="rct">' + (data.l.length || '') + '</span></button>'
-      + '<button id="' + pid + '-d" class="review-react-btn' + (isDisliked ? ' is-active' : '') + '" onclick="handleReaction(\'' + sKey + '\',' + reviewId + ',\'d\')" title="Não útil">'
-      + thumbDown + '<span class="rct">' + (data.d.length || '') + '</span></button>'
-      + '<button class="review-react-btn review-react-btn--share" onclick="handleShare(\'' + safeText + '\',\'' + safeProd + '\')" title="Copiar avaliação">'
-      + shareSvg + ' Compartilhar</button>'
-      + '</div>';
-  }
-
   // ── Renderiza avaliações ──────────────────────────────────────────
   function renderAvaliacoes(reviews, isOwner) {
     var container = document.getElementById('js-avaliacoes-list');
@@ -591,10 +535,7 @@
         + '</div>'
         + '<p class="google-review-card__text" style="-webkit-line-clamp:unset">' + esc(r.text) + '</p>'
         + '</article></a>'
-        + '<div class="review-actions" style="border-top:1px solid var(--gray-line);display:flex;align-items:center;flex-wrap:wrap;gap:0;">'
-        + ownerActions
-        + reactBarHtml(r._storageKey || '', rId, r.text, r.product || 'Produto')
-        + '</div>'
+        + (ownerActions ? '<div class="review-actions" style="border-top:1px solid var(--gray-line);display:flex;align-items:center;flex-wrap:wrap;gap:0;">' + ownerActions + '</div>' : '')
         + '</div>';
     }).join('');
 

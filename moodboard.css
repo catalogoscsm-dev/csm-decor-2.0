@@ -716,3 +716,46 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .mb-header__actions .btn span { display: none; }
   .mb-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
 }
+
+/* ── Modo visualização (link compartilhado com cliente) ── */
+.is-view-mode #share-btn,
+.is-view-mode #print-btn { display: none; }
+
+.is-view-mode .mb-hero__title,
+.is-view-mode .mb-hero__meta-input {
+  pointer-events: none;
+  border-color: transparent;
+  background: transparent;
+}
+
+.is-view-mode .mb-hero__title { cursor: default; }
+
+/* CTA do modo visualização */
+.mb-view-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: var(--darker);
+  color: #fff;
+  border-radius: var(--r-lg);
+  padding: 2rem 2.5rem;
+  margin-top: 3rem;
+}
+.mb-view-cta__label {
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  margin-bottom: .25rem;
+}
+.mb-view-cta__title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.2;
+}
+@media (max-width: 600px) {
+  .mb-view-cta { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+}

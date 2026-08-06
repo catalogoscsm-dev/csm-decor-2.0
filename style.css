@@ -733,7 +733,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .sec-divider {
   position: relative;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
 
   /* Full-bleed definitivo — ponta a ponta independente do contexto pai */
   width: 100vw;
