@@ -7378,6 +7378,157 @@ a.showroom-map__val:hover { color: var(--white); }
   color: rgba(255,255,255,.78);
 }
 
+/* ── Reviews Carousel ──────────────────────────────────────────── */
+.rc-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.rc-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 5rem;
+  background: linear-gradient(to right, transparent, var(--off-white));
+  pointer-events: none;
+  transition: opacity .4s ease;
+  z-index: 1;
+}
+.rc-wrap.is-last::after { opacity: 0; }
+
+.rc-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 1.25rem;
+  padding-bottom: .25rem;
+}
+.rc-track::-webkit-scrollbar { display: none; }
+
+.rc-page {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  scroll-snap-align: start;
+}
+
+/* Navegação */
+.rc-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.rc-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gray-line);
+  background: none;
+  color: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color .2s, color .2s;
+}
+.rc-btn:hover:not(:disabled) {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.rc-btn:disabled { opacity: .28; cursor: default; }
+
+.rc-progress {
+  width: 72px; height: 2px;
+  background: var(--gray-line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rc-progress__bar {
+  height: 100%;
+  width: 50%;
+  background: var(--orange);
+  border-radius: 2px;
+  transition: width .45s cubic-bezier(.4,0,.2,1);
+}
+
+.rc-counter {
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--gray-mid);
+  min-width: 3.2rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .rc-page { grid-template-columns: 1fr; }
+  .rc-wrap::after { display: none; }
+}
+
+/* ── Depoimentos — grid 2×2 e elementos de suporte ── */
+.dep-new__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.dep-new__header .rating-bar {
+  justify-content: center;
+  margin-bottom: 0;
+  margin-top: 1.25rem;
+}
+.dep-reviews-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.dep-new__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  gap: .6rem;
+  align-items: center;
+}
+.dep-new__cta .btn--outline {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+@media (max-width: 768px) {
+  .dep-reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* ── 3D Parallax Tilt — Review Cards ──────────────────────────── */
+.rc-page { perspective: 1200px; }
+
+.google-review-card {
+  position: relative;
+  will-change: transform;
+  overflow: hidden;
+}
+
+/* Glare de luz que segue o cursor */
+.rc-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity .4s ease;
+  mix-blend-mode: soft-light;
+}
+
+/* Camadas internas — transição suave ao resetar */
+.google-review-card__header,
+.google-review-card__stars,
+.google-review-card__text,
+.google-review-card__photos,
+.google-review-card__link {
+  transition: transform .08s linear;
+}
+
 /* ── Google Review cards (para quando o usuário colar os reviews) ── */
 .google-review-card {
   background: var(--white);
@@ -8295,4 +8446,38 @@ a.showroom-map__val:hover { color: var(--white); }
   .perfil-hero__social { justify-content: center; }
   .perfil-hero__stats { justify-content: center; }
   .perfil-hero__ctas { justify-content: center; }
+}
+
+/* ── Reveal de imagens com máscara ──────────────────────────────── */
+.img-reveal-wrap {
+  overflow: hidden;
+  display: block;
+  /* herda dimensões exatas do <img> original */
+  line-height: 0;
+}
+
+.img-reveal-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: inherit;
+  clip-path: inset(0 0 100% 0);
+  transform: scale(1.07);
+  will-change: clip-path, transform;
+  transition:
+    clip-path 1.05s cubic-bezier(0.77, 0, 0.175, 1),
+    transform  1.05s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-reveal-wrap.is-revealed img {
+  clip-path: inset(0 0 0% 0);
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-reveal-wrap img {
+    clip-path: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

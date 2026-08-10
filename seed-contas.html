@@ -2,66 +2,27 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8"/>
-  <title>Seed de Contas — CSM Dev</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Seed desativado — CSM</title>
   <style>
-    body { font-family: sans-serif; max-width: 500px; margin: 60px auto; padding: 0 1rem; }
-    h2   { margin-bottom: 1rem; }
-    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: .75rem; }
-    .card b { display: block; margin-bottom: .25rem; }
-    .ok  { color: #1a7a4a; font-weight: 600; }
-    .dup { color: #888; }
-    button { margin-top: 1.5rem; padding: .75rem 2rem; background: #F07800; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
-    button:hover { background: #c86200; }
+    body { font-family: sans-serif; max-width: 500px; margin: 80px auto; padding: 0 1.5rem; text-align: center; color: #333; }
+    h2   { color: #c0392b; }
+    p    { line-height: 1.6; color: #555; }
+    a    { color: #F07800; font-weight: 600; text-decoration: none; }
   </style>
 </head>
 <body>
-  <h2>Criar contas de teste</h2>
-  <div id="resultado"></div>
-  <button onclick="window.location.href='index.html'">Ir para o site</button>
-
-  <script>
-  (function() {
-    var KEY = 'csm-users';
-    var users = [];
-    try { users = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(_) {}
-
-    var contas = [
-      {
-        name: 'Carlos Silva', email: 'cliente@teste.com', password: 'teste123',
-        role: 'user', tipo: 'comum', genero: 'masculino',
-        bio: 'Cliente há 3 anos, apaixonado por design de interiores.',
-        instagram: '@carlos.silva', photoUrl: '', cau: '', cnpj: '', created: Date.now()
-      },
-      {
-        name: 'Ana Beatriz Lima', email: 'arquiteto@teste.com', password: 'teste123',
-        role: 'user', tipo: 'arquiteto', genero: 'feminino',
-        bio: 'Arquiteta com 10 anos de experiência em interiores residenciais de alto padrão.',
-        instagram: '@ana.arq', cau: 'CAU A 123456-7', cnpj: '', photoUrl: '', created: Date.now()
-      },
-      {
-        name: 'Móveis Premium Ltda', email: 'fornecedor@teste.com', password: 'teste123',
-        role: 'user', tipo: 'fornecedor', genero: 'neutro',
-        bio: 'Fornecedor premium de móveis e decoração para o segmento corporativo e residencial.',
-        instagram: '@moveispremium', cnpj: '12.345.678/0001-99', cau: '', photoUrl: '', created: Date.now()
-      }
-    ];
-
-    var html = '';
-    contas.forEach(function(c) {
-      var existe = users.find(function(u){ return u.email === c.email; });
-      if (!existe) {
-        users.push(c);
-        html += '<div class="card"><b class="ok">✅ Criada — ' + c.tipo + '</b>'
-          + 'Nome: ' + c.name + '<br/>E-mail: <b>' + c.email + '</b><br/>Senha: <b>' + c.password + '</b></div>';
-      } else {
-        html += '<div class="card"><b class="dup">⚠️ Já existia — ' + c.tipo + '</b>'
-          + c.email + '</div>';
-      }
-    });
-
-    localStorage.setItem(KEY, JSON.stringify(users));
-    document.getElementById('resultado').innerHTML = html;
-  }());
-  </script>
+  <h2>⚠️ Ferramenta desativada</h2>
+  <p>
+    O seed de contas via localStorage foi desativado.<br>
+    O sistema de autenticação agora usa <strong>Supabase</strong>.
+  </p>
+  <p>
+    Para criar contas de teste, acesse o painel do Supabase:<br>
+    <strong>Authentication › Users › Add user</strong>
+  </p>
+  <p style="margin-top:2rem">
+    <a href="index.html">← Voltar ao site</a>
+  </p>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8" />
@@ -271,6 +271,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="auth.js"></script>
   <script>
   /* Revela a página (remove cortina preta) */
@@ -318,21 +319,40 @@
     });
   }());
 
-  // ── Redireciona se não logado (exceto em perfis públicos) ─────────
+  // ── Inicialização assíncrona — aguarda Supabase resolver sessão ──────
   var _publicEmail = new URLSearchParams(location.search).get('user') || '';
-  var _session = CSMAuth.getSession();
-  if (!_session && !_publicEmail) {
-    window.location.replace('index.html');
-  }
+  var _isReset     = new URLSearchParams(location.search).get('reset') === '1';
+
+  CSMAuth.ready().then(function (readySession) {
+    if (_isReset && readySession) {
+      showPasswordResetUI();
+    } else if (!readySession && !_publicEmail) {
+      window.location.replace('index.html');
+    } else if (readySession) {
+      initPerfil();
+    }
+  });
 
   // ── Inicializa perfil ─────────────────────────────────────────────
   function initPerfil() {
     var session = CSMAuth.getSession();
     if (!session) return;
 
-    // Busca dados completos do usuário
-    var users = CSMAuth.getUsers();
-    var user  = users.find(function(u){ return u.email === session.email; }) || session;
+    var p = CSMAuth.getProfile() || {};
+    var user = {
+      id:        session.id,
+      email:     session.email,
+      name:      p.name      || session.name,
+      tipo:      p.tipo      || session.tipo,
+      genero:    p.genero    || session.genero,
+      photoUrl:  p.photo_url || '',
+      bio:       p.bio       || '',
+      instagram: p.instagram || '',
+      cau:       p.cau       || '',
+      cnpj:      p.cnpj      || '',
+      isPartner: p.is_partner || false,
+      role:      p.role      || session.role
+    };
 
     // Avatar e header
     renderAvatar(user);
@@ -921,16 +941,16 @@
     wrap.classList.toggle('perfil-avatar--editable', _editOpen);
     if (!_editOpen) {
       // Cancelar: descarta pending e restaura estado salvo
-      _pendingPhotoBase64 = null;
-      _removePhoto        = false;
+      _pendingPhotoFile = null;
+      _removePhoto      = false;
       initPerfil();
     }
   }
 
   // ── Upload de foto (via avatar do hero) ──────────────────────────
-  var _pendingPhotoBase64 = null;
-  var _removePhoto        = false;
-  var _savedPhotoUrl      = '';
+  var _pendingPhotoFile = null;   // File object aguardando upload
+  var _removePhoto      = false;
+  var _savedPhotoUrl    = '';
 
   function avatarClick() {
     if (!_editOpen) return;
@@ -964,31 +984,50 @@
       input.value = '';
       return;
     }
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var img = new Image();
-      img.onload = function() {
-        var MAX = 200;
-        var ratio = Math.min(MAX / img.width, MAX / img.height, 1);
-        var canvas = document.createElement('canvas');
-        canvas.width  = Math.round(img.width  * ratio);
-        canvas.height = Math.round(img.height * ratio);
-        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        _pendingPhotoBase64 = canvas.toDataURL('image/jpeg', 0.8);
-        _removePhoto        = false;
-        var wrap = document.getElementById('js-avatar-wrap');
-        wrap.innerHTML =
-          '<img src="' + _pendingPhotoBase64 + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />'
-          + '<div class="perfil-avatar-overlay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
+    _pendingPhotoFile = file;
+    _removePhoto      = false;
+    // Preview local via URL temporária (sem base64 no localStorage)
+    var previewUrl = URL.createObjectURL(file);
+    var wrap = document.getElementById('js-avatar-wrap');
+    wrap.innerHTML =
+      '<img src="' + previewUrl + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />'
+      + '<div class="perfil-avatar-overlay" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>';
+  }
+
+  // Faz resize e upload para Supabase Storage; retorna URL pública ou null
+  function uploadPhotoToSupabase(file, userId) {
+    return new Promise(function (resolve) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var img = new Image();
+        img.onload = function () {
+          var MAX = 400;
+          var ratio = Math.min(MAX / img.width, MAX / img.height, 1);
+          var canvas = document.createElement('canvas');
+          canvas.width  = Math.round(img.width  * ratio);
+          canvas.height = Math.round(img.height * ratio);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function (blob) {
+            var ext  = 'jpg';
+            var path = userId + '/' + Date.now() + '.' + ext;
+            var sb   = CSMAuth.supabase;
+            sb.storage.from('avatars').upload(path, blob, { contentType: 'image/jpeg', upsert: true })
+              .then(function (res) {
+                if (res.error) { console.error('[Perfil] Upload erro:', res.error); resolve(null); return; }
+                var urlRes = sb.storage.from('avatars').getPublicUrl(path);
+                resolve(urlRes.data.publicUrl || null);
+              });
+          }, 'image/jpeg', 0.82);
+        };
+        img.src = e.target.result;
       };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    });
   }
 
   function removePhoto() {
-    _pendingPhotoBase64 = null;
-    _removePhoto        = true;
+    _pendingPhotoFile = null;
+    _removePhoto      = true;
     document.getElementById('edit-photo').value = '';
     // Volta para avatar de inicial
     var session = CSMAuth.getSession();
@@ -1004,25 +1043,39 @@
   function saveProfile() {
     var session = CSMAuth.getSession();
     if (!session) return;
-    var users = CSMAuth.getUsers();
-    var idx   = users.findIndex(function(u){ return u.email === session.email; });
-    if (idx < 0) return;
 
-    users[idx].name      = document.getElementById('edit-name').value.trim() || users[idx].name;
-    users[idx].bio       = document.getElementById('edit-bio').value.trim();
-    users[idx].instagram = document.getElementById('edit-instagram').value.trim();
-    users[idx].cau       = document.getElementById('edit-cau').value.trim();
-    users[idx].cnpj      = document.getElementById('edit-cnpj').value.trim();
-    if (_pendingPhotoBase64)   users[idx].photoUrl = _pendingPhotoBase64;
-    else if (_removePhoto)     users[idx].photoUrl = '';
+    var saveBtn = document.querySelector('.perfil-edit-actions .btn--primary');
+    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Salvando…'; }
 
-    CSMAuth.saveUsers(users);
-    CSMAuth.setSession(users[idx]);
-    CSMAuth.updateHeaderAuth();
-    _pendingPhotoBase64 = null;
-    _removePhoto        = false;
-    toggleEditPanel();
-    initPerfil();
+    var data = {
+      name:      document.getElementById('edit-name').value.trim() || session.name,
+      bio:       document.getElementById('edit-bio').value.trim(),
+      instagram: document.getElementById('edit-instagram').value.trim(),
+      cau:       document.getElementById('edit-cau').value.trim(),
+      cnpj:      document.getElementById('edit-cnpj').value.trim()
+    };
+
+    var photoPromise;
+    if (_pendingPhotoFile) {
+      photoPromise = uploadPhotoToSupabase(_pendingPhotoFile, session.id)
+        .then(function (url) { if (url) data.photoUrl = url; });
+    } else if (_removePhoto) {
+      data.photoUrl = '';
+      photoPromise = Promise.resolve();
+    } else {
+      photoPromise = Promise.resolve();
+    }
+
+    photoPromise.then(function () {
+      return CSMAuth.updateUserProfile(session.email, data);
+    }).then(function (ok) {
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Salvar alterações'; }
+      if (!ok) { alert('Erro ao salvar. Tente novamente.'); return; }
+      _pendingPhotoFile = null;
+      _removePhoto      = false;
+      toggleEditPanel();
+      initPerfil();
+    });
   }
 
   // ── Alterar senha ─────────────────────────────────────────────────
@@ -1031,16 +1084,76 @@
     var newPass  = (document.getElementById('edit-pass-new')      || {}).value || '';
     var confirm  = (document.getElementById('edit-pass-confirm')  || {}).value || '';
     var errEl    = document.getElementById('perfil-pass-error');
+    var btn      = document.querySelector('[onclick="handleChangePassword()"]');
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
-    var result = CSMAuth.doChangePassword(current, newPass, confirm);
-    if (!result.ok) {
-      if (errEl) { errEl.textContent = result.msg; errEl.style.display = 'block'; }
-      return;
-    }
-    ['edit-pass-current','edit-pass-new','edit-pass-confirm'].forEach(function(id) {
-      var el = document.getElementById(id); if (el) el.value = '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Aguarde…'; }
+
+    CSMAuth.doChangePassword(current, newPass, confirm).then(function (result) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Confirmar'; }
+      if (!result.ok) {
+        if (errEl) { errEl.textContent = result.msg; errEl.style.display = 'block'; }
+        return;
+      }
+      ['edit-pass-current','edit-pass-new','edit-pass-confirm'].forEach(function(id) {
+        var el = document.getElementById(id); if (el) el.value = '';
+      });
+      togglePassFields();
+      alert('Senha alterada com sucesso!');
     });
-    alert('Senha alterada com sucesso!');
+  }
+
+  // ── Redefinição de senha (chegou via link no e-mail) ──────────────
+  function showPasswordResetUI() {
+    // Esconde hero e abas; exibe apenas o formulário de nova senha
+    var hero = document.getElementById('perfil-hero');
+    var tabs = document.querySelector('.perfil-tabs-bar');
+    var panels = document.querySelector('.container > div');
+    if (hero)   hero.style.display   = 'none';
+    if (tabs)   tabs.style.display   = 'none';
+
+    var editSection = document.getElementById('js-edit-panel');
+    if (editSection) editSection.hidden = false;
+
+    var editGrid    = document.querySelector('.perfil-edit-grid');
+    var editActions = document.querySelector('.perfil-edit-actions');
+    var passTitle   = document.getElementById('js-btn-toggle-pass');
+    if (editGrid)    editGrid.style.display    = 'none';
+    if (editActions) editActions.style.display = 'none';
+    if (passTitle)   passTitle.style.display   = 'none';
+
+    var passFields = document.getElementById('js-pass-fields');
+    if (passFields) passFields.classList.add('is-open');
+
+    // Muda labels para fluxo de reset
+    var currentLabel = document.querySelector('[for="edit-pass-current"]');
+    if (currentLabel) currentLabel.closest('.perfil-edit-row').style.display = 'none';
+
+    var confirmBtn = document.querySelector('[onclick="handleChangePassword()"]');
+    if (confirmBtn) {
+      confirmBtn.textContent = 'Definir nova senha';
+      confirmBtn.onclick = function () { handleResetPassword(); };
+    }
+    var cancelBtn = document.querySelector('[onclick="togglePassFields()"]');
+    if (cancelBtn) cancelBtn.style.display = 'none';
+  }
+
+  function handleResetPassword() {
+    var newPass = (document.getElementById('edit-pass-new')     || {}).value || '';
+    var confirm = (document.getElementById('edit-pass-confirm') || {}).value || '';
+    var errEl   = document.getElementById('perfil-pass-error');
+    var btn     = document.querySelector('[onclick="handleResetPassword()"]');
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+    if (btn) { btn.disabled = true; btn.textContent = 'Salvando…'; }
+
+    CSMAuth.doSetNewPassword(newPass, confirm).then(function (result) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Definir nova senha'; }
+      if (!result.ok) {
+        if (errEl) { errEl.textContent = result.msg; errEl.style.display = 'block'; }
+        return;
+      }
+      alert('Senha redefinida com sucesso! Você já pode usar a nova senha.');
+      window.location.href = 'index.html';
+    });
   }
 
   // ── Escape ────────────────────────────────────────────────────────
