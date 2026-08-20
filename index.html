@@ -714,9 +714,39 @@
       var track = document.getElementById('mv-track');
       if (!track) return;
 
+      /* Mapa tipoLabel → chave de categoria do produto.html */
+      var TIPO_MAP = {
+        'Sofá': 'sofa', 'Poltrona': 'poltrona',
+        'Sala de Jantar': 'sala-jantar', 'Sala de TV': 'sofa',
+        'Mesa': 'sala-jantar', 'Cadeira': 'sala-jantar'
+      };
+
+      function mvGoProduct(idx) {
+        var p = MAIS_VENDIDOS[idx];
+        if (!p) return;
+        var fullImg = p.img.replace(/-\d+x\d+(\.[a-z]+)$/i, '$1');
+        try {
+          localStorage.setItem('csm-produto-current', JSON.stringify({
+            id: p.id,
+            name: p.nome,
+            badge: p.tipoLabel,
+            status: 'mais-vendido',
+            statusLabel: '✦ Mais Vendido',
+            tipo: TIPO_MAP[p.tipoLabel] || 'sofa',
+            tagline: p.tipoLabel + ' · Design exclusivo · Alto padrão',
+            imgs: [fullImg],
+            wpp: p.wpp,
+            glb: '',
+            specs: []
+          }));
+        } catch (_) {}
+        window.location.href = 'produto.html?id=' + p.id;
+      }
+      window._mvGoProduct = mvGoProduct;
+
       track.innerHTML = MAIS_VENDIDOS.map(function (p, i) {
         var num = String(i + 1).padStart(2, '0');
-        return '<a class="mv-card" href="' + p.wpp + '" target="_blank" rel="noopener noreferrer" aria-label="' + p.nome + ' — solicitar orçamento">'
+        return '<a class="mv-card" href="produto.html?id=' + p.id + '" onclick="event.preventDefault();_mvGoProduct(' + i + ')" aria-label="Ver produto ' + p.nome + '">'
           + '<figure class="mv-card__fig">'
           + '<img class="mv-card__img" src="' + p.img + '" alt="' + p.nome + ' — CSM Decor" loading="lazy" />'
           + '</figure>'
@@ -726,16 +756,16 @@
           + '<span class="mv-card__badge-mv">✦ Mais Vendido</span>'
           + '<span class="mv-card__badge-tipo">' + p.tipoLabel + '</span>'
           + '<h3 class="mv-card__name"><em>' + p.nome + '</em></h3>'
-          + '<span class="mv-card__cta-label">Solicitar orçamento →</span>'
+          + '<span class="mv-card__cta-label">Ver produto →</span>'
           + '</div>'
           + '</div>'
           + '</a>';
       }).join('');
 
-      /* Drag-to-scroll */
-      var isDown = false, startX, scrollLeft;
+      /* Drag-to-scroll — cancela navegação se o usuário arrastou */
+      var isDown = false, startX, scrollLeft, didDrag = false;
       track.addEventListener('mousedown', function (e) {
-        isDown = true;
+        isDown = true; didDrag = false;
         track.classList.add('is-dragging');
         startX = e.pageX - track.offsetLeft;
         scrollLeft = track.scrollLeft;
@@ -747,10 +777,13 @@
       track.addEventListener('mouseleave', function () { isDown = false; track.classList.remove('is-dragging'); });
       track.addEventListener('mousemove', function (e) {
         if (!isDown) return;
-        e.preventDefault();
         var x = e.pageX - track.offsetLeft;
+        if (Math.abs(x - startX) > 5) { didDrag = true; e.preventDefault(); }
         track.scrollLeft = scrollLeft - (x - startX) * 1.4;
       });
+      track.addEventListener('click', function (e) {
+        if (didDrag) { e.preventDefault(); e.stopPropagation(); didDrag = false; }
+      }, true);
 
       /* Arrow nav */
       function getCardStep() {
