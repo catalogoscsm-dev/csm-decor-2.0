@@ -670,6 +670,162 @@
     </section>
 
     <!-- ============================================================
+         MAIS VENDIDOS — Editorial Luxury Rail
+    ============================================================ -->
+    <script src="mais-vendidos.js"></script>
+    <section class="mv-showcase" aria-label="Produtos mais vendidos CSM Decor">
+
+      <div class="mv-showcase__sep" aria-hidden="true">
+        <span class="mv-showcase__sep-line"></span>
+        <span class="mv-showcase__sep-label">✦ Mais Vendidos</span>
+        <span class="mv-showcase__sep-line"></span>
+      </div>
+
+      <div class="container">
+        <div class="mv-showcase__head">
+          <div class="mv-showcase__titles">
+            <span class="mv-showcase__eyebrow">Os preferidos pelos nossos clientes</span>
+            <h2 class="mv-showcase__title">Peças que <em>marcam presença</em></h2>
+          </div>
+          <a href="produtos.html?categoria=mais-vendido" class="btn btn--outline btn--sm mv-showcase__cta-top">
+            Ver todos no catálogo
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="mv-showcase__track-wrap">
+        <button class="mv-nav-btn mv-nav-btn--prev" id="mv-prev" aria-label="Produto anterior">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="mv-showcase__track" id="mv-track"></div>
+        <button class="mv-nav-btn mv-nav-btn--next" id="mv-next" aria-label="Próximo produto">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="mv-progress" id="mv-progress" aria-hidden="true">
+          <div class="mv-progress__bar" id="mv-progress-bar"></div>
+        </div>
+      </div>
+
+    </section>
+    <script>
+    (function () {
+      if (typeof MAIS_VENDIDOS === 'undefined') return;
+      var track = document.getElementById('mv-track');
+      if (!track) return;
+
+      track.innerHTML = MAIS_VENDIDOS.map(function (p, i) {
+        var num = String(i + 1).padStart(2, '0');
+        return '<a class="mv-card" href="' + p.wpp + '" target="_blank" rel="noopener noreferrer" aria-label="' + p.nome + ' — solicitar orçamento">'
+          + '<figure class="mv-card__fig">'
+          + '<img class="mv-card__img" src="' + p.img + '" alt="' + p.nome + ' — CSM Decor" loading="lazy" />'
+          + '</figure>'
+          + '<div class="mv-card__overlay">'
+          + '<span class="mv-card__num">' + num + '</span>'
+          + '<div class="mv-card__info">'
+          + '<span class="mv-card__badge-mv">✦ Mais Vendido</span>'
+          + '<span class="mv-card__badge-tipo">' + p.tipoLabel + '</span>'
+          + '<h3 class="mv-card__name"><em>' + p.nome + '</em></h3>'
+          + '<span class="mv-card__cta-label">Solicitar orçamento →</span>'
+          + '</div>'
+          + '</div>'
+          + '</a>';
+      }).join('');
+
+      /* Drag-to-scroll */
+      var isDown = false, startX, scrollLeft;
+      track.addEventListener('mousedown', function (e) {
+        isDown = true;
+        track.classList.add('is-dragging');
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+      document.addEventListener('mouseup', function () {
+        isDown = false;
+        track.classList.remove('is-dragging');
+      });
+      track.addEventListener('mouseleave', function () { isDown = false; track.classList.remove('is-dragging'); });
+      track.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - track.offsetLeft;
+        track.scrollLeft = scrollLeft - (x - startX) * 1.4;
+      });
+
+      /* Arrow nav */
+      function getCardStep() {
+        var c = track.querySelector('.mv-card');
+        return c ? c.offsetWidth + 24 : 340;
+      }
+      var prevBtn = document.getElementById('mv-prev');
+      var nextBtn = document.getElementById('mv-next');
+
+      function pressBtn(btn) {
+        btn.classList.add('is-pressed');
+        setTimeout(function () { btn.classList.remove('is-pressed'); }, 320);
+      }
+      if (prevBtn) prevBtn.addEventListener('click', function () {
+        track.scrollBy({ left: -getCardStep(), behavior: 'smooth' });
+        pressBtn(prevBtn);
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function () {
+        track.scrollBy({ left: getCardStep(), behavior: 'smooth' });
+        pressBtn(nextBtn);
+      });
+
+      /* Fades dinâmicos + progresso mobile */
+      var progressBar = document.getElementById('mv-progress-bar');
+      var trackWrap = track.parentElement;
+
+      function updateEdges() {
+        var sl = track.scrollLeft;
+        var max = track.scrollWidth - track.clientWidth;
+        trackWrap.classList.toggle('has-prev', sl > 4);
+        trackWrap.classList.toggle('has-next', sl < max - 4);
+        if (progressBar) {
+          progressBar.style.width = (max > 0 ? (sl / max) * 100 : 0) + '%';
+        }
+      }
+
+      track.addEventListener('scroll', updateEdges, { passive: true });
+      /* Estado inicial — checa depois dos cards renderizarem */
+      setTimeout(updateEdges, 80);
+
+      /* Mobile swipe hint on first view */
+      var mvSection = track.closest('.mv-showcase');
+      if (mvSection && progressBar && 'IntersectionObserver' in window) {
+        var hintObs = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            var prog = document.getElementById('mv-progress');
+            if (prog) prog.classList.add('mv-progress--hint');
+            hintObs.disconnect();
+          }
+        }, { threshold: 0.6 });
+        hintObs.observe(mvSection);
+      }
+
+      /* Stagger entrance via IntersectionObserver */
+      var cards = track.querySelectorAll('.mv-card');
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('mv-card--visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08 });
+        cards.forEach(function (c, i) {
+          c.style.transitionDelay = (i * 0.07) + 's';
+          obs.observe(c);
+        });
+      } else {
+        cards.forEach(function (c) { c.classList.add('mv-card--visible'); });
+      }
+    }());
+    </script>
+
+    <!-- ============================================================
          PRODUTOS — Stacking Featured Cards
     ============================================================ -->
     <section class="destaque" id="produtos" aria-label="Produtos em destaque CSM Decor">
