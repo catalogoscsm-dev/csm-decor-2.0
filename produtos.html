@@ -142,9 +142,39 @@
       </div>
     </section>
 
-    <!-- ── Filtros ── -->
-    <div class="catalogo__filters cat-page-filters" role="tablist" aria-label="Filtrar por categoria" id="cat-filters">
-      <div class="container">
+    <!-- ── Buscador + Filtros ── -->
+    <div class="catalogo__filters cat-page-filters" id="cat-filters">
+
+      <!-- Buscador por produto -->
+      <div class="csb" id="csb">
+        <div class="container csb__inner">
+          <div class="csb__field">
+            <svg class="csb__icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <div class="csb__input-wrap">
+              <input class="csb__input" id="csb-input" type="search" autocomplete="off" spellcheck="false" aria-label="Pesquisar produtos" />
+              <span class="csb__hint" id="csb-hint" aria-hidden="true"></span>
+            </div>
+            <span class="csb__counter" id="csb-counter" aria-live="polite" aria-atomic="true"></span>
+            <button type="button" class="csb__clear" id="csb-clear" aria-label="Limpar busca" hidden>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="csb__chips" id="csb-chips" aria-label="Pesquisas rápidas">
+            <span class="csb__chips-label" aria-hidden="true">Explorar</span>
+            <button type="button" class="csb__chip" data-q="Couro">Couro</button>
+            <button type="button" class="csb__chip" data-q="Veludo">Veludo</button>
+            <button type="button" class="csb__chip" data-q="Madeira">Madeira</button>
+            <button type="button" class="csb__chip" data-q="Retrátil">Retrátil</button>
+            <button type="button" class="csb__chip" data-q="Reclinável">Reclinável</button>
+            <button type="button" class="csb__chip" data-q="Chesterfield">Chesterfield</button>
+            <button type="button" class="csb__chip" data-q="Puff">Puff</button>
+            <button type="button" class="csb__chip" data-q="Modular">Modular</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pills de categoria -->
+      <div class="container cat-filters__pills" role="tablist" aria-label="Filtrar por categoria">
         <button class="filter active" role="tab" aria-selected="true"  data-cat="all">Todos <span class="filter__count" id="cnt-all"></span></button>
         <button class="filter"        role="tab" aria-selected="false" data-cat="sofa">Sofás</button>
         <button class="filter"        role="tab" aria-selected="false" data-cat="poltrona">Poltronas</button>
@@ -5586,41 +5616,120 @@
     }
   }
 
+  /* ── Estado compartilhado: filtro de categoria + busca ── */
   var activeFilter = 'all';
-  function setFilter(cat){
-    activeFilter = cat;
-    var cards = document.querySelectorAll('.cat-card');
-    var btns  = document.querySelectorAll('[data-cat]');
-    var empty = document.getElementById('cat-empty');
-    var vis   = 0;
-    btns.forEach(function(b){ var a=b.dataset.cat===cat; b.classList.toggle('active',a); b.setAttribute('aria-selected',a?'true':'false'); });
-    cards.forEach(function(c){
-      var m=cat==='all'||c.dataset.tipo===cat||(cat==='promocao'&&c.dataset.status==='promocao');
-      c.style.display=m?'':'none';
-      if(m){
+  var activeSearch  = '';
+
+  /* ── Índice de busca construído do DOM (zero hardcode) ── */
+  var ALL_CARDS = (function () {
+    return Array.from(document.querySelectorAll('.cat-card')).map(function (card) {
+      var name    = (card.querySelector('.cat-card__name')    || {}).textContent || '';
+      var tagline = (card.querySelector('.cat-card__tagline') || {}).textContent || '';
+      var badge   = (card.querySelector('.cat-card__badge')   || {}).textContent || '';
+      var tipo    = card.dataset.tipo        || '';
+      var forn    = card.dataset.fornecedor  || '';
+      var specs   = [];
+      try { specs = JSON.parse(card.dataset.specs || '[]'); } catch (_) {}
+      var specText = specs.map(function (s) { return (s.key || '') + ' ' + (s.val || ''); }).join(' ');
+      card._searchText = [name, tagline, badge, tipo, specText, forn].join(' ');
+      return card;
+    });
+  }());
+
+  function normStr(s) {
+    return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
+  /* ── Contador animado ── */
+  var _cntTimer;
+  function updateCounter(vis) {
+    var el    = document.getElementById('csb-counter');
+    var total = ALL_CARDS.length;
+    if (!el) return;
+    var searching = activeSearch && activeSearch.length >= 2;
+    var filtered  = activeFilter !== 'all';
+    var showCount = searching || (filtered && vis < total);
+    if (!showCount) {
+      el.classList.remove('csb-counter--active');
+      el.textContent = '';
+      return;
+    }
+    var label = vis + (vis < total ? ' de ' + total : '') + ' produto' + (vis !== 1 ? 's' : '');
+    if (el.textContent !== label) {
+      el.classList.add('csb-counter--tick');
+      clearTimeout(_cntTimer);
+      _cntTimer = setTimeout(function () { el.classList.remove('csb-counter--tick'); }, 220);
+    }
+    el.textContent = label;
+    el.classList.add('csb-counter--active');
+  }
+
+  /* ── Motor de filtro unificado ── */
+  function applyFilters() {
+    var nq     = normStr(activeSearch).trim();
+    var cat    = activeFilter;
+    var empty  = document.getElementById('cat-empty');
+    var vis    = 0;
+    var delay  = 0;
+
+    ALL_CARDS.forEach(function (card) {
+      var matchesCat =
+        cat === 'all' ||
+        card.dataset.tipo === cat ||
+        (cat === 'promocao' && card.dataset.status === 'promocao');
+      var matchesSearch =
+        nq.length < 2 ||
+        normStr(card._searchText).indexOf(nq) !== -1;
+      var show = matchesCat && matchesSearch;
+
+      var wasHidden = card.style.display === 'none';
+      if (show) {
+        card.style.display = '';
+        if (card.style.opacity === '0') { card.style.opacity = ''; card.style.transform = ''; }
+        if (wasHidden) {
+          card.style.animationDelay = delay + 'ms';
+          card.classList.remove('csb-reveal');
+          void card.offsetWidth; // reflow
+          card.classList.add('csb-reveal');
+          delay = Math.min(delay + 32, 240);
+        }
         vis++;
-        // If GSAP froze this card at opacity:0 before its scroll trigger fired,
-        // clear the inline styles so it becomes immediately visible.
-        if(c.style.opacity==='0'){ c.style.opacity=''; c.style.transform=''; }
+      } else {
+        card.style.display = 'none';
+        card.classList.remove('csb-reveal');
       }
     });
+
     if (empty) empty.hidden = vis > 0;
-    var url = new URL(window.location);
-    if (cat==='all') url.searchParams.delete('categoria'); else url.searchParams.set('categoria',cat);
-    history.replaceState(null,'',url);
-    // Let GSAP recalculate trigger positions after layout change.
-    requestAnimationFrame(function(){
-      if(typeof ScrollTrigger!=='undefined') ScrollTrigger.refresh();
+    updateCounter(vis);
+    requestAnimationFrame(function () {
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
     });
   }
 
-  (function(){
+  function setFilter(cat) {
+    activeFilter = cat;
+    document.querySelectorAll('[data-cat]').forEach(function (b) {
+      var a = b.dataset.cat === cat;
+      b.classList.toggle('active', a);
+      b.setAttribute('aria-selected', a ? 'true' : 'false');
+    });
+    var url = new URL(window.location);
+    if (cat === 'all') url.searchParams.delete('categoria');
+    else url.searchParams.set('categoria', cat);
+    history.replaceState(null, '', url);
+    applyFilters();
+  }
+
+  (function () {
     var p = new URLSearchParams(window.location.search);
     var c = p.get('categoria') || 'all';
     setFilter(c);
   }());
 
-  document.querySelectorAll('[data-cat]').forEach(function(b){ b.addEventListener('click', function(){ setFilter(b.dataset.cat); }); });
+  document.querySelectorAll('[data-cat]').forEach(function (b) {
+    b.addEventListener('click', function () { setFilter(b.dataset.cat); });
+  });
 
   /* ── Badge de Status ────────────────────────────────────────── */
   (function(){
@@ -5829,18 +5938,116 @@
   }());
 
   (function(){
+    var c=document.getElementById('fab-cluster');
     var f=document.getElementById('fab-main'); var s=document.getElementById('fab-subs'); if(!f||!s) return;
-    f.addEventListener('click',function(){ var o=f.getAttribute('aria-expanded')==='true'; f.setAttribute('aria-expanded',o?'false':'true'); s.setAttribute('aria-hidden',o?'true':'false'); f.classList.toggle('is-open',!o); });
-    document.addEventListener('click',function(e){ if(!f.contains(e.target)&&!s.contains(e.target)){f.setAttribute('aria-expanded','false');s.setAttribute('aria-hidden','true');f.classList.remove('is-open');} });
+    f.addEventListener('click',function(){ var o=f.getAttribute('aria-expanded')==='true'; f.setAttribute('aria-expanded',o?'false':'true'); s.setAttribute('aria-hidden',o?'true':'false'); if(c) c.classList.toggle('fab-open',!o); });
+    document.addEventListener('click',function(e){ if(!f.contains(e.target)&&!s.contains(e.target)){f.setAttribute('aria-expanded','false');s.setAttribute('aria-hidden','true');if(c) c.classList.remove('fab-open');} });
   }());
 
   function submitArqForm(e){ e.preventDefault(); var fw=document.getElementById('arq-form-wrap'); var sw=document.getElementById('arq-success'); if(fw) fw.hidden=true; if(sw) sw.hidden=false; }
   function simulateGoogleLogin(){ submitArqForm({preventDefault:function(){}}); }
 
-  var sb=document.getElementById('header-search-btn');
-  if(sb) sb.addEventListener('click',function(){window.location.href='index.html';});
+  /* search-overlay handler at bottom of script handles header-search-btn */
 
   var an=document.getElementById('ano'); if(an) an.textContent=new Date().getFullYear();
+
+  /* ── Buscador do Catálogo (CSB) — mesmo escopo que applyFilters ── */
+  (function () {
+    var inp     = document.getElementById('csb-input');
+    var hintEl  = document.getElementById('csb-hint');
+    var clrBtn  = document.getElementById('csb-clear');
+    var chipsEl = document.getElementById('csb-chips');
+    var csbEl   = document.getElementById('csb');
+    if (!inp) return;
+
+    /* Placeholder rotativo */
+    var HINTS = ['Pesquisar produtos…','Chesterfield…','Poltrona Ondine…','Couro natural…','Sofá retrátil…','Shoulder…','Madeira maciça…','Veludo…','Pier…','Reclinável…'];
+    var hintIdx = 0;
+    if (hintEl) hintEl.textContent = HINTS[0];
+
+    setInterval(function () {
+      if (inp.value || document.activeElement === inp || !hintEl) return;
+      hintEl.classList.add('csb-hint--out');
+      setTimeout(function () {
+        hintIdx = (hintIdx + 1) % HINTS.length;
+        hintEl.textContent = HINTS[hintIdx];
+        hintEl.classList.remove('csb-hint--out');
+      }, 300);
+    }, 3400);
+
+    inp.addEventListener('focus', function () {
+      if (hintEl) hintEl.style.opacity = '0';
+      if (csbEl)  csbEl.classList.add('csb--focused');
+    });
+    inp.addEventListener('blur', function () {
+      if (hintEl && !inp.value) hintEl.style.opacity = '1';
+      if (csbEl)  csbEl.classList.remove('csb--focused');
+    });
+
+    /* Debounce */
+    var debTimer;
+
+    /* Input: filtra em tempo real */
+    inp.addEventListener('input', function () {
+      activeSearch = inp.value;
+      clrBtn.hidden = !inp.value;
+      if (hintEl) hintEl.style.opacity = inp.value ? '0' : '1';
+      if (chipsEl) chipsEl.querySelectorAll('.csb__chip').forEach(function (c) { c.classList.remove('is-active'); });
+      clearTimeout(debTimer);
+      debTimer = setTimeout(applyFilters, 140);
+    });
+
+    /* Limpar */
+    clrBtn.addEventListener('click', function () {
+      inp.value    = '';
+      activeSearch = '';
+      clrBtn.hidden = true;
+      if (hintEl) hintEl.style.opacity = '1';
+      if (chipsEl) chipsEl.querySelectorAll('.csb__chip').forEach(function (c) { c.classList.remove('is-active'); });
+      inp.focus();
+      applyFilters();
+    });
+
+    /* Chips */
+    if (chipsEl) {
+      chipsEl.addEventListener('click', function (e) {
+        var chip = e.target.closest('.csb__chip');
+        if (!chip) return;
+        var q = chip.dataset.q || '';
+        var already = chip.classList.contains('is-active');
+        chipsEl.querySelectorAll('.csb__chip').forEach(function (c) { c.classList.remove('is-active'); });
+        if (already) {
+          inp.value = ''; activeSearch = ''; clrBtn.hidden = true;
+          if (hintEl) hintEl.style.opacity = '1';
+        } else {
+          chip.classList.add('is-active');
+          inp.value = q; activeSearch = q; clrBtn.hidden = false;
+          if (hintEl) hintEl.style.opacity = '0';
+        }
+        inp.focus();
+        applyFilters();
+      });
+    }
+
+    /* Teclado: Esc limpa, Enter vai ao primeiro resultado */
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (inp.value) {
+          inp.value = ''; activeSearch = ''; clrBtn.hidden = true;
+          if (hintEl) hintEl.style.opacity = '1';
+          if (chipsEl) chipsEl.querySelectorAll('.csb__chip').forEach(function (c) { c.classList.remove('is-active'); });
+          applyFilters();
+        } else { inp.blur(); }
+        e.preventDefault();
+      }
+      if (e.key === 'Enter') {
+        var first = document.querySelector('.cat-card:not([style*="display: none"])');
+        if (first) { inp.blur(); first.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        e.preventDefault();
+      }
+    });
+  }());
+
   </script>
 
   <!-- ── Accordion de especificações: exclusivo + animação ── -->
@@ -6228,6 +6435,7 @@
     });
   }());
   </script>
+
 
   <!-- ── Moodboard Panel ──────────────────────────────────────── -->
   <div class="moodboard-backdrop" id="moodboard-backdrop"></div>
