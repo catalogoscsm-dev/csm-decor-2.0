@@ -6,3 +6,11 @@ diag-test.jpg
 .modelos-progress.json
 diag-hunyuan3d.js
 modelos-3d/
+
+# Local Netlify folder
+.netlify
+
+# Arquivos temporários / screenshots
+prints/
+open-produto.html
+produtos-ideale-preview.html

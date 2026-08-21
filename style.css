@@ -3156,6 +3156,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform: scale(1.06);
 }
 
+/* Fornecedor Ideale: imagens com fundo branco */
+.cat-card[data-fornecedor="ideale"] .cat-card__fig {
+  background: #f2ede8;
+}
+.cat-card[data-fornecedor="ideale"] .cat-card__fig img {
+  object-fit: cover;
+  object-position: center center;
+}
+
 /* Estado de erro: img não carregou — gradient fica visível */
 .cat-card__fig.img-fallback img {
   display: none;
