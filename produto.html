@@ -1249,11 +1249,26 @@
       }
     }());
 
-    // ── Pesquisar → vai para catálogo com busca ────
+    // ── Pesquisar → catálogo com busca ativa (curtain + #buscar) ────
     (function () {
       var btn = document.getElementById('header-search-btn');
-      if (btn) btn.addEventListener('click', function () {
-        window.location.href = 'produtos.html';
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var curtain = document.getElementById('page-curtain');
+        if (curtain) {
+          var ease = 'cubic-bezier(0.76, 0, 0.24, 1)';
+          curtain.style.transition    = 'none';
+          curtain.style.transform     = 'translateY(100%)';
+          curtain.style.pointerEvents = 'all';
+          curtain.offsetHeight;
+          curtain.style.transition = 'transform .65s ' + ease;
+          curtain.style.transform  = 'translateY(0)';
+          curtain.addEventListener('transitionend', function () {
+            window.location.href = 'produtos.html#buscar';
+          }, { once: true });
+        } else {
+          window.location.href = 'produtos.html#buscar';
+        }
       });
     }());
 

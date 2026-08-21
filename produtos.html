@@ -6046,6 +6046,15 @@
         e.preventDefault();
       }
     });
+
+    /* Auto-foca quando chega vindo de outra página com #buscar */
+    if (window.location.hash === '#buscar') {
+      setTimeout(function () {
+        inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        inp.focus();
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }, 350);
+    }
   }());
 
   </script>
