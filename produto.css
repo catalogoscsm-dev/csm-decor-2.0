@@ -254,6 +254,14 @@
   margin: 1.5rem 0;
 }
 
+/* Descrição longa do produto */
+.product-panel__desc {
+  font-size: .92rem;
+  line-height: 1.75;
+  color: var(--gray-dark);
+  margin-bottom: 1.4rem;
+}
+
 /* Preço / consulta */
 .product-panel__price-wrap {
   display: flex;

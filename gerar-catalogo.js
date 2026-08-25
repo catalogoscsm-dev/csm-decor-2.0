@@ -18,6 +18,35 @@ const BASE   = 'https://www.csmdecor.com.br/wsite';
 const WPP_NR = '5519990034068';
 const OUT    = path.join(__dirname, 'produtos.html');
 
+// ─── Produtos excluídos do catálogo (removidos intencionalmente) ───────────
+const EXCLUDED_IDS = new Set([
+  4784, // Sofá Portland
+  4781, // Sofá Oreon
+  4778, // Sofá Chesterfield I
+  4775, // Sofá Premium
+  4771, // Sofá Ibiza
+  4767, // Sofá Seul
+  4755, // Sofá California
+  4749, // Sofá Como
+  4747, // Sofá Chesterfield X
+  4699, // Poltrona reclinável Bela
+  4698, // Poltrona reclinável Luna
+  4662, // Sofá Aura
+  4658, // Sofá Boreal
+  4657, // Sofá Klimt
+  4615, // Sofá Abruzi
+  4496, // Puffs Linha Shape
+  4490, // Puff Puffon
+  4482, // Puffs Puff
+  4477, // Puff Levoo
+  4459, // Linha Slider para Escritórios
+  4433, // Mesa Talk
+  4397, // Mesa Bistrô
+  4192, // Poltronas Linha Pix
+  3697, // Sofá cama Planno
+  3265, // Sofá IBIZA
+]);
+
 // ─── Mapeamento categoria WP → tipo de filtro ──────────────────────────────
 const CAT_TO_TIPO = {
   // Sofás / Living
@@ -208,6 +237,7 @@ function specsToHtml(specs) {
 }
 
 function buildCard(p, idToSlug) {
+  if (EXCLUDED_IDS.has(p.id)) return '';
   const tipo  = getProductTipo(p, idToSlug);
   if (!tipo) return '';
 
@@ -233,8 +263,10 @@ function buildCard(p, idToSlug) {
   // Specs
   const specs    = parseSpecs(p.content?.rendered || '');
   const specsHtml = specsToHtml(specs);
-  // JSON seguro para o atributo data-specs no modal
   const specsJson = JSON.stringify(specs).replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+
+  const desc    = stripHtml(p.excerpt?.rendered || '').substring(0, 500);
+  const descEsc = desc.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
 
   const imgTag = img600
     ? `<img src="${img600}" alt="${name} — CSM Decor" loading="lazy" />`
@@ -244,7 +276,8 @@ function buildCard(p, idToSlug) {
           <article class="cat-card" data-tipo="${tipo}" data-id="${p.id}"
             data-imgs='${JSON.stringify(imgFull ? [imgFull] : [])}'
             data-wpp="${wpp}"
-            data-specs="${specsJson}">
+            data-specs="${specsJson}"
+            data-description="${descEsc}">
             <figure class="cat-card__fig" data-nome="${name}">
               ${imgTag}
               <span class="cat-card__badge">${badge}</span>

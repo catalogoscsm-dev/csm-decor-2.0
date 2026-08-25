@@ -2811,6 +2811,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   object-position: center center;
 }
 
+/* Fornecedores novos: mesmo fundo neutro (imagens normalizadas 600x600) */
+.cat-card[data-fornecedor="klassic"] .cat-card__fig,
+.cat-card[data-fornecedor="karams"] .cat-card__fig,
+.cat-card[data-fornecedor="serragaucha"] .cat-card__fig,
+.cat-card[data-fornecedor="goldline"] .cat-card__fig,
+.cat-card[data-fornecedor="artbel"] .cat-card__fig,
+.cat-card[data-fornecedor="ferguile"] .cat-card__fig,
+.cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig,
+.cat-card[data-fornecedor="buriti"] .cat-card__fig,
+.cat-card[data-fornecedor="daf"] .cat-card__fig,
+.cat-card[data-fornecedor="suprema"] .cat-card__fig {
+  background: #f2ede8;
+}
+.cat-card[data-fornecedor="klassic"] .cat-card__fig img,
+.cat-card[data-fornecedor="karams"] .cat-card__fig img,
+.cat-card[data-fornecedor="serragaucha"] .cat-card__fig img,
+.cat-card[data-fornecedor="goldline"] .cat-card__fig img,
+.cat-card[data-fornecedor="artbel"] .cat-card__fig img,
+.cat-card[data-fornecedor="ferguile"] .cat-card__fig img,
+.cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig img,
+.cat-card[data-fornecedor="buriti"] .cat-card__fig img,
+.cat-card[data-fornecedor="daf"] .cat-card__fig img,
+.cat-card[data-fornecedor="suprema"] .cat-card__fig img {
+  object-fit: cover;
+  object-position: center center;
+}
+
 /* Estado de erro: img não carregou — gradient fica visível */
 .cat-card__fig.img-fallback img {
   display: none;
@@ -2853,6 +2880,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card__badge--poltrona {
   background: rgba(240, 120, 0, .85);
   border-color: rgba(255,255,255,.15);
+}
+
+/* Badge "Novo" — identifica produtos recém-adicionados (canto superior direito) */
+.cat-card__novo {
+  position: absolute;
+  top: .9rem;
+  right: .9rem;
+  background: rgba(34, 139, 34, .88);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .25rem .55rem;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,.15);
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* ── Status badges (bottom-left) ─────────────────────────────── */
@@ -5833,14 +5879,35 @@ html { scroll-padding-top: 80px; }
    THEME TOGGLE — Tooltip dinâmico (muda conforme o tema ativo)
    ================================================================ */
 
-/* Modo claro → "Tema Escuro" (convida a mudar para dark) */
+/* Estado base: oculto, posicionado abaixo do botão */
 .header__theme-toggle::after {
-  content: "Tema Escuro" !important;
+  content: "Tema Escuro";
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  font-family: var(--font-sans);
+  font-size: .5rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--orange);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s var(--ease), transform .22s var(--ease);
+  z-index: 10;
 }
 
-/* Modo escuro → "Tema Claro" (convida a mudar para light) */
+/* Modo escuro → label muda para "Tema Claro" */
 [data-theme="dark"] .header__theme-toggle::after {
-  content: "Tema Claro" !important;
+  content: "Tema Claro";
+}
+
+/* Hover: aparece com deslize suave */
+.header__theme-toggle:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* ================================================================
@@ -7086,6 +7153,75 @@ html { scroll-padding-top: 80px; }
 [data-theme="dark"] .cat-page-hero   { background: var(--bg-dark, #0f0f0f); border-color: rgba(255,255,255,.06); }
 [data-theme="dark"] .cat-page-filters { background: var(--bg-dark, #0f0f0f); border-color: rgba(255,255,255,.06); }
 [data-theme="dark"] .cat-page-grid   { background: var(--bg-dark, #0f0f0f); }
+
+/* ── Letreiro elegante — cat-ticker ─────────────────────────── */
+.cat-ticker {
+  position: relative;
+  overflow: hidden;
+  background: var(--cream);
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+  padding-block: 1.15rem;
+  /* vignette lateral */
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right,
+    transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.cat-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  animation: marqueeScroll 42s linear infinite;
+}
+
+
+.cat-ticker__group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  padding-inline: 2rem;
+}
+
+.cat-ticker__item {
+  font-family: var(--font-serif);
+  font-size: clamp(.95rem, 1.6vw, 1.1rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: .06em;
+  color: rgba(30, 30, 30, .78);
+  transition: color 220ms ease;
+}
+
+.cat-ticker:hover .cat-ticker__item {
+  color: rgba(30, 30, 30, .95);
+}
+
+.cat-ticker__sep {
+  font-size: .44rem;
+  color: var(--orange);
+  opacity: .85;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .cat-ticker {
+  background: rgba(255, 255, 255, .04);
+  border-color: rgba(255, 255, 255, .08);
+}
+
+[data-theme="dark"] .cat-ticker__item {
+  color: rgba(255, 255, 255, .45);
+}
+
+[data-theme="dark"] .cat-ticker:hover .cat-ticker__item {
+  color: rgba(255, 255, 255, .75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-ticker__track { animation: none; }
+}
 
 /* ── Mobile: catálogo standalone ────────────────────────────── */
 @media (max-width: 768px) {

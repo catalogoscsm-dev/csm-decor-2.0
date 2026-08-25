@@ -367,6 +367,9 @@
 
             <div class="product-panel__divider" aria-hidden="true"></div>
 
+            <!-- Descrição do produto -->
+            <p class="product-panel__desc" id="product-desc" hidden></p>
+
             <!-- Preço / consulta -->
             <div class="product-panel__price-wrap">
               <span class="product-panel__price-label">A partir de</span>
@@ -910,6 +913,13 @@
       } else {
         h1.innerHTML = '<em>' + p.name + '</em>';
       }
+    }
+
+    // ── Descrição do produto
+    var descEl = document.getElementById('product-desc');
+    if (descEl && p.description && p.description.trim()) {
+      descEl.textContent = p.description;
+      descEl.removeAttribute('hidden');
     }
 
     // ── Specs: from localStorage data if available, else generic

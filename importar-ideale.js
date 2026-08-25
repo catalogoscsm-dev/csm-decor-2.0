@@ -174,6 +174,9 @@ function buildCard(p) {
   const specs     = parseSpecs(p.description || '');
   const specsJson = JSON.stringify(specs).replace(/'/g, '&#39;').replace(/"/g, '&quot;');
 
+  const desc    = stripHtml(p.short_description || '').substring(0, 500);
+  const descEsc = desc.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+
   const imgTag = img600
     ? `<img src="${img600}" alt="${name} — CSM Decor" loading="lazy" />`
     : `<div class="cat-card__no-img" aria-hidden="true"></div>`;
@@ -182,7 +185,8 @@ function buildCard(p) {
           <article class="cat-card" data-tipo="${tipo}" data-id="ideale-${p.id}" data-fornecedor="ideale"
             data-imgs='${JSON.stringify(allImgs)}'
             data-wpp="${wpp}"
-            data-specs="${specsJson}">
+            data-specs="${specsJson}"
+            data-description="${descEsc}">
             <figure class="cat-card__fig" data-nome="${name}">
               ${imgTag}
               <span class="cat-card__badge">${badge}</span>
