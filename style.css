@@ -2783,13 +2783,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   height: 260px;
   overflow: hidden;
   flex-shrink: 0;
-  /* Gradiente elegante enquanto imagem carrega / como fallback */
-  background: linear-gradient(145deg, var(--dark) 0%, var(--gray-dark) 100%);
+  background: #ede9e4;
+}
+.cat-card__fig::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23c8bfb5' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E") center/48px no-repeat;
+  pointer-events: none;
 }
 
 .cat-card__fig img {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;

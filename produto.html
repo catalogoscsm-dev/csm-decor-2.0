@@ -855,7 +855,17 @@
     // ── Gallery main image
     var firstImg = (p.imgs && p.imgs[0]) ? p.imgs[0] : '';
     var mainImg  = document.getElementById('gallery-main-img');
-    if (mainImg && firstImg) { mainImg.src = firstImg; mainImg.alt = p.name + ' — vista frontal'; }
+    if (mainImg) {
+      if (firstImg) {
+        mainImg.src = firstImg;
+        mainImg.alt = p.name + ' — vista frontal';
+        mainImg.style.display = '';
+      } else {
+        mainImg.src = '';
+        mainImg.alt = '';
+        mainImg.style.display = 'none';
+      }
+    }
 
     // ── Gallery badge
     var galBadge = document.querySelector('.gallery-badge--cat');
