@@ -1,0 +1,107 @@
+[
+  {
+    "nome": "Sofá Bora",
+    "slug": "bora",
+    "categoria": "sofa",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/bora-600.jpg",
+    "imagem2": "imagens/artecouro2/bora-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Almofadas em fibra siliconada e sustentação por cinta elástica",
+      "assento": "Espuma D30 soft de alta resiliência envolvida por manta de fibra de poliéster, sustentação por mola zig zag, arames em aço e manta pet foam. Acionamento elétrico com sistema touch.",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D26 dura",
+      "pes": "MDF"
+    }
+  },
+  {
+    "nome": "Sofá Haero",
+    "slug": "haero",
+    "categoria": "sofa",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/haero-600.jpg",
+    "imagem2": "imagens/artecouro2/haero-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Almofadas de fibra siliconada, sustentação por cinta elástica",
+      "assento": "Espuma D26 soft de alta resiliência envolvida por manta de plumante",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D26 dura",
+      "pes": "Madeira"
+    }
+  },
+  {
+    "nome": "Sofá Madri",
+    "slug": "madri",
+    "categoria": "sofa",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/madri-600.jpg",
+    "imagem2": "imagens/artecouro2/madri-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Almofadas de fibra siliconada, sustentação por cinta elástica, com mecanismo de catraca com haste flexível em 4 estágios",
+      "assento": "Espuma D26 soft de alta resiliência envolvida por manta de fibra de poliéster, sustentação por cinta elástica e mola espiral. Os assentos são retráteis.",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D26 dura",
+      "pes": "Madeira"
+    }
+  },
+  {
+    "nome": "Poltrona Madson",
+    "slug": "madson",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/madson-600.jpg",
+    "imagem2": "imagens/artecouro2/madson-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Espuma D26 soft, sustentação por molas zig zag",
+      "assento": "Espuma D26 soft de alta resiliência envolvida por manta de fibra poliéster",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D26",
+      "pes": "Madeira e rodízios"
+    }
+  },
+  {
+    "nome": "Poltrona Mood",
+    "slug": "mood",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/mood-600.jpg",
+    "imagem2": "imagens/artecouro2/mood-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Espuma D23, Cinta Elástica e Fibra Siliconada",
+      "assento": "Espuma D26 HR, D29, Tecnoforme e Mola Zig Zag",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D23 Soft, D26 e Tecnoforme",
+      "pes": "Ferro"
+    }
+  },
+  {
+    "nome": "Poltrona Poli",
+    "slug": "poli",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/poli-600.jpg",
+    "imagem2": "imagens/artecouro2/poli-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Espuma D23 soft envolvida por manta de fibra siliconada e sustentação por cinta elástica",
+      "assento": "Espuma D30 soft de alta resiliência envolvida por manta de fibra siliconada e sustentação por cinta elástica",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D23 soft envolvida por manta de fibra siliconada e sustentação por cinta elástica",
+      "pes": "Base giratória"
+    }
+  },
+  {
+    "nome": "Sofá Urbi",
+    "slug": "urbi",
+    "categoria": "sofa",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro2/urbi-600.jpg",
+    "imagem2": "imagens/artecouro2/urbi-lateral-600.jpg",
+    "composicao": {
+      "encosto": "Plumante e Fibra Siliconada",
+      "assento": "Espuma D26 plumante e Mola Zig Zag",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "bracos": "Espuma D23, D26 Dura, Plumante",
+      "pes": "Aço"
+    }
+  }
+]

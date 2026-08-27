@@ -1,1 +1,1 @@
-{"name":"csm-luxury-lp","version":"1.0.0","private":true,"dependencies":{"@gradio/client":"^2.3.0","@imgly/background-removal-node":"^1.4.5"},"devDependencies":{"playwright":"^1.61.1"}}
+{"name":"csm-luxury-lp","version":"1.0.0","private":true,"dependencies":{"@gradio/client":"^2.3.0","@imgly/background-removal-node":"^1.4.5","canvas":"^3.2.3","pdf-to-img":"^6.3.0","pdfjs-dist":"^6.2.108"},"devDependencies":{"pdf-parse":"^2.4.5","playwright":"^1.61.1"}}

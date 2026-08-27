@@ -1,0 +1,96 @@
+[
+  {
+    "nome": "Poltrona Arraia",
+    "slug": "arraia",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro/arraia-600.jpg",
+    "imagem2": "imagens/artecouro/arraia-lateral-600.jpg",
+    "descricao": "Poltrona Arraia com estrutura em madeira eucalipto de reflorestamento e chapa MDF. Encosto em espuma D26 HR, Tecnoforme e Cinta Elástica. Assento em espuma D29, Tecnoforme e Cinta Elástica. Braço em espuma D26 HR e Tecnoforme. Pés em madeira.",
+    "composicao": {
+      "encosto": "Espuma D26 HR, Tecnoforme, Cinta Elástica",
+      "assento": "Espuma D29, Tecnoforme, Cinta Elástica",
+      "braco": "Espuma D26 HR, Tecnoforme",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "pes": "Madeira"
+    }
+  },
+  {
+    "nome": "Poltrona Eloah",
+    "slug": "eloah",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro/eloah-600.jpg",
+    "imagem2": "imagens/artecouro/eloah-lateral-600.jpg",
+    "descricao": "Poltrona Eloah com estrutura em madeira eucalipto de reflorestamento e chapa MDF. Encosto em espuma D23 Soft e Plumante. Assento em espuma D26, D35 e Plumante. Braço em espuma D26 Dura e Plumante. Pés em madeira.",
+    "composicao": {
+      "encosto": "Espuma D23 Soft, Plumante",
+      "assento": "Espuma D26, D35 e Plumante",
+      "braco": "Espuma D26 Dura e Plumante",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "pes": "Madeira"
+    }
+  },
+  {
+    "nome": "Poltrona Generosa",
+    "slug": "generosa",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro/generosa-600.jpg",
+    "imagem2": "imagens/artecouro/generosa-lateral-600.jpg",
+    "descricao": "Poltrona Generosa com estrutura em madeira eucalipto de reflorestamento e chapa MDF. Encosto em espuma D25 Soft e Plumante. Assento em espuma D35, Plumante e Cinta Elástica. Braço em espuma D26 e Plumante. Pés em madeira.",
+    "composicao": {
+      "encosto": "Espuma D25 Soft, Plumante",
+      "assento": "Espuma D35, Plumante e Cinta Elástica",
+      "braco": "Espuma D26, Plumante",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "pes": "Madeira"
+    }
+  },
+  {
+    "nome": "Poltrona Oca",
+    "slug": "oca",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro/oca-600.jpg",
+    "imagem2": "imagens/artecouro/oca-lateral-600.jpg",
+    "descricao": "Poltrona Oca com estrutura em madeira eucalipto de reflorestamento e chapa MDF. Encosto em espuma D25 Soft e Plumante. Assento em espuma D35, Plumante e Cinta Elástica. Braço em espuma D29 e Plumante. Pés em aço.",
+    "composicao": {
+      "encosto": "Espuma D25 Soft, Plumante",
+      "assento": "Espuma D35, Plumante e Cinta Elástica",
+      "braco": "Espuma D29, Plumante",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "pes": "Aço"
+    }
+  },
+  {
+    "nome": "Sofá Rembrandit",
+    "slug": "rembrandit",
+    "categoria": "sofa",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro/rembrandit-600.jpg",
+    "imagem2": "imagens/artecouro/rembrandit-lateral-600.jpg",
+    "descricao": "Sofá Rembrandit com estrutura em madeira eucalipto de reflorestamento e chapa MDF. Encosto em espuma D23 Soft de alta resiliência envolvida por mola zig zag. Assento em espuma D32 Soft de alta resiliência, Tecnoform e sustentação por cinta elástica. Pés em aço.",
+    "composicao": {
+      "encosto": "Espuma D23 Soft de alta resiliência, mola zig zag",
+      "assento": "Espuma D32 Soft de alta resiliência, Tecnoform, cinta elástica",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "pes": "Aço"
+    }
+  },
+  {
+    "nome": "Poltrona Volpi",
+    "slug": "volpi",
+    "categoria": "poltrona",
+    "fornecedor": "artecouro",
+    "imagem": "imagens/artecouro/volpi-600.jpg",
+    "imagem2": "imagens/artecouro/volpi-lateral-600.jpg",
+    "descricao": "Poltrona Volpi com estrutura em madeira eucalipto de reflorestamento e chapa MDF. Encosto em espuma D25 Soft de alta resiliência e plumante. Assento em espuma D25 e D32 Soft de alta resiliência, plumante e sustentação por cinta elástica. Pés em aço.",
+    "composicao": {
+      "encosto": "Espuma D25 Soft de alta resiliência, plumante",
+      "assento": "Espuma D25 e D32 Soft de alta resiliência, plumante, cinta elástica",
+      "estrutura": "Madeira eucalipto de reflorestamento e chapa MDF",
+      "pes": "Aço"
+    }
+  }
+]

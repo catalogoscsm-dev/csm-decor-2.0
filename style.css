@@ -2829,7 +2829,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig,
 .cat-card[data-fornecedor="buriti"] .cat-card__fig,
 .cat-card[data-fornecedor="daf"] .cat-card__fig,
-.cat-card[data-fornecedor="suprema"] .cat-card__fig {
+.cat-card[data-fornecedor="suprema"] .cat-card__fig,
+.cat-card[data-fornecedor="artecouro"] .cat-card__fig {
   background: #f2ede8;
 }
 .cat-card[data-fornecedor="klassic"] .cat-card__fig img,
@@ -2841,7 +2842,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig img,
 .cat-card[data-fornecedor="buriti"] .cat-card__fig img,
 .cat-card[data-fornecedor="daf"] .cat-card__fig img,
-.cat-card[data-fornecedor="suprema"] .cat-card__fig img {
+.cat-card[data-fornecedor="suprema"] .cat-card__fig img,
+.cat-card[data-fornecedor="artecouro"] .cat-card__fig img {
   object-fit: cover;
   object-position: center center;
 }
@@ -7304,6 +7306,8 @@ html { scroll-padding-top: 80px; }
   font-weight: 400;
   letter-spacing: .01em;
   color: var(--dark);
+  -webkit-text-fill-color: var(--dark);
+  caret-color: var(--dark);
   background: transparent;
   border: none;
   outline: none;
