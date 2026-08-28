@@ -376,48 +376,8 @@
               <span class="product-panel__price">Consulte-nos</span>
             </div>
             <p class="product-panel__price-note">
-              Preço sob consulta · Financiamento em até 60× · Frete incluso para Campinas e região
+              Preço sob consulta · Frete incluso para Campinas e região
             </p>
-
-            <!-- Opções de acabamento -->
-            <p class="product-panel__option-label">Revestimento</p>
-            <div class="product-panel__swatches" role="group" aria-label="Opções de revestimento">
-              <button
-                class="swatch active"
-                style="background: #8B5E3C;"
-                title="Couro Cognac"
-                aria-label="Couro Cognac"
-                aria-pressed="true"
-              ></button>
-              <button
-                class="swatch"
-                style="background: #1C1C1C;"
-                title="Couro Preto"
-                aria-label="Couro Preto"
-                aria-pressed="false"
-              ></button>
-              <button
-                class="swatch"
-                style="background: #C5A882;"
-                title="Couro Bege"
-                aria-label="Couro Bege"
-                aria-pressed="false"
-              ></button>
-              <button
-                class="swatch"
-                style="background: #3E3560;"
-                title="Veludo Azul Noite"
-                aria-label="Veludo Azul Noite"
-                aria-pressed="false"
-              ></button>
-              <button
-                class="swatch"
-                style="background: #6B3D2A;"
-                title="Veludo Bordô"
-                aria-label="Veludo Bordô"
-                aria-pressed="false"
-              ></button>
-            </div>
 
             <!-- Especificações expansíveis -->
             <div class="product-specs" aria-label="Especificações técnicas">
@@ -1258,17 +1218,6 @@
       if (isOpen) { closeSpecs(); } else { openSpecs(); }
     });
 
-    // ── Swatches de revestimento ─────────────────────────────
-    document.querySelectorAll('.swatch').forEach(swatch => {
-      swatch.addEventListener('click', () => {
-        document.querySelectorAll('.swatch').forEach(s => {
-          s.classList.remove('active');
-          s.setAttribute('aria-pressed', 'false');
-        });
-        swatch.classList.add('active');
-        swatch.setAttribute('aria-pressed', 'true');
-      });
-    });
 
     // ── Favoritar ────────────────────────────────────────────
     function getMbKey() {
