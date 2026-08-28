@@ -836,7 +836,8 @@
     var thumb3d    = document.getElementById('thumb-3d');
     if (thumbsWrap && thumb3d) {
       thumbsWrap.innerHTML = '';
-      var imgs = (p.imgs && p.imgs.length) ? p.imgs : (firstImg ? [firstImg] : []);
+      var rawImgs = (p.imgs && p.imgs.length) ? p.imgs : (firstImg ? [firstImg] : []);
+      var imgs = rawImgs.filter(function (src, idx, arr) { return arr.indexOf(src) === idx; });
       imgs.forEach(function (src, i) {
         var div = document.createElement('div');
         div.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
