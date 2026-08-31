@@ -745,7 +745,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-block: 1px solid rgba(240, 120, 0, 0.12);
   padding-block: 1.15rem;
 
-  cursor: default;
+  cursor: grab;
 }
 
 /* Linha de brilho laranja no topo — acento de marca */
@@ -773,44 +773,52 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   animation: secDivScroll 26s linear infinite;
 }
 
-.sec-divider:hover .sec-divider__track {
-  animation-play-state: paused;
-}
+/* hover-pause removido — velocidade controlada pelo motor rAF em JS */
 
 @keyframes secDivScroll {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
 }
 
-/* Texto — Light mode: cinza reforçado, mais legível que brand-strip padrão */
+/* Texto — âmbar escuro no light, glow sutil */
 .sec-divider__item {
   font-family: var(--font-sans);
-  font-size: clamp(.62rem, 1.2vw, .74rem);   /* ligeiramente maior que brand-strip */
-  font-weight: 600;                            /* semi-bold — reforço de leitura */
+  font-size: clamp(.62rem, 1.2vw, .74rem);
+  font-weight: 600;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: rgba(30, 30, 30, .72);               /* mais forte que brand-strip (.52) */
   white-space: nowrap;
   flex-shrink: 0;
   padding-inline: 2.4rem;
   user-select: none;
-  transition: color 220ms ease;
+  transition: color 220ms ease, text-shadow 220ms ease;
+
+  color: #7a3800;
+  text-shadow:
+    0 0 10px rgba(180, 80, 0, .20),
+    0 0 24px rgba(180, 80, 0, .10);
 }
 
 .sec-divider:hover .sec-divider__item {
-  color: rgba(30, 30, 30, .92);
+  color: #8f4200;
+  text-shadow:
+    0 0 10px rgba(180, 80, 0, .32),
+    0 0 28px rgba(180, 80, 0, .16);
 }
 
-/* Separador ✦ — losango laranja, idêntico ao brand-strip__sep */
+/* Separador ✦ */
 .sec-divider__sep {
   font-size: .5rem;
-  color: var(--orange);
-  opacity: .75;
+  color: #c05a00;
+  opacity: .80;
   flex-shrink: 0;
   line-height: 1;
   position: relative;
   top: .5px;
   user-select: none;
+  text-shadow:
+    0 0 6px  rgba(200, 90, 0, .35),
+    0 0 14px rgba(200, 90, 0, .18);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -824,11 +832,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 [data-theme="dark"] .sec-divider__item {
-  color: rgba(255, 255, 255, .55);
+  color: #e07830;
+  text-shadow:
+    0 0 8px  rgba(230, 120, 40, .55),
+    0 0 20px rgba(230, 120, 40, .28),
+    0 0 40px rgba(230, 120, 40, .12);
 }
 
 [data-theme="dark"] .sec-divider:hover .sec-divider__item {
-  color: rgba(255, 255, 255, .78);
+  color: #f08840;
+  text-shadow:
+    0 0 8px  rgba(240, 136, 60, .75),
+    0 0 22px rgba(240, 136, 60, .42),
+    0 0 48px rgba(240, 136, 60, .18);
 }
 
 /* ----------------------------------------------------------
@@ -7198,19 +7214,35 @@ html { scroll-padding-top: 80px; }
 [data-theme="dark"] .cat-page-filters { background: var(--bg-dark, #0f0f0f); border-color: rgba(255,255,255,.06); }
 [data-theme="dark"] .cat-page-grid   { background: var(--bg-dark, #0f0f0f); }
 
-/* ── Letreiro elegante — cat-ticker ─────────────────────────── */
+/* ── Letreiro elegante — cat-ticker (espelha sec-divider) ──── */
 .cat-ticker {
   position: relative;
   overflow: hidden;
-  background: var(--cream);
-  border-top: 1px solid var(--gray-light);
-  border-bottom: 1px solid var(--gray-light);
+  z-index: 1;
+
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: linear-gradient(180deg, #ede9e2 0%, #f2efe9 100%);
+  border-block: 1px solid rgba(240, 120, 0, 0.12);
   padding-block: 1.15rem;
-  /* vignette lateral */
-  -webkit-mask-image: linear-gradient(to right,
-    transparent 0%, black 8%, black 92%, transparent 100%);
-  mask-image: linear-gradient(to right,
-    transparent 0%, black 8%, black 92%, transparent 100%);
+  cursor: default;
+}
+
+.cat-ticker::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(240,120,0,.38) 30%,
+    rgba(240,120,0,.60) 50%,
+    rgba(240,120,0,.38) 70%,
+    transparent 100%
+  );
 }
 
 .cat-ticker__track {
@@ -7218,49 +7250,75 @@ html { scroll-padding-top: 80px; }
   align-items: center;
   width: max-content;
   white-space: nowrap;
-  animation: marqueeScroll 42s linear infinite;
+  will-change: transform;
+  animation: secDivScroll 26s linear infinite;
 }
 
+/* hover-pause removido — velocidade controlada pelo motor rAF em JS */
 
 .cat-ticker__group {
   display: inline-flex;
   align-items: center;
-  gap: 2rem;
-  padding-inline: 2rem;
 }
 
 .cat-ticker__item {
-  font-family: var(--font-serif);
-  font-size: clamp(.95rem, 1.6vw, 1.1rem);
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: .06em;
-  color: rgba(30, 30, 30, .78);
-  transition: color 220ms ease;
+  font-family: var(--font-sans);
+  font-size: clamp(.62rem, 1.2vw, .74rem);
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-inline: 2.4rem;
+  user-select: none;
+  transition: color 220ms ease, text-shadow 220ms ease;
+
+  color: #7a3800;
+  text-shadow:
+    0 0 10px rgba(180, 80, 0, .20),
+    0 0 24px rgba(180, 80, 0, .10);
 }
 
 .cat-ticker:hover .cat-ticker__item {
-  color: rgba(30, 30, 30, .95);
+  color: #8f4200;
+  text-shadow:
+    0 0 10px rgba(180, 80, 0, .32),
+    0 0 28px rgba(180, 80, 0, .16);
 }
 
 .cat-ticker__sep {
-  font-size: .44rem;
-  color: var(--orange);
-  opacity: .85;
+  font-size: .5rem;
+  color: #c05a00;
+  opacity: .80;
   flex-shrink: 0;
+  line-height: 1;
+  position: relative;
+  top: .5px;
+  user-select: none;
+  text-shadow:
+    0 0 6px  rgba(200, 90, 0, .35),
+    0 0 14px rgba(200, 90, 0, .18);
 }
 
 [data-theme="dark"] .cat-ticker {
-  background: rgba(255, 255, 255, .04);
-  border-color: rgba(255, 255, 255, .08);
+  background: linear-gradient(180deg, #0d0d0d 0%, #111111 100%);
+  border-block-color: rgba(240, 120, 0, 0.14);
 }
 
 [data-theme="dark"] .cat-ticker__item {
-  color: rgba(255, 255, 255, .45);
+  color: #e07830;
+  text-shadow:
+    0 0 8px  rgba(230, 120, 40, .55),
+    0 0 20px rgba(230, 120, 40, .28),
+    0 0 40px rgba(230, 120, 40, .12);
 }
 
 [data-theme="dark"] .cat-ticker:hover .cat-ticker__item {
-  color: rgba(255, 255, 255, .75);
+  color: #f08840;
+  text-shadow:
+    0 0 8px  rgba(240, 136, 60, .75),
+    0 0 22px rgba(240, 136, 60, .42),
+    0 0 48px rgba(240, 136, 60, .18);
 }
 
 @media (prefers-reduced-motion: reduce) {

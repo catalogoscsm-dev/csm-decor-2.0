@@ -3756,5 +3756,88 @@
   }());
   </script>
 
+  <!-- ── Motor rAF: auto-scroll + drag + momentum + lerp de velocidade ── -->
+  <script>
+  (function () {
+    var el    = document.querySelector('.sec-divider');
+    var track = el && el.querySelector('.sec-divider__track');
+    if (!el || !track) return;
+
+    var AUTO  = 0.80;   /* px/frame velocidade normal (≈ 48 px/s @ 60fps) */
+    var SLOW  = 0.15;   /* px/frame ao parar sobre o ticker               */
+    var LERP  = 0.055;  /* suavidade da aceleração/desaceleração           */
+    var DECAY = 0.88;   /* fricção do momentum após soltar                 */
+
+    var halfW    = 0;
+    var pos      = 0;   /* translateX atual em px, sempre em (-halfW, 0]  */
+    var speed    = AUTO;
+    var targetS  = AUTO;
+    var dragging = false;
+    var lastX    = 0;
+    var momentum = 0;
+
+    /* Mata a animação CSS — o JS assume o controle */
+    track.style.animation = 'none';
+
+    function measure() { halfW = track.scrollWidth / 2; }
+    measure();
+    window.addEventListener('resize', measure);
+
+    function wrap(p) {
+      p = p % halfW;
+      return p > 0 ? p - halfW : p;
+    }
+
+    function tick() {
+      if (!dragging) {
+        if (Math.abs(momentum) > 0.05) {
+          pos      = wrap(pos + momentum);
+          momentum *= DECAY;
+        } else {
+          momentum  = 0;
+          speed    += (targetS - speed) * LERP;   /* lerp suave de velocidade */
+          pos       = wrap(pos - speed);
+        }
+      }
+      track.style.transform = 'translate3d(' + pos.toFixed(2) + 'px,0,0)';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    /* Hover: desacelera / acelera */
+    el.addEventListener('mouseenter', function () { if (!dragging) targetS = SLOW; });
+    el.addEventListener('mouseleave', function () { targetS = AUTO; });
+
+    /* ── Drag ── */
+    function dragStart(x) {
+      dragging = true; lastX = x; momentum = 0;
+      el.style.cursor = 'grabbing';
+    }
+    function dragMove(x) {
+      if (!dragging) return;
+      var delta = x - lastX;
+      pos   = wrap(pos + delta);
+      momentum = delta;          /* último delta vira momentum na soltura */
+      lastX = x;
+    }
+    function dragEnd() {
+      if (!dragging) return;
+      dragging = false;
+      el.style.cursor = 'grab';
+      /* targetS já foi setado pelo mouseleave ou fica AUTO se vier de touch */
+    }
+
+    el.addEventListener('mousedown',  function (e) { e.preventDefault(); dragStart(e.clientX); });
+    window.addEventListener('mousemove',  function (e) { dragMove(e.clientX); });
+    window.addEventListener('mouseup',    function ()  { dragEnd(); });
+
+    el.addEventListener('touchstart', function (e) { dragStart(e.touches[0].clientX); },       { passive: true });
+    el.addEventListener('touchmove',  function (e) { dragMove(e.touches[0].clientX); },        { passive: true });
+    el.addEventListener('touchend',   function ()  { dragEnd(); });
+
+    el.style.cursor = 'grab';
+  }());
+  </script>
+
 </body>
 </html>

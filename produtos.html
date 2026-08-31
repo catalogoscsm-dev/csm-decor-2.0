@@ -3616,14 +3616,14 @@
             data-imgs='["https://www.csmdecor.com.br/wsite/wp-content/uploads/2021/04/sofa-5.jpeg"]'
             data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Sof%C3%A1%20Lux.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
             data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;possui base fixa em MDF e madeira de eucalipto reflorestada.&quot;},{&quot;key&quot;:&quot;Acabamento&quot;,&quot;val&quot;:&quot;em linho cinza de alta qualidade.&quot;}]"
-            data-description="ESTRUTURA Estrutura possui base fixa em MDF e madeira de eucalipto reflorestada. ACABAMENTOS DESTE PRODUTO: Acabamento em linho cinza de alta qualidade. ACABAMENTOS SOB ENCOMENDA: Variedade de acabamentos em tecidos e cores de pés. DIMENSÕES DO PRODUTO: L: 3,10 x P: 1,00 x A: 0,85">
+            data-description="Estrutura possui base fixa em MDF e madeira de eucalipto reflorestada. ACABAMENTOS DESTE PRODUTO: Acabamento em linho cinza de alta qualidade. ACABAMENTOS SOB ENCOMENDA: Variedade de acabamentos em tecidos e cores de pés. DIMENSÕES DO PRODUTO: L: 3,10 x P: 1,00 x A: 0,85">
             <figure class="cat-card__fig" data-nome="Sofá Lux">
               <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2021/04/sofa-5-600x600.jpeg" alt="Sofá Lux — CSM Decor" loading="lazy" />
               <span class="cat-card__badge">Sofá</span>
             </figure>
             <div class="cat-card__body">
               <h2 class="cat-card__name">Sofá Lux</h2>
-              <p class="cat-card__tagline">ESTRUTURA Estrutura possui base fixa em MDF e madeira de eucalipto reflorestada. ACABAMENTOS DESTE PRODUTO: Ac</p>
+              <p class="cat-card__tagline">Estrutura possui base fixa em MDF e madeira de eucalipto reflorestada. ACABAMENTOS DESTE PRODUTO: Ac</p>
               <details class="cat-specs">
                 <summary class="cat-specs__toggle">Especificações técnicas</summary>
                 <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>possui base fixa em MDF e madeira de eucalipto reflorestada.</dd></div><div class="cat-specs__row"><dt>Acabamento</dt><dd>em linho cinza de alta qualidade.</dd></div></dl>
@@ -5999,6 +5999,85 @@
     });
 
     requestAnimationFrame(tick);
+  }());
+  </script>
+
+  <!-- ── Motor rAF: auto-scroll + drag + momentum + lerp de velocidade ── -->
+  <script>
+  (function () {
+    var el    = document.querySelector('.cat-ticker');
+    var track = el && el.querySelector('.cat-ticker__track');
+    if (!el || !track) return;
+
+    var AUTO  = 0.80;
+    var SLOW  = 0.15;
+    var LERP  = 0.055;
+    var DECAY = 0.88;
+
+    var halfW    = 0;
+    var pos      = 0;
+    var speed    = AUTO;
+    var targetS  = AUTO;
+    var dragging = false;
+    var lastX    = 0;
+    var momentum = 0;
+
+    track.style.animation = 'none';
+
+    function measure() { halfW = track.scrollWidth / 2; }
+    measure();
+    window.addEventListener('resize', measure);
+
+    function wrap(p) {
+      p = p % halfW;
+      return p > 0 ? p - halfW : p;
+    }
+
+    function tick() {
+      if (!dragging) {
+        if (Math.abs(momentum) > 0.05) {
+          pos      = wrap(pos + momentum);
+          momentum *= DECAY;
+        } else {
+          momentum  = 0;
+          speed    += (targetS - speed) * LERP;
+          pos       = wrap(pos - speed);
+        }
+      }
+      track.style.transform = 'translate3d(' + pos.toFixed(2) + 'px,0,0)';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    el.addEventListener('mouseenter', function () { if (!dragging) targetS = SLOW; });
+    el.addEventListener('mouseleave', function () { targetS = AUTO; });
+
+    function dragStart(x) {
+      dragging = true; lastX = x; momentum = 0;
+      el.style.cursor = 'grabbing';
+    }
+    function dragMove(x) {
+      if (!dragging) return;
+      var delta = x - lastX;
+      pos      = wrap(pos + delta);
+      momentum = delta;
+      lastX    = x;
+    }
+    function dragEnd() {
+      if (!dragging) return;
+      dragging = false;
+      el.style.cursor = 'grab';
+    }
+
+    el.addEventListener('mousedown',  function (e) { e.preventDefault(); dragStart(e.clientX); });
+    window.addEventListener('mousemove',  function (e) { dragMove(e.clientX); });
+    window.addEventListener('mouseup',    function ()  { dragEnd(); });
+
+    el.addEventListener('touchstart', function (e) { dragStart(e.touches[0].clientX); },       { passive: true });
+    el.addEventListener('touchmove',  function (e) { dragMove(e.touches[0].clientX); },        { passive: true });
+    el.addEventListener('touchend',   function ()  { dragEnd(); });
+
+    el.style.cursor = 'grab';
   }());
   </script>
 
