@@ -1986,47 +1986,62 @@
 
   <script>
   (function () {
-    var ZOOM        = 3;
-    var RESULT_SIZE = 360;
-    var LENS_SIZE   = Math.round(RESULT_SIZE / ZOOM); // 120px
+    var ZOOM = 3;
 
     var lens      = document.getElementById('zoom-lens');
     var result    = document.getElementById('zoom-result');
     var img       = document.getElementById('gallery-main-img');
     var container = document.getElementById('gallery-main');
+    var panel     = document.querySelector('.product-panel');
     var lightbox  = document.getElementById('lightbox');
 
     if (!lens || !result || !img || !container) return;
+
+    var rW = 0, rH = 0, lW = 0, lH = 0;
+
+    function anchor() {
+      var cr = container.getBoundingClientRect();
+      var pr = panel ? panel.getBoundingClientRect() : null;
+
+      /* alinha com o painel de descrições; fallback: à direita da galeria */
+      if (pr && pr.width > 80) {
+        result.style.left = pr.left + 'px';
+        rW = pr.width;
+      } else {
+        result.style.left = (cr.right + 20) + 'px';
+        rW = 400;
+      }
+
+      rH = cr.height;
+      result.style.top    = cr.top + 'px';
+      result.style.width  = rW + 'px';
+      result.style.height = rH + 'px';
+
+      lW = Math.round(rW / ZOOM);
+      lH = Math.round(rH / ZOOM);
+      lens.style.width  = lW + 'px';
+      lens.style.height = lH + 'px';
+    }
 
     function move(e) {
       var rect = img.getBoundingClientRect();
       var x = e.clientX - rect.left;
       var y = e.clientY - rect.top;
 
-      var lx = Math.max(0, Math.min(x - LENS_SIZE / 2, rect.width  - LENS_SIZE));
-      var ly = Math.max(0, Math.min(y - LENS_SIZE / 2, rect.height - LENS_SIZE));
+      var lx = Math.max(0, Math.min(x - lW / 2, rect.width  - lW));
+      var ly = Math.max(0, Math.min(y - lH / 2, rect.height - lH));
 
       lens.style.left = lx + 'px';
       lens.style.top  = ly + 'px';
 
-      var bgW = rect.width  * ZOOM;
-      var bgH = rect.height * ZOOM;
-
       result.style.backgroundImage    = 'url("' + img.src + '")';
-      result.style.backgroundSize     = bgW + 'px ' + bgH + 'px';
+      result.style.backgroundSize     = (rect.width * ZOOM) + 'px ' + (rect.height * ZOOM) + 'px';
       result.style.backgroundPosition = (-lx * ZOOM) + 'px ' + (-ly * ZOOM) + 'px';
-
-      var rx = e.clientX + 28;
-      var ry = e.clientY - RESULT_SIZE / 2;
-      if (rx + RESULT_SIZE > window.innerWidth - 16) rx = e.clientX - RESULT_SIZE - 28;
-      ry = Math.max(12, Math.min(ry, window.innerHeight - RESULT_SIZE - 12));
-
-      result.style.left = rx + 'px';
-      result.style.top  = ry + 'px';
     }
 
     container.addEventListener('mouseenter', function () {
       if (lightbox && lightbox.classList.contains('open')) return;
+      anchor();
       lens.style.display   = 'block';
       result.style.display = 'block';
       container.classList.add('is-zooming');
@@ -2039,6 +2054,9 @@
     });
 
     container.addEventListener('mousemove', move);
+    window.addEventListener('resize', function () {
+      if (result.style.display === 'block') anchor();
+    });
   }());
   </script>
 
