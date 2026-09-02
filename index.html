@@ -262,10 +262,10 @@
     ============================================================ -->
     <section class="hero" id="inicio" aria-label="Apresentação CSM">
 
-      <!-- Vídeo de fundo -->
+      <!-- Vídeo de fundo — playlist: gemini.mp4 → francis.mp4 → loop -->
       <div class="hero__video-wrap" aria-hidden="true">
-        <video class="hero__video"
-          autoplay muted loop playsinline preload="auto"
+        <video class="hero__video" id="hero-video"
+          autoplay muted playsinline preload="auto"
           poster="apresentacao/mesa-centro-liu.webp">
           <source src="gemini.mp4" type="video/mp4" />
         </video>
@@ -275,15 +275,6 @@
       <!-- Conteúdo sobreposto -->
       <div class="container hero__body">
         <p class="eyebrow" id="hero-eyebrow">Campinas Shopping Móveis</p>
-        <h1 class="hero__headline" id="hero-headline">
-          O ambiente que você<br />
-          <em>sempre imaginou</em>,<br />
-          finalmente realizado.
-        </h1>
-        <p class="hero__sub" id="hero-sub">
-          Móveis e decoração de alto padrão.<br />
-          Mais de 30 anos de tradição. 6.000 m² de inspiração.
-        </p>
         <div class="hero__actions" id="hero-actions">
           <a
             href="https://wa.me/5519990034068?text=Quero%20agendar%20uma%20visita%20ao%20showroom%20CSM."
@@ -2433,21 +2424,24 @@
       }
     });
 
-    // ── Hero vídeo: pausa ao sair do viewport + loop eterno garantido ──
+    // ── Hero vídeo: playlist gemini → francis → gemini → … ──
     (function () {
-      var video = document.querySelector('.hero__video');
+      var video = document.getElementById('hero-video');
       if (!video) return;
 
-      video.loop = true;
+      var PLAYLIST = ['gemini.mp4', 'francis.mp4'];
+      var idx = 0;
       var visible = true;
 
-      // Fallback: se o vídeo terminar sem reiniciar (bug de alguns browsers), força restart
+      // Avança para o próximo vídeo da playlist ao terminar
       video.addEventListener('ended', function () {
-        video.currentTime = 0;
+        idx = (idx + 1) % PLAYLIST.length;
+        video.src = PLAYLIST[idx];
+        video.load();
         video.play().catch(function () {});
       });
 
-      // Heartbeat a cada 2s: garante que o vídeo continue rodando quando visível
+      // Heartbeat: garante reprodução quando visível
       setInterval(function () {
         if (visible && video.paused && !video.ended) {
           video.play().catch(function () {});

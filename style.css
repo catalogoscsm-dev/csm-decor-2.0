@@ -7511,6 +7511,22 @@ html { scroll-padding-top: 80px; }
   box-shadow: 0 2px 18px rgba(0,0,0,.06);
 }
 
+/* Variante hero — integrado ao cat-page-hero, sem borda/fundo próprios */
+.csb--hero {
+  border-bottom: none;
+  background: transparent;
+  padding-block: 2rem 0;
+  box-shadow: none !important;
+}
+.csb--hero .csb__field {
+  border-bottom-color: var(--gray-mid);
+  max-width: 580px;
+  margin-inline: auto;
+}
+.csb--hero.csb--focused .csb__field {
+  border-bottom-color: var(--dark);
+}
+
 .csb__inner {
   display: flex;
   flex-direction: column;
