@@ -2584,8 +2584,6 @@
     (function () {
       'use strict';
 
-      var DB = window.CSM_PRODUTOS || [];
-
       function norm(s) {
         return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
       }
@@ -2602,6 +2600,7 @@
       }
 
       function doSearch(q) {
+        var DB = window.CSM_PRODUTOS || [];
         if (!q || q.length < 2) return [];
         var nq = norm(q);
         var results = [];

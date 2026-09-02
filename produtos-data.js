@@ -8,10 +8,24 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "name": "Sofá Vênus",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/novos/venus2-1.jpg",
+    "keywords": "sofa venus sala estar mola bonnel espuma fibra madeira living conforto"
+  },
+  {
     "name": "Estantes Linha Pix Modular",
     "tipo": "corporativo",
     "badge": "Corporativo",
     "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/02/estante-pix-modular-2-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Shoulder",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ideale/shoulder-1.jpg",
     "keywords": ""
   },
   {
@@ -22,6 +36,13 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "name": "Sofá Pier",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ideale/sofa-pier-1.jpg",
+    "keywords": ""
+  },
+  {
     "name": "Sofás Linha Pix",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -29,10 +50,10 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
-    "name": "Linha Multifuncional Luna",
-    "tipo": "corporativo",
-    "badge": "Corporativo",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/02/luna-600x600.jpg",
+    "name": "Sofá Cosmopolitan Soft",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ilhabelamoveis/ib729-sofa-cosmopolitan-soft-1.jpg",
     "keywords": ""
   },
   {
@@ -40,6 +61,13 @@ window.CSM_PRODUTOS = [
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
     "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2020/07/1689-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Linha Multifuncional Luna",
+    "tipo": "corporativo",
+    "badge": "Corporativo",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/02/luna-600x600.jpg",
     "keywords": ""
   },
   {
@@ -54,6 +82,69 @@ window.CSM_PRODUTOS = [
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
     "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2020/07/1688-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Tesla",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ideale/tesla-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Mallorca",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ideale/mallorca-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Toledo",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ideale/toledo-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Ludwing",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/ideale/ludwing-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Ânkur",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/novos/ankur-1.jpg",
+    "keywords": "sofá ankur sala living design autoral contemporâneo conforto"
+  },
+  {
+    "name": "Sofá Bora",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-bora.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Haero",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/artecouro2/haero-600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Urbi",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/artecouro2/urbi-600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Vip",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/sofa-vp-12-bifoto-600x600.jpg",
     "keywords": ""
   },
   {
@@ -159,13 +250,6 @@ window.CSM_PRODUTOS = [
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
     "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/mesa-jantar-fiori-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá Vip",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/sofa-vp-12-bifoto-600x600.jpg",
     "keywords": ""
   },
   {
@@ -680,55 +764,6 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
-    "name": "Sofá Cama Fit",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-fit-1-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá cama Orlando",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2020/04/orlando-03-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá cama Daybed",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-daybed-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá-Cama MH 1456",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1456-1-1-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá cama MH 1606",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1606-1-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá cama MH 1605",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1605-1-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá-Cama MH 1174",
-    "tipo": "sofa",
-    "badge": "Quarto",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1174-1-600x600.jpg",
-    "keywords": ""
-  },
-  {
     "name": "Cabeceira MH 2694",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -1048,13 +1083,6 @@ window.CSM_PRODUTOS = [
     "tipo": "poltrona",
     "badge": "Poltrona",
     "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/poltrona-blausee-17-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá BORA",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-bora-600x600.jpg",
     "keywords": ""
   },
   {
@@ -1443,59 +1471,10 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
-    "name": "Sofá Fixo HAERO",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2020/03/haero-600x600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Shoulder",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ideale/shoulder-1.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Tesla",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ideale/tesla-1.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Mallorca",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ideale/mallorca-1.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Toledo",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ideale/toledo-1.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Ludwing",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ideale/ludwing-1.jpg",
-    "keywords": ""
-  },
-  {
     "name": "Poltrona Ondine",
     "tipo": "poltrona",
     "badge": "Poltrona",
     "img": "imagens/ideale/poltrona-ondine-1.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá Pier",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ideale/sofa-pier-1.jpg",
     "keywords": ""
   },
   {
@@ -1534,13 +1513,6 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
-    "name": "Sofá Cosmopolitan Soft",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/ilhabelamoveis/ib729-sofa-cosmopolitan-soft-1.jpg",
-    "keywords": ""
-  },
-  {
     "name": "Sonata",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1567,13 +1539,6 @@ window.CSM_PRODUTOS = [
     "badge": "Poltrona",
     "img": "imagens/novos/roy-1.jpg",
     "keywords": "poltrona roy sala eucalipto almofadas luxo design contemporâneo"
-  },
-  {
-    "name": "Sofá Ânkur",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/novos/ankur-1.jpg",
-    "keywords": "sofá ankur sala living design autoral contemporâneo conforto"
   },
   {
     "name": "Poltrona Beá",
@@ -1639,13 +1604,6 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona dolphin sala design contemporâneo versátil estilo daf"
   },
   {
-    "name": "Sofá Vênus",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/novos/venus2-1.jpg",
-    "keywords": "sofa venus sala estar mola bonnel espuma fibra madeira living conforto"
-  },
-  {
     "name": "Sofá S-147",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1695,20 +1653,6 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
-    "name": "Sofá Bora",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/artecouro2/bora-600.jpg",
-    "keywords": ""
-  },
-  {
-    "name": "Sofá Haero",
-    "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/artecouro2/haero-600.jpg",
-    "keywords": ""
-  },
-  {
     "name": "Sofá Madri",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1737,10 +1681,52 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
-    "name": "Sofá Urbi",
+    "name": "Sofá Cama Fit",
     "tipo": "sofa",
-    "badge": "Sofá",
-    "img": "imagens/artecouro2/urbi-600.jpg",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-fit-1-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá cama Orlando",
+    "tipo": "sofa",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2020/04/orlando-03-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá cama Daybed",
+    "tipo": "sofa",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-daybed-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá-Cama MH 1456",
+    "tipo": "sofa",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1456-1-1-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá cama MH 1606",
+    "tipo": "sofa",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1606-1-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá cama MH 1605",
+    "tipo": "sofa",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1605-1-600x600.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá-Cama MH 1174",
+    "tipo": "sofa",
+    "badge": "Quarto",
+    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1174-1-600x600.jpg",
     "keywords": ""
   }
 ];
