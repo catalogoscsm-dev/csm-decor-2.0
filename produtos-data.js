@@ -1,6 +1,7 @@
 // Gerado automaticamente por gerar-produtos-data.js — não editar manualmente
 window.CSM_PRODUTOS = [
   {
+    "id": "4661",
     "name": "Poltrona Aura",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -8,6 +9,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "novos-venus2",
     "name": "Sofá Vênus",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -15,6 +17,7 @@ window.CSM_PRODUTOS = [
     "keywords": "sofa venus sala estar mola bonnel espuma fibra madeira living conforto"
   },
   {
+    "id": "4378",
     "name": "Estantes Linha Pix Modular",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -22,6 +25,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7381",
     "name": "Shoulder",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -29,6 +33,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4370",
     "name": "Estantes Linha Pix",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -36,6 +41,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7067",
     "name": "Sofá Pier",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -43,6 +49,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4334",
     "name": "Sofás Linha Pix",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -50,6 +57,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ilhabelamoveis-13067",
     "name": "Sofá Cosmopolitan Soft",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -57,6 +65,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2335",
     "name": "Mocho BISTRO 1689",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -64,6 +73,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4269",
     "name": "Linha Multifuncional Luna",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -71,6 +81,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2316",
     "name": "Mesa de bar BISTRO 1699",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -78,6 +89,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2287",
     "name": "Banco BISTRO 1688",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -85,6 +97,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7285",
     "name": "Tesla",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -92,6 +105,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7112",
     "name": "Mallorca",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -99,6 +113,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-4321",
     "name": "Toledo",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -106,6 +121,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7388",
     "name": "Ludwing",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -113,6 +129,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "novos-ankur",
     "name": "Sofá Ânkur",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -120,6 +137,7 @@ window.CSM_PRODUTOS = [
     "keywords": "sofá ankur sala living design autoral contemporâneo conforto"
   },
   {
+    "id": "artecouro-bora",
     "name": "Sofá Bora",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -127,6 +145,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-haero",
     "name": "Sofá Haero",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -134,6 +153,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-urbi",
     "name": "Sofá Urbi",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -141,6 +161,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4646",
     "name": "Sofá Vip",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -148,6 +169,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4765",
     "name": "Sofá Rubi",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -155,6 +177,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4759",
     "name": "Sofá Apgar",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -162,6 +185,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4697",
     "name": "Poltrona reclinável Eva",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -169,6 +193,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4696",
     "name": "Poltrona reclinável Nina",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -176,6 +201,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4695",
     "name": "Poltrona reclinável Lily",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -183,6 +209,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4694",
     "name": "Poltrona reclinável Ava",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -190,6 +217,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4676",
     "name": "Poltrona Allure",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -197,6 +225,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4674",
     "name": "Mesa Alma",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -204,6 +233,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4656",
     "name": "Sofá Greco",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -211,6 +241,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4654",
     "name": "Mesa Kaiko",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -218,6 +249,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4651",
     "name": "Cadeira Kaiko",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -225,6 +257,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4650",
     "name": "Cadeira Minah",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -232,6 +265,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4649",
     "name": "Mesa de Jantar Trapézio",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -239,6 +273,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4648",
     "name": "Mesa de Jantar Grega",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -246,6 +281,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4647",
     "name": "Mesa de Jantar Fiori",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -253,6 +289,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4645",
     "name": "Sofá Danúbio",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -260,6 +297,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4643",
     "name": "Sofá V",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -267,6 +305,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4642",
     "name": "Sofá Cannes",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -274,6 +313,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4611",
     "name": "Sofá Eros",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -281,6 +321,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4569",
     "name": "Mesa de Cabeceira Oregon",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -288,6 +329,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4568",
     "name": "Mesa de Cabeceira Marche",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -295,6 +337,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4567",
     "name": "Mesa de Cabeceira Malta",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -302,6 +345,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4565",
     "name": "Mesa de Cabeceira Lille",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -309,6 +353,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4566",
     "name": "Mesa de Cabeceira Ideale",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -316,6 +361,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4562",
     "name": "Mesa de Cabeceira Eros",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -323,6 +369,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4563",
     "name": "Mesa de Cabeceira Brisa",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -330,6 +377,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4561",
     "name": "Mesa de Cabeceira Atlante",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -337,6 +385,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4560",
     "name": "Mesa de Cabeceira Vigo",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -344,6 +393,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4559",
     "name": "Mesa de Cabeceira Sparta",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -351,6 +401,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4555",
     "name": "Mesa de Cabeceira Roma",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -358,6 +409,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4556",
     "name": "Cama Malta",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -365,6 +417,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4554",
     "name": "Cama Estofada Lille",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -372,6 +425,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4553",
     "name": "Cama Afrodite (Tecido)",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -379,6 +433,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4552",
     "name": "Cama Afrodite (Tela)",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -386,6 +441,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4551",
     "name": "Penteadeira Lisboa",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -393,6 +449,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4550",
     "name": "Cômoda Roma",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -400,6 +457,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4549",
     "name": "Cômoda Lille",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -407,6 +465,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4548",
     "name": "Cômoda Eros",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -414,6 +473,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4424",
     "name": "Mesa Piano",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -421,6 +481,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4412",
     "name": "Mesa Note",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -428,6 +489,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4413",
     "name": "Mesa Noa",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -435,6 +497,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4395",
     "name": "Mesas Linha Flow",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -442,6 +505,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4315",
     "name": "Sofás Linha Noa",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -449,6 +513,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4285",
     "name": "Linha Multifuncional UP",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -456,6 +521,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4281",
     "name": "Linha Multifuncional Satz",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -463,6 +529,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4277",
     "name": "Linha Multifuncional New Iso",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -470,6 +537,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4267",
     "name": "Linha Multifuncional Longarina Leaf",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -477,6 +545,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4242",
     "name": "Linha Multifuncional Leaf",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -484,6 +553,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4231",
     "name": "Linha Multifuncional Connect",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -491,6 +561,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4208",
     "name": "Linha Multifuncional Bit",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -498,6 +569,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4186",
     "name": "Poltronas Linha Neo",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -505,6 +577,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4184",
     "name": "Cadeiras linha Secretária",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -512,6 +585,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4182",
     "name": "Cadeiras linha Presidente",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -519,6 +593,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4179",
     "name": "Cadeiras linha Executiva",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -526,6 +601,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4177",
     "name": "Cadeiras linha Diretor",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -533,6 +609,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4135",
     "name": "Cadeiras Linha Nexus",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -540,6 +617,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4122",
     "name": "Cadeiras Linha Liss",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -547,6 +625,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4098",
     "name": "Cadeiras Linha Job",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -554,6 +633,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4063",
     "name": "Cadeiras Linha Goah",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -561,6 +641,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4047",
     "name": "Cadeiras Linha Alles",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -568,6 +649,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "4029",
     "name": "Cadeiras Linha Agile",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -575,6 +657,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3996",
     "name": "Cadeiras Linha Addit",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -582,6 +665,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3979",
     "name": "Cadeiras Linha Acto",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -589,6 +673,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3962",
     "name": "Sofá ADA",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -596,6 +681,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3953",
     "name": "Poltrona ADA",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -603,6 +689,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3941",
     "name": "Mesa Centro/Lateral MANU",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -610,6 +697,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3924",
     "name": "Mesa ZAKI",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -617,6 +705,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3921",
     "name": "Mesa de Centro VENUS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -624,6 +713,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3919",
     "name": "Puff CLAN",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -631,6 +721,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3915",
     "name": "Poltrona NAZCA",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -638,6 +729,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3911",
     "name": "Poltrona ATENA",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -645,6 +737,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3902",
     "name": "Poltrona SHELL",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -652,6 +745,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3890",
     "name": "Poltrona DONCELLA",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -659,6 +753,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3889",
     "name": "Poltrona CIRCUS",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -666,6 +761,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3800",
     "name": "Cama DALLAS",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -673,6 +769,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3802",
     "name": "Cama BOSTON",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -680,6 +777,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3801",
     "name": "Cama DAKOTA",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -687,6 +785,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3799",
     "name": "Cômoda MICHIGAN",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -694,6 +793,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3796",
     "name": "Mesa de Cabeceira MICHIGAN",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -701,6 +801,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3794",
     "name": "Mesa de Cabeceira KANSAS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -708,6 +809,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3787",
     "name": "Cômoda KANSAS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -715,6 +817,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3778",
     "name": "Mesa de cabeceira BRERA",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -722,6 +825,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3734",
     "name": "Puff ITALIA",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -729,6 +833,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3732",
     "name": "Moldura espelho TOSCANA",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -736,6 +841,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3730",
     "name": "Mesa de Cabeceira PALHA",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -743,6 +849,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3728",
     "name": "Cômoda KIEV",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -750,6 +857,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3718",
     "name": "Cama Palha",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -757,6 +865,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3717",
     "name": "Cama Munique",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -764,6 +873,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3644",
     "name": "Cabeceira MH 2694",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -771,6 +881,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3642",
     "name": "Cabeceira MH 2651",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -778,6 +889,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3640",
     "name": "Cabeceira MH 2695",
     "tipo": "quarto",
     "badge": "Quarto",
@@ -785,6 +897,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3615",
     "name": "Sofá FINE",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -792,6 +905,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3614",
     "name": "Sofá CANNES",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -799,6 +913,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3605",
     "name": "Sofá DOMUS",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -806,6 +921,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3594",
     "name": "Sofá VERSALES",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -813,6 +929,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3572",
     "name": "Home HEITOR",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -820,6 +937,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3571",
     "name": "Home ZARA",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -827,6 +945,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3570",
     "name": "Rack LAIS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -834,6 +953,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3568",
     "name": "Home ELEGANCE",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -841,6 +961,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3567",
     "name": "Home RENOVARE",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -848,6 +969,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3564",
     "name": "Carrinho bar AMSTERDAM",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -855,6 +977,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3563",
     "name": "Carrinho bar RENÊ",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -862,6 +985,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3562",
     "name": "Aparador CHEVRON",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -869,6 +993,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3561",
     "name": "Aparador DUO",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -876,6 +1001,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3560",
     "name": "Espelho BOLD",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -883,6 +1009,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3559",
     "name": "Espelho JABUTI",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -890,6 +1017,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3557",
     "name": "Mesa lateral BISCOTTO",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -897,6 +1025,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3555",
     "name": "Mesa lateral CRIQUET",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -904,6 +1033,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3556",
     "name": "Mesa centro LISSE",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -911,6 +1041,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3515",
     "name": "Mesa de Centro CRIQUET",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -918,6 +1049,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3486",
     "name": "Sofá TAJ",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -925,6 +1057,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3485",
     "name": "Sofá DNA",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -932,6 +1065,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3484",
     "name": "Puff HAIFAS",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -939,6 +1073,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3483",
     "name": "Poltrona TAJ",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -946,6 +1081,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3482",
     "name": "Poltrona DNA",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -953,6 +1089,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3481",
     "name": "Mesa jantar CONE",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -960,6 +1097,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3480",
     "name": "Chaise SELIMA",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -967,6 +1105,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3479",
     "name": "Cadeira IVYS",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -974,6 +1113,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3478",
     "name": "Cadeira ALEPO",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -981,6 +1121,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3451",
     "name": "Mesa de Jantar SOLE",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -988,6 +1129,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3449",
     "name": "Mesa de Jantar GAVEA",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -995,6 +1137,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3448",
     "name": "Mesa de Jantar CAPA",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1002,6 +1145,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3447",
     "name": "Mesa de Jantar CANNES",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1009,6 +1153,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3446",
     "name": "Mesa de Jantar BOWL",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1016,6 +1161,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3433",
     "name": "Mesa de Centro COMPASS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1023,6 +1169,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3429",
     "name": "Espelho URCA",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1030,6 +1177,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3413",
     "name": "Sofá NANTES",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1037,6 +1185,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3411",
     "name": "Sofá TOULOUSE",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1044,6 +1193,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3410",
     "name": "Sofá ORLEANS",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1051,6 +1201,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3408",
     "name": "Sofá LOMA",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1058,6 +1209,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3407",
     "name": "Poltrona MALLORCA",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1065,6 +1217,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3374",
     "name": "Banco ARTEMIS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1072,6 +1225,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3346",
     "name": "Poltrona LIBRE",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1079,6 +1233,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3345",
     "name": "Poltrona BLAUSEE",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1086,6 +1241,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3260",
     "name": "Poltrona VOLPI",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1093,6 +1249,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1546",
     "name": "Mesa de Jantar retangular EMMA",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1100,6 +1257,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3174",
     "name": "Mesa retangular Bolero",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1107,6 +1265,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2690",
     "name": "Poltrona Bia",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1114,6 +1273,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2689",
     "name": "Poltrona Vivara",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1121,6 +1281,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2676",
     "name": "Poltrona reclinável 3601",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1128,6 +1289,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2672",
     "name": "Poltrona reclinável 3792",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1135,6 +1297,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2671",
     "name": "Sofá Fine",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1142,6 +1305,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2665",
     "name": "Sofá Lux",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1149,6 +1313,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2566",
     "name": "Cadeira SÉFORA",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1156,6 +1321,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2650",
     "name": "Sofá 4203 fixo",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1163,6 +1329,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2646",
     "name": "Sofá 4209 fixo",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1170,6 +1337,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2644",
     "name": "Estante VERMONT",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -1177,6 +1345,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2642",
     "name": "Linha Moblie",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -1184,6 +1353,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2635",
     "name": "Linha Moblie 01",
     "tipo": "corporativo",
     "badge": "Corporativo",
@@ -1191,6 +1361,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2608",
     "name": "Sofá 8040",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1198,6 +1369,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2626",
     "name": "Poltrona MABEL",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1205,6 +1377,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2612",
     "name": "Recamier Sofia",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1212,6 +1385,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2485",
     "name": "Sofá Cairo",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1219,6 +1393,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2387",
     "name": "Sofá ARGOS",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1226,6 +1401,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2345",
     "name": "Metade de Barril 4001-P E 4001-G",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1233,6 +1409,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2343",
     "name": "Quadro TAMPA DE BARRIL",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1240,6 +1417,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2341",
     "name": "Pufe SOMMELIER 1051",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1247,6 +1425,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2339",
     "name": "Mocho CANOA 4122",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1254,6 +1433,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2337",
     "name": "Mocho BOLICHE 2115",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1261,6 +1441,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2333",
     "name": "Mocho GAIOLA 4117",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1268,6 +1449,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2331",
     "name": "Mocho PUB 2113",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1275,6 +1457,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2328",
     "name": "Mesa de bar boteco 1597",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1282,6 +1465,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2325",
     "name": "Mesa de bar boteco 1597-E",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1289,6 +1473,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2323",
     "name": "Mesa de bar boteco 1597-AE",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1296,6 +1481,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2321",
     "name": "Mesa de bar boteco QUADRADA 2119-AE",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1303,6 +1489,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2319",
     "name": "Mesa de bar boteco 1597-A",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1310,6 +1497,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2313",
     "name": "Mesa de bar 116 &#8211; 1571",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1317,6 +1505,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2311",
     "name": "Banqueta boteco 05 &#8211; 1593",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1324,6 +1513,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2309",
     "name": "Banqueta EMPORIO C/ ENCOSTO 4007",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1331,6 +1521,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2307",
     "name": "Banqueta EMPORIO GIRATÓRIA 4006",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1338,6 +1529,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2305",
     "name": "Banqueta INDIA 4107",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1345,6 +1537,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2301",
     "name": "Banqueta PUB 2 &#8211; 4111",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1352,6 +1545,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2299",
     "name": "Banqueta ANATOMICA C/ ENCOSTO 4140",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1359,6 +1553,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2296",
     "name": "Banqueta NINFA 1592",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1366,6 +1561,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2294",
     "name": "Banco ANATOMICO ARAMADO 4112",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1373,6 +1569,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2292",
     "name": "Banco CANOA 4121",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1380,6 +1577,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2290",
     "name": "Banco BOLICHE 2114",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1387,6 +1585,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2285",
     "name": "Banco PUB ARAMADO 4138",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1394,6 +1593,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2283",
     "name": "Banco PUB COM ENCOSTO 2112",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1401,6 +1601,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2281",
     "name": "Banco PUB 2001",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1408,6 +1609,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2279",
     "name": "Adega PÉ PALITO 2062",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1415,6 +1617,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2277",
     "name": "Adega MODULAR 6 GARRAFAS 1650",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1422,6 +1625,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "2275",
     "name": "Adega MODULAR 12 GARRAFAS 1651",
     "tipo": "area-gourmet",
     "badge": "Área Gourmet",
@@ -1429,6 +1633,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1552",
     "name": "Mesa de Jantar INFINITY",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1436,6 +1641,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1482",
     "name": "Aparador FINN",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1443,6 +1649,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1454",
     "name": "Cadeira JULY",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1450,6 +1657,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1452",
     "name": "Bufett CARLTON",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1457,6 +1665,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1453",
     "name": "Bufett MARROCOS",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1464,6 +1673,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "1427",
     "name": "Mesa de Jantar AGAVE",
     "tipo": "sala-jantar",
     "badge": "Sala de Jantar",
@@ -1471,6 +1681,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7139",
     "name": "Poltrona Ondine",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1478,6 +1689,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-3959",
     "name": "Poltrona Mariah",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1485,6 +1697,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7425",
     "name": "Poltrona Mia",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1492,6 +1705,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7416",
     "name": "Poltrona Soft",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1499,6 +1713,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7103",
     "name": "Otto",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1506,6 +1721,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "ideale-7320",
     "name": "Poltrona e Puff Amorosa",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1513,6 +1729,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "buriti-9130",
     "name": "Sonata",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1520,6 +1737,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "novos-carmem",
     "name": "Poltrona Carmem",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1527,6 +1745,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona carmem giratória sala eucalipto espuma conforto"
   },
   {
+    "id": "novos-jow",
     "name": "Poltrona Jow",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1534,6 +1753,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona jow sala eucalipto espuma conforto design"
   },
   {
+    "id": "novos-roy",
     "name": "Poltrona Roy",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1541,6 +1761,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona roy sala eucalipto almofadas luxo design contemporâneo"
   },
   {
+    "id": "novos-bea",
     "name": "Poltrona Beá",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1548,6 +1769,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona beá bea sala giratória design contemporâneo conforto"
   },
   {
+    "id": "novos-aloha",
     "name": "Sofá Aloha",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1555,6 +1777,7 @@ window.CSM_PRODUTOS = [
     "keywords": "sofá aloha sala living linhas suaves conforto minimalista"
   },
   {
+    "id": "novos-venus",
     "name": "Puff Vênus",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1562,6 +1785,7 @@ window.CSM_PRODUTOS = [
     "keywords": "puff venus complemento sala estar design orgânico redondo"
   },
   {
+    "id": "novos-marajo",
     "name": "Sofá Marajó",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1569,6 +1793,7 @@ window.CSM_PRODUTOS = [
     "keywords": "sofá marajó orgânico modular sala living curvas naturais luxo"
   },
   {
+    "id": "novos-planura",
     "name": "Banco Planura",
     "tipo": "complemento",
     "badge": "Complemento",
@@ -1576,6 +1801,7 @@ window.CSM_PRODUTOS = [
     "keywords": "banco planura complemento madeira couro hall quarto sala design minimalista"
   },
   {
+    "id": "novos-bel132",
     "name": "Sofá BEL 132",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1583,6 +1809,7 @@ window.CSM_PRODUTOS = [
     "keywords": "sofá bel 132 sala living lyptus molas bonell espuma conforto"
   },
   {
+    "id": "novos-poltrona028",
     "name": "Poltrona 028",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1590,6 +1817,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona 028 giratória sala espuma d30 design contemporâneo conforto"
   },
   {
+    "id": "novos-carmin",
     "name": "Poltrona Carmin",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1597,6 +1825,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona carmin giratória molas espirais eucalipto sala conforto luxo"
   },
   {
+    "id": "novos-dolphin",
     "name": "Poltrona Dolphin",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1604,6 +1833,7 @@ window.CSM_PRODUTOS = [
     "keywords": "poltrona dolphin sala design contemporâneo versátil estilo daf"
   },
   {
+    "id": "novos-s147",
     "name": "Sofá S-147",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1611,6 +1841,7 @@ window.CSM_PRODUTOS = [
     "keywords": "sofa s147 modular espuma mola espiral eucalipto sala living configurável suprema"
   },
   {
+    "id": "artecouro-arraia",
     "name": "Poltrona Arraia",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1618,6 +1849,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-eloah",
     "name": "Poltrona Eloah",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1625,6 +1857,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-generosa",
     "name": "Poltrona Generosa",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1632,6 +1865,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-oca",
     "name": "Poltrona Oca",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1639,6 +1873,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-rembrandit",
     "name": "Sofá Rembrandit",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1646,6 +1881,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-volpi",
     "name": "Poltrona Volpi",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1653,6 +1889,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-madri",
     "name": "Sofá Madri",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1660,6 +1897,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-madson",
     "name": "Poltrona Madson",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1667,6 +1905,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-mood",
     "name": "Poltrona Mood",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1674,6 +1913,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "artecouro-poli",
     "name": "Poltrona Poli",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1681,6 +1921,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3696",
     "name": "Sofá Cama Fit",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1688,6 +1929,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3683",
     "name": "Sofá cama Orlando",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1695,6 +1937,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3682",
     "name": "Sofá cama Daybed",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1702,6 +1945,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3681",
     "name": "Sofá-Cama MH 1456",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1709,6 +1953,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3680",
     "name": "Sofá cama MH 1606",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1716,6 +1961,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3679",
     "name": "Sofá cama MH 1605",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1723,6 +1969,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "3646",
     "name": "Sofá-Cama MH 1174",
     "tipo": "sofa",
     "badge": "Quarto",
@@ -1730,6 +1977,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "buriti-lucy",
     "name": "Poltrona Lucy",
     "tipo": "poltrona",
     "badge": "Poltrona",
@@ -1737,6 +1985,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "minuano-puerto-power",
     "name": "Sofá Puerto Power",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1744,6 +1993,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "minuano-alias",
     "name": "Sofá Alias",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1751,6 +2001,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "minuano-pietro",
     "name": "Sofá Pietro",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1758,6 +2009,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "salva-anis",
     "name": "Sofá Anis",
     "tipo": "sofa",
     "badge": "Sofá",
@@ -1765,6 +2017,7 @@ window.CSM_PRODUTOS = [
     "keywords": ""
   },
   {
+    "id": "salva-poente",
     "name": "Sofá Poente",
     "tipo": "sofa",
     "badge": "Sofá",

@@ -9,6 +9,7 @@ let match;
 while ((match = cardRegex.exec(html)) !== null) {
   const block = match[0];
 
+  const id        = (block.match(/data-id="([^"]*)"/)        || [])[1] || '';
   const tipo      = (block.match(/data-tipo="([^"]*)"/)     || [])[1] || '';
   const keywords  = (block.match(/data-keywords="([^"]*)"/) || [])[1] || '';
   const nome      = (block.match(/data-nome="([^"]*)"/)     || [])[1] || '';
@@ -24,7 +25,7 @@ while ((match = cardRegex.exec(html)) !== null) {
 
   if (!nome || !img) continue;
 
-  produtos.push({ name: nome, tipo, badge, img, keywords });
+  produtos.push({ id, name: nome, tipo, badge, img, keywords });
 }
 
 const js = `// Gerado automaticamente por gerar-produtos-data.js — não editar manualmente

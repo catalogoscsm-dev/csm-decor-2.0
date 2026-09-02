@@ -769,6 +769,9 @@
     </div>
   </div>
 
+  <!-- Catálogo atual — usado para sugestões dinâmicas -->
+  <script src="produtos-data.js"></script>
+
   <!-- ── Produto dinâmico: popula a partir de localStorage quando ?id= presente ── -->
   <script>
   (function () {
@@ -946,44 +949,17 @@
     }());
 
     // ── Sugestões dinâmicas com imagens reais ────────────────
-    var SUGG_POOL = {
-      'sofa': [
-        { id:'4784', name:'Sofá Portland',        cat:'Sofás',         tipo:'sofa',       img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/portland.jpg' },
-        { id:'4771', name:'Sofá Ibiza',           cat:'Sofás',         tipo:'sofa',       img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/ibiza.jpg' },
-        { id:'4775', name:'Sofá Premium',         cat:'Sofás',         tipo:'sofa',       img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/premium-1.jpg' },
-        { id:'4767', name:'Sofá Seul',            cat:'Sofás',         tipo:'sofa',       img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/seul-1.jpg' },
-        { id:'4765', name:'Sofá Rubi',            cat:'Sofás',         tipo:'sofa',       img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/rubi.jpg' },
-        { id:'4762', name:'Sofá Chesterfield II', cat:'Sofás',         tipo:'sofa',       img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-ii.jpg' }
-      ],
-      'poltrona': [
-        { id:'4661', name:'Poltrona Aura',        cat:'Poltronas',     tipo:'poltrona',   img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/02.png' },
-        { id:'4676', name:'Poltrona Allure',      cat:'Poltronas',     tipo:'poltrona',   img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/allure-scaled.jpg' }
-      ],
-      'sala-tv': [
-        { id:'4699', name:'Poltrona Bela',        cat:'Sala de TV',    tipo:'sala-tv',    img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/08/12.png' },
-        { id:'4694', name:'Poltrona Ava',         cat:'Sala de TV',    tipo:'sala-tv',    img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/08/2.png' },
-        { id:'4698', name:'Poltrona Luna',        cat:'Sala de TV',    tipo:'sala-tv',    img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/08/9.png' },
-        { id:'4697', name:'Poltrona Eva',         cat:'Sala de TV',    tipo:'sala-tv',    img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/08/7.png' },
-        { id:'4696', name:'Poltrona Nina',        cat:'Sala de TV',    tipo:'sala-tv',    img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/08/5.png' }
-      ],
-      'sala-jantar': [
-        { id:'4654', name:'Mesa Kaiko',              cat:'Sala de Jantar', tipo:'sala-jantar', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/mesa-kaiko.jpg' },
-        { id:'4651', name:'Cadeira Kaiko',           cat:'Sala de Jantar', tipo:'sala-jantar', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/kaiko2.png' },
-        { id:'4650', name:'Cadeira Minah',           cat:'Sala de Jantar', tipo:'sala-jantar', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/cadeira-minah.jpg' },
-        { id:'4649', name:'Mesa de Jantar Trapézio', cat:'Sala de Jantar', tipo:'sala-jantar', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/mesa-jantar-trapezio.jpg' },
-        { id:'4648', name:'Mesa de Jantar Grega',    cat:'Sala de Jantar', tipo:'sala-jantar', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2024/07/mesa-jantar-grega-organica.jpg' }
-      ],
-      'quarto': [
-        { id:'4569', name:'Mesa de Cabeceira Oregon', cat:'Quartos', tipo:'quarto', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/03/mesa-cabeceira-oregon.jpg' },
-        { id:'4568', name:'Mesa de Cabeceira Marche', cat:'Quartos', tipo:'quarto', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/03/mesa-cabeceira-marche.jpg' },
-        { id:'4567', name:'Mesa de Cabeceira Malta',  cat:'Quartos', tipo:'quarto', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/03/mesa-cabeceira-malta.jpg' }
-      ],
-      'corporativo': [
-        { id:'4496', name:'Puffs Linha Shape', cat:'Corporativo', tipo:'corporativo', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/03/shape4.jpg' },
-        { id:'4490', name:'Puff Puffon',       cat:'Corporativo', tipo:'corporativo', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/03/puffon1.jpg' },
-        { id:'4482', name:'Puffs Puff',        cat:'Corporativo', tipo:'corporativo', img:'https://www.csmdecor.com.br/wsite/wp-content/uploads/2023/03/puff.jpg' }
-      ]
-    };
+    // Pool dinâmico — construído a partir do catálogo atual (produtos-data.js)
+    var SUGG_POOL = (function () {
+      var pool = {};
+      (window.CSM_PRODUTOS || []).forEach(function (p) {
+        if (!p.id || !p.img) return;
+        var t = p.tipo || 'sofa';
+        if (!pool[t]) pool[t] = [];
+        pool[t].push({ id: p.id, name: p.name, cat: p.badge || t, tipo: t, img: p.img });
+      });
+      return pool;
+    }());
     var PAIRED_CAT = { 'sofa':'poltrona', 'poltrona':'sofa', 'sala-tv':'sofa', 'sala-jantar':'sala-tv', 'quarto':'sala-jantar', 'corporativo':'sofa' };
 
     (function renderSuggestions(currentId, tipo) {
@@ -1000,7 +976,7 @@
       var picks = pool.slice(0, 5);
       if (!picks.length) return;
       track.innerHTML = picks.map(function(pr) {
-        return '<a href="produto.html?id=' + pr.id + '" class="suggestion-card" role="listitem" aria-label="' + pr.name + '" data-sugg=\'' + JSON.stringify(pr).replace(/'/g, '&#39;') + '\'>' +
+        return '<a href="produtos.html?autoopen=' + pr.id + '" class="suggestion-card" role="listitem" aria-label="' + pr.name + '" data-sugg=\'' + JSON.stringify(pr).replace(/'/g, '&#39;') + '\'>' +
           '<div class="suggestion-card__img"><img src="' + pr.img + '" alt="' + pr.name + '" loading="lazy" /></div>' +
           '<div class="suggestion-card__body">' +
             '<p class="suggestion-card__cat">' + pr.cat + '</p>' +
@@ -1011,16 +987,9 @@
         card.addEventListener('click', function(e) {
           e.preventDefault();
           var pr = JSON.parse(card.dataset.sugg);
-          try {
-            localStorage.setItem('csm-produto-current', JSON.stringify({
-              id: pr.id, name: pr.name, badge: pr.cat, tipo: pr.tipo,
-              tagline: pr.cat + ' · Design exclusivo · Alto padrão',
-              imgs: [pr.img],
-              wpp: 'https://wa.me/5519990034068?text=Tenho%20interesse%20no%20' + encodeURIComponent(pr.name) + '.',
-              glb: '', specs: []
-            }));
-          } catch(_) {}
-          window.location.href = 'produto.html?id=' + pr.id;
+          // Redireciona via produtos.html?autoopen para que navigateToProduct()
+          // leia todos os dados reais do card (imgs, specs, descrição, wpp)
+          window.location.href = 'produtos.html?autoopen=' + pr.id;
         });
       });
     }(p.id, p.tipo));
