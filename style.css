@@ -2844,6 +2844,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card[data-fornecedor="ferguile"] .cat-card__fig,
 .cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig,
 .cat-card[data-fornecedor="buriti"] .cat-card__fig,
+.cat-card[data-fornecedor="minuano"] .cat-card__fig,
+.cat-card[data-fornecedor="salva"] .cat-card__fig,
 .cat-card[data-fornecedor="daf"] .cat-card__fig,
 .cat-card[data-fornecedor="suprema"] .cat-card__fig,
 .cat-card[data-fornecedor="artecouro"] .cat-card__fig {
@@ -2857,6 +2859,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card[data-fornecedor="ferguile"] .cat-card__fig img,
 .cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig img,
 .cat-card[data-fornecedor="buriti"] .cat-card__fig img,
+.cat-card[data-fornecedor="minuano"] .cat-card__fig img,
+.cat-card[data-fornecedor="salva"] .cat-card__fig img,
 .cat-card[data-fornecedor="daf"] .cat-card__fig img,
 .cat-card[data-fornecedor="suprema"] .cat-card__fig img,
 .cat-card[data-fornecedor="artecouro"] .cat-card__fig img {

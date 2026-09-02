@@ -1728,5 +1728,47 @@ window.CSM_PRODUTOS = [
     "badge": "Quarto",
     "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/08/sofa-cama-mh-1174-1-600x600.jpg",
     "keywords": ""
+  },
+  {
+    "name": "Poltrona Lucy",
+    "tipo": "poltrona",
+    "badge": "Poltrona",
+    "img": "imagens/buriti/lucy-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Puerto Power",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/minuano/puerto-power-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Alias",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/minuano/alias-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Pietro",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/minuano/pietro-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Anis",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/salva/anis-1.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Sofá Poente",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/salva/poente-1.jpg",
+    "keywords": ""
   }
 ];
