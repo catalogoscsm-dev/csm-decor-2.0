@@ -6258,6 +6258,17 @@
   }());
   </script>
 
+  <!-- ── Card inteiro clicável ── -->
+  <script>
+  (function () {
+    document.querySelectorAll('.cat-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        if (typeof navigateToProduct === 'function') navigateToProduct(card);
+      });
+    });
+  }());
+  </script>
+
   <!-- ── Toggle de visualização (duo / solo) ── -->
   <script>
   (function () {

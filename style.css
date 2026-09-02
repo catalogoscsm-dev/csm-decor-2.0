@@ -2781,6 +2781,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   transition:
     box-shadow var(--dur) var(--ease),
     transform  var(--dur) var(--ease),
@@ -2943,11 +2944,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ── Corpo do card ── */
 .cat-card__body {
-  padding: 1.35rem 1.5rem 1.5rem;
+  padding: 1.25rem 1.5rem 1.4rem;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
-  flex-grow: 1;
+  gap: .4rem;
 }
 
 .cat-card__name {
@@ -2966,6 +2966,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.5;
   margin-bottom: .25rem;
 }
+
+/* Specs e botão visíveis apenas na página do produto */
+.cat-specs,
+.cat-card__cta { display: none; }
 
 /* ── Accordion de especificações ── */
 .cat-specs {
@@ -3163,9 +3167,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .catalogo__grid--solo .cat-card__body {
   position: relative;
-  padding: 4rem 4.5rem;
+  padding: 3.5rem 4.5rem;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 1rem;
   border-left: 1px solid var(--gray-line);
 }
 
@@ -3194,23 +3198,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   margin-bottom: .5rem;
 }
 
-.catalogo__grid--solo .cat-card__cta {
-  width: auto;
-  align-self: flex-start;
-  margin-top: 2rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-/* Solo: specs sempre visíveis */
-.catalogo__grid--solo .cat-specs {
-  display: block;
-}
-
-.catalogo__grid--solo .cat-specs__body {
-  max-height: none !important;
-  overflow: visible !important;
-}
 
 /* Rodapé da seção */
 .catalogo__rodape {
