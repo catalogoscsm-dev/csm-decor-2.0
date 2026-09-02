@@ -213,6 +213,29 @@
     <!-- ── Grade ── -->
     <section class="cat-page-grid" aria-label="Produtos">
       <div class="container">
+
+        <!-- Barra de visualização -->
+        <div class="cat-view-bar">
+          <p class="cat-view-bar__count" id="view-count"></p>
+          <div class="cat-view-bar__toggle" role="group" aria-label="Modo de visualização">
+            <button class="cat-view-btn active" id="btn-duo" data-view="duo" aria-pressed="true" title="Dois por linha">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <rect x="1" y="1" width="6" height="6" rx="1"/>
+                <rect x="9" y="1" width="6" height="6" rx="1"/>
+                <rect x="1" y="9" width="6" height="6" rx="1"/>
+                <rect x="9" y="9" width="6" height="6" rx="1"/>
+              </svg>
+            </button>
+            <button class="cat-view-btn" id="btn-solo" data-view="solo" aria-pressed="false" title="Um por linha">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <rect x="1" y="2" width="14" height="3.5" rx="1"/>
+                <rect x="1" y="6.25" width="14" height="3.5" rx="1"/>
+                <rect x="1" y="10.5" width="14" height="3.5" rx="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
         <div class="catalogo__grid" id="catalogo-grid">
           <!-- INICIO RESTAURADOS -->
           <!-- FIM RESTAURADOS -->
@@ -6233,6 +6256,45 @@
         img.style.opacity = '1';
       });
     });
+  }());
+  </script>
+
+  <!-- ── Toggle de visualização (duo / solo) ── -->
+  <script>
+  (function () {
+    var grid    = document.getElementById('catalogo-grid');
+    var btnDuo  = document.getElementById('btn-duo');
+    var btnSolo = document.getElementById('btn-solo');
+    var countEl = document.getElementById('view-count');
+    if (!grid || !btnDuo || !btnSolo) return;
+
+    function updateCount() {
+      var visible = grid.querySelectorAll('.cat-card:not([hidden]):not([style*="display: none"])').length;
+      if (countEl) countEl.textContent = visible + ' produto' + (visible !== 1 ? 's' : '');
+    }
+
+    function setView(mode) {
+      var isSolo = mode === 'solo';
+      grid.classList.toggle('catalogo__grid--solo', isSolo);
+      btnDuo.classList.toggle('active', !isSolo);
+      btnSolo.classList.toggle('active', isSolo);
+      btnDuo.setAttribute('aria-pressed', String(!isSolo));
+      btnSolo.setAttribute('aria-pressed', String(isSolo));
+      try { localStorage.setItem('csm-view-pref', mode); } catch (_) {}
+    }
+
+    // Restaura preferência salva
+    var saved = 'duo';
+    try { saved = localStorage.getItem('csm-view-pref') || 'duo'; } catch (_) {}
+    setView(saved);
+    updateCount();
+
+    btnDuo.addEventListener('click',  function () { setView('duo');  });
+    btnSolo.addEventListener('click', function () { setView('solo'); });
+
+    // Atualiza count quando filtros mudam (o grid filtra por display)
+    var observer = new MutationObserver(updateCount);
+    observer.observe(grid, { childList: false, attributes: true, subtree: true, attributeFilter: ['hidden', 'style'] });
   }());
   </script>
 
