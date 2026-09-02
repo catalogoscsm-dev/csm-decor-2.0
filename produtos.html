@@ -5873,6 +5873,14 @@
       }, 350);
     }());
   }());
+
+  // ── autoopen: redireciona direto para produto.html ao vir do letreiro ──
+  (function () {
+    var id = new URLSearchParams(window.location.search).get('autoopen');
+    if (!id) return;
+    var card = document.querySelector('.cat-card[data-id="' + id + '"]');
+    if (card && typeof navigateToProduct === 'function') navigateToProduct(card);
+  }());
   </script>
 
   <script>
@@ -6078,6 +6086,34 @@
     el.addEventListener('touchend',   function ()  { dragEnd(); });
 
     el.style.cursor = 'grab';
+  }());
+  </script>
+
+  <!-- ── Cards — ciclo de fotos no hover ─────────────────────── -->
+  <script>
+  (function () {
+    document.querySelectorAll('.cat-card').forEach(function (card) {
+      var imgs = [];
+      try { imgs = JSON.parse(card.dataset.imgs || '[]'); } catch (_) {}
+      if (imgs.length < 2) return;
+      var img = card.querySelector('.cat-card__fig img');
+      if (!img) return;
+      var idx = 0, timer = null;
+      card.addEventListener('mouseenter', function () {
+        idx = 0;
+        timer = setInterval(function () {
+          idx = (idx + 1) % imgs.length;
+          img.style.opacity = '0';
+          setTimeout(function () { img.src = imgs[idx]; img.style.opacity = '1'; }, 200);
+        }, 1400);
+      });
+      card.addEventListener('mouseleave', function () {
+        clearInterval(timer);
+        timer = null;
+        img.src = imgs[0];
+        img.style.opacity = '1';
+      });
+    });
   }());
   </script>
 

@@ -2819,7 +2819,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   object-fit: cover;
   object-position: center top;
   display: block;
-  transition: transform .6s var(--ease);
+  transition: transform .6s var(--ease), opacity .2s ease;
 }
 
 .cat-card:hover .cat-card__fig img {
