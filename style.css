@@ -7319,6 +7319,7 @@ html { scroll-padding-top: 80px; }
   flex-wrap: wrap;
   gap: .4rem;
   align-items: center;
+  justify-content: center;
   padding-block: .75rem;
 }
 
@@ -7497,6 +7498,8 @@ html { scroll-padding-top: 80px; }
   display: flex;
   flex-direction: column;
   gap: .625rem;
+  max-width: 640px;
+  margin-inline: auto;
 }
 
 /* ── Campo ── */
@@ -7663,6 +7666,7 @@ html { scroll-padding-top: 80px; }
   flex-wrap: wrap;
   gap: .4rem;
   align-items: center;
+  justify-content: center;
 }
 
 /* ── Dark mode ── */
