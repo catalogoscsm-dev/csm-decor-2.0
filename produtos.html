@@ -6269,12 +6269,20 @@
     var countEl = document.getElementById('view-count');
     if (!grid || !btnDuo || !btnSolo) return;
 
+    var _busy = false;
+
     function updateCount() {
       var visible = grid.querySelectorAll('.cat-card:not([hidden]):not([style*="display: none"])').length;
       if (countEl) countEl.textContent = visible + ' produto' + (visible !== 1 ? 's' : '');
     }
 
-    function setView(mode) {
+    function visibleCards() {
+      return Array.from(grid.querySelectorAll('.cat-card')).filter(function (c) {
+        return c.style.display !== 'none' && !c.hasAttribute('hidden');
+      });
+    }
+
+    function applyMode(mode) {
       var isSolo = mode === 'solo';
       grid.classList.toggle('catalogo__grid--solo', isSolo);
       btnDuo.classList.toggle('active', !isSolo);
@@ -6284,16 +6292,48 @@
       try { localStorage.setItem('csm-view-pref', mode); } catch (_) {}
     }
 
-    // Restaura preferência salva
+    function setView(mode, animate) {
+      if (!animate) { applyMode(mode); return; }
+      if (_busy) return;
+      _busy = true;
+
+      var cards = visibleCards();
+
+      // 1. Saída: todos os cards somem juntos
+      cards.forEach(function (c) { c.classList.add('cat-card--exit'); });
+
+      setTimeout(function () {
+        // 2. Muda o layout
+        applyMode(mode);
+
+        // 3. Entrada em cascata (stagger)
+        cards.forEach(function (c, i) {
+          c.classList.remove('cat-card--exit');
+          c.style.animationDelay = Math.min(i * 32, 220) + 'ms';
+          c.classList.add('cat-card--enter');
+        });
+
+        // 4. Limpa classes após animação
+        setTimeout(function () {
+          cards.forEach(function (c) {
+            c.classList.remove('cat-card--enter');
+            c.style.animationDelay = '';
+          });
+          _busy = false;
+        }, 700);
+
+      }, 230);
+    }
+
+    // Carga inicial sem animação
     var saved = 'duo';
     try { saved = localStorage.getItem('csm-view-pref') || 'duo'; } catch (_) {}
-    setView(saved);
+    setView(saved, false);
     updateCount();
 
-    btnDuo.addEventListener('click',  function () { setView('duo');  });
-    btnSolo.addEventListener('click', function () { setView('solo'); });
+    btnDuo.addEventListener('click',  function () { setView('duo',  true); });
+    btnSolo.addEventListener('click', function () { setView('solo', true); });
 
-    // Atualiza count quando filtros mudam (o grid filtra por display)
     var observer = new MutationObserver(updateCount);
     observer.observe(grid, { childList: false, attributes: true, subtree: true, attributeFilter: ['hidden', 'style'] });
   }());

@@ -3113,6 +3113,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: var(--dark);
 }
 
+/* ── Animações de troca de vista ── */
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cat-card--exit {
+  opacity: 0 !important;
+  transform: scale(0.93) !important;
+  pointer-events: none;
+}
+
+.cat-card--enter {
+  animation: cardEnter .42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  pointer-events: none;
+}
+
 /* ── Vista Solo (1 coluna editorial) ── */
 .catalogo__grid--solo {
   grid-template-columns: 1fr;
