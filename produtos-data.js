@@ -2023,5 +2023,13 @@ window.CSM_PRODUTOS = [
     "badge": "Sofá",
     "img": "imagens/salva/poente-1.jpg",
     "keywords": ""
+  },
+  {
+    "id": "salva-athos",
+    "name": "Sofá Athos",
+    "tipo": "sofa",
+    "badge": "Sofá",
+    "img": "imagens/salva/athos-1.jpg",
+    "keywords": ""
   }
 ];
