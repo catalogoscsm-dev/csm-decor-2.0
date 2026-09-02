@@ -2799,7 +2799,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   height: 400px;
   overflow: hidden;
   flex-shrink: 0;
-  background: #ede9e4;
+  background: #f2ede8;
 }
 .cat-card__fig::after {
   content: '';
@@ -2820,37 +2820,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   object-position: center top;
   display: block;
   transition: transform .6s var(--ease), opacity .2s ease;
+  mix-blend-mode: multiply;
 }
 
 .cat-card:hover .cat-card__fig img {
   transform: scale(1.06);
 }
 
-/* Fornecedor Ideale: imagens com fundo neutro */
-.cat-card[data-fornecedor="ideale"] .cat-card__fig {
-  background: #f2ede8;
-}
-.cat-card[data-fornecedor="ideale"] .cat-card__fig img {
-  object-fit: cover;
-  object-position: center center;
-}
-
-/* Fornecedores novos: mesmo fundo neutro (imagens normalizadas 600x600) */
-.cat-card[data-fornecedor="klassic"] .cat-card__fig,
-.cat-card[data-fornecedor="karams"] .cat-card__fig,
-.cat-card[data-fornecedor="serragaucha"] .cat-card__fig,
-.cat-card[data-fornecedor="goldline"] .cat-card__fig,
-.cat-card[data-fornecedor="artbel"] .cat-card__fig,
-.cat-card[data-fornecedor="ferguile"] .cat-card__fig,
-.cat-card[data-fornecedor="ilhabelamoveis"] .cat-card__fig,
-.cat-card[data-fornecedor="buriti"] .cat-card__fig,
-.cat-card[data-fornecedor="minuano"] .cat-card__fig,
-.cat-card[data-fornecedor="salva"] .cat-card__fig,
-.cat-card[data-fornecedor="daf"] .cat-card__fig,
-.cat-card[data-fornecedor="suprema"] .cat-card__fig,
-.cat-card[data-fornecedor="artecouro"] .cat-card__fig {
-  background: #f2ede8;
-}
+/* Imagens normalizadas (600×600, centradas) — centraliza no container */
+.cat-card[data-fornecedor="ideale"] .cat-card__fig img,
 .cat-card[data-fornecedor="klassic"] .cat-card__fig img,
 .cat-card[data-fornecedor="karams"] .cat-card__fig img,
 .cat-card[data-fornecedor="serragaucha"] .cat-card__fig img,
@@ -3401,6 +3379,29 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-radius: 2px;
   line-height: 1.2;
   flex-shrink: 0;
+}
+
+/* Dark mode — cards */
+[data-theme="dark"] .cat-card {
+  background: #161412;
+  border-color: #2a2520;
+}
+
+[data-theme="dark"] .cat-card__fig {
+  background: #1c1814;
+}
+
+[data-theme="dark"] .cat-card__fig img {
+  mix-blend-mode: normal;
+  filter: brightness(0.82) contrast(1.04);
+}
+
+[data-theme="dark"] .cat-card__name {
+  color: #ede8e2;
+}
+
+[data-theme="dark"] .cat-card__body {
+  background: #161412;
 }
 
 /* Dark mode */
