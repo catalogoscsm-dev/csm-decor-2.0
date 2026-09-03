@@ -410,8 +410,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  max-width: none;
-  margin: 0;
   padding-left: clamp(1.5rem, 5vw, 5rem);
   padding-right: clamp(1.5rem, 5vw, 2.5rem);
 }
@@ -7306,7 +7304,7 @@ html { scroll-padding-top: 80px; }
   border-bottom: 1px solid var(--gray-line);
 }
 .cat-page-hero .eyebrow   { margin-bottom: .6rem; }
-.cat-page-hero .section-title { margin-bottom: 1rem; }
+.cat-page-hero .section-title { margin-bottom: 5rem; }
 .cat-page-hero__sub {
   font-family: var(--font-sans);
   font-size: clamp(.85rem, 1.2vw, 1rem);
@@ -7508,13 +7506,16 @@ html { scroll-padding-top: 80px; }
 .csb--hero {
   border-bottom: none;
   background: transparent;
-  padding-block: 2rem 0;
+  padding-block: 1.5rem 0;
   box-shadow: none !important;
+}
+.csb--hero .csb__inner {
+  max-width: 700px;
 }
 .csb--hero .csb__field {
   border-bottom-color: var(--gray-mid);
-  max-width: 580px;
-  margin-inline: auto;
+  max-width: 100%;
+  margin-inline: 0;
 }
 .csb--hero.csb--focused .csb__field {
   border-bottom-color: var(--dark);
