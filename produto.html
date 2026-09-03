@@ -27,8 +27,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="produto.css" />
 
-  <!-- model-viewer — AR / 3D para produtos -->
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -271,53 +269,6 @@
               </div>
               <div id="zoom-lens" aria-hidden="true"></div>
 
-              <!-- Vista 3D / AR (ativa quando thumb-3d é clicado) -->
-              <div class="gallery-3d-view" id="gallery-3d-view" hidden>
-
-                <!-- Loading -->
-                <div class="gallery-3d-loading" id="gallery-3d-loading">
-                  <div class="ar-modal__loading-ring"></div>
-                  <p class="ar-modal__loading-text">Carregando modelo 3D…</p>
-                </div>
-
-                <model-viewer
-                  id="produto-model-viewer"
-                  src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/SheenChair/glTF-Binary/SheenChair.glb"
-                  alt="Sofá Chesterfield I — modelo 3D interativo"
-                  shadow-intensity="1.4"
-                  shadow-softness="0.6"
-                  camera-controls
-                  auto-rotate
-                  auto-rotate-delay="2000"
-                  rotation-per-second="14deg"
-                  ar
-                  ar-modes="webxr scene-viewer quick-look"
-                  ar-scale="auto"
-                  environment-image="neutral"
-                  exposure="1.1"
-                  tone-mapping="commerce"
-                  loading="eager"
-                  reveal="auto"
-                  interaction-prompt="none"
-                >
-                  <!-- Botão AR — aparece só em dispositivos que suportam AR -->
-                  <button slot="ar-button" class="ar-modal__ar-btn ar-modal__ar-btn--inline">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                      <line x1="12" y1="22.08" x2="12" y2="12"/>
-                    </svg>
-                    Ver no ambiente
-                  </button>
-                </model-viewer>
-
-                <!-- Dica interação — separada do botão AR -->
-                <div class="gallery-3d-hint">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                  Arraste para girar · Pinça para zoom · Botão laranja para AR
-                </div>
-
-              </div>
 
             </div>
 
@@ -334,15 +285,6 @@
                 <img src="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg" alt="Sofá Chesterfield I — em ambiente" loading="lazy" style="opacity:.8" />
               </div>
 
-              <!-- Tab 3D / AR -->
-              <div class="gallery-thumb gallery-thumb--3d" id="thumb-3d" role="listitem" aria-label="Ver em 3D e AR" tabindex="0">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                  <line x1="12" y1="22.08" x2="12" y2="12"/>
-                </svg>
-                <span>3D · AR</span>
-              </div>
             </div>
 
           </div>
@@ -373,11 +315,10 @@
 
             <!-- Preço / consulta -->
             <div class="product-panel__price-wrap">
-              <span class="product-panel__price-label">A partir de</span>
-              <span class="product-panel__price">Consulte-nos</span>
+              <span class="product-panel__price">Sob consulta</span>
             </div>
             <p class="product-panel__price-note">
-              Preço sob consulta · Frete incluso para Campinas e região
+              Fabricado sob encomenda · Revestimento e dimensões customizáveis · Frete incluso para Campinas e região
             </p>
 
             <!-- Especificações expansíveis -->
@@ -835,10 +776,9 @@
     var galBadge = document.querySelector('.gallery-badge--cat');
     if (galBadge) galBadge.textContent = p.badge || cat.label;
 
-    // ── Gallery thumbs: rebuild from imgs array, preserve 3D tab
+    // ── Gallery thumbs: rebuild from imgs array
     var thumbsWrap = document.querySelector('.product-gallery__thumbs');
-    var thumb3d    = document.getElementById('thumb-3d');
-    if (thumbsWrap && thumb3d) {
+    if (thumbsWrap) {
       thumbsWrap.innerHTML = '';
       var rawImgs = (p.imgs && p.imgs.length) ? p.imgs : (firstImg ? [firstImg] : []);
       var imgs = rawImgs.filter(function (src, idx, arr) { return arr.indexOf(src) === idx; });
@@ -854,14 +794,6 @@
         div.appendChild(img);
         thumbsWrap.appendChild(div);
       });
-      if (p.glb) {
-        thumb3d.removeAttribute('hidden');
-        var mv = document.getElementById('produto-model-viewer');
-        if (mv) { mv.setAttribute('src', p.glb); mv.setAttribute('alt', p.name + ' — modelo 3D interativo'); }
-      } else {
-        thumb3d.setAttribute('hidden', '');
-      }
-      thumbsWrap.appendChild(thumb3d);
     }
 
     // ── Eyebrow
@@ -1734,64 +1666,6 @@
 
   </script>
 
-  <!-- AR / 3D Gallery Toggle -->
-  <script>
-  (function () {
-    var thumb3d    = document.getElementById('thumb-3d');
-    var photoView  = document.getElementById('gallery-photo-view');
-    var view3d     = document.getElementById('gallery-3d-view');
-    var loading3d  = document.getElementById('gallery-3d-loading');
-    var mvProduto  = document.getElementById('produto-model-viewer');
-    if (!thumb3d || !photoView || !view3d) return;
-
-    var is3dActive  = false;
-    var modelLoaded = false;
-
-    // Ouve o load UMA VEZ de forma persistente — resolve race condition onde
-    // o GLB termina de carregar antes do usuário clicar no tab 3D
-    if (mvProduto) {
-      mvProduto.addEventListener('load', function () {
-        modelLoaded = true;
-        if (loading3d) loading3d.style.display = 'none';
-      });
-    }
-
-    function enter3D() {
-      photoView.hidden = true;
-      view3d.hidden = false;
-      thumb3d.classList.add('active');
-      document.querySelectorAll('.gallery-thumb:not(.gallery-thumb--3d)').forEach(function (t) {
-        t.classList.remove('active');
-      });
-      is3dActive = true;
-      if (loading3d) {
-        // Se o modelo já carregou, esconde o overlay imediatamente
-        loading3d.style.display = modelLoaded ? 'none' : 'flex';
-      }
-    }
-
-    function exitToPhoto(src) {
-      view3d.hidden = true;
-      photoView.hidden = false;
-      thumb3d.classList.remove('active');
-      is3dActive = false;
-      if (src) document.getElementById('gallery-main-img').src = src;
-    }
-
-    thumb3d.addEventListener('click', function () {
-      if (!is3dActive) enter3D();
-    });
-    thumb3d.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!is3dActive) enter3D(); }
-    });
-
-    document.querySelectorAll('.gallery-thumb:not(.gallery-thumb--3d)').forEach(function (t) {
-      t.addEventListener('click', function () {
-        if (is3dActive) exitToPhoto(t.dataset.src);
-      });
-    });
-  }());
-  </script>
 
   <!-- ============================================================
        TRANSIÇÕES DE PÁGINA — Cortina cinematográfica

@@ -401,14 +401,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* Conteúdo sobreposto */
 .hero__body {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  padding-block: 4rem;
+  padding-top: calc(80px + 2.5rem);
+  padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* anchor to left edge — override .container's margin-inline: auto */
-  margin-left: 0;
+  justify-content: space-between;
+  max-width: none;
+  margin: 0;
   padding-left: clamp(1.5rem, 5vw, 5rem);
   padding-right: clamp(1.5rem, 5vw, 2.5rem);
 }
@@ -3557,7 +3560,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   /* Hero mobile — reduz padding para conteúdo caber sem corte */
   .hero__body {
-    padding-block: 2rem;
+    padding-top: calc(64px + 1.5rem);
+    padding-bottom: 2rem;
   }
   .hero__sub {
     margin-bottom: 1.5rem;
@@ -3606,7 +3610,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     min-height: 640px;
   }
   .hero__body {
-    padding-block: 2.5rem;
+    padding-top: calc(80px + 1.5rem);
+    padding-bottom: 2rem;
   }
   .hero__sub {
     margin-bottom: 1.75rem;
@@ -3619,7 +3624,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     min-height: 600px;
   }
   .hero__body {
-    padding-block: 1.5rem;
+    padding-top: calc(80px + 1rem);
+    padding-bottom: 1.5rem;
   }
   .hero__headline {
     font-size: clamp(2.2rem, 5vw, 3.4rem);
