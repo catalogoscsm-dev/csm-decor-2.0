@@ -1,0 +1,128 @@
+#!/usr/bin/env node
+/**
+ * baixar-imagens-maschieto.js
+ * Baixa imagens da Maschieto Móveis via WooCommerce Store API,
+ * normaliza para 600×600 com fundo neutro e salva em imagens/maschieto/
+ *
+ * Uso: node baixar-imagens-maschieto.js
+ */
+
+'use strict';
+
+const fs    = require('fs');
+const path  = require('path');
+const https = require('https');
+const http  = require('http');
+const sharp = require('sharp');
+
+const FORNECEDOR_API = 'https://maschietomoveis.com.br/wp-json/wc/store/v1/products';
+const OUT_DIR        = path.join(__dirname, 'imagens', 'maschieto');
+const SIZE           = 600;
+const BG             = { r: 242, g: 237, b: 232, alpha: 1 };
+
+const TARGET_SLUGS = [
+  'mesa-petra',
+  'mesa-agnes',
+];
+
+function fetchJSON(url) {
+  return new Promise((resolve, reject) => {
+    https.get(url, { headers: { 'User-Agent': 'csm-importer/1.0' } }, res => {
+      let raw = '';
+      res.on('data', c => raw += c);
+      res.on('end', () => { try { resolve(JSON.parse(raw)); } catch(e) { reject(e); } });
+    }).on('error', reject);
+  });
+}
+
+function downloadBuffer(url, redirects = 0) {
+  return new Promise((resolve, reject) => {
+    if (redirects > 5) return reject(new Error('Muitos redirecionamentos'));
+    const mod = url.startsWith('https') ? https : http;
+    mod.get(url, { headers: { 'User-Agent': 'csm-importer/1.0' } }, res => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        return downloadBuffer(res.headers.location, redirects + 1).then(resolve).catch(reject);
+      }
+      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode}`));
+      const chunks = [];
+      res.on('data', c => chunks.push(c));
+      res.on('end', () => resolve(Buffer.concat(chunks)));
+    }).on('error', reject);
+  });
+}
+
+async function processImage(buffer, outPath) {
+  await sharp(buffer)
+    .resize(SIZE, SIZE, { fit: 'contain', position: 'centre', background: BG })
+    .jpeg({ quality: 88 })
+    .toFile(outPath);
+}
+
+async function main() {
+  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
+
+  console.log('\n🔍 Buscando produtos da Maschieto Móveis...\n');
+
+  const all = [];
+  let page = 1;
+  while (true) {
+    const url = `${FORNECEDOR_API}?per_page=100&page=${page}`;
+    const data = await fetchJSON(url);
+    if (!Array.isArray(data) || data.length === 0) break;
+    all.push(...data);
+    if (data.length < 100) break;
+    page++;
+  }
+
+  const selected = TARGET_SLUGS.map(s => all.find(p => p.slug === s)).filter(Boolean);
+  console.log(`✅ ${selected.length}/${TARGET_SLUGS.length} produtos encontrados\n`);
+
+  const localMap = {};
+
+  for (const p of selected) {
+    const images = p.images || [];
+    if (!images.length) { console.log(`  ⚠️  ${p.name}: sem imagens\n`); continue; }
+
+    console.log(`📷 ${p.name} (${images.length} imagens)`);
+    const localImgs = [];
+
+    for (let i = 0; i < images.length; i++) {
+      const srcUrl  = images[i].src;
+      const fname   = `${p.slug}-${i + 1}.jpg`;
+      const outPath = path.join(OUT_DIR, fname);
+
+      if (fs.existsSync(outPath)) {
+        console.log(`   [${i + 1}/${images.length}] ${fname} — já existe, pulando`);
+        localImgs.push(`imagens/maschieto/${fname}`);
+        continue;
+      }
+
+      process.stdout.write(`   [${i + 1}/${images.length}] ${fname}... `);
+      try {
+        const buf = await downloadBuffer(srcUrl);
+        await processImage(buf, outPath);
+        localImgs.push(`imagens/maschieto/${fname}`);
+        console.log('✔');
+      } catch (e) {
+        console.log(`✗ ${e.message}`);
+      }
+    }
+
+    if (localImgs.length) localMap[p.slug] = localImgs;
+    console.log('');
+  }
+
+  fs.writeFileSync(
+    path.join(__dirname, 'maschieto-imagens-locais.json'),
+    JSON.stringify(localMap, null, 2), 'utf8'
+  );
+
+  console.log(`📦 Imagens salvas em: imagens/maschieto/`);
+  console.log(`📄 Mapa salvo em:     maschieto-imagens-locais.json`);
+  console.log(`\nAgora rode: node importar-maschieto.js\n`);
+}
+
+main().catch(err => {
+  console.error('\n❌ Erro:', err.message);
+  process.exit(1);
+});

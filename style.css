@@ -2843,7 +2843,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .cat-card[data-fornecedor="salva"] .cat-card__fig img,
 .cat-card[data-fornecedor="daf"] .cat-card__fig img,
 .cat-card[data-fornecedor="suprema"] .cat-card__fig img,
-.cat-card[data-fornecedor="artecouro"] .cat-card__fig img {
+.cat-card[data-fornecedor="artecouro"] .cat-card__fig img,
+.cat-card[data-fornecedor="maschieto"] .cat-card__fig img,
+.cat-card[data-fornecedor="primebravus"] .cat-card__fig img,
+.cat-card[data-fornecedor="tecnoarte"] .cat-card__fig img,
+.cat-card[data-fornecedor="essenza"] .cat-card__fig img,
+.cat-card[data-fornecedor="bonte"] .cat-card__fig img {
   object-fit: cover;
   object-position: center center;
 }
