@@ -357,6 +357,78 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: block;
 }
 
+/* Selo CSM animado — marca d'água sobre o vídeo */
+.hero__video-cover {
+  position: absolute;
+  right: 6.5%;
+  bottom: 6.5%;
+  width: 112px;
+  height: 112px;
+  background: #F07800;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.92;
+  overflow: hidden;
+  animation: seal-pulse 3.5s ease-in-out infinite, seal-drift 8s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(240,120,0,0.5);
+}
+
+@keyframes seal-pulse {
+  0%   { box-shadow: 0 0 0 0    rgba(240,120,0,0.5); }
+  50%  { box-shadow: 0 0 0 10px rgba(240,120,0,0);   }
+  100% { box-shadow: 0 0 0 0    rgba(240,120,0,0);   }
+}
+
+@keyframes seal-drift {
+  0%   { transform: translateX(0px); }
+  50%  { transform: translateX(8px); }
+  100% { transform: translateX(0px); }
+}
+
+.hero__seal-ring {
+  position: absolute;
+  inset: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  animation: seal-spin 12s linear infinite;
+  z-index: 2;
+}
+
+@keyframes seal-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.hero__video-cover__logo {
+  width: 60%;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  position: relative;
+  z-index: 3;
+}
+
+.hero__seal-shine {
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+  animation: seal-shine 4s ease-in-out infinite;
+  z-index: 4;
+}
+
+@keyframes seal-shine {
+  0%   { left: -75%; opacity: 0; }
+  10%  { opacity: 1; }
+  40%  { left: 130%; opacity: 0; }
+  100% { left: 130%; opacity: 0; }
+}
+
 /* Acessibilidade: usuários que preferem sem movimento veem o poster */
 @media (prefers-reduced-motion: reduce) {
   .hero__video { display: none; }
@@ -2519,6 +2591,56 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .footer__bottom-inner a:hover { color: var(--orange-light); }
+
+/* ── Footer Créditos ── */
+.footer__credits {
+  padding-block: 1rem;
+  background: rgba(0,0,0,.45);
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, rgba(240,120,0,.4), transparent) 1;
+  position: relative;
+}
+
+.footer__credits-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .5rem 1.2rem;
+  font-size: .72rem;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.footer__credits-inner strong {
+  font-weight: 600;
+  color: var(--orange);
+  letter-spacing: .06em;
+  text-shadow: 0 0 12px rgba(240,120,0,.45);
+}
+
+.footer__credits-sep {
+  color: rgba(240,120,0,.3);
+}
+
+.footer__credits-inner a {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255,255,255,.3);
+  margin-left: .35rem;
+  transition: color .25s ease, filter .25s ease;
+}
+
+.footer__credits-inner a:hover {
+  color: var(--orange-light);
+  filter: drop-shadow(0 0 5px rgba(240,120,0,.6));
+}
+
+.footer__credits-inner a svg {
+  width: 13px;
+  height: 13px;
+}
 
 /* ── Footer Credibilidade — selos e pagamento ── */
 .footer__trust-list {
