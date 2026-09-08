@@ -2710,21 +2710,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 /* ----------------------------------------------------------
-   14. FAB — Botão "Atendimento" expansível
-   Um botão principal que abre 3 sub-botões ao clicar.
+   14. FAB — Stack animado de canais
 ---------------------------------------------------------- */
 .fab-cluster {
   position: fixed;
   bottom: 30px;
   right: 30px;
   z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  transition:
-    opacity .35s cubic-bezier(0.16, 1, 0.3, 1),
-    transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 58px;
+  height: 58px;
+  transition: opacity .35s ease, transform .35s ease;
 }
 
 .fab-cluster.panel-open {
@@ -2733,124 +2728,147 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform: translateY(18px) scale(0.88);
 }
 
+/* ── PEEK: círculos empilhados flutuando ── */
 .fab-subs {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 58px;
+  height: 58px;
+  pointer-events: none;
+  animation: fab-float 3s ease-in-out infinite;
+}
+
+@keyframes fab-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+
+.fab-sub {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  text-decoration: none;
+  animation: fab-cycle 12s ease-in-out infinite;
+  box-shadow: 0 4px 14px rgba(0,0,0,.3);
+}
+
+.fab-sub:nth-child(1) { animation-delay:  0s; }
+.fab-sub:nth-child(2) { animation-delay: -3s; }
+.fab-sub:nth-child(3) { animation-delay: -6s; }
+.fab-sub:nth-child(4) { animation-delay: -9s; }
+
+@keyframes fab-cycle {
+  0%       { z-index: 4; transform: scale(1.10); opacity: 1;    box-shadow: 0 6px 22px rgba(0,0,0,.4); }
+  18%      { z-index: 4; transform: scale(1.10); opacity: 1;    box-shadow: 0 6px 22px rgba(0,0,0,.4); }
+  30%      { z-index: 1; transform: scale(0.82); opacity: 0.38; box-shadow: 0 2px 8px rgba(0,0,0,.2);  }
+  92%      { z-index: 1; transform: scale(0.82); opacity: 0.38; box-shadow: 0 2px 8px rgba(0,0,0,.2);  }
+  100%     { z-index: 4; transform: scale(1.10); opacity: 1;    box-shadow: 0 6px 22px rgba(0,0,0,.4); }
+}
+
+.fab-sub__label { display: none; }
+.fab-sub__icon  { display: flex; align-items: center; justify-content: center; }
+
+.fab-sub--products { background: var(--orange); }
+.fab-sub--wpp      { background: #1FAD52; }
+.fab-sub--ig       { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+.fab-sub--fb       { background: #1877F2; }
+
+/* Gatilho transparente — sobre toda a pilha */
+.fab-trigger {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+/* ── OPEN: lista sobe para cima ── */
+.fab-cluster.fab-open {
+  width: auto;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 8px;
-  pointer-events: none;
+  gap: 10px;
 }
 
 .fab-cluster.fab-open .fab-subs {
+  position: static;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  animation: none;
   pointer-events: auto;
+  order: -1; /* sobe acima do trigger */
 }
 
-/* Sub-botões (ocultos por padrão, animam para cima ao abrir) */
-.fab-sub {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 14px 0 10px;
-  height: 44px;
+.fab-cluster.fab-open .fab-sub {
+  position: static;
+  inset: auto;
+  width: auto;
+  height: 46px;
   border-radius: 100px;
-  color: var(--white);
+  padding: 0 16px 0 12px;
+  gap: 8px;
+  animation: none !important;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .25s ease, transform .25s ease, box-shadow .2s ease;
   font-family: var(--font-sans);
   font-size: .63rem;
   font-weight: 600;
   letter-spacing: .07em;
   text-transform: uppercase;
-  text-decoration: none;
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0,0,0,.18), 0 1px 4px rgba(0,0,0,.10);
-  opacity: 0;
-  transform: translateY(12px) scale(.88);
-  transition:
-    opacity   .22s ease,
-    transform .22s ease,
-    box-shadow .2s ease;
 }
 
-.fab-cluster.fab-open .fab-sub { opacity: 1; transform: translateY(0) scale(1); }
-.fab-cluster.fab-open .fab-sub:nth-child(1) { transition-delay: .15s; }
-.fab-cluster.fab-open .fab-sub:nth-child(2) { transition-delay: .10s; }
-.fab-cluster.fab-open .fab-sub:nth-child(3) { transition-delay: .055s; }
-.fab-cluster.fab-open .fab-sub:nth-child(4) { transition-delay: 0s; }
+/* Entrada em cascata de baixo pra cima */
+.fab-cluster.fab-open.fab-animated .fab-sub { opacity: 1; transform: none; }
+.fab-cluster.fab-open .fab-sub:nth-child(4) { transition-delay: 0s;    }
+.fab-cluster.fab-open .fab-sub:nth-child(3) { transition-delay: .06s;  }
+.fab-cluster.fab-open .fab-sub:nth-child(2) { transition-delay: .12s;  }
+.fab-cluster.fab-open .fab-sub:nth-child(1) { transition-delay: .18s;  }
 
-.fab-sub:hover {
-  transform: translateY(-2px) scale(1);
-  box-shadow: 0 8px 24px rgba(0,0,0,.26);
+.fab-cluster.fab-open .fab-sub:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
 }
 
-.fab-sub__icon {
+.fab-cluster.fab-open .fab-sub__label { display: inline; }
+
+/* Botão fechar (X) — substitui o trigger quando aberto */
+.fab-cluster.fab-open .fab-trigger {
+  position: static;
+  inset: auto;
+  width: 58px;
+  height: 58px;
+  background: rgba(30,30,30,.92);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
 }
 
-.fab-sub--products { background: var(--orange); }
-.fab-sub--wpp { background: #1FAD52; }
-.fab-sub--ig  {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-}
-.fab-sub--fb  { background: #1877F2; }
-
-/* Botão principal */
-.fab-main {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 22px 0 18px;
-  height: 56px;
-  border-radius: 100px;
-  background: var(--orange);
-  color: var(--white);
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: .7rem;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  box-shadow: 0 4px 20px rgba(240,120,0,.45), 0 1px 6px rgba(0,0,0,.12);
-  transition:
-    background .25s ease,
-    box-shadow  .25s ease,
-    transform   .18s ease;
-}
-
-.fab-main:hover {
-  background: var(--orange-dark);
-  box-shadow: 0 8px 28px rgba(240,120,0,.55);
-  transform: translateY(-2px);
-}
-
-.fab-main:active { transform: none; }
-
-.fab-cluster.fab-open .fab-main {
-  background: var(--gray-dark);
-  box-shadow: 0 4px 16px rgba(0,0,0,.25);
-}
-
-.fab-main__icon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  transition: transform .3s ease;
-}
-
-.fab-cluster.fab-open .fab-main__icon {
-  transform: rotate(45deg);
+.fab-cluster.fab-open .fab-trigger::after {
+  content: '✕';
+  color: rgba(255,255,255,.85);
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 @media (max-width: 480px) {
   .fab-cluster { bottom: 20px; right: 16px; }
-  /* Ícone apenas — reduz footprint para não sobrepor CTAs */
-  .fab-main { padding: 0; width: 52px; height: 52px; justify-content: center; }
-  .fab-main__label { display: none; }
-  .fab-sub__label { display: none; }
-  .fab-sub { padding: 0 12px; justify-content: center; }
+  .fab-cluster.fab-open .fab-sub { padding: 0 14px 0 10px; }
 }
 
 /* ----------------------------------------------------------
