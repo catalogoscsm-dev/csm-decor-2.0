@@ -26,6 +26,7 @@ const LOCAL_IMGS = fs.existsSync(LOCAL_IMGS_FILE)
 const TARGET_SLUGS = [
   'mesa-petra',
   'mesa-agnes',
+  'mesa-valentina-retangular',
 ];
 
 const CAT_TO_TIPO = {

@@ -23,6 +23,7 @@ const BG             = { r: 242, g: 237, b: 232, alpha: 1 };
 const TARGET_SLUGS = [
   'mesa-petra',
   'mesa-agnes',
+  'mesa-valentina-retangular',
 ];
 
 function fetchJSON(url) {
