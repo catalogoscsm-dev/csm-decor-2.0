@@ -9277,3 +9277,180 @@ a.showroom-map__val:hover { color: var(--white); }
     transition: none !important;
   }
 }
+
+/* ----------------------------------------------------------
+   DIFERENCIAIS — 3 cards de benefícios
+---------------------------------------------------------- */
+.dif {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  background: var(--darker);
+}
+
+.dif__eyebrow {
+  color: var(--orange);
+  margin-bottom: 2.5rem;
+}
+
+@keyframes dif-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
+}
+
+.dif__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* Card base */
+.dif-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: clamp(2rem, 4vw, 2.75rem);
+  background: var(--darker);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: var(--r-lg);
+  position: relative;
+  animation: dif-float 5s ease-in-out infinite;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.dif-card:nth-child(1) { animation-delay: 0s; }
+.dif-card:nth-child(2) { animation-delay: 1.6s; }
+.dif-card:nth-child(3) { animation-delay: 3.2s; }
+
+.dif-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(240,120,0,.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+  pointer-events: none;
+}
+
+.dif-card:hover {
+  background: #1a1a1a;
+  box-shadow: 0 16px 48px rgba(0,0,0,.35);
+  animation-play-state: paused;
+}
+.dif-card:hover::before { opacity: 1; }
+
+/* Card em destaque */
+.dif-card--featured {
+  background: #1c1008;
+}
+.dif-card--featured::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange-dark), var(--orange), var(--orange-light));
+}
+.dif-card--featured:hover { background: #221309; }
+
+/* Ícone */
+.dif-card__icon-wrap {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-md);
+  border: 1px solid rgba(240,120,0,.25);
+  background: rgba(240,120,0,.07);
+  flex-shrink: 0;
+}
+
+.dif-card__icon-wrap .dif-card__icon {
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: static !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+
+/* Título */
+.dif-card__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #ffffff;
+  letter-spacing: -.01em;
+}
+
+/* Descrição */
+.dif-card__desc {
+  font-family: var(--font-sans);
+  font-size: .9rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,.82);
+  flex: 1;
+}
+
+/* Garante legibilidade no dark mode */
+[data-theme="dark"] .dif-card__title { color: #ffffff; }
+[data-theme="dark"] .dif-card__desc  { color: rgba(255,255,255,.82); }
+
+/* Links / CTA */
+.dif-card__links {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: .25rem;
+}
+
+.dif-card__sep {
+  color: rgba(255,255,255,.2);
+  font-size: .8rem;
+}
+
+.dif-card__cta {
+  font-family: var(--font-sans);
+  font-size: .825rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--dur) var(--ease);
+}
+
+.dif-card__cta::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s var(--ease);
+}
+
+.dif-card__cta:hover { color: var(--orange-light); }
+.dif-card__cta:hover::after { transform: scaleX(1); }
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .dif__grid { grid-template-columns: 1fr; gap: 1rem; }
+  .dif { margin-block: clamp(2rem, 5vw, 3.5rem); }
+}
+
+@media (max-width: 480px) {
+  .dif-card { padding: 1.75rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dif-card { animation: none; }
+}
