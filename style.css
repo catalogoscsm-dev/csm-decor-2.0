@@ -341,6 +341,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding-top: 80px;
 }
 
+/* Fade de vinheta na borda inferior — dissolve o vídeo para o fundo da próxima seção */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 220px;
+  background: linear-gradient(to bottom, transparent 0%, #141414 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* ── Vídeo de fundo do hero ── */
 .hero__video-wrap {
   position: absolute;
@@ -369,7 +380,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
   opacity: 0.92;
   overflow: hidden;
@@ -475,7 +486,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .hero__body {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 3;
   padding-top: calc(80px + 2.5rem);
   padding-bottom: 3rem;
   display: flex;
@@ -9282,8 +9293,10 @@ a.showroom-map__val:hover { color: var(--white); }
    DIFERENCIAIS — 3 cards de benefícios
 ---------------------------------------------------------- */
 .dif {
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
   background: var(--darker);
+  margin-top: -1px; /* cola com o fade do hero sem linha fantasma */
 }
 
 .dif__eyebrow {
