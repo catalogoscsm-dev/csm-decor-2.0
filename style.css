@@ -466,8 +466,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(10,10,10,.45) 0%,
-    rgba(10,10,10,.72) 100%
+    rgba(10,10,10,.10) 0%,
+    rgba(10,10,10,.32) 100%
   );
 }
 
