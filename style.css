@@ -358,26 +358,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: #141414;
-}
-
-/* Vinheta lateral — funde as bordas do vídeo portrait com o fundo escuro */
-.hero__video-wrap::before,
-.hero__video-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 18%;
-  z-index: 1;
-  pointer-events: none;
-}
-.hero__video-wrap::before {
-  left: 0;
-  background: linear-gradient(to right, #141414 0%, transparent 100%);
-}
-.hero__video-wrap::after {
-  right: 0;
-  background: linear-gradient(to left, #141414 0%, transparent 100%);
 }
 
 .hero__video {
@@ -386,17 +366,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   object-fit: cover;
   object-position: center;
   display: block;
-}
-
-/* Vídeo portrait (9:16): centraliza pela altura sem cropar */
-.hero__video--portrait {
-  width: auto;
-  height: 100%;
-  object-fit: unset;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 /* Selo CSM animado — marca d'água sobre o vídeo */
