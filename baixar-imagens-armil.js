@@ -28,6 +28,9 @@ const IMAGES = [
   { slug: 'brisa-1',   file: '753/comoda-brisa.jpg' },
   { slug: 'brisa-2',   file: '754/normal_comoda-brisa.jpg' },
   { slug: 'ayla',      file: '930/luminaria-ayla.jpg' },
+  { slug: 'recamier-ballet-1', file: '893/recamier-ballet.jpg' },
+  { slug: 'recamier-ballet-2', file: '894/recamier-ballet.jpg' },
+  { slug: 'recamier-ballet-3', file: '895/recamier-ballet.jpg' },
 ];
 
 function downloadBuffer(url, redirects = 0) {

@@ -105,6 +105,20 @@ const PRODUCTS = [
     imgs: ['brisa-1', 'brisa-2'],
   },
   {
+    id:         'armil-recamier-ballet',
+    name:       'Recâmier Ballet',
+    tipo:       'complemento',
+    fornecedor: 'armil',
+    tagline:    'Design refinado · 155 × 50 × 43 cm · Acabamentos naturais e ebanizado',
+    description: 'O Recâmier Ballet da Móveis Armil é uma peça sofisticada para quarto ou sala, com design elegante e proporções refinadas. Suas dimensões de 155×50×43 cm garantem presença discreta e funcional em qualquer ambiente. Disponível em acabamentos naturais e ebanizado.',
+    specs: [
+      { key: 'Dimensões',   val: '155 × 50 × 43 cm (ref. 100506)' },
+      { key: 'Acabamentos', val: 'In Natura, Nogueira, Castanho Envelhecido, Eucalipto Naturalle, Eucalipto Marrone, Ebanizado' },
+    ],
+    keywords: 'recâmier ballet quarto sala complemento madeira armil gramado elegante',
+    imgs: ['recamier-ballet-1', 'recamier-ballet-2', 'recamier-ballet-3'],
+  },
+  {
     id:         'armil-ayla',
     name:       'Luminária Ayla',
     tipo:       'complemento',
