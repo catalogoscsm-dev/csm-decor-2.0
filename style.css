@@ -341,16 +341,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding-top: 80px;
 }
 
-/* Fade de vinheta na borda inferior — dissolve o vídeo para o fundo da próxima seção */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 220px;
-  background: linear-gradient(to bottom, transparent 0%, #141414 100%);
-  pointer-events: none;
-  z-index: 2;
-}
+/* vinheta inferior removida */
 
 /* ── Vídeo de fundo do hero ── */
 .hero__video-wrap {
@@ -471,15 +462,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .hero__slide--active { opacity: 1; }
 
-/* Overlay escuro para legibilidade do texto */
+/* Overlay leve — apenas para legibilidade mínima do texto */
 .hero__bg-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(10,10,10,.10) 0%,
-    rgba(10,10,10,.32) 100%
-  );
+  background: rgba(10,10,10,.08);
 }
 
 /* Conteúdo sobreposto */
@@ -7381,13 +7368,9 @@ html { scroll-padding-top: 80px; }
     min-height: 540px; /* evita hero menor que o conteúdo em telas compactas (iPhone SE) */
   }
 
-  /* Overlay um pouco mais intenso para garantir legibilidade do vídeo em tela pequena */
+  /* Overlay mobile — levemente mais denso que desktop para legibilidade */
   .hero__bg-overlay {
-    background: linear-gradient(
-      160deg,
-      rgba(10,10,10,.54) 0%,
-      rgba(10,10,10,.80) 100%
-    );
+    background: rgba(10,10,10,.18);
   }
 }
 
