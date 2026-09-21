@@ -1,0 +1,25 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Roda às 10h UTC nas 2ªs e 5ªs feiras (a cada ~3 dias)
+    # Evita auto-pause do plano free do Supabase (pausa após 7 dias sem atividade)
+    - cron: '0 10 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://dlehmspwgrtxtkqpkbfz.supabase.co/rest/v1/" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" != "200" ] && [ "$STATUS" != "404" ]; then
+            echo "Unexpected status $STATUS — Supabase may be paused or unreachable."
+            exit 1
+          fi
+          echo "Supabase is active."

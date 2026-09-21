@@ -26,9 +26,10 @@
 (function () {
   'use strict';
 
-  // ── CONFIGURAÇÃO — substitua pelos valores do seu projeto ────────────
-  var SUPABASE_URL      = 'https://SEU-PROJETO.supabase.co';
-  var SUPABASE_ANON_KEY = 'COLE-SUA-ANON-KEY-AQUI';
+  // ── CONFIGURAÇÃO — lida de supabase-config.js (gitignored) ──────────
+  var _cfg = window._supabaseConfig || {};
+  var SUPABASE_URL      = _cfg.url     || 'https://SEU-PROJETO.supabase.co';
+  var SUPABASE_ANON_KEY = _cfg.anonKey || 'COLE-SUA-ANON-KEY-AQUI';
   var AVATARS_BUCKET    = 'avatars';
   // ────────────────────────────────────────────────────────────────────
 
