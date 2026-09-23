@@ -141,7 +141,7 @@ window.CSM_PRODUTOS = [
     "name": "Sofá Bora",
     "tipo": "sofa",
     "badge": "Sofá",
-    "img": "https://www.csmdecor.com.br/wsite/wp-content/uploads/2022/07/sofa-bora.jpg",
+    "img": "produtos/sofa-bora-frontal.jpg",
     "keywords": ""
   },
   {
