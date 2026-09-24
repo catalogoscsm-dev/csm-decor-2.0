@@ -431,15 +431,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   100% { left: 130%; opacity: 0; }
 }
 
-/* Mobile: substitui vídeo por imagem estática — economiza dados e bateria */
-@media (max-width: 640px) {
-  .hero__video { display: none; }
-  .hero__video-wrap {
-    background-image: url('apresentacao/mesa-centro-liu.webp');
-    background-size: cover;
-    background-position: center;
-  }
-}
 
 /* Contêiner do slider — overflow:hidden aqui, não no .hero */
 .hero__slider {
