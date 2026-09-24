@@ -9603,6 +9603,6 @@ a.showroom-map__val:hover { color: var(--white); }
   /* Empurra o conteúdo para não ficar atrás da barra */
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 
-  /* FAB substituído pelo bottom nav no mobile */
-  .fab-cluster { display: none; }
+  /* FAB sobe para não sobrepor o bottom nav */
+  .fab-cluster { bottom: calc(74px + env(safe-area-inset-bottom)); }
 }
