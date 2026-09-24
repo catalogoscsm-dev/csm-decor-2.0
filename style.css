@@ -441,6 +441,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
 }
 
+/* Mobile: substitui vídeo por imagem estática — economiza dados e bateria */
+@media (max-width: 640px) {
+  .hero__video { display: none; }
+  .hero__video-wrap {
+    background-image: url('apresentacao/mesa-centro-liu.webp');
+    background-size: cover;
+    background-position: center;
+  }
+}
+
 /* Contêiner do slider — overflow:hidden aqui, não no .hero */
 .hero__slider {
   position: absolute;
@@ -3851,6 +3861,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .modal--sm { max-width: 480px; }
+
+/* ----------------------------------------------------------
+   MOBILE: MODAL FULLSCREEN (≤640px)
+   Abre como bottom sheet cobrindo quase toda a tela
+---------------------------------------------------------- */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal {
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    max-height: 95dvh;
+    height: 95dvh;
+    width: 100%;
+    max-width: 100%;
+  }
+  .modal__layout {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .modal__img-wrap {
+    min-height: 260px;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+  }
+  .modal__gallery { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .modal__thumbs  { border-radius: 0; }
+  .modal__info    { padding: 1.25rem; }
+  .modal__close   { top: .75rem; right: .75rem; }
+}
 
 @keyframes slideUpModal {
   from { opacity: 0; transform: translateY(28px); }
@@ -7658,6 +7698,22 @@ html { scroll-padding-top: 80px; }
 
 @media (max-width: 480px) {
   .cat-page-hero .section-title { font-size: clamp(2rem, 8vw, 2.6rem); }
+}
+
+/* ----------------------------------------------------------
+   MOBILE: FILTRO SCROLL HORIZONTAL (≤640px)
+   Pills não quebram linha — ficam numa faixa rolável fina
+---------------------------------------------------------- */
+@media (max-width: 640px) {
+  .cat-filters__pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-inline: 1rem;
+  }
+  .cat-filters__pills::-webkit-scrollbar { display: none; }
 }
 
 /* ----------------------------------------------------------
