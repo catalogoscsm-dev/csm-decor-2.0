@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preview Ideale Estofados — CSM Decor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .preview-banner {
+      background: #1a1a1a; color: #fff; padding: 1rem 2rem;
+      font-family: Inter, sans-serif; font-size: .85rem;
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .preview-banner strong { color: #c9a96e; }
+    .preview-banner__stats { margin-left: auto; opacity: .7; }
+  </style>
+</head>
+<body>
+
+  <div id="page-curtain" class="page-curtain" aria-hidden="true"></div>
+
+  <div class="preview-banner">
+    <span>PREVIEW — Produtos importados da <strong>Ideale Estofados</strong></span>
+    <span>Revise os cards abaixo e copie os desejados para <code>produtos.html</code></span>
+    <span class="preview-banner__stats">31 produtos · 0 sem categoria</span>
+  </div>
+
+  <!-- Filtros -->
+  <div class="catalogo__filters cat-page-filters" role="tablist" aria-label="Filtrar por categoria" id="cat-filters" style="margin-top:0">
+    <div class="container">
+      <button class="filter active" role="tab" aria-selected="true"  data-cat="all">Todos</button>
+      <button class="filter"        role="tab" aria-selected="false" data-cat="sofa">Sofás</button>
+      <button class="filter"        role="tab" aria-selected="false" data-cat="poltrona">Poltronas</button>
+      <button class="filter"        role="tab" aria-selected="false" data-cat="sala-jantar">Sala de Jantar</button>
+      <button class="filter"        role="tab" aria-selected="false" data-cat="quarto">Quartos</button>
+      <button class="filter"        role="tab" aria-selected="false" data-cat="complemento">Complementos</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="cat-page-grid">
+      <div class="container">
+        <div class="catalogo__grid" id="catalogo-grid">
+
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7402"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-ISLAND-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-ISLAND-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-ISLAND-1.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Island.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas de 60 mm e molas bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo, tipo “ilha”.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;móvel, com tela antiderrapante, almofadas soltas com enchimento em pluma de ganso sintética.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça castanho.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Island">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-ISLAND-3-700x854.jpg" alt="Island — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Island</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas de 60 mm e molas bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo, tipo “ilha”.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>móvel, com tela antiderrapante, almofadas soltas com enchimento em pluma de ganso sintética.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça castanho.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7397"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-CANNES-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-CANNES-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-CANNES-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-CANNES.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Cannes.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas de 60 mm e molas bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas com enchimento em pluma de ganso sintética.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça castanho.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Cannes">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-CANNES-3-700x854.jpg" alt="Cannes — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Cannes</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas de 60 mm e molas bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas com enchimento em pluma de ganso sintética.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça castanho.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7392"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-MARE-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-MARE-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-MARE-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-MARE.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Mar%C3%A9.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas 60mm e molas bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo&quot;},{&quot;key&quot;:&quot;Esquema de conforto&quot;,&quot;val&quot;:&quot;espuma d28 soft (suporte), espuma hr38, espuma hipersoft 30&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas, enchimento em pluma de ganso sintética.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça castanho.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Maré">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-MARE-1-700x854.jpg" alt="Maré — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Maré</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas 60mm e molas bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo</dd></div><div class="cat-specs__row"><dt>Esquema de conforto</dt><dd>espuma d28 soft (suporte), espuma hr38, espuma hipersoft 30</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas, enchimento em pluma de ganso sintética.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça castanho.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7388"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-LUDWING-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-LUDWING-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-LUDWING-1_1.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Ludwing.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas 60 mm e molas Bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil aéreo.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas, enchimento em pluma de ganso sintética.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça castanho.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Ludwing">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFA-LUDWING-2-700x854.jpg" alt="Ludwing — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Ludwing</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas 60 mm e molas Bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil aéreo.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas, enchimento em pluma de ganso sintética.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça castanho.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7381"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER-4.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER-5.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER-6.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Shoulder.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas de 60 mm e molas bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil com corrediça metálica com trava.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30 (pillow).&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas com enchimento em pluma de ganso sintética.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça castanho.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Shoulder">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SHOULDER-700x854.jpg" alt="Shoulder — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Shoulder</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas de 60 mm e molas bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil com corrediça metálica com trava.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30 (pillow).</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas com enchimento em pluma de ganso sintética.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça castanho.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7425"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/PL-MIA1-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/PL-MIA.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Poltrona%20Mia.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;MDF 18 mm.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;percinta italiana.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;espuma D28 Soft e encosto D26 Soft.&quot;},{&quot;key&quot;:&quot;Base&quot;,&quot;val&quot;:&quot;fixa, giratória ou giratoria com retorno por mola (inteligente).&quot;}]">
+            <figure class="cat-card__fig" data-nome="Poltrona Mia">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/PL-MIA1-2.jpg" alt="Poltrona Mia — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Poltrona Mia</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>MDF 18 mm.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>percinta italiana.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>espuma D28 Soft e encosto D26 Soft.</dd></div><div class="cat-specs__row"><dt>Base</dt><dd>fixa, giratória ou giratoria com retorno por mola (inteligente).</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7416"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFT-4.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFT-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFT-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFT.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Poltrona%20Soft.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa + MDF 18 mm.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas 60 mm.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo em espuma D28 Soft.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;fixo em espuma D28 Soft. Almofada de cabeça com regulagem por pêndulo.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça castanho ou base giratória.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Poltrona Soft">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/SOFT-4-700x854.jpg" alt="Poltrona Soft — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Poltrona Soft</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa + MDF 18 mm.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas 60 mm.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo em espuma D28 Soft.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>fixo em espuma D28 Soft. Almofada de cabeça com regulagem por pêndulo.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça castanho ou base giratória.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7411"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/Elipse1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/ELIPSE.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/ELIPSE-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/ELIPSE-4.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Elipse.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto rosa, tratada e seca em estufa + MDF 18mm.&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas 60mm.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo, espuma D28 soft.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;fixo, espuma D28 soft.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;base giratória em disco de metal, 5 cores disponíveis.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Elipse">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/Elipse1.jpg" alt="Elipse — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Elipse</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto rosa, tratada e seca em estufa + MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas 60mm.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo, espuma D28 soft.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>fixo, espuma D28 soft.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>base giratória em disco de metal, 5 cores disponíveis.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7406"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/Lua1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/CHAISE-LUA.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/CHAISE-LUA-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/CHAISE-LUA-1.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Chaise%20Lua.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;MDF 18 mm&quot;},{&quot;key&quot;:&quot;Suporte&quot;,&quot;val&quot;:&quot;percintas elásticas 60 mm e molas bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas, enchimento em pluma de ganso sintética.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;e base: Pés em madeira castanho. Base revestida em couro sintético caramelo.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Chaise Lua">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/08/Lua1.jpg" alt="Chaise Lua — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Chaise Lua</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>MDF 18 mm</dd></div><div class="cat-specs__row"><dt>Suporte</dt><dd>percintas elásticas 60 mm e molas bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>espuma D28 Soft (suporte), espuma HR38, espuma Hipersoft 30.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas, enchimento em pluma de ganso sintética.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>e base: Pés em madeira castanho. Base revestida em couro sintético caramelo.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7320"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/AMOROSA-3-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/AMOROSO-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/AMOROSA-2-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/AMOROSA-1.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Poltrona%20e%20Puff%20Amorosa.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca + MDF 18mm.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;espuma D30 soft.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;percinta italiana e fibra de silicone.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;fixos em metal aço carbono.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Poltrona e Puff Amorosa">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/AMOROSA-3-1-700x854.jpg" alt="Poltrona e Puff Amorosa — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Poltrona e Puff Amorosa</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca + MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>espuma D30 soft.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>percinta italiana e fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>fixos em metal aço carbono.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7317"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/USUAL-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Puff%20Usual.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira eucalipto tratada, concha de madeirite. MDF 18mm&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;Percinta italiana.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Espuma D-28 Soft&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;Madeira com sapata de Borracha&quot;}]">
+            <figure class="cat-card__fig" data-nome="Puff Usual">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/USUAL-700x854.jpg" alt="Puff Usual — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Puff Usual</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira eucalipto tratada, concha de madeirite. MDF 18mm</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>Percinta italiana.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Espuma D-28 Soft</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>Madeira com sapata de Borracha</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="complemento" data-id="ideale-7314"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/Brooklin-3-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/Brooklin-4-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Banco%20Brooklin.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Espuma D-28 Soft&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;Sapata de Borracha&quot;}]">
+            <figure class="cat-card__fig" data-nome="Banco Brooklin">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/Brooklin-3-700x854.jpg" alt="Banco Brooklin — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Complemento</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Banco Brooklin</h2>
+              <p class="cat-card__tagline">Complemento · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Espuma D-28 Soft</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>Sapata de Borracha</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7461"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/THOMAZ-SEM-CAPA-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/THOMAZ-SEM-CAPA-2.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Thomaz%20Revestido.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto de reflorestamento, aparelhada e estufada com umidade controlada.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Espuma HR33, D26, assentos com almofadas soltas.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;percinta Italiana.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas. Enchimento em pluma de ganso sintética.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Thomaz Revestido">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2026/03/THOMAZ-SEM-CAPA-1-700x854.jpg" alt="Thomaz Revestido — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Thomaz Revestido</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto de reflorestamento, aparelhada e estufada com umidade controlada.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Espuma HR33, D26, assentos com almofadas soltas.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>percinta Italiana.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas. Enchimento em pluma de ganso sintética.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7311"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/THOMAZ-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/THOMAZ-2-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Thomaz%20com%20Capa.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de reflorestamento, eucalipto 100% aparelhada e estufada com umidade controlada por estufa.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Espuma HR-33, D-26, assentos com as almofadas soltas.&quot;},{&quot;key&quot;:&quot;Sistema&quot;,&quot;val&quot;:&quot;Conforto: Percinta Italiana&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas com Plumante Pena de Ganso&quot;},{&quot;key&quot;:&quot;Obs&quot;,&quot;val&quot;:&quot;Capa avulsa, opção de capa tecido sarja lavável.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Thomaz com Capa">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/THOMAZ-700x854.jpg" alt="Thomaz com Capa — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Thomaz com Capa</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de reflorestamento, eucalipto 100% aparelhada e estufada com umidade controlada por estufa.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Espuma HR-33, D-26, assentos com as almofadas soltas.</dd></div><div class="cat-specs__row"><dt>Sistema</dt><dd>Conforto: Percinta Italiana</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas com Plumante Pena de Ganso</dd></div><div class="cat-specs__row"><dt>Obs</dt><dd>Capa avulsa, opção de capa tecido sarja lavável.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7285"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/TESLA-4-1-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/TESLA-5-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/TESLA-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/TESLA-2-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/TESLA-3-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Tesla.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;Madeira eucalipto oriunda de reflorestamento,&quot;},{&quot;key&quot;:&quot;Espuma&quot;,&quot;val&quot;:&quot;HR-33, D-28 hipersoft&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil, abertura 1,85m, corrediça com destravamento&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas com Plumante Pena de Ganso&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;Em madeira maciça e sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Tesla">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/TESLA-4-1-700x854.jpg" alt="Tesla — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Tesla</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>Madeira eucalipto oriunda de reflorestamento,</dd></div><div class="cat-specs__row"><dt>Espuma</dt><dd>HR-33, D-28 hipersoft</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil, abertura 1,85m, corrediça com destravamento</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas com Plumante Pena de Ganso</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>Em madeira maciça e sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7280"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/ENLACE-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/ENLACE-2-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/ENLACE-3-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/ENLACE-4-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Enlace.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;Madeira eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;D30 soft&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas com fibra de silicone.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;Madeira Maciça e sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Enlace">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2025/07/ENLACE-700x854.jpg" alt="Enlace — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Enlace</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>Madeira eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>D30 soft</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas com fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>Madeira Maciça e sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7133"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/5.png","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/4.png","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/3.png","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/2.png"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Poltrona%20Opera.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;almofada solta c/ espuma D-28 soft, percinta 60mm.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas c/ fibra de silicone.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;fixos, metal aço carbono preto.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Poltrona Opera">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/5-700x660.png" alt="Poltrona Opera — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Poltrona Opera</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>almofada solta c/ espuma D-28 soft, percinta 60mm.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas c/ fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>fixos, metal aço carbono preto.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7128"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0635-copiar-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0631-copiar-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0632-copiar-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0633-copiar-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Loop.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;HR33, D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil, abertura 1,85m, corrediça com destravamento por suspensão&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas c/ fibra de silicone.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;em madeira maciça e sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Loop">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0635-copiar-700x854.jpg" alt="Loop — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Loop</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>HR33, D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil, abertura 1,85m, corrediça com destravamento por suspensão</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas c/ fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>em madeira maciça e sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7124"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/lumiere1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/LUMIERE-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/LUMIERE-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/LUMIERE.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/LUMIERE1-1.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Lumiere.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;HR33, D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil, abertura 1,65m, molas bonnel e percinta alastica de 60mm.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas c/ fibra de silicone, rolinhoo c/ espuma hipersoft.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;em madeira maciça e sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Lumiere">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/lumiere1.jpg" alt="Lumiere — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Lumiere</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>HR33, D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil, abertura 1,65m, molas bonnel e percinta alastica de 60mm.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas c/ fibra de silicone, rolinhoo c/ espuma hipersoft.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>em madeira maciça e sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7115"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/MOUNT-3-1-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/MOUNT-4-2-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/MOUNT-4-1-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Mount.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto aparelhada e estufada com umidade controlada.&quot;},{&quot;key&quot;:&quot;Montagem da Estrutura&quot;,&quot;val&quot;:&quot;nas junções das madeira são utilizados grampos não oxidantes para manter a estrutura firme e resistente.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;assento com espuma HR – 33, D-28 soft e D-28 Hipersoft&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Retrátil, em trilho de aço com trava de suspensão.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;Almofadas soltas com fibra de silicone.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;em madeira maciça cor carvalho.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Mount">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/MOUNT-3-1-700x854.jpg" alt="Mount — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Mount</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto aparelhada e estufada com umidade controlada.</dd></div><div class="cat-specs__row"><dt>Montagem da Estrutura</dt><dd>nas junções das madeira são utilizados grampos não oxidantes para manter a estrutura firme e resistente.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>assento com espuma HR – 33, D-28 soft e D-28 Hipersoft</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Retrátil, em trilho de aço com trava de suspensão.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>Almofadas soltas com fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>em madeira maciça cor carvalho.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7112"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0593-1-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0579-1-1-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Mallorca.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;HR33, D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil, abertura 1,85m, corrediça com destravamento por suspensão&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas c/ fibra de silicone.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;em madeira maciça e sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Mallorca">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0593-1-700x854.jpg" alt="Mallorca — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Mallorca</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>HR33, D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil, abertura 1,85m, corrediça com destravamento por suspensão</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas c/ fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>em madeira maciça e sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7103"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0518-1-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Otto.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;HR33, D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;fixo com espuma HR33, molas bonnel e percinta elástica de 60mm.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas c/ fibra de silicone, almofadas decorativas inclusas.&quot;},{&quot;key&quot;:&quot;Detalhe&quot;,&quot;val&quot;:&quot;base e apliques em MDF revestido, com opções de cores do mostruário.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;aço carbono cor preto.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Otto">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0518-1-700x854.jpg" alt="Otto — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Otto</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>HR33, D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>fixo com espuma HR33, molas bonnel e percinta elástica de 60mm.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas c/ fibra de silicone, almofadas decorativas inclusas.</dd></div><div class="cat-specs__row"><dt>Detalhe</dt><dd>base e apliques em MDF revestido, com opções de cores do mostruário.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>aço carbono cor preto.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7107"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/Lagun-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0544-1-1-scaled.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/DSC_0569-1-scaled.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Lagun.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto aparelhada e estufada com umidade controlada. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;HR-33, D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;retrátil, abertura 1,60m, modelo sem caixa com reclinagem manual ou elétrico.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;almofadas soltas c/fibra de silicone, almofadas decorativas inclusas.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;em madeira maciça e sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Lagun">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/Lagun-1.jpg" alt="Lagun — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Lagun</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto aparelhada e estufada com umidade controlada. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>HR-33, D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>retrátil, abertura 1,60m, modelo sem caixa com reclinagem manual ou elétrico.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>almofadas soltas c/fibra de silicone, almofadas decorativas inclusas.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>em madeira maciça e sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7071"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/timoth.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/puff-timoth-medidas.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Puff%20Timoth.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;MDF 18 mm.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;percinta italiana.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;com espuma D-26 soft.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;pés de madeira com sapata de borracha.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Puff Timoth">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/timoth.jpg" alt="Puff Timoth — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Puff Timoth</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>MDF 18 mm.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>percinta italiana.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>com espuma D-26 soft.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>pés de madeira com sapata de borracha.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-7067"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/pier.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/sofa-pier-principal.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/pier-medidas.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Sof%C3%A1%20Pier.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;MDF 18mm.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;percinta italiana / molas bonnel.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Espumas D33 soft / encosto D26 soft.&quot;},{&quot;key&quot;:&quot;Base&quot;,&quot;val&quot;:&quot;do sofá: em MDF revestido com couro sintético / com opção de complemento no tamanho padrão: 0,55.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Sofá Pier">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/04/pier.jpg" alt="Sofá Pier — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Sofá Pier</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>percinta italiana / molas bonnel.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Espumas D33 soft / encosto D26 soft.</dd></div><div class="cat-specs__row"><dt>Base</dt><dd>do sofá: em MDF revestido com couro sintético / com opção de complemento no tamanho padrão: 0,55.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-7139"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/1-Ondine.png","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/3-Ondine.png","https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/2-Ondine.png"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Poltrona%20Ondine.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;D28 soft.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;molas bonnel e percinta elástica de 60mm.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;percinta 60mm, espuma D-28.&quot;},{&quot;key&quot;:&quot;Sistema&quot;,&quot;val&quot;:&quot;fixa, giratória, giratória c/ retorno por mola (inteligente).&quot;}]">
+            <figure class="cat-card__fig" data-nome="Poltrona Ondine">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2024/12/1-Ondine-700x660.png" alt="Poltrona Ondine — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Poltrona Ondine</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto oriunda de reflorestamento, tratada e seca. MDF 18mm.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>D28 soft.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>molas bonnel e percinta elástica de 60mm.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>percinta 60mm, espuma D-28.</dd></div><div class="cat-specs__row"><dt>Sistema</dt><dd>fixa, giratória, giratória c/ retorno por mola (inteligente).</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-4321"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2023/10/toledo.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/10/toledo-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/10/toledo-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/10/toledo-medidas.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Toledo.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto aparelhada e estufada com umidade controlada.&quot;},{&quot;key&quot;:&quot;Montagem da Estrutura&quot;,&quot;val&quot;:&quot;nas junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.&quot;},{&quot;key&quot;:&quot;Sistema&quot;,&quot;val&quot;:&quot;de abertura: retrátil com deslocamento de encosto manual ou elétrico (modelo sem caixa).&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;assento/encosto com espuma D-28 soft + D-33 HR.&quot;},{&quot;key&quot;:&quot;Almofadas&quot;,&quot;val&quot;:&quot;fibra de silicone.&quot;},{&quot;key&quot;:&quot;Braços&quot;,&quot;val&quot;:&quot;espuma D-26 soft.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Toledo">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2023/10/toledo.jpg" alt="Toledo — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Toledo</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto aparelhada e estufada com umidade controlada.</dd></div><div class="cat-specs__row"><dt>Montagem da Estrutura</dt><dd>nas junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.</dd></div><div class="cat-specs__row"><dt>Sistema</dt><dd>de abertura: retrátil com deslocamento de encosto manual ou elétrico (modelo sem caixa).</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>assento/encosto com espuma D-28 soft + D-33 HR.</dd></div><div class="cat-specs__row"><dt>Almofadas</dt><dd>fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Braços</dt><dd>espuma D-26 soft.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-3960"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/palermo-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/Palermo-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/palermo-2-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/palermo-1-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/palermo-medidas.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Palermo.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira de Estrutura&quot;,&quot;val&quot;:&quot;madeira de reflorestamento, eucalipto 100% aparelhada e estufada com umidade controlada, por estufa.&quot;},{&quot;key&quot;:&quot;Montagem da Estrutura&quot;,&quot;val&quot;:&quot;nas junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;madeira maciça na cor castanho e sapata emborrachada.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;espumas certificadas de acordo com a norma ISO 9001-2000, sem CFC (cloro-flúor-carbono): não prejudica a camada de Ozônio.&quot;},{&quot;key&quot;:&quot;Sistema de conforto&quot;,&quot;val&quot;:&quot;Manta Acrílica 300gm, Espuma D-28 HM tecnologia Hipersoft, Espuma D-30 Soft, Molas ensacadas.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;Retrátil, com sistema mecânico ou elétrico, rodízios de silicone, pillowtop com 28 cm de altura.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;/Baraços: reclinável c/ catraca blindade de 6 estágios, almofada do encosto c/ preenchimento de espuma D-28 hipersoft envolvida em manta acrílica 300 gm, almofadas decorativas c/ enchimento em fibra de silicone.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Palermo">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/palermo-2.jpg" alt="Palermo — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Palermo</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira de Estrutura</dt><dd>madeira de reflorestamento, eucalipto 100% aparelhada e estufada com umidade controlada, por estufa.</dd></div><div class="cat-specs__row"><dt>Montagem da Estrutura</dt><dd>nas junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>madeira maciça na cor castanho e sapata emborrachada.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>espumas certificadas de acordo com a norma ISO 9001-2000, sem CFC (cloro-flúor-carbono): não prejudica a camada de Ozônio.</dd></div><div class="cat-specs__row"><dt>Sistema de conforto</dt><dd>Manta Acrílica 300gm, Espuma D-28 HM tecnologia Hipersoft, Espuma D-30 Soft, Molas ensacadas.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>Retrátil, com sistema mecânico ou elétrico, rodízios de silicone, pillowtop com 28 cm de altura.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>/Baraços: reclinável c/ catraca blindade de 6 estágios, almofada do encosto c/ preenchimento de espuma D-28 hipersoft envolvida em manta acrílica 300 gm, almofadas decorativas c/ enchimento em fibra de silicone.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="poltrona" data-id="ideale-3959"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/mariah1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/PL-MARIAH.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Poltrona%20Mariah.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Estrutura&quot;,&quot;val&quot;:&quot;madeira de eucalipto tratada, concha de madeirite.&quot;},{&quot;key&quot;:&quot;Assento&quot;,&quot;val&quot;:&quot;molas Nosag, espuma D-28 soft, espuma D-28 hipersoft, manta acrílica 150 gramas.&quot;},{&quot;key&quot;:&quot;Encosto&quot;,&quot;val&quot;:&quot;concha madeirite laminado, espuma D-28 soft.&quot;},{&quot;key&quot;:&quot;Pés&quot;,&quot;val&quot;:&quot;giratória modelo Glider / fixa pés de madeira Tauari cor castanho / fixa com pés metal pintura microtextura cor preto.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Poltrona Mariah">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/mariah1.jpg" alt="Poltrona Mariah — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Poltrona</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Poltrona Mariah</h2>
+              <p class="cat-card__tagline">Poltrona · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Estrutura</dt><dd>madeira de eucalipto tratada, concha de madeirite.</dd></div><div class="cat-specs__row"><dt>Assento</dt><dd>molas Nosag, espuma D-28 soft, espuma D-28 hipersoft, manta acrílica 150 gramas.</dd></div><div class="cat-specs__row"><dt>Encosto</dt><dd>concha madeirite laminado, espuma D-28 soft.</dd></div><div class="cat-specs__row"><dt>Pés</dt><dd>giratória modelo Glider / fixa pés de madeira Tauari cor castanho / fixa com pés metal pintura microtextura cor preto.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-3958"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/almare.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/almare-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/almare-3.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/almare-2.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/almare2-medidas.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Almare.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto aparelhada e estufada com umidade controlada.&quot;},{&quot;key&quot;:&quot;Montagem da Estrutura&quot;,&quot;val&quot;:&quot;na junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;assento com espuma D-28 soft encosto com espuma D-26 soft.&quot;},{&quot;key&quot;:&quot;Almofadas&quot;,&quot;val&quot;:&quot;fibra de silicone.&quot;},{&quot;key&quot;:&quot;Braços&quot;,&quot;val&quot;:&quot;espuma D-26 soft.&quot;}]">
+            <figure class="cat-card__fig" data-nome="Almare">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/almare.jpg" alt="Almare — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Almare</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto aparelhada e estufada com umidade controlada.</dd></div><div class="cat-specs__row"><dt>Montagem da Estrutura</dt><dd>na junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>assento com espuma D-28 soft encosto com espuma D-26 soft.</dd></div><div class="cat-specs__row"><dt>Almofadas</dt><dd>fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Braços</dt><dd>espuma D-26 soft.</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+          <article class="cat-card" data-tipo="sofa" data-id="ideale-3957"
+            data-imgs='["https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/Aramis-1000x562-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/aramis-3-1000x563-1.jpg","https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/aramis-1-1000x562-1.jpg"]'
+            data-wpp="https://wa.me/5519990034068?text=Tenho%20interesse%20no%20produto%20Aramis.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"
+            data-specs="[{&quot;key&quot;:&quot;Madeira&quot;,&quot;val&quot;:&quot;madeira de eucalipto aparelhada e estufada com umidade controlada.&quot;},{&quot;key&quot;:&quot;Montagem da estrutura&quot;,&quot;val&quot;:&quot;nas junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.&quot;},{&quot;key&quot;:&quot;Sistema&quot;,&quot;val&quot;:&quot;de Abertura: retrátil com deslocamento de encosto manual ou elétrico (modelo sem caixa).&quot;},{&quot;key&quot;:&quot;Espumas&quot;,&quot;val&quot;:&quot;assento/encosto com espuma D-28 soft + D-33 hipersoft.&quot;},{&quot;key&quot;:&quot;Almofadas&quot;,&quot;val&quot;:&quot;fibra de silicone.&quot;},{&quot;key&quot;:&quot;Braços&quot;,&quot;val&quot;:&quot;Espuma D-26 soft&quot;}]">
+            <figure class="cat-card__fig" data-nome="Aramis">
+              <img src="https://idealeestofados.com.br/wp/wp-content/uploads/2023/09/Aramis-1000x562-1.jpg" alt="Aramis — CSM Decor" loading="lazy" />
+              <span class="cat-card__badge">Sofá</span>
+            </figure>
+            <div class="cat-card__body">
+              <h2 class="cat-card__name">Aramis</h2>
+              <p class="cat-card__tagline">Sofá · Design exclusivo · Alto padrão</p>
+              <details class="cat-specs">
+                <summary class="cat-specs__toggle">Especificações técnicas</summary>
+                <dl class="cat-specs__list"><div class="cat-specs__row"><dt>Madeira</dt><dd>madeira de eucalipto aparelhada e estufada com umidade controlada.</dd></div><div class="cat-specs__row"><dt>Montagem da estrutura</dt><dd>nas junções das madeiras são utilizados grampos não oxidantes para manter a estrutura firme e resistente.</dd></div><div class="cat-specs__row"><dt>Sistema</dt><dd>de Abertura: retrátil com deslocamento de encosto manual ou elétrico (modelo sem caixa).</dd></div><div class="cat-specs__row"><dt>Espumas</dt><dd>assento/encosto com espuma D-28 soft + D-33 hipersoft.</dd></div><div class="cat-specs__row"><dt>Almofadas</dt><dd>fibra de silicone.</dd></div><div class="cat-specs__row"><dt>Braços</dt><dd>Espuma D-26 soft</dd></div></dl>
+              </details>
+              <button type="button" class="btn btn--primary btn--sm cat-card__cta"
+                onclick="openProductModal(this.closest('.cat-card'))">
+                Ver Produto
+              </button>
+            </div>
+          </article>
+        </div>
+        <div class="cat-empty" id="cat-empty" hidden>
+          <p>Nenhum produto nessa categoria.</p>
+          <button class="btn btn--outline" onclick="setFilter('all')" style="margin-top:1rem">Ver todos</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Produto -->
+  <div class="modal-overlay" id="modal-produto" role="dialog" aria-modal="true" aria-labelledby="modal-produto-title" hidden>
+    <div class="modal" role="document">
+      <button class="modal__close" aria-label="Fechar" onclick="closeModal('modal-produto')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal__layout">
+        <div class="modal__gallery">
+          <div class="modal__img-wrap"><img id="modal-img-main" src="" alt="" class="modal__img-main" /></div>
+          <div class="modal__thumbs" id="modal-thumbs"></div>
+        </div>
+        <div class="modal__info">
+          <span class="modal__badge" id="modal-badge"></span>
+          <h2 class="modal__title" id="modal-produto-title"></h2>
+          <p class="modal__tagline" id="modal-tagline"></p>
+          <div id="modal-specs" class="modal__specs"></div>
+          <a id="modal-wpp-btn" href="#" class="btn btn--primary modal__cta" target="_blank" rel="noopener noreferrer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar Orçamento via WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+  'use strict';
+  function lockScroll()   { document.body.style.overflow = 'hidden'; }
+  function unlockScroll() { document.body.style.overflow = ''; }
+
+  (function(){
+    var s = localStorage.getItem('csm-theme');
+    if (s === 'dark') document.documentElement.setAttribute('data-theme','dark');
+  }());
+
+  function openModal(id){ var el=document.getElementById(id); if(!el) return; el.removeAttribute('hidden'); lockScroll(); }
+  function closeModal(id){ var el=document.getElementById(id); if(!el) return; el.setAttribute('hidden',''); unlockScroll(); }
+  document.querySelectorAll('.modal-overlay').forEach(function(ov){ ov.addEventListener('click', function(e){ if(e.target===ov) closeModal(ov.id); }); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') document.querySelectorAll('.modal-overlay:not([hidden])').forEach(function(m){ closeModal(m.id); }); });
+
+  function openProductModal(card){
+    var img   = card.querySelector('img');
+    var badge = card.querySelector('.cat-card__badge');
+    var name  = card.querySelector('.cat-card__name').textContent;
+    var tag   = card.querySelector('.cat-card__tagline').textContent;
+    var wpp   = card.dataset.wpp;
+    document.getElementById('modal-produto-title').textContent = name;
+    document.getElementById('modal-tagline').textContent       = tag;
+    document.getElementById('modal-wpp-btn').href              = wpp;
+    var mb = document.getElementById('modal-badge');
+    if (mb && badge) mb.textContent = badge.textContent;
+    var mi   = document.getElementById('modal-img-main');
+    var imgs = JSON.parse(card.dataset.imgs || '[]');
+    if (mi) { mi.src = imgs[0] || (img ? img.src : ''); mi.alt = name; }
+    var thumbs = document.getElementById('modal-thumbs');
+    if (thumbs) {
+      thumbs.innerHTML = '';
+      imgs.forEach(function(src, i){
+        var t = document.createElement('div'); t.className='modal__thumb'+(i===0?' active':'');
+        var ti = document.createElement('img'); ti.src=src; ti.loading='lazy';
+        t.appendChild(ti);
+        t.addEventListener('click', function(){
+          thumbs.querySelectorAll('.modal__thumb').forEach(function(x){ x.classList.remove('active'); });
+          t.classList.add('active'); if(mi) mi.src=src;
+        });
+        thumbs.appendChild(t);
+      });
+    }
+    var specsEl = document.getElementById('modal-specs');
+    if (specsEl) {
+      specsEl.innerHTML = '';
+      try {
+        var specs = JSON.parse(card.dataset.specs || '[]');
+        if (specs.length) {
+          var dl = document.createElement('dl'); dl.className='cat-specs__list';
+          specs.forEach(function(s){
+            var row=document.createElement('div'); row.className='cat-specs__row';
+            var dt=document.createElement('dt'); dt.textContent=s.key;
+            var dd=document.createElement('dd'); dd.textContent=s.val;
+            row.appendChild(dt); row.appendChild(dd); dl.appendChild(row);
+          });
+          specsEl.appendChild(dl);
+        }
+      } catch(_){}
+    }
+    openModal('modal-produto');
+  }
+
+  var activeFilter = 'all';
+  function setFilter(cat){
+    activeFilter = cat;
+    var cards = document.querySelectorAll('.cat-card');
+    var btns  = document.querySelectorAll('[data-cat]');
+    var empty = document.getElementById('cat-empty');
+    var vis   = 0;
+    btns.forEach(function(b){ var a=b.dataset.cat===cat; b.classList.toggle('active',a); b.setAttribute('aria-selected',a?'true':'false'); });
+    cards.forEach(function(c){ var m=cat==='all'||c.dataset.tipo===cat; c.style.display=m?'':'none'; if(m) vis++; });
+    if (empty) empty.hidden = vis > 0;
+  }
+  document.querySelectorAll('[data-cat]').forEach(function(b){ b.addEventListener('click', function(){ setFilter(b.dataset.cat); }); });
+
+  (function(){
+    if (typeof gsap==='undefined'||typeof ScrollTrigger==='undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.cat-card').forEach(function(card, i){
+      gsap.fromTo(card, {opacity:0,y:28}, {opacity:1,y:0,duration:.55,ease:'power2.out',delay:(i%3)*.06,
+        scrollTrigger:{trigger:card,start:'top 88%',once:true}});
+    });
+  }());
+  </script>
+</body>
+</html>

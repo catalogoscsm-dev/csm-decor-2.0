@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Abrindo produto...</title>
+  <style>
+    body { margin: 0; display: flex; align-items: center; justify-content: center;
+           height: 100vh; font-family: sans-serif; background: #111; color: #fff; }
+    p { opacity: .6; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <p>Carregando produto...</p>
+  <script>
+  (function () {
+    var slug  = new URLSearchParams(location.search).get('slug') || 'shoulder';
+    var WPP   = '5519990034068';
+
+    function stripHtml(html) {
+      return (html || '').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ')
+        .replace(/&amp;/g,'&').replace(/&#[0-9]+;/g,'').replace(/\s+/g,' ').trim();
+    }
+
+    var SPEC_FIELDS = ['Estrutura','Suporte','Assento','Encosto','Pés','Base',
+      'Braços','Mecanismo','Revestimento','Material','Acabamento',
+      'Almofadas','Almofada','Assentos','Molas','Sistema de conforto',
+      'Largura','Profundidade','Altura','Medidas','Dimensões'];
+
+    function parseSpecs(html) {
+      if (!html) return [];
+      var text = html.replace(/<br\s*\/?>/gi,'\n').replace(/<\/p>/gi,'\n')
+        .replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&')
+        .replace(/&#[0-9]+;/g,'').replace(/&[a-z]+;/g,'');
+      var specs = [];
+      text.split('\n').forEach(function(raw) {
+        var line = raw.trim();
+        if (!line || line.length < 3) return;
+        var found = false;
+        for (var i = 0; i < SPEC_FIELDS.length; i++) {
+          var f = SPEC_FIELDS[i];
+          if (line.toLowerCase().indexOf(f.toLowerCase()) === 0) {
+            var val = line.slice(f.length).replace(/^[:\s\-–]+/,'').trim();
+            if (val) { specs.push({ key: f, val: val }); found = true; }
+            break;
+          }
+        }
+        if (!found && line.indexOf(':') > 0) {
+          var ci  = line.indexOf(':');
+          var key = line.slice(0, ci).trim();
+          var val = line.slice(ci + 1).trim();
+          if (key.length >= 2 && key.length <= 30 && val.length >= 2)
+            specs.push({ key: key, val: val });
+        }
+      });
+      return specs;
+    }
+
+    var CAT = {
+      'sofa':'sofa','sofas':'sofa','estofados':'sofa',
+      'poltronas':'poltrona','poltrona':'poltrona',
+      'chaise':'sofa','banco':'complemento','puff':'complemento',
+      'cama':'quarto','cadeiras':'sala-jantar'
+    };
+    var LABEL = {
+      'sofa':'Sofá','poltrona':'Poltrona','sala-jantar':'Sala de Jantar',
+      'quarto':'Quarto','complemento':'Complemento'
+    };
+
+    function getTipo(cats) {
+      for (var i = 0; i < cats.length; i++) {
+        var s = (cats[i].slug || '').toLowerCase();
+        if (CAT[s]) return CAT[s];
+        var n = (cats[i].name || '').toLowerCase();
+        if (n.indexOf('poltrona') >= 0) return 'poltrona';
+        if (n.indexOf('sofa') >= 0 || n.indexOf('sofá') >= 0) return 'sofa';
+        if (n.indexOf('puff') >= 0) return 'complemento';
+      }
+      if (slug.indexOf('poltrona') >= 0) return 'poltrona';
+      return 'sofa';
+    }
+
+    fetch('https://idealeestofados.com.br/wp-json/wc/store/v1/products?slug=' + encodeURIComponent(slug))
+      .then(function(r) { return r.json(); })
+      .then(function(list) {
+        var p = Array.isArray(list) ? list[0] : list;
+        if (!p) throw new Error('Produto não encontrado: ' + slug);
+
+        var tipo   = getTipo(p.categories || []);
+        var badge  = LABEL[tipo] || tipo;
+        var name   = p.name || slug;
+        var imgs   = (p.images || []).map(function(i){ return i.src; }).filter(Boolean);
+        var specs  = parseSpecs(p.description || '');
+        var tagline = stripHtml(p.short_description || '') || (badge + ' · Design exclusivo · Alto padrão');
+        var wpp    = 'https://wa.me/' + WPP + '?text=' + encodeURIComponent('Tenho interesse no produto ' + name + '. Pode me enviar mais informações?');
+        var id     = 'ideale-' + p.id;
+
+        localStorage.setItem('csm-produto-current', JSON.stringify({
+          id: id, name: name, badge: badge, tipo: tipo,
+          tagline: tagline.substring(0, 110),
+          imgs: imgs, wpp: wpp, glb: '', specs: specs
+        }));
+
+        location.href = 'produto.html?id=' + encodeURIComponent(id);
+      })
+      .catch(function(err) {
+        document.querySelector('p').textContent = 'Erro: ' + err.message;
+      });
+  }());
+  </script>
+</body>
+</html>

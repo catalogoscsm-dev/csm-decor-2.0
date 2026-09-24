@@ -1,4 +1,4 @@
-# CSM Decor Luxury — Instruções para Claude
+# CSM Decor Luxury — Instruções para Codex
 
 ## Stack
 Site estático (HTML/CSS/JS) + WordPress/WooCommerce como CMS em `csmdecor.com.br/wsite`.

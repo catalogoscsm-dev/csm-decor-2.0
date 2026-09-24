@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dual Marquee — Componente Standalone</title>
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  DUAL MARQUEE — Componente independente                         ║
+  ║                                                                  ║
+  ║  Como usar:                                                      ║
+  ║  1. Copie o bloco <style> para o seu CSS (ou deixe aqui)        ║
+  ║  2. Cole o bloco <div class="marquee-wrapper"> no seu HTML      ║
+  ║  3. Copie o bloco <script> para o final do seu HTML             ║
+  ║  4. Substitua as imagens e textos nas seções marcadas           ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+
+  <style>
+    /* ── Reset mínimo ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f1ea;
+      padding: 3rem 0;
+    }
+
+    /* ══════════════════════════════════════════════════
+       VARIÁVEIS — ajuste aqui para mudar cores/fonte
+    ══════════════════════════════════════════════════ */
+    :root {
+      --accent:    #f07800;       /* cor de destaque (laranja por padrão)  */
+      --bg:        #f5f1ea;       /* cor de fundo da seção                  */
+      --bg-card:   #edeae3;       /* cor de fundo dos cards de estatística  */
+      --radius:    16px;          /* arredondamento dos cards               */
+      --ease:      cubic-bezier(.25,.46,.45,.94);
+    }
+
+    /* ══════════════════════════════════════════════════
+       WRAPPER EXTERNO
+    ══════════════════════════════════════════════════ */
+    .marquee-wrapper {
+      overflow: hidden;         /* esconde o que passa da borda              */
+      position: relative;
+      padding-block: .5rem 0;
+    }
+
+    /* Vignette lateral (funde com o fundo) */
+    .marquee-wrapper::before,
+    .marquee-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 12%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg) 10%, transparent);
+    }
+    .marquee-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left,  var(--bg) 10%, transparent);
+    }
+
+    /* ══════════════════════════════════════════════════
+       LINHA (ROW) E LABEL
+    ══════════════════════════════════════════════════ */
+    .mq-row {
+      position: relative;
+    }
+    .mq-row:first-child {
+      padding-top: 1.75rem; /* espaço para o label "Fileira 1" */
+    }
+
+    /* Label acima da primeira fileira */
+    .mq-label--top {
+      position: absolute;
+      top: .3rem;
+      left: clamp(1.25rem, 3vw, 2.5rem);
+      z-index: 10;
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .mq-label--top em {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: clamp(.9rem, 1.4vw, 1.15rem);
+      font-weight: 600;
+      letter-spacing: .07em;
+      color: var(--accent);
+      text-shadow: 0 0 14px rgba(240,120,0,.3);
+    }
+
+    /* Divisor entre fileiras com label à direita */
+    .mq-divider {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: .65rem clamp(1.25rem, 3vw, 2.5rem);
+      position: relative;
+    }
+    .mq-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: clamp(2rem, 8vw, 6rem);
+      right: clamp(2rem, 8vw, 6rem);
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(240,120,0,.5) 20%,
+        rgba(240,120,0,.5) 80%,
+        transparent
+      );
+      box-shadow: 0 0 6px rgba(240,120,0,.4), 0 0 20px rgba(240,120,0,.15);
+    }
+    .mq-label--bottom {
+      position: relative;
+      z-index: 5;
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .mq-label--bottom em {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: clamp(.9rem, 1.4vw, 1.15rem);
+      font-weight: 600;
+      letter-spacing: .07em;
+      color: var(--accent);
+      text-shadow: 0 0 14px rgba(240,120,0,.3);
+    }
+
+    /* ══════════════════════════════════════════════════
+       TRACK (a faixa que anima)
+    ══════════════════════════════════════════════════ */
+    .mq-track {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      will-change: transform;
+      margin-bottom: 1rem;
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .mq-track.is-dragging { cursor: grabbing; }
+
+    /* Fileira 1 vai para a esquerda, fileira 2 vai para a direita */
+    .mq-track--fwd { animation: mq-fwd 55s linear infinite; }
+    .mq-track--rev { animation: mq-rev 62s linear infinite; }
+
+    /* ══════════════════════════════════════════════════
+       CARD DE IMAGEM
+    ══════════════════════════════════════════════════ */
+    .mq-item {
+      flex-shrink: 0;
+      width: clamp(260px, 23vw, 380px);
+      aspect-ratio: 16 / 10;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      display: block;
+      cursor: pointer;
+      text-decoration: none;
+      transition: filter .45s ease;
+    }
+    .mq-item:hover {
+      filter: drop-shadow(0 0 16px rgba(240,120,0,.38));
+    }
+    @media (max-width: 600px) {
+      .mq-item { width: clamp(190px, 55vw, 270px); }
+      .mq-label--top, .mq-label--bottom { display: none; }
+    }
+
+    /* Imagem */
+    .mq-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .65s var(--ease), opacity .2s ease;
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;
+    }
+    .mq-item:hover .mq-img { transform: scale(1.05); }
+
+    /* Label que aparece no hover */
+    .mq-caption {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.1rem;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,.92) 0%,
+        rgba(0,0,0,.7)  28%,
+        rgba(0,0,0,.25) 55%,
+        transparent     80%
+      );
+      opacity: 0;
+      transition: opacity .3s var(--ease);
+    }
+    .mq-item:hover .mq-caption { opacity: 1; }
+
+    .mq-caption__cat {
+      display: block;
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .3rem;
+      text-shadow: 0 1px 6px rgba(0,0,0,.9);
+    }
+    .mq-caption__name {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.2;
+      text-shadow: 0 1px 8px rgba(0,0,0,.95);
+    }
+
+    /* ══════════════════════════════════════════════════
+       CARD DE ESTATÍSTICA (opcional — pode remover)
+    ══════════════════════════════════════════════════ */
+    .mq-item--stat {
+      background: var(--bg-card);
+      border: 1px solid rgba(240,120,0,.22);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      cursor: default;
+    }
+    .mq-stat {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 1.5rem 1.75rem;
+      position: relative; overflow: hidden;
+    }
+    .mq-stat__num {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: .25rem;
+    }
+    .mq-stat__num sup { font-size: .42em; vertical-align: super; margin-left: .05em; }
+    .mq-stat__label {
+      display: block;
+      font-size: .54rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(30,30,30,.60);
+      margin-bottom: .7rem;
+    }
+    .mq-stat__desc {
+      font-size: .77rem;
+      line-height: 1.6;
+      color: rgba(30,30,30,.52);
+      max-width: 24ch;
+    }
+    .mq-stat__deco {
+      position: absolute;
+      bottom: -.5rem; right: .8rem;
+      font-family: Georgia, serif;
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 300;
+      color: rgba(240,120,0,.08);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    /* ══════════════════════════════════════════════════
+       KEYFRAMES
+    ══════════════════════════════════════════════════ */
+    @keyframes mq-fwd {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes mq-rev {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  HTML DO COMPONENTE — cole no seu site                      ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+
+<div class="marquee-wrapper">
+
+  <!-- ── FILEIRA 1 — rola para a ESQUERDA ──────────────────── -->
+  <div class="mq-row">
+
+    <span class="mq-label--top" aria-hidden="true"><em>Ambientes</em></span>
+
+    <!--
+      mq-track--fwd = rola para a esquerda
+      IMPORTANTE: duplique todos os cards (Set A + Set B idêntico)
+      para o loop contínuo sem cortes.
+    -->
+    <div class="mq-track mq-track--fwd" id="track-fwd">
+
+      <!-- ════ SET A — seus cards reais ════ -->
+
+      <!--
+        data-imgs: array JSON de URLs para ciclar no hover.
+        Mínimo 1 imagem. Se tiver só 1, não haverá ciclo.
+        href: para onde o clique vai (pode ser "#" se não tiver link)
+      -->
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Externo</span>
+          <span class="mq-caption__name">Área Gourmet</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Sala de Estar</span>
+          <span class="mq-caption__name">Living</span>
+        </div>
+      </a>
+
+      <!-- Card de estatística (opcional) -->
+      <div class="mq-item mq-item--stat">
+        <div class="mq-stat">
+          <strong class="mq-stat__num">30<sup>+</sup></strong>
+          <span class="mq-stat__label">Anos de mercado</span>
+          <p class="mq-stat__desc">Tradição familiar com evolução constante em design.</p>
+          <span class="mq-stat__deco" aria-hidden="true">★</span>
+        </div>
+      </div>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80","https://images.unsplash.com/photo-1549187774-b4e9b0445b41?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Estofados</span>
+          <span class="mq-caption__name">Linha Couro</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=80","https://images.unsplash.com/photo-1522771739844-6a9136b5c672?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Dormitório</span>
+          <span class="mq-caption__name">Quartos</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=700&q=80","https://images.unsplash.com/photo-1617806118233-18e1de247200?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Jantar</span>
+          <span class="mq-caption__name">Sala de Jantar</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80","https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Estofados</span>
+          <span class="mq-caption__name">Poltronas</span>
+        </div>
+      </a>
+
+      <!-- ════ SET B — cópia idêntica do Set A para loop sem corte ════ -->
+      <!-- ATENÇÃO: copie aqui exatamente os mesmos cards do Set A -->
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Externo</span>
+          <span class="mq-caption__name">Área Gourmet</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1560185009-5bf9f2849488?w=700&q=80","https://images.unsplash.com/photo-1586023492125-27b2c045efd3?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1560185009-5bf9f2849488?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Sala de Estar</span>
+          <span class="mq-caption__name">Living</span>
+        </div>
+      </a>
+
+      <div class="mq-item mq-item--stat">
+        <div class="mq-stat">
+          <strong class="mq-stat__num">30<sup>+</sup></strong>
+          <span class="mq-stat__label">Anos de mercado</span>
+          <p class="mq-stat__desc">Tradição familiar com evolução constante em design.</p>
+          <span class="mq-stat__deco" aria-hidden="true">★</span>
+        </div>
+      </div>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80","https://images.unsplash.com/photo-1549187774-b4e9b0445b41?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Estofados</span>
+          <span class="mq-caption__name">Linha Couro</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=80","https://images.unsplash.com/photo-1522771739844-6a9136b5c672?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Dormitório</span>
+          <span class="mq-caption__name">Quartos</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=700&q=80","https://images.unsplash.com/photo-1617806118233-18e1de247200?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Jantar</span>
+          <span class="mq-caption__name">Sala de Jantar</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80","https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Estofados</span>
+          <span class="mq-caption__name">Poltronas</span>
+        </div>
+      </a>
+
+    </div><!-- /mq-track--fwd -->
+  </div><!-- /mq-row -->
+
+
+  <!-- Divisor entre fileiras -->
+  <div class="mq-divider">
+    <span class="mq-label--bottom" aria-hidden="true"><em>Produtos</em></span>
+  </div>
+
+
+  <!-- ── FILEIRA 2 — rola para a DIREITA ───────────────────── -->
+  <div class="mq-row">
+    <!--
+      mq-track--rev = rola para a direita (sentido oposto)
+      Mesma regra: Set A + Set B idêntico para loop.
+    -->
+    <div class="mq-track mq-track--rev" id="track-rev">
+
+      <!-- ════ SET A ════ -->
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80","https://images.unsplash.com/photo-1550254478-ead40cc54513?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Sofá</span>
+          <span class="mq-caption__name">Modelo A</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80","https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Poltrona</span>
+          <span class="mq-caption__name">Modelo B</span>
+        </div>
+      </a>
+
+      <div class="mq-item mq-item--stat">
+        <div class="mq-stat">
+          <strong class="mq-stat__num">200<sup>+</sup></strong>
+          <span class="mq-stat__label">Produtos</span>
+          <p class="mq-stat__desc">Curadoria das melhores linhas nacionais e importadas.</p>
+          <span class="mq-stat__deco" aria-hidden="true">★</span>
+        </div>
+      </div>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80","https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Estofado</span>
+          <span class="mq-caption__name">Modelo C</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=700&q=80","https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Mesa</span>
+          <span class="mq-caption__name">Modelo D</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=700&q=80","https://images.unsplash.com/photo-1524758631624-e2822132143e?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Decoração</span>
+          <span class="mq-caption__name">Complementos</span>
+        </div>
+      </a>
+
+      <!-- ════ SET B — cópia idêntica do Set A acima ════ -->
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80","https://images.unsplash.com/photo-1550254478-ead40cc54513?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Sofá</span>
+          <span class="mq-caption__name">Modelo A</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80","https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Poltrona</span>
+          <span class="mq-caption__name">Modelo B</span>
+        </div>
+      </a>
+
+      <div class="mq-item mq-item--stat">
+        <div class="mq-stat">
+          <strong class="mq-stat__num">200<sup>+</sup></strong>
+          <span class="mq-stat__label">Produtos</span>
+          <p class="mq-stat__desc">Curadoria das melhores linhas nacionais e importadas.</p>
+          <span class="mq-stat__deco" aria-hidden="true">★</span>
+        </div>
+      </div>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80","https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Estofado</span>
+          <span class="mq-caption__name">Modelo C</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=700&q=80","https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Mesa</span>
+          <span class="mq-caption__name">Modelo D</span>
+        </div>
+      </a>
+
+      <a href="#" class="mq-item"
+         data-imgs='["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=700&q=80","https://images.unsplash.com/photo-1524758631624-e2822132143e?w=700&q=80"]'>
+        <img class="mq-img" src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=700&q=80" alt="" loading="lazy" draggable="false" />
+        <div class="mq-caption">
+          <span class="mq-caption__cat">Decoração</span>
+          <span class="mq-caption__name">Complementos</span>
+        </div>
+      </a>
+
+    </div><!-- /mq-track--rev -->
+  </div><!-- /mq-row -->
+
+</div><!-- /marquee-wrapper -->
+
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  JAVASCRIPT — cole antes do </body>                         ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── 1. Ciclo de fotos no hover ─────────────────────────────────
+  document.querySelectorAll('.mq-item').forEach(function (item) {
+    var imgs = [];
+    try { imgs = JSON.parse(item.dataset.imgs || '[]'); } catch (_) {}
+    if (imgs.length < 2) return;
+    var img = item.querySelector('.mq-img');
+    if (!img) return;
+    var idx = 0, timer = null;
+    item.addEventListener('mouseenter', function () {
+      idx = 0;
+      timer = setInterval(function () {
+        idx = (idx + 1) % imgs.length;
+        img.style.opacity = '0';
+        setTimeout(function () { img.src = imgs[idx]; img.style.opacity = '1'; }, 200);
+      }, 1400);
+    });
+    item.addEventListener('mouseleave', function () {
+      clearInterval(timer);
+      img.src = imgs[0];
+      img.style.opacity = '1';
+    });
+  });
+
+  // ── 2. Pausa suave no hover (desacelera a animação) ────────────
+  var wrapper = document.querySelector('.marquee-wrapper');
+  if (wrapper) {
+    var rafId = null, SLOW_MS = 700, FAST_MS = 450;
+    var tracks = Array.from(wrapper.querySelectorAll('.mq-track'));
+
+    function getAnims() {
+      var list = [];
+      tracks.forEach(function (t) { t.getAnimations().forEach(function (a) { list.push(a); }); });
+      return list;
+    }
+    function animateTo(target, dur) {
+      if (rafId) cancelAnimationFrame(rafId);
+      var anims = getAnims();
+      if (!anims.length) return;
+      var from = anims[0].playbackRate, start = null;
+      function tick(now) {
+        if (!start) start = now;
+        var t = Math.min((now - start) / dur, 1);
+        var e = target === 0
+          ? 1 - Math.pow(1 - t, 4)
+          : t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+        getAnims().forEach(function (a) { a.playbackRate = from + (target - from) * e; });
+        if (t < 1) rafId = requestAnimationFrame(tick); else rafId = null;
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    wrapper.addEventListener('mouseenter',   function () { animateTo(0, SLOW_MS); });
+    wrapper.addEventListener('mouseleave',   function () { animateTo(1, FAST_MS); });
+    wrapper.addEventListener('touchstart',   function () { animateTo(0, SLOW_MS); }, { passive: true });
+    wrapper.addEventListener('touchend',     function () { animateTo(1, FAST_MS); }, { passive: true });
+    wrapper.addEventListener('touchcancel',  function () { animateTo(1, FAST_MS); }, { passive: true });
+  }
+
+  // ── 3. Drag com inércia (arraste e solte com momentum) ─────────
+  var CFG = [
+    { sel: '#track-fwd', anim: 'mq-fwd', dur: 55, fwd: true  },
+    { sel: '#track-rev', anim: 'mq-rev', dur: 62, fwd: false }
+  ];
+
+  CFG.forEach(function (c) {
+    var el = document.querySelector(c.sel);
+    if (!el) return;
+
+    var FRICTION = 0.91, RESIST = 0.78, MIN_VEL = 0.35;
+    var isDown = false, didMove = false, prevX = 0, startX = 0, curX = 0, vel = 0, rafId = null;
+    var startTarget = null;
+
+    function hw()      { return el.scrollWidth / 2; }
+    function norm(x)   { var h = hw(); while (x < -h) x += h; while (x > 0) x -= h; return x; }
+    function readX()   { return new DOMMatrix(getComputedStyle(el).transform).m41; }
+    function applyX(x) { curX = norm(x); el.style.transform = 'translateX(' + curX + 'px)'; }
+
+    function freeze() {
+      curX = readX();
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.transform = 'translateX(' + curX + 'px)';
+    }
+    function thaw() {
+      var x = norm(curX);
+      var progress = c.fwd ? Math.abs(x) / hw() : (x / hw() + 1);
+      var delay = -(progress * c.dur);
+      el.style.transform = '';
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = c.anim + ' ' + c.dur + 's linear infinite ' + delay + 's';
+    }
+    function tick() {
+      vel *= FRICTION;
+      if (Math.abs(vel) < MIN_VEL) { rafId = null; thaw(); return; }
+      applyX(curX + vel);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    el.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      e.preventDefault();
+      startTarget = e.target;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      isDown = true; didMove = false; prevX = e.clientX; startX = e.clientX; vel = 0;
+      freeze();
+      el.setPointerCapture(e.pointerId);
+      el.classList.add('is-dragging');
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!isDown) return;
+      if (Math.abs(e.clientX - startX) > 5) didMove = true;
+      vel = (e.clientX - prevX) * RESIST;
+      applyX(curX + vel);
+      prevX = e.clientX;
+    });
+    el.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    function release() {
+      if (!isDown) return;
+      isDown = false;
+      el.classList.remove('is-dragging');
+      if (!didMove && startTarget) {
+        var item = startTarget.closest('a.mq-item[href]');
+        if (item) { window.location.href = item.getAttribute('href'); return; }
+      }
+      startTarget = null;
+      rafId = requestAnimationFrame(tick);
+    }
+    el.addEventListener('pointerup',     release);
+    el.addEventListener('pointercancel', function () {
+      isDown = false; startTarget = null;
+      el.classList.remove('is-dragging');
+      thaw();
+    });
+    el.addEventListener('click', function (e) { if (didMove) e.preventDefault(); }, true);
+  });
+
+}());
+</script>
+
+</body>
+</html>
