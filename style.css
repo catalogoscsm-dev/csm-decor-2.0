@@ -2866,7 +2866,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @media (max-width: 480px) {
   .fab-cluster { bottom: 20px; right: 16px; }
-  .fab-cluster.fab-open .fab-sub { padding: 0 14px 0 10px; }
+
+  /* No mobile, FAB aberto vira coluna de círculos compactos (sem labels)
+     para não cobrir o conteúdo da página */
+  .fab-cluster.fab-open { gap: 8px; }
+  .fab-cluster.fab-open .fab-sub {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    gap: 0;
+  }
+  .fab-cluster.fab-open .fab-sub__label { display: none; }
+  .fab-cluster.fab-open .fab-trigger { width: 48px; height: 48px; }
 }
 
 /* ----------------------------------------------------------
@@ -3739,6 +3751,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   /* Badge arquitetos — evita overflow do viewport */
   .arquitetos__badge { right: 0; }
+
+  /* Stats: 2 colunas no mobile pequeno para economizar espaço vertical */
+  .stats { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .stat--featured { grid-column: 1 / -1; }
+
+  /* Títulos de seção menores em telas muito pequenas */
+  .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+  /* Área de toque mínima de 44px para todos os botões e links */
+  .btn, a.btn, button { min-height: 44px; }
+
+  /* Remove delay de toque em dispositivos móveis */
+  a, button, [role="button"] { touch-action: manipulation; }
+
+  /* Evita overflow horizontal em qualquer seção */
+  section, .container { overflow-x: hidden; max-width: 100vw; }
 }
 
 /* ----------------------------------------------------------
