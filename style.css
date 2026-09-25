@@ -9558,6 +9558,33 @@ a.showroom-map__val:hover { color: var(--white); }
     flex-shrink: 0;
   }
 
+  /* Reset para o item de conta (é um <button>, não <a>) */
+  button.pill-nav__item {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Avatar do usuário logado no pill nav */
+  .pill-nav__avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .pill-nav__avatar--initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    letter-spacing: .02em;
+  }
+
   .pill-nav__item--active { color: var(--dark); }
 
   .pill-nav__item--active .pill-nav__label { opacity: 0; }

@@ -6862,10 +6862,10 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.121 1.532 5.854L.057 23.177a.75.75 0 0 0 .916.932l5.453-1.43A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.528-5.228-1.449l-.374-.224-3.878 1.017 1.037-3.764-.244-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         <span class="pill-nav__label">WhatsApp</span>
       </a>
-      <a href="fale-conosco.html" class="pill-nav__item" data-idx="3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <span class="pill-nav__label">Contato</span>
-      </a>
+      <button type="button" class="pill-nav__item" data-idx="3" id="pill-nav-conta" aria-label="Minha conta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="pill-nav__label">Entrar</span>
+      </button>
     </div>
   </nav>
   <script>
@@ -6894,6 +6894,41 @@
         place(i, true);
       });
     });
+
+    // ── Conta: estado dinâmico login/perfil ──
+    function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function updatePillNavConta() {
+      var btn = document.getElementById('pill-nav-conta');
+      if (!btn) return;
+      var session = window.CSMAuth ? CSMAuth.getSession() : null;
+      if (session) {
+        var color    = ((window.CSMAuth && CSMAuth.ROLE_COLORS) || {})[session.tipo] || '#F07800';
+        var initial  = (session.name || 'U')[0].toUpperCase();
+        var prefix   = session.genero === 'feminino'  ? 'Sra. '
+                     : session.genero === 'masculino' ? 'Sr. '  : '';
+        var firstName = (session.name || '').split(' ')[0];
+        if (firstName.length > 8) firstName = firstName.slice(0, 7) + '…';
+        var avatarHTML = session.photoUrl
+          ? '<img class="pill-nav__avatar" src="' + esc(session.photoUrl) + '" alt="">'
+          : '<span class="pill-nav__avatar pill-nav__avatar--initial" style="background:' + esc(color) + '">' + esc(initial) + '</span>';
+        btn.innerHTML = avatarHTML + '<span class="pill-nav__label">' + esc(prefix + firstName) + '</span>';
+        btn.setAttribute('aria-label', 'Perfil de ' + esc(session.name));
+        btn.onclick = function () { window.location.href = 'perfil.html'; };
+      } else {
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+          + '<span class="pill-nav__label">Entrar</span>';
+        btn.setAttribute('aria-label', 'Entrar na conta');
+        btn.onclick = function () { if (window.CSMAuth) CSMAuth.openAuthModal(); };
+      }
+    }
+    updatePillNavConta();
+    if (window.CSMAuth && CSMAuth.ready) {
+      CSMAuth.ready.then(function () {
+        updatePillNavConta();
+        var orig = CSMAuth.updateHeaderAuth;
+        CSMAuth.updateHeaderAuth = function () { orig.call(this); updatePillNavConta(); };
+      });
+    }
   }());
   </script>
 
