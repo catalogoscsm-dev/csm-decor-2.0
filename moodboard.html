@@ -13,15 +13,13 @@
 </head>
 <body>
 
-  <!-- Cortina de transição entre páginas -->
+  
   <div id="page-curtain" style="position:fixed;inset:0;z-index:99998;background:#0c0c0c;transform:translateY(0);pointer-events:all;will-change:transform;" aria-hidden="true"></div>
 
-  <!-- ── Toast ── -->
+  
   <div class="mb-toast" id="mb-toast" role="status" aria-live="polite"></div>
 
-  <!-- ============================================================
-       HEADER
-  ============================================================ -->
+  
   <header class="mb-header">
     <div class="container mb-header__inner">
 
@@ -49,9 +47,7 @@
     </div>
   </header>
 
-  <!-- ============================================================
-       HERO — Dados do projeto (editável)
-  ============================================================ -->
+  
   <div class="mb-hero">
     <div class="container mb-hero__inner">
       <span class="mb-hero__eyebrow">Board de Inspiração</span>
@@ -84,19 +80,17 @@
     </div>
   </div>
 
-  <!-- ============================================================
-       MAIN
-  ============================================================ -->
+  
   <main class="mb-main">
     <div class="container">
 
-      <!-- Section header -->
+      
       <div class="mb-section-hd">
         <h2 class="mb-section-hd__title">Itens Selecionados</h2>
         <span class="mb-section-hd__count" id="items-count">0 itens</span>
       </div>
 
-      <!-- Empty state -->
+      
       <div class="mb-empty-page" id="empty-state" hidden>
         <div class="mb-empty-page__icon">
           <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".8" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
@@ -106,10 +100,10 @@
         <a href="produtos.html" class="btn btn--primary">Explorar Catálogo</a>
       </div>
 
-      <!-- Products grid -->
+      
       <div class="mb-grid" id="mb-grid"></div>
 
-      <!-- Notes -->
+      
       <div class="mb-notes" id="notes-section" hidden>
         <h3 class="mb-notes__title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -124,13 +118,13 @@
         ></textarea>
       </div>
 
-      <!-- Hidden print notes (shown only on print) -->
+      
       <div class="mb-print-notes" id="print-notes-section" style="display:none;">
         <p class="mb-print-notes__title">Notas do Projeto</p>
         <p class="mb-print-notes__content" id="print-notes-content"></p>
       </div>
 
-      <!-- CTA -->
+      
       <div class="mb-cta" id="cta-section" hidden>
         <div>
           <h3 class="mb-cta__title">Pronto para dar vida<br /><em>a este projeto?</em></h3>
@@ -156,13 +150,13 @@
         </div>
       </div>
 
-      <!-- Print footer (only visible on print) -->
+      
       <div class="mb-print-footer" id="print-footer">
         <span>CSM — Campinas Shopping Móveis | csmdecor.com.br | (19) 99003-4068</span>
         <span id="print-date-footer"></span>
       </div>
 
-      <!-- CTA modo visualização (exibido apenas quando cliente abre link compartilhado) -->
+      
       <div class="mb-view-cta" id="mb-view-cta" hidden>
         <div class="mb-view-cta__text">
           <p class="mb-view-cta__label">Gostou da seleção?</p>
@@ -178,9 +172,7 @@
     </div>
   </main>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
+  
   <footer class="mb-footer">
     <div class="container mb-footer__inner">
       <a href="index.html" class="mb-footer__logo" aria-label="CSM Decor">

@@ -19,7 +19,7 @@
 
   <div id="page-curtain" class="page-curtain" aria-hidden="true"></div>
 
-  <!-- ── Header simplificado ── -->
+  
   <header class="header" id="header">
     <div class="container header__inner">
       <div class="header__left">
@@ -46,11 +46,11 @@
     </div>
   </header>
 
-  <!-- ── Perfil: Hero ── -->
+  
   <section class="perfil-hero" id="perfil-hero">
     <div class="container">
       <div class="perfil-hero__inner">
-        <!-- Avatar -->
+        
         <div class="perfil-hero__avatar-col">
           <div class="perfil-hero__avatar-wrap" id="js-avatar-wrap" onclick="avatarClick()" title="Trocar foto">
             <div class="perfil-hero__avatar-initial" id="js-avatar-initial">?</div>
@@ -61,7 +61,7 @@
           <button type="button" class="perfil-avatar-remove" id="js-btn-remove-photo" onclick="removePhoto()" hidden>Remover foto</button>
           <input type="file" id="edit-photo" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handlePhotoUpload(this)" />
         </div>
-        <!-- Info -->
+        
         <div class="perfil-hero__info">
           <span class="perfil-role-badge" id="js-role-badge">Cliente</span>
           <span class="perfil-partner-badge" id="js-partner-badge" hidden></span>
@@ -92,7 +92,7 @@
     </div>
   </section>
 
-  <!-- ── Perfil: Edit Panel ── -->
+  
   <section class="perfil-edit-section" id="js-edit-panel" hidden>
     <div class="container">
       <p class="eyebrow" style="margin-bottom:1rem">Editar informações</p>
@@ -123,7 +123,7 @@
         <button class="btn btn--ghost btn--sm" onclick="toggleEditPanel()">Cancelar</button>
       </div>
 
-      <!-- Alterar senha -->
+      
       <div class="perfil-edit-fields" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-line)">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem">
           <p style="font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin:0">Alterar senha</p>
@@ -184,7 +184,7 @@
     </div>
   </section>
 
-  <!-- ── Tabs ── -->
+  
   <div class="perfil-tabs-bar">
     <div class="container">
       <button class="perfil-tab-btn active" data-tab="avaliacoes" onclick="switchPerfilTab('avaliacoes')">Avaliações</button>
@@ -194,20 +194,20 @@
     </div>
   </div>
 
-  <!-- ── Content Panels ── -->
+  
   <div class="container">
 
-    <!-- Avaliações -->
+    
     <div class="perfil-panel active" id="panel-avaliacoes">
       <div id="js-avaliacoes-list"></div>
     </div>
 
-    <!-- Favoritos -->
+    
     <div class="perfil-panel" id="panel-favoritos">
       <div id="js-favoritos-grid" class="perfil-fav-grid"></div>
     </div>
 
-    <!-- Moodboard (arquitetos) -->
+    
     <div class="perfil-panel" id="panel-moodboard">
       <div style="margin-bottom:1.25rem;display:flex;justify-content:flex-end;">
         <a href="moodboard.html" class="btn btn--outline" style="font-size:.75rem;padding:.4rem 1rem;border-color:var(--orange);color:var(--orange);">
@@ -218,14 +218,14 @@
       <div id="js-moodboard-list" class="perfil-fav-grid"></div>
     </div>
 
-    <!-- Catálogo (fornecedores) -->
+    
     <div class="perfil-panel" id="panel-catalogo">
       <div class="perfil-catalogo-wrap" id="js-catalogo-content"></div>
     </div>
 
   </div>
 
-  <!-- ── Footer ── -->
+  
   <footer class="footer" role="contentinfo">
     <div class="footer__bottom">
       <div class="container footer__bottom-inner">
@@ -239,7 +239,7 @@
     </div>
   </footer>
 
-  <!-- ── Auth Modal (padrão) ── -->
+  
   <div class="modal-overlay" id="modal-auth" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
     <div class="modal modal--sm modal--auth" role="document">
       <button class="modal__close" aria-label="Fechar" onclick="CSMAuth.closeAuthModal()">
@@ -1274,7 +1274,7 @@
 
   </script>
 
-  <!-- ── Luxury Confirm Modal ── -->
+  
   <div class="luxury-confirm-overlay" id="luxury-confirm" role="dialog" aria-modal="true" aria-labelledby="luxury-confirm-title">
     <div class="luxury-confirm-box">
       <div class="luxury-confirm-icon">
