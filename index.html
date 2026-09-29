@@ -7,11 +7,11 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://csmdecor.com.br/" />
 
-  <!-- Favicon -->
+  
   <link rel="icon" type="image/png" href="fav11.PNG" />
   <link rel="apple-touch-icon" href="fav11.PNG" />
 
-  <!-- Open Graph -->
+  
   <meta property="og:title" content="CSM — Campinas Shopping Móveis | Alto Padrão" />
   <meta property="og:description" content="Mais de 30 anos transformando ambientes. 6.000 m² de showroom exclusivo em Campinas." />
   <meta property="og:type" content="website" />
@@ -19,7 +19,7 @@
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:image" content="https://www.csmdecor.com.br/wsite/wp-content/uploads/2025/10/chesterfield-i-2.jpg" />
 
-  <!-- Twitter Card -->
+  
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="CSM — Campinas Shopping Móveis | Alto Padrão" />
   <meta name="twitter:description" content="Mais de 30 anos transformando ambientes. 6.000 m² de showroom exclusivo em Campinas." />
@@ -27,26 +27,24 @@
 
   <title>CSM — Campinas Shopping Móveis | Alto Padrão</title>
 
-  <!-- Google Fonts -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
-  <!-- Animate.css — efeitos de entrada no carregamento da página -->
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- model-viewer — AR / 3D para produtos -->
+  
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 </head>
 <body>
 
-  <!-- ============================================================
-       LOADING SCREEN — Reveal da marca CSM
-  ============================================================ -->
+  
   <div id="loading-screen" aria-hidden="true">
     <div class="ls__inner">
       <img src="imagens/logo/csm-logo.png" alt="" class="ls__logo" width="180" height="54" draggable="false" />
@@ -55,19 +53,17 @@
     </div>
   </div>
 
-  <!-- Cortina de transição entre páginas (z-index 99998, abaixo do loading screen 99999) -->
+  
   <div id="page-curtain" class="page-curtain" aria-hidden="true"></div>
 
-  <!-- ============================================================
-       HEADER
-  ============================================================ -->
+  
   <header class="header" id="header">
     <div class="container header__inner">
 
-      <!-- ── ESQUERDA: Menu + Cadastro + Fale Conosco ── -->
+      
       <div class="header__left">
 
-        <!-- 1. Menu -->
+        
         <button class="header-icon header__menu-btn" id="menu-toggle-btn"
           aria-label="Abrir menu de navegação"
           aria-expanded="false"
@@ -79,7 +75,7 @@
           <span class="header__menu-label">Menu</span>
         </button>
 
-        <!-- 2. Cadastro -->
+        
         <button type="button" class="header-icon header__cadastro-btn"
           aria-label="Cadastrar-se">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -91,7 +87,7 @@
           <span class="header__icon-label">Cadastro</span>
         </button>
 
-        <!-- 3. Fale Conosco -->
+        
         <a class="header-icon header__wpp-btn"
           href="fale-conosco.html"
           aria-label="Fale conosco">
@@ -103,7 +99,7 @@
 
       </div>
 
-      <!-- ── CENTRO: Logo ── -->
+      
       <a href="#" class="header__logo" aria-label="CSM — Campinas Shopping Móveis">
         <img
           src="imagens/logo/csm-logo.png"
@@ -114,10 +110,10 @@
         />
       </a>
 
-      <!-- ── DIREITA: Minha Conta + Favoritos + Tema ── -->
+      
       <div class="header__right">
 
-        <!-- 5. Pesquisar -->
+        
         <button type="button" class="header-icon header__search-btn" id="header-search-btn"
           data-label="Pesquisar"
           aria-label="Pesquisar produtos"
@@ -129,7 +125,7 @@
           </svg>
         </button>
 
-        <!-- 6. Favoritos / Moodboard (sem círculo) -->
+        
         <button class="header-icon header__moodboard-btn" id="moodboard-header-btn"
           data-label="Favoritos"
           aria-label="Meu Moodboard — Favoritos"
@@ -140,7 +136,7 @@
           <span class="header__moodboard-badge" id="moodboard-badge" hidden>0</span>
         </button>
 
-        <!-- 7. Tema Light / Dark (sem círculo) -->
+        
         <button class="header-icon header__theme-toggle" id="theme-toggle"
           data-label="Tema"
           aria-label="Alternar tema claro/escuro">
@@ -165,12 +161,10 @@
     </div>
   </header>
 
-  <!-- ============================================================
-       MENU OVERLAY — Estilo Louis Vuitton
-  ============================================================ -->
+  
   <div class="menu-overlay" id="menu-overlay" role="dialog" aria-modal="true" aria-label="Menu de navegação" hidden>
 
-    <!-- Barra do topo (espelha o header enquanto aberto) -->
+    
     <div class="menu-overlay__topbar">
       <div class="container menu-overlay__topbar-inner">
         <div class="header__left">
@@ -189,11 +183,11 @@
       </div>
     </div>
 
-    <!-- Conteúdo principal do menu -->
+    
     <div class="menu-overlay__body">
       <div class="container menu-overlay__inner">
 
-        <!-- Navegação principal (esquerda) -->
+        
         <nav class="menu-nav" aria-label="Navegação principal">
           <ul class="menu-nav__list">
             <li class="menu-nav__item">
@@ -220,7 +214,7 @@
           </ul>
         </nav>
 
-        <!-- Painel lateral (direita) -->
+        
         <aside class="menu-aside">
           <div class="menu-aside__block">
             <p class="menu-aside__label">Showroom</p>
@@ -247,7 +241,7 @@
       </div>
     </div>
 
-    <!-- Rodapé do overlay -->
+    
     <div class="menu-overlay__footer">
       <div class="container">
         <p class="menu-overlay__tagline">6.000 m² de Inspiração &nbsp;·&nbsp; 200+ Marcas Parceiras &nbsp;·&nbsp; 30+ Anos de Tradição</p>
@@ -258,12 +252,10 @@
 
   <main>
 
-    <!-- ============================================================
-         HERO — Carrossel Premium
-    ============================================================ -->
+    
     <section class="hero" id="inicio" aria-label="Apresentação CSM">
 
-      <!-- Vídeo de fundo — playlist: gemini.mp4 → francis.mp4 → loop -->
+      
       <div class="hero__video-wrap" aria-hidden="true">
         <video class="hero__video" id="hero-video"
           autoplay muted playsinline preload="auto"
@@ -281,7 +273,7 @@
         </div>
       </div>
 
-      <!-- Conteúdo sobreposto -->
+      
       <div class="hero__body">
         <p class="eyebrow" id="hero-eyebrow">Campinas Shopping Móveis</p>
         <div class="hero__actions" id="hero-actions"></div>
@@ -289,9 +281,7 @@
 
     </section>
 
-    <!-- ============================================================
-         AMBIENTES — Dual Marquee
-    ============================================================ -->
+    
     <section class="ambientes" id="ambientes" aria-label="Galeria de ambientes CSM Decor">
 
       <div class="container">
@@ -307,12 +297,12 @@
 
       <div class="amb-marquee">
 
-        <!-- Fileira 1 → Ambientes (esquerda) -->
+        
         <div class="amb-marquee__row">
         <span class="amb-row-label amb-row-label--fwd" aria-hidden="true"><em>Ambientes</em></span>
         <div class="amb-marquee__track amb-marquee__track--fwd">
 
-          <!-- Set A -->
+          
           <a href="produtos.html?categoria=area-gourmet" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909172-a6c5b78452e5?auto=format&fit=crop&w=700&q=80"]'>
             <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Externo</span><span class="amb-marquee__name">Área Gourmet</span></div>
@@ -382,7 +372,7 @@
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Decoração</span><span class="amb-marquee__name">Complementos</span></div>
           </a>
 
-          <!-- Set B — duplicado para loop sem corte -->
+          
           <a href="produtos.html?categoria=area-gourmet" class="amb-marquee__item" data-imgs='["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1556909172-a6c5b78452e5?auto=format&fit=crop&w=700&q=80"]'>
             <img class="amb-marquee__img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Externo</span><span class="amb-marquee__name">Área Gourmet</span></div>
@@ -452,10 +442,10 @@
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Decoração</span><span class="amb-marquee__name">Complementos</span></div>
           </a>
 
-        </div><!-- /track fwd -->
-        </div><!-- /row fwd -->
+        </div>
+        </div>
 
-      </div><!-- /amb-marquee -->
+      </div>
 
       <div class="amb-marquee">
 
@@ -463,11 +453,11 @@
           <span class="amb-row-label amb-row-label--rev" aria-hidden="true"><em>Produtos</em></span>
         </div>
 
-        <!-- Fileira 2 ← Produtos (direita) -->
+        
         <div class="amb-marquee__row">
         <div class="amb-marquee__track amb-marquee__track--rev">
 
-          <!-- Set A -->
+          
           <a href="produtos.html?autoopen=artecouro-urbi" class="amb-marquee__item" data-imgs='["imagens/artecouro2/urbi-600.jpg","imagens/artecouro2/urbi-lateral-600.jpg"]'>
             <img class="amb-marquee__img" src="imagens/artecouro2/urbi-600.jpg" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Urbi</span></div>
@@ -561,7 +551,7 @@
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Poltrona</span><span class="amb-marquee__name">Jow</span></div>
           </a>
 
-          <!-- Set B — duplicado para loop sem corte -->
+          
           <a href="produtos.html?autoopen=artecouro-urbi" class="amb-marquee__item" data-imgs='["imagens/artecouro2/urbi-600.jpg","imagens/artecouro2/urbi-lateral-600.jpg"]'>
             <img class="amb-marquee__img" src="imagens/artecouro2/urbi-600.jpg" alt="" loading="lazy" draggable="false" />
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Sofá</span><span class="amb-marquee__name">Urbi</span></div>
@@ -655,10 +645,10 @@
             <div class="amb-marquee__label"><span class="amb-marquee__cat">Poltrona</span><span class="amb-marquee__name">Jow</span></div>
           </a>
 
-        </div><!-- /track rev -->
-        </div><!-- /row rev -->
+        </div>
+        </div>
 
-      </div><!-- /amb-marquee -->
+      </div>
 
       <div class="container ambientes__footer">
         <a href="produtos.html" class="btn btn--outline">
@@ -669,15 +659,13 @@
 
     </section>
 
-    <!-- ============================================================
-         DIFERENCIAIS — Redes · Frete · Assessoria
-    ============================================================ -->
+    
     <section class="dif" aria-label="Diferenciais CSM Decor">
       <div class="container">
         <p class="eyebrow dif__eyebrow">Por que escolher a CSM?</p>
         <div class="dif__grid">
 
-          <!-- Card 1 — Redes Sociais -->
+          
           <div class="dif-card">
             <div class="dif-card__icon-wrap" aria-hidden="true">
               <svg class="dif-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -691,7 +679,7 @@
             </div>
           </div>
 
-          <!-- Card 2 — Frete Grátis -->
+          
           <div class="dif-card dif-card--featured">
             <div class="dif-card__icon-wrap" aria-hidden="true">
               <svg class="dif-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
@@ -703,7 +691,7 @@
             </div>
           </div>
 
-          <!-- Card 3 — Assessoria de Projeto -->
+          
           <div class="dif-card">
             <div class="dif-card__icon-wrap" aria-hidden="true">
               <svg class="dif-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M6 20V10l6-7 6 7v10"/><path d="M10 20v-5h4v5"/></svg>
@@ -719,9 +707,7 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         PRODUTOS — Stacking Featured Cards
-    ============================================================ -->
+    
     <section class="destaque" id="produtos" aria-label="Produtos em destaque CSM Decor">
 
       <div class="container destaque__head">
@@ -745,7 +731,7 @@
 
       <div class="destaque__stack" id="destaque-stack">
 
-        <!-- ─── CARD 01 — Sofá Samec 1070 ─── -->
+        
           <div class="destaque__card" style="--cidx:0; z-index:1; --card-a1:#C8920A; --card-a2:#F07800; --card-glow:rgba(200,146,10,.5)">
             <span class="destaque__cat-sig" aria-hidden="true">SOFÁS SAMEC</span>
             <div class="destaque__card-top">
@@ -805,7 +791,7 @@
 
           </div>
 
-        <!-- ─── CARD 02 — Sofá Shoulder ─── -->
+        
           <div class="destaque__card" style="--cidx:1; z-index:2; --card-a1:#9A6B28; --card-a2:#C4883E; --card-glow:rgba(154,107,40,.5)">
             <span class="destaque__cat-sig" aria-hidden="true">SOFÁS IDEALE</span>
             <div class="destaque__card-top">
@@ -865,7 +851,7 @@
 
           </div>
 
-        <!-- ─── CARD 03 — Sofá Bora ─── -->
+        
           <div class="destaque__card" style="--cidx:2; z-index:3; --card-a1:#6B3F14; --card-a2:#9A5C22; --card-glow:rgba(107,63,20,.5)">
             <span class="destaque__cat-sig" aria-hidden="true">SOFÁS ARTECOURO</span>
             <div class="destaque__card-top">
@@ -924,7 +910,7 @@
 
           </div>
 
-      </div><!-- /destaque__stack -->
+      </div>
 
       <div class="container destaque__rodape">
         <p class="destaque__nota">Produtos fabricados sob encomenda; revestimentos, dimensões e acabamentos customizáveis. Ampla oferta de produtos em estoque — consulte prazos e condições.</p>
@@ -936,7 +922,7 @@
 
     </section>
 
-    <!-- ─── Divisor: Produtos ─── -->
+    
     <div class="sec-divider" role="marquee" aria-label="Coleção de produtos CSM">
       <div class="sec-divider__track">
         <span class="sec-divider__item">ALTA MARCENARIA &amp; ESTOFADOS PREMIUM</span>
@@ -954,9 +940,7 @@
       </div>
     </div>
 
-    <!-- ============================================================
-         HISTÓRIA / CREDIBILIDADE
-    ============================================================ -->
+    
     <section class="historia" id="historia" aria-label="Nossa história e números">
       <div class="container">
 
@@ -1000,13 +984,11 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         DEPOIMENTOS
-    ============================================================ -->
+    
     <section class="depoimentos" id="depoimentos" aria-label="Depoimentos de clientes">
       <div class="container">
 
-        <!-- Cabeçalho -->
+        
         <div class="dep-new__header">
           <p class="eyebrow">Depoimentos</p>
           <h2 class="section-title">
@@ -1025,11 +1007,11 @@
           </div>
         </div>
 
-        <!-- Carousel de reviews -->
+        
         <div class="rc-wrap" aria-label="Avaliações de clientes">
           <div class="rc-track" id="rc-track" aria-live="polite">
 
-            <!-- Página 1 -->
+            
             <div class="rc-page" role="group" aria-label="Avaliações 1 e 2 de 4">
               <article class="google-review-card review" aria-label="Avaliação de Ana Cristina Denni">
                 <div class="google-review-card__header">
@@ -1086,9 +1068,9 @@
                   Ver avaliação no Google
                 </a>
               </article>
-            </div><!-- /rc-page 1 -->
+            </div>
 
-            <!-- Página 2 -->
+            
             <div class="rc-page" role="group" aria-label="Avaliações 3 e 4 de 4">
               <article class="google-review-card review" aria-label="Avaliação de Julia Targa">
                 <div class="google-review-card__header">
@@ -1135,12 +1117,12 @@
                   Ver avaliação no Google
                 </a>
               </article>
-            </div><!-- /rc-page 2 -->
+            </div>
 
-          </div><!-- /rc-track -->
-        </div><!-- /rc-wrap -->
+          </div>
+        </div>
 
-        <!-- Navegação elegante -->
+        
         <div class="rc-nav">
           <button class="rc-btn" id="rc-prev" aria-label="Avaliações anteriores" disabled>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
@@ -1154,7 +1136,7 @@
           </button>
         </div>
 
-        <!-- CTA -->
+        
         <div class="dep-new__cta">
           <a href="https://g.page/r/PLACEHOLDER/review" class="btn btn--outline" target="_blank" rel="noopener noreferrer">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1167,12 +1149,10 @@
           </a>
         </div>
 
-      </div><!-- /container -->
+      </div>
     </section>
 
-    <!-- ============================================================
-         ÁREA PARA ARQUITETOS
-    ============================================================ -->
+    
     <section class="arquitetos" id="arquitetos" aria-label="Programa exclusivo para arquitetos e decoradores">
       <div class="arquitetos__bg" aria-hidden="true"></div>
       <div class="container arquitetos__inner">
@@ -1216,9 +1196,7 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         CTA FINAL
-    ============================================================ -->
+    
     <section class="cta-final" aria-label="Convite final para visita ou contato">
       <div class="container cta-final__inner">
         <p class="eyebrow">Dê o próximo passo</p>
@@ -1238,7 +1216,7 @@
 
   </main>
 
-  <!-- ── Showroom — Mapa + Informações ── -->
+  
   <section class="showroom-map" id="showroom" aria-label="Como nos encontrar">
     <div class="showroom-map__embed">
       <iframe
@@ -1283,9 +1261,7 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
+  
   <footer class="footer" role="contentinfo">
     <div class="container footer__top">
 
@@ -1298,7 +1274,7 @@
         </p>
         <div class="footer__socials" aria-label="Redes sociais">
           <a href="https://www.instagram.com/csmdecor/" class="social-link" aria-label="Instagram CSM" target="_blank" rel="noopener noreferrer">
-            <!-- Instagram icon -->
+            
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
           <a href="https://www.facebook.com/CampinasShoppingMoveis/" class="social-link" aria-label="Facebook CSM" target="_blank" rel="noopener noreferrer">
@@ -1312,7 +1288,7 @@
 
       <nav class="footer__nav" aria-label="Links do rodapé">
 
-        <!-- Coluna 1: Mapa do Site (Sitemap) -->
+        
         <div class="footer__col footer__col--sitemap">
           <h3 class="footer__col-title">Mapa do Site</h3>
           <ul>
@@ -1326,13 +1302,13 @@
           </ul>
         </div>
 
-        <!-- Coluna 2: Credibilidade & Pagamento -->
+        
         <div class="footer__col footer__col--trust">
           <h3 class="footer__col-title">Pagamento</h3>
           <ul class="footer__trust-list">
             <li class="footer__pay-item">
               <span class="footer__pay-chip footer__pay-chip--pix">
-                <!-- Pix mark — 4 losangos em cruz -->
+                
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M11.37 16.18 7.18 12l4.19-4.18 1.06 1.06L9.3 12l3.13 3.12-1.06 1.06Zm1.26 0 1.06-1.06L16.82 12l-3.13-3.12 1.06-1.06L18.94 12l-4.31 4.18Zm-3.6 4.84A10 10 0 1 1 22 12 10 10 0 0 1 9.03 21.02Z" opacity=".0001"/>
                   <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm5.66 6.59-2.2 2.2a3.06 3.06 0 0 1-4.32 0l-.35-.35a.77.77 0 0 0-1.09 0l-2.56 2.56 2.56 2.56a.77.77 0 0 0 1.09 0l.35-.35a3.06 3.06 0 0 1 4.32 0l2.2 2.2A7.94 7.94 0 0 0 12 4a7.94 7.94 0 0 0-5.71 2.39L8.82 8.9a.77.77 0 0 0 1.09 0l.35-.35a3.06 3.06 0 0 1 4.32 0l2.2 2.2ZM12 20a7.94 7.94 0 0 0 5.66-2.39l-2.2-2.2a3.06 3.06 0 0 1-4.32 0l-.35-.35a.77.77 0 0 0-1.09 0l-2.53 2.53A7.94 7.94 0 0 0 12 20Z"/>
@@ -1342,7 +1318,7 @@
             </li>
             <li class="footer__pay-item">
               <span class="footer__pay-chip">
-                <!-- Credit card icon -->
+                
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                   <rect x="2" y="5" width="20" height="14" rx="2"/>
                   <line x1="2" y1="10" x2="22" y2="10"/>
@@ -1373,7 +1349,7 @@
     </div>
   </footer>
 
-  <!-- ── Modal: Produto ── -->
+  
   <div class="modal-overlay" id="modal-produto" role="dialog" aria-modal="true" aria-labelledby="modal-produto-title" hidden>
     <div class="modal" role="document">
       <button class="modal__close" aria-label="Fechar" onclick="closeModal('modal-produto')">
@@ -1400,7 +1376,7 @@
     </div>
   </div>
 
-  <!-- ── Modal: Auth unificado ── -->
+  
   <div class="modal-overlay" id="modal-auth" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
     <div class="modal modal--sm modal--auth" role="document">
       <button class="modal__close" aria-label="Fechar" onclick="CSMAuth.closeAuthModal()">
@@ -1494,7 +1470,7 @@
   </div>
 
 
-  <!-- ── FAB Alternante WhatsApp ↔ Instagram ── -->
+  
   <div class="contatos-flutuantes" id="contatos-flutuantes">
     <div class="fab-menu" id="fab-menu" hidden>
       <a class="fab-menu-item whatsapp" href="https://wa.me/5519990034068" target="_blank" rel="noopener" aria-label="WhatsApp CSM">
@@ -1513,7 +1489,7 @@
     </button>
   </div>
 
-  <!-- GSAP + ScrollTrigger — motor de animação ao rolar -->
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
     integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -3300,9 +3276,7 @@
   }
   </script>
 
-  <!-- ============================================================
-       SEARCH OVERLAY
-  ============================================================ -->
+  
   <div class="search-overlay" id="search-overlay" role="search" aria-label="Busca de produtos" hidden>
     <div class="search-overlay__panel">
       <div class="container">
@@ -3343,9 +3317,7 @@
     <div class="search-overlay__backdrop" id="search-backdrop"></div>
   </div>
 
-  <!-- ============================================================
-       MOODBOARD — Painel lateral + backdrop
-  ============================================================ -->
+  
   <div class="moodboard-backdrop" id="moodboard-backdrop"></div>
 
   <aside class="moodboard-panel" id="moodboard-panel" role="dialog" aria-modal="true" aria-labelledby="moodboard-panel-title" aria-hidden="true">
@@ -3365,14 +3337,14 @@
     <div class="moodboard-panel__footer" id="moodboard-footer">
       <p class="moodboard-panel__count" id="moodboard-count-label">Nenhum item salvo</p>
 
-      <!-- CTA principal — Enviar lista para WhatsApp -->
+      
       <a href="#" class="btn btn--primary moodboard-panel__wpp-btn" id="moodboard-wpp-btn"
          target="_blank" rel="noopener noreferrer" hidden>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Enviar lista para WhatsApp
       </a>
 
-      <!-- Linha secundária — limpar + link board visual -->
+      
       <div class="moodboard-panel__secondary" id="moodboard-secondary-row" hidden>
         <button class="moodboard-panel__clear" id="moodboard-clear-btn">Limpar tudo</button>
         <a href="moodboard.html" class="moodboard-panel__board-link" id="moodboard-go-btn">
@@ -3383,14 +3355,12 @@
 
   </aside>
 
-  <!-- ============================================================
-       AR VIEWER MODAL — Visualizador 3D / Realidade Aumentada
-  ============================================================ -->
+  
   <div class="ar-modal" id="ar-modal" hidden role="dialog" aria-modal="true" aria-label="Visualizador 3D e Realidade Aumentada">
 
     <div class="ar-modal__panel">
 
-      <!-- Header -->
+      
       <div class="ar-modal__header">
         <div class="ar-modal__header-info">
           <span class="ar-modal__eyebrow">CSM · Visualizador 3D</span>
@@ -3404,10 +3374,10 @@
         </button>
       </div>
 
-      <!-- Viewer 3D -->
+      
       <div class="ar-modal__viewer">
 
-        <!-- Loading state -->
+        
         <div class="ar-modal__loading" id="ar-loading">
           <div class="ar-modal__loading-ring"></div>
           <p class="ar-modal__loading-text">Carregando modelo 3D…</p>
@@ -3432,7 +3402,7 @@
           loading="eager"
           reveal="interaction"
         >
-          <!-- Botão AR nativo (aparece só em dispositivos com suporte) -->
+          
           <button slot="ar-button" class="ar-modal__ar-btn">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -3445,7 +3415,7 @@
 
       </div>
 
-      <!-- Footer -->
+      
       <div class="ar-modal__footer">
         <p class="ar-modal__hint">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
@@ -3460,7 +3430,7 @@
     </div>
   </div>
 
-  <!-- AR JS -->
+  
   <script>
   (function () {
     var modal   = document.getElementById('ar-modal');
@@ -3527,9 +3497,7 @@
   }());
   </script>
 
-  <!-- ============================================================
-       TRANSIÇÕES DE PÁGINA — Cortina cinematográfica
-  ============================================================ -->
+  
   <script>
   (function () {
     var curtain = document.getElementById('page-curtain');
@@ -3740,9 +3708,7 @@
     }());
   </script>
 
-  <!-- ============================================================
-       COUNTERS ANIMADOS
-  ============================================================ -->
+  
   <script>
   (function () {
     var DURATION = 1800;
@@ -3800,9 +3766,7 @@
   }());
   </script>
 
-  <!-- ============================================================
-       REVEAL DE IMAGENS COM MÁSCARA
-  ============================================================ -->
+  
   <script>
   (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -3839,7 +3803,7 @@
   }());
   </script>
 
-  <!-- ── Motor rAF: auto-scroll + drag + momentum + lerp de velocidade ── -->
+  
   <script>
   (function () {
     var el    = document.querySelector('.sec-divider');
@@ -3940,7 +3904,7 @@
   }());
   </script>
 
-  <!-- Pill Nav — barra flutuante mobile -->
+  
   <nav class="pill-nav" aria-label="Navegação rápida">
     <div class="pill-nav__track">
       <span class="pill-nav__indicator" aria-hidden="true"></span>
