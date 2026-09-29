@@ -9492,12 +9492,18 @@ a.showroom-map__val:hover { color: var(--white); }
     right: 0;
     z-index: 9000;
     pointer-events: none;
-    opacity: 0;
-    transform: translateY(12px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity .35s ease, transform .35s ease;
   }
 
-  .pill-nav--visible {
+  /* Só oculta no topo quando há hero na página */
+  .has-hero .pill-nav {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .has-hero .pill-nav--visible {
     opacity: 1;
     transform: translateY(0);
   }
