@@ -6160,9 +6160,10 @@ html { scroll-padding-top: 80px; }
 
 /* ── Mobile: esconder itens menos essenciais ── */
 @media (max-width: 768px) {
-  /* Esquerda: só Menu */
+  /* Esquerda: só Menu — !important necessário pois .header__perfil-chip (adicionado pelo JS)
+     tem display:flex e aparece depois no CSS, sobrescrevendo o none sem !important */
   .header__wpp-btn,
-  .header__cadastro-btn { display: none; }
+  .header__cadastro-btn { display: none !important; }
 
   /* Direita: só Favoritos + Tema */
   .header__login-btn { display: none; }
