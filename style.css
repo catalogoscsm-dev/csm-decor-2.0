@@ -2581,55 +2581,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .footer__bottom-inner a:hover { color: var(--orange-light); }
 
-/* ── Footer Créditos ── */
-.footer__credits {
-  padding-block: 1rem;
-  background: rgba(0,0,0,.45);
-  border-top: 1px solid transparent;
-  border-image: linear-gradient(90deg, transparent, rgba(240,120,0,.4), transparent) 1;
-  position: relative;
-}
-
-.footer__credits-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: .5rem 1.2rem;
-  font-size: .72rem;
-  color: rgba(255,255,255,.35);
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-
-.footer__credits-inner strong {
-  font-weight: 600;
-  color: var(--orange);
-  letter-spacing: .06em;
-  text-shadow: 0 0 12px rgba(240,120,0,.45);
-}
-
-.footer__credits-sep {
-  color: rgba(240,120,0,.3);
-}
-
-.footer__credits-inner a {
-  display: inline-flex;
-  align-items: center;
-  color: rgba(255,255,255,.3);
-  margin-left: .35rem;
-  transition: color .25s ease, filter .25s ease;
-}
-
-.footer__credits-inner a:hover {
-  color: var(--orange-light);
-  filter: drop-shadow(0 0 5px rgba(240,120,0,.6));
-}
-
-.footer__credits-inner a svg {
-  width: 13px;
-  height: 13px;
-}
 
 /* ── Footer Credibilidade — selos e pagamento ── */
 .footer__trust-list {
