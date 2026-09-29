@@ -3542,6 +3542,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+  }
+  .stat--featured { grid-column: auto !important; }
+  .stat { padding: 1.75rem 1.5rem; }
+}
+
+@media (max-width: 1024px) {
 
   .showroom__inner,
   .arquitetos__inner {
@@ -3627,8 +3639,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   .reviews-grid { grid-template-columns: 1fr; }
 
-  .stats { grid-template-columns: 1fr; }
-
   .footer__nav { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
   .footer__bottom-inner {
@@ -3673,11 +3683,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   /* Badge arquitetos — evita overflow do viewport */
   .arquitetos__badge { right: 0; }
-
-  /* Stats: 1 coluna — evita espaço vazio ao lado do featured card */
-  .stats { grid-template-columns: 1fr; gap: 1px; }
-  .stat--featured { grid-column: auto; }
-  .stat { padding: 1.75rem 1.5rem; }
 
   /* Títulos de seção menores em telas muito pequenas */
   .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
