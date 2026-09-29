@@ -1598,9 +1598,18 @@
       }
     }
 
-    // ── Header scroll ────────────────────────────────────────────
-    const header = document.getElementById('header');
-    const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 10);
+    // ── Header scroll + pill nav reveal ─────────────────────────
+    const header  = document.getElementById('header');
+    const pillNav = document.querySelector('.pill-nav');
+    const hero    = document.getElementById('inicio');
+    const onScroll = () => {
+      const scrolled = window.scrollY > 10;
+      header.classList.toggle('header--scrolled', scrolled);
+      if (pillNav && hero) {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        pillNav.classList.toggle('pill-nav--visible', heroBottom < window.innerHeight * 0.6);
+      }
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 

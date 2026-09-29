@@ -9492,6 +9492,14 @@ a.showroom-map__val:hover { color: var(--white); }
     right: 0;
     z-index: 9000;
     pointer-events: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+
+  .pill-nav--visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .pill-nav__track {
