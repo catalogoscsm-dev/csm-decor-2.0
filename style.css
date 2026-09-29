@@ -3627,7 +3627,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
   .reviews-grid { grid-template-columns: 1fr; }
 
-  .stats { grid-template-columns: 1fr 1fr; }
+  .stats { grid-template-columns: 1fr; }
 
   .footer__nav { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
@@ -3657,8 +3657,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    18. RESPONSIVO — Mobile pequeno ≤ 480px
 ---------------------------------------------------------- */
 @media (max-width: 480px) {
-  .stats { grid-template-columns: 1fr; }
-
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { text-align: center; }
 
@@ -3676,9 +3674,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   /* Badge arquitetos — evita overflow do viewport */
   .arquitetos__badge { right: 0; }
 
-  /* Stats: 2 colunas no mobile pequeno para economizar espaço vertical */
-  .stats { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .stat--featured { grid-column: 1 / -1; }
+  /* Stats: 1 coluna — evita espaço vazio ao lado do featured card */
+  .stats { grid-template-columns: 1fr; gap: 1px; }
+  .stat--featured { grid-column: auto; }
+  .stat { padding: 1.75rem 1.5rem; }
 
   /* Títulos de seção menores em telas muito pequenas */
   .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
