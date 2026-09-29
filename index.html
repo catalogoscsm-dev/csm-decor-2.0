@@ -271,6 +271,7 @@
           <source src="gemini.mp4" type="video/mp4" />
         </video>
         <div class="hero__bg-overlay"></div>
+        <div class="hero__top-fade" aria-hidden="true"></div>
         <div class="hero__video-cover" aria-hidden="true">
           <svg class="hero__seal-ring" viewBox="0 0 120 120" aria-hidden="true">
             <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-dasharray="6 4" />
@@ -1599,7 +1600,7 @@
 
     // ── Header scroll ────────────────────────────────────────────
     const header = document.getElementById('header');
-    const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 50);
+    const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 

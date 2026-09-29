@@ -234,16 +234,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 900;
-  background: var(--white);
+  background: transparent;
   border-bottom: 1px solid transparent;
   padding-block: 1rem;
   transition:
-    border-color var(--dur) var(--ease),
-    box-shadow   var(--dur) var(--ease),
-    padding      var(--dur) var(--ease);
+    background    .35s ease,
+    border-color  var(--dur) var(--ease),
+    box-shadow    var(--dur) var(--ease),
+    padding       var(--dur) var(--ease);
+}
+
+/* Ícones e logo ficam brancos sobre o hero */
+.header:not(.header--scrolled) .header-icon,
+.header:not(.header--scrolled) .header__nav-link,
+.header:not(.header--scrolled) .nav-link {
+  color: #fff;
+}
+.header:not(.header--scrolled) .header__menu-line {
+  background: #fff;
+}
+.header:not(.header--scrolled) .header__logo-img {
+  filter: brightness(0) invert(1);
+}
+.header:not(.header--scrolled) .header__moodboard-badge {
+  background: #fff;
+  color: var(--orange);
 }
 
 .header--scrolled {
+  background: var(--white);
   border-bottom-color: var(--gray-line);
   box-shadow: var(--shadow-sm);
   padding-block: .65rem;
@@ -458,6 +477,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: absolute;
   inset: 0;
   background: rgba(10,10,10,.08);
+}
+
+/* Gradiente escuro no topo para legibilidade do header transparente */
+.hero__top-fade {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(0,0,0,.45) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* Conteúdo sobreposto */
