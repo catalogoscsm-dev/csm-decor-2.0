@@ -3693,8 +3693,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   /* Remove delay de toque em dispositivos móveis */
   a, button, [role="button"] { touch-action: manipulation; }
 
-  /* Evita overflow horizontal em qualquer seção */
-  section, .container { overflow-x: hidden; max-width: 100vw; }
+  /* Evita overflow horizontal em qualquer seção — exceto .destaque (sticky filhos quebrariam) */
+  section:not(.destaque), .container { overflow-x: hidden; max-width: 100vw; }
+  .destaque { max-width: 100vw; }
 }
 
 /* ----------------------------------------------------------
