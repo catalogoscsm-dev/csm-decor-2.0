@@ -1289,6 +1289,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @media (max-width: 600px) {
   .amb-marquee__item { width: clamp(190px, 55vw, 270px); }
+  .amb-marquee__item--stat { width: clamp(260px, 80vw, 320px); }
+  .amb-stat-card { padding: 1.25rem 1.5rem; }
+  .amb-stat-card__num { font-size: clamp(2rem, 10vw, 2.8rem); }
+  .amb-stat-card__desc { font-size: .78rem; }
   .amb-row-label--fwd,
   .amb-row-label--rev { display: none; }
 }
