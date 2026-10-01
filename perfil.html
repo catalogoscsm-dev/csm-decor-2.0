@@ -52,14 +52,14 @@
       <div class="perfil-hero__inner">
         
         <div class="perfil-hero__avatar-col">
-          <div class="perfil-hero__avatar-wrap" id="js-avatar-wrap" onclick="avatarClick()" title="Trocar foto">
+          <div class="perfil-hero__avatar-wrap" id="js-avatar-wrap" title="Trocar foto">
             <div class="perfil-hero__avatar-initial" id="js-avatar-initial">?</div>
             <div class="perfil-avatar-overlay" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </div>
           </div>
-          <button type="button" class="perfil-avatar-remove" id="js-btn-remove-photo" onclick="removePhoto()" hidden>Remover foto</button>
-          <input type="file" id="edit-photo" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handlePhotoUpload(this)" />
+          <button type="button" class="perfil-avatar-remove" id="js-btn-remove-photo" hidden>Remover foto</button>
+          <input type="file" id="edit-photo" accept="image/jpeg,image/png,image/webp" style="display:none" />
         </div>
         
         <div class="perfil-hero__info">
@@ -84,8 +84,8 @@
             </div>
           </div>
           <div class="perfil-hero__ctas">
-            <button class="btn btn--outline btn--sm" id="js-btn-edit" onclick="toggleEditPanel()">Editar perfil</button>
-            <button class="btn btn--ghost btn--sm" onclick="CSMAuth.doLogout()">Sair</button>
+            <button class="btn btn--outline btn--sm" id="js-btn-edit">Editar perfil</button>
+            <button class="btn btn--ghost btn--sm" id="js-btn-logout">Sair</button>
           </div>
         </div>
       </div>
@@ -115,19 +115,19 @@
         </div>
         <div class="perfil-edit-row" id="js-edit-cnpj-row" style="display:none">
           <label class="perfil-edit-label" for="edit-cnpj">CNPJ</label>
-          <input class="perfil-edit-input" type="text" id="edit-cnpj" placeholder="00.000.000/0001-00" inputmode="numeric" maxlength="18" oninput="formatCNPJInput(this)" />
+          <input class="perfil-edit-input" type="text" id="edit-cnpj" placeholder="00.000.000/0001-00" inputmode="numeric" maxlength="18" />
         </div>
       </div>
       <div class="perfil-edit-actions">
-        <button class="btn btn--primary btn--sm" onclick="saveProfile()">Salvar alterações</button>
-        <button class="btn btn--ghost btn--sm" onclick="toggleEditPanel()">Cancelar</button>
+        <button class="btn btn--primary btn--sm" id="js-btn-save-profile">Salvar alterações</button>
+        <button class="btn btn--ghost btn--sm" id="js-btn-cancel-edit">Cancelar</button>
       </div>
 
       
       <div class="perfil-edit-fields" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-line)">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem">
           <p style="font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-mid);margin:0">Alterar senha</p>
-          <button class="btn btn--outline btn--sm" id="js-btn-toggle-pass" onclick="togglePassFields()">Alterar senha</button>
+          <button class="btn btn--outline btn--sm" id="js-btn-toggle-pass">Alterar senha</button>
         </div>
         <div id="js-pass-fields" class="perfil-pass-fields">
           <div style="margin-top:1rem">
@@ -136,7 +136,7 @@
               <div class="perfil-pass-wrap">
                 <input class="perfil-edit-input" type="password" id="edit-pass-current" placeholder="Sua senha atual" autocomplete="current-password" />
                 <div class="perfil-pass-curtain" aria-hidden="true"></div>
-                <button type="button" class="perfil-pass-eye" onclick="togglePassVis('edit-pass-current',this)" aria-label="Mostrar senha" tabindex="-1">
+                <button type="button" class="perfil-pass-eye" data-for="edit-pass-current" aria-label="Mostrar senha" tabindex="-1">
                   <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <ellipse class="eye-ball" cx="12" cy="12" rx="9" ry="5.5"/>
                     <circle class="eye-pupil" cx="12" cy="12" r="2.4"/>
@@ -150,7 +150,7 @@
               <div class="perfil-pass-wrap">
                 <input class="perfil-edit-input" type="password" id="edit-pass-new" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
                 <div class="perfil-pass-curtain" aria-hidden="true"></div>
-                <button type="button" class="perfil-pass-eye" onclick="togglePassVis('edit-pass-new',this)" aria-label="Mostrar senha" tabindex="-1">
+                <button type="button" class="perfil-pass-eye" data-for="edit-pass-new" aria-label="Mostrar senha" tabindex="-1">
                   <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <ellipse class="eye-ball" cx="12" cy="12" rx="9" ry="5.5"/>
                     <circle class="eye-pupil" cx="12" cy="12" r="2.4"/>
@@ -164,7 +164,7 @@
               <div class="perfil-pass-wrap">
                 <input class="perfil-edit-input" type="password" id="edit-pass-confirm" placeholder="Repita a nova senha" autocomplete="new-password" />
                 <div class="perfil-pass-curtain" aria-hidden="true"></div>
-                <button type="button" class="perfil-pass-eye" onclick="togglePassVis('edit-pass-confirm',this)" aria-label="Mostrar senha" tabindex="-1">
+                <button type="button" class="perfil-pass-eye" data-for="edit-pass-confirm" aria-label="Mostrar senha" tabindex="-1">
                   <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <ellipse class="eye-ball" cx="12" cy="12" rx="9" ry="5.5"/>
                     <circle class="eye-pupil" cx="12" cy="12" r="2.4"/>
@@ -175,8 +175,8 @@
             </div>
             <p id="perfil-pass-error" style="display:none;color:#c0392b;font-size:.8rem;margin:.25rem 0"></p>
             <div style="margin-top:.75rem;display:flex;gap:.5rem">
-              <button class="btn btn--outline btn--sm" onclick="handleChangePassword()">Confirmar</button>
-              <button class="btn btn--ghost btn--sm" onclick="togglePassFields()">Cancelar</button>
+              <button class="btn btn--outline btn--sm" id="js-btn-confirm-pass">Confirmar</button>
+              <button class="btn btn--ghost btn--sm" id="js-btn-cancel-pass">Cancelar</button>
             </div>
           </div>
         </div>
@@ -187,10 +187,10 @@
   
   <div class="perfil-tabs-bar">
     <div class="container">
-      <button class="perfil-tab-btn active" data-tab="avaliacoes" onclick="switchPerfilTab('avaliacoes')">Avaliações</button>
-      <button class="perfil-tab-btn" data-tab="favoritos" onclick="switchPerfilTab('favoritos')">Favoritos</button>
-      <button class="perfil-tab-btn perfil-tab-btn--arq" id="js-tab-moodboard" data-tab="moodboard" onclick="switchPerfilTab('moodboard')">Moodboard</button>
-      <button class="perfil-tab-btn perfil-tab-btn--forn" id="js-tab-catalogo" data-tab="catalogo" onclick="switchPerfilTab('catalogo')">Catálogo</button>
+      <button class="perfil-tab-btn active" data-tab="avaliacoes">Avaliações</button>
+      <button class="perfil-tab-btn" data-tab="favoritos">Favoritos</button>
+      <button class="perfil-tab-btn perfil-tab-btn--arq" id="js-tab-moodboard" data-tab="moodboard">Moodboard</button>
+      <button class="perfil-tab-btn perfil-tab-btn--forn" id="js-tab-catalogo" data-tab="catalogo">Catálogo</button>
     </div>
   </div>
 
@@ -242,7 +242,7 @@
   
   <div class="modal-overlay" id="modal-auth" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
     <div class="modal modal--sm modal--auth" role="document">
-      <button class="modal__close" aria-label="Fechar" onclick="CSMAuth.closeAuthModal()">
+      <button class="modal__close" aria-label="Fechar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="modal__arq-header">
@@ -251,22 +251,22 @@
         <p class="modal__arq-sub" id="auth-modal-sub">Faça login ou crie sua conta CSM.</p>
       </div>
       <div class="auth-modal-tabs">
-        <button class="auth-tab active" data-panel="login" onclick="CSMAuth.switchAuthTab('login')">Entrar</button>
-        <button class="auth-tab" data-panel="register" onclick="CSMAuth.switchAuthTab('register')">Criar conta</button>
+        <button class="auth-tab active" data-panel="login">Entrar</button>
+        <button class="auth-tab" data-panel="register">Criar conta</button>
       </div>
       <div class="auth-panel active" id="auth-panel-login">
         <div class="arq-form__row"><label class="arq-form__label" for="auth-login-email">E-mail</label><input class="arq-form__input" type="email" id="auth-login-email" placeholder="seu@email.com" /></div>
         <div class="arq-form__row"><label class="arq-form__label" for="auth-login-pass">Senha</label><input class="arq-form__input" type="password" id="auth-login-pass" placeholder="••••••••" /></div>
         <p class="arq-form__error" id="auth-login-error" style="display:none;"></p>
-        <button type="button" class="btn btn--primary arq-form__submit" onclick="CSMAuth.doLogin()">Entrar</button>
+        <button type="button" class="btn btn--primary arq-form__submit">Entrar</button>
       </div>
       <div class="auth-panel" id="auth-panel-register">
         <div class="arq-form__row"><label class="arq-form__label" for="auth-reg-name">Nome</label><input class="arq-form__input" type="text" id="auth-reg-name" placeholder="Seu nome" /></div>
         <div class="arq-form__row"><label class="arq-form__label" for="auth-reg-email">E-mail</label><input class="arq-form__input" type="email" id="auth-reg-email" placeholder="seu@email.com" /></div>
         <div class="arq-form__row"><label class="arq-form__label" for="auth-reg-pass">Senha</label><input class="arq-form__input" type="password" id="auth-reg-pass" placeholder="Mín. 6 caracteres" /></div>
-        <div class="arq-form__row"><label class="arq-form__label">Tratamento</label><div class="auth-genero__opts"><button type="button" class="auth-genero__opt" data-genero="masculino" onclick="CSMAuth.switchGenero('masculino')">Sr.</button><button type="button" class="auth-genero__opt" data-genero="feminino" onclick="CSMAuth.switchGenero('feminino')">Sra.</button><button type="button" class="auth-genero__opt" data-genero="neutro" onclick="CSMAuth.switchGenero('neutro')">Neutro</button></div></div>
+        <div class="arq-form__row"><label class="arq-form__label">Tratamento</label><div class="auth-genero__opts"><button type="button" class="auth-genero__opt" data-genero="masculino">Sr.</button><button type="button" class="auth-genero__opt" data-genero="feminino">Sra.</button><button type="button" class="auth-genero__opt" data-genero="neutro">Neutro</button></div></div>
         <p class="arq-form__error" id="auth-reg-error" style="display:none;"></p>
-        <button type="button" class="btn btn--primary arq-form__submit" onclick="CSMAuth.doRegister()">Criar conta</button>
+        <button type="button" class="btn btn--primary arq-form__submit">Criar conta</button>
       </div>
     </div>
   </div>

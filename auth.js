@@ -578,10 +578,12 @@
         var forgotLink = document.createElement('p');
         forgotLink.className = 'auth-forgot-link';
         forgotLink.style.cssText = 'text-align:center;margin-top:.6rem;font-size:.8rem;';
-        forgotLink.innerHTML =
-          '<a href="#" onclick="event.preventDefault();CSMAuth.showForgotPanel()" '
-          + 'style="color:var(--orange,#F07800);text-decoration:none;font-weight:500;">'
-          + 'Esqueci minha senha</a>';
+        var forgotA = document.createElement('a');
+        forgotA.href = '#';
+        forgotA.style.cssText = 'color:var(--orange,#F07800);text-decoration:none;font-weight:500;';
+        forgotA.textContent = 'Esqueci minha senha';
+        forgotA.addEventListener('click', function(e) { e.preventDefault(); showForgotPanel(); });
+        forgotLink.appendChild(forgotA);
         loginPanel.appendChild(forgotLink);
       }
     }
@@ -619,13 +621,15 @@
           '<p id="auth-verify-error" class="arq-form__error" style="display:none"></p>',
           '<p style="font-size:.8rem;color:var(--gray-mid,#888);margin-top:.75rem">',
             'Não recebeu? Verifique a pasta de spam ou ',
-            '<a href="#" onclick="event.preventDefault();CSMAuth.resendVerifyCode()"',
+            '<a href="#" id="auth-resend-link"',
               ' style="color:var(--orange,#F07800);text-decoration:none;font-weight:500;">',
               'reenvie o e-mail</a>.',
           '</p>',
         '</div>'
       ].join('');
       container.appendChild(vPanel);
+      var resendLink = vPanel.querySelector('#auth-resend-link');
+      if (resendLink) resendLink.addEventListener('click', function(e) { e.preventDefault(); resendVerifyCode(); });
     }
 
     // Painel de recuperação de senha — envia link por e-mail
@@ -643,10 +647,9 @@
           '<input id="auth-forgot-email" class="arq-form__input" type="email"',
             ' placeholder="seu@email.com" autocomplete="email" />',
           '<p id="auth-forgot-error" class="arq-form__error" style="display:none"></p>',
-          '<button type="button" class="arq-form__btn" style="width:100%;margin-top:.75rem"',
-            ' onclick="CSMAuth.doForgotRequest()">Enviar link de redefinição</button>',
+          '<button type="button" class="arq-form__btn" id="auth-forgot-submit-btn" style="width:100%;margin-top:.75rem">Enviar link de redefinição</button>',
           '<p style="text-align:center;margin-top:.75rem;font-size:.8rem">',
-            '<a href="#" onclick="event.preventDefault();CSMAuth.switchAuthTab(\'login\')"',
+            '<a href="#" id="auth-forgot-back-1"',
               ' style="color:var(--orange,#F07800);text-decoration:none;font-weight:500;">',
               '← Voltar ao login</a>',
           '</p>',
@@ -667,13 +670,19 @@
             '<br>Verifique também a pasta de spam.',
           '</p>',
           '<p style="text-align:center;font-size:.8rem">',
-            '<a href="#" onclick="event.preventDefault();CSMAuth.switchAuthTab(\'login\')"',
+            '<a href="#" id="auth-forgot-back-2"',
               ' style="color:var(--orange,#F07800);text-decoration:none;font-weight:500;">',
               '← Voltar ao login</a>',
           '</p>',
         '</div>'
       ].join('');
       container.appendChild(fPanel);
+      var forgotSubmit = fPanel.querySelector('#auth-forgot-submit-btn');
+      if (forgotSubmit) forgotSubmit.addEventListener('click', doForgotRequest);
+      var forgotBack1 = fPanel.querySelector('#auth-forgot-back-1');
+      if (forgotBack1) forgotBack1.addEventListener('click', function(e) { e.preventDefault(); switchAuthTab('login'); });
+      var forgotBack2 = fPanel.querySelector('#auth-forgot-back-2');
+      if (forgotBack2) forgotBack2.addEventListener('click', function(e) { e.preventDefault(); switchAuthTab('login'); });
     }
   }
 
@@ -686,6 +695,35 @@
     if (overlay) {
       overlay.addEventListener('click', function (e) {
         if (e.target === overlay) closeAuthModal();
+      });
+
+      // Botão fechar — substitui onclick="CSMAuth.closeAuthModal()" no HTML
+      var closeBtn = overlay.querySelector('.modal__close');
+      if (closeBtn) closeBtn.addEventListener('click', closeAuthModal);
+
+      // Abas — substitui onclick="CSMAuth.switchAuthTab(...)" no HTML
+      overlay.querySelectorAll('.auth-tab[data-panel]').forEach(function (btn) {
+        btn.addEventListener('click', function () { switchAuthTab(btn.dataset.panel); });
+      });
+
+      // Opções de gênero — substitui onclick="CSMAuth.switchGenero(...)" no HTML
+      overlay.querySelectorAll('.auth-genero__opt[data-genero]').forEach(function (btn) {
+        btn.addEventListener('click', function () { switchGenero(btn.dataset.genero); });
+      });
+
+      // Botões de submit
+      var loginBtn = overlay.querySelector('#auth-login-btn');
+      if (loginBtn) loginBtn.addEventListener('click', doLogin);
+
+      var googleBtn = overlay.querySelector('#auth-google-btn');
+      if (googleBtn) googleBtn.addEventListener('click', doGoogleLogin);
+
+      var regBtn = overlay.querySelector('#auth-reg-btn');
+      if (regBtn) regBtn.addEventListener('click', doRegister);
+
+      // Tipo de conta — substitui onclick="CSMAuth.switchRegisterTipo(...)" no HTML
+      overlay.querySelectorAll('.auth-tipo__opt[data-tipo]').forEach(function (el) {
+        el.addEventListener('click', function () { switchRegisterTipo(el.dataset.tipo); });
       });
     }
 

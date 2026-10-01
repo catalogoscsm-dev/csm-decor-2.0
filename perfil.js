@@ -1,4 +1,4 @@
-/* perfil.js — extraído de perfil.html para permitir CSP sem unsafe-inline */
+/* perfil.js — extraído de perfil.html para CSP sem unsafe-inline */
 'use strict';
 
 /* ── Revela a página (remove cortina preta) ─────────────────────── */
@@ -80,10 +80,8 @@ function initPerfil() {
     role:      p.role      || session.role
   };
 
-  // Avatar e header
   renderAvatar(user);
 
-  // Role badge
   var badge   = document.getElementById('js-role-badge');
   var roleMap = { admin: 'Admin', arquiteto: 'Arquiteto', fornecedor: 'Fornecedor', comum: 'Cliente' };
   var color   = CSMAuth.ROLE_COLORS[user.tipo] || CSMAuth.ROLE_COLORS.comum;
@@ -91,7 +89,6 @@ function initPerfil() {
   badge.style.background = color;
   if (user.tipo && user.tipo !== 'comum') badge.classList.add('perfil-role-badge--' + user.tipo);
 
-  // Partner badge
   var partnerBadge = document.getElementById('js-partner-badge');
   if (user.isPartner) {
     partnerBadge.innerHTML = '<span class="perfil-partner-badge__shimmer" aria-hidden="true"></span>&#10022; Parceiro Oficial';
@@ -102,7 +99,6 @@ function initPerfil() {
   }
   partnerBadge.removeAttribute('hidden');
 
-  // Infos
   var namePrefix = user.genero === 'masculino' ? 'Sr. ' : user.genero === 'feminino' ? 'Sra. ' : '';
   document.getElementById('js-perfil-name').textContent  = namePrefix + (user.name || session.name);
   document.getElementById('js-perfil-email').textContent = user.email || session.email;
@@ -111,18 +107,15 @@ function initPerfil() {
   bioEl.hidden = !user.bio;
   bioEl.textContent = user.bio || '';
 
-  // Social
   var socialEl = document.getElementById('js-perfil-social');
   socialEl.hidden = false;
   if (user.instagram) {
-    // Permite apenas caracteres válidos de handle do Instagram (sem XSS possível)
     var instaHandle = user.instagram.replace(/^@/, '').replace(/[^a-zA-Z0-9_.]/g, '').slice(0, 30);
     var link = document.createElement('a');
     link.className = 'perfil-social-link';
     link.href = 'https://instagram.com/' + instaHandle;
     link.target = '_blank';
     link.rel = 'noopener';
-    // SVG é estático — seguro usar innerHTML aqui
     link.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
     link.appendChild(document.createTextNode('@' + instaHandle));
     socialEl.innerHTML = '';
@@ -131,7 +124,6 @@ function initPerfil() {
     socialEl.hidden = true;
   }
 
-  // Stats
   var reviews   = getUserReviews(user.email);
   var favorites = getFavorites();
   var moodboard = getMoodboardItems();
@@ -140,19 +132,16 @@ function initPerfil() {
   document.getElementById('js-stat-favoritos').textContent  = favorites.length;
   document.getElementById('js-stat-moodboard').textContent  = moodboard.length;
 
-  // Moodboard tab: visível apenas para arquitetos
   if (user.tipo === 'arquiteto' || user.tipo === 'admin') {
     document.getElementById('js-tab-moodboard').classList.add('visible');
     document.getElementById('js-stat-moodboard-wrap').style.display = '';
   }
 
-  // Catálogo tab: visível apenas para fornecedores (e admin)
   if (user.tipo === 'fornecedor' || user.tipo === 'admin') {
     document.getElementById('js-tab-catalogo').classList.add('visible');
     renderCatalogo(user.email);
   }
 
-  // Edit form: pré-preenche
   document.getElementById('edit-name').value      = user.name || '';
   document.getElementById('edit-bio').value       = user.bio || '';
   document.getElementById('edit-instagram').value = user.instagram || '';
@@ -163,7 +152,6 @@ function initPerfil() {
   if (user.tipo === 'arquiteto')  document.getElementById('js-edit-cau-row').style.display  = '';
   if (user.tipo === 'fornecedor') document.getElementById('js-edit-cnpj-row').style.display = '';
 
-  // Renderiza paineis
   renderAvaliacoes(reviews, true);
   renderFavoritos(favorites);
   renderMoodboard(moodboard);
@@ -177,8 +165,8 @@ function renderAvatar(user) {
   wrap.style.borderColor = color;
   if (user.photoUrl) {
     var img = document.createElement('img');
-    img.src = user.photoUrl;           // atribuído via propriedade — sem interpolação de string
-    img.alt = user.name || '';         // idem
+    img.src = user.photoUrl;
+    img.alt = user.name || '';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
     var firstLetter = (user.name || 'U')[0].toUpperCase();
     img.addEventListener('error', function () {
@@ -225,9 +213,7 @@ function getFavorites() {
   try { return JSON.parse(localStorage.getItem(getMbKey()) || '[]'); } catch(_) { return []; }
 }
 
-function getMoodboardItems() {
-  return getFavorites();
-}
+function getMoodboardItems() { return getFavorites(); }
 
 function luxuryConfirm(title, sub, onConfirm) {
   var overlay = document.getElementById('luxury-confirm');
@@ -245,7 +231,6 @@ function luxuryConfirm(title, sub, onConfirm) {
   overlay.onclick = function(e) { if (e.target === overlay) close(); };
 }
 
-// Animação de remoção de card em 2 fases: fade → colapso de altura
 function animateRemoveCard(wrap, callback) {
   if (!wrap) { callback(); return; }
   wrap.style.transition   = 'opacity .22s ease, transform .22s ease';
@@ -290,8 +275,8 @@ function renderAvaliacoes(reviews, isOwner) {
     var sKey = esc(r._storageKey || '');
     var rId  = Number(r.id);
     var ownerActions = isOwner !== false
-      ? '<button class="review-action-btn review-action-btn--edit" onclick="event.stopPropagation();openEditProfileReview(\'' + sKey + '\',' + rId + ')">' + pencilSvg + ' Editar</button>'
-        + '<button class="review-action-btn review-action-btn--delete" onclick="event.stopPropagation();deleteProfileReview(\'' + sKey + '\',' + rId + ')">' + trashSvg + ' Excluir</button>'
+      ? '<button class="review-action-btn review-action-btn--edit" data-action="edit-review" data-skey="' + sKey + '" data-id="' + rId + '">' + pencilSvg + ' Editar</button>'
+        + '<button class="review-action-btn review-action-btn--delete" data-action="delete-review" data-skey="' + sKey + '" data-id="' + rId + '">' + trashSvg + ' Excluir</button>'
       : '';
     return '<div class="perfil-review-wrap" data-review-id="' + rId + '" style="margin-bottom:1rem;border:1px solid var(--gray-line);border-radius:var(--r-lg);overflow:hidden;">'
       + '<a href="' + (productId ? 'produto.html?id=' + productId : 'produtos.html') + '" class="perfil-review-link" style="text-decoration:none;display:block;color:inherit">'
@@ -306,12 +291,25 @@ function renderAvaliacoes(reviews, isOwner) {
       + '</div>';
   }).join('');
 
-  // Animação escalonada de entrada nos cards
   container.querySelectorAll('.perfil-review-wrap').forEach(function(w, i) {
     w.style.animationDelay = (i * 0.07) + 's';
     w.classList.add('review-entering');
   });
 }
+
+// Delegação de eventos: lista de avaliações
+document.getElementById('js-avaliacoes-list').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  var action = btn.dataset.action;
+  var skey   = btn.dataset.skey;
+  var id     = parseInt(btn.dataset.id, 10);
+  if      (action === 'edit-review')         { e.stopPropagation(); openEditProfileReview(skey, id); }
+  else if (action === 'delete-review')       { e.stopPropagation(); deleteProfileReview(skey, id); }
+  else if (action === 'set-star')            { setEditStar(parseInt(btn.dataset.val, 10)); }
+  else if (action === 'cancel-edit-review')  { initPerfil(); }
+  else if (action === 'save-edit-review')    { saveEditProfileReview(skey, id); }
+});
 
 function openEditProfileReview(storageKey, id) {
   var arr = [];
@@ -322,22 +320,27 @@ function openEditProfileReview(storageKey, id) {
   var wrap = document.querySelector('.perfil-review-wrap[data-review-id="' + id + '"]');
   if (!wrap) return;
   var starsHtml = [1,2,3,4,5].map(function(n) {
-    return '<svg class="pedit-star" data-val="' + n + '" onclick="setEditStar(' + n + ')" width="22" height="22" viewBox="0 0 24 24"'
+    return '<svg class="pedit-star" data-action="set-star" data-val="' + n + '" data-id="' + id + '"'
+      + ' width="22" height="22" viewBox="0 0 24 24"'
       + ' fill="' + (n <= _editStars ? '#F59E0B' : 'none') + '"'
-      + ' stroke="#F59E0B" stroke-width="1.5" style="cursor:pointer;transition:transform .15s" role="button" tabindex="0"'
-      + ' onmouseenter="this.style.transform=\'scale(1.2)\'" onmouseleave="this.style.transform=\'scale(1)\'">'
+      + ' stroke="#F59E0B" stroke-width="1.5" style="cursor:pointer;transition:transform .15s" role="button" tabindex="0">'
       + '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
   }).join('');
-  var safeKey = storageKey.replace(/'/g,"\\'");
+  var safeKey = esc(storageKey);
   wrap.innerHTML = '<div style="padding:1.25rem 1.25rem 1rem;background:var(--white,#fff);border-left:3px solid var(--orange,#F07800);">'
     + '<p style="font-family:var(--font-serif,serif);font-size:1rem;font-weight:400;letter-spacing:.02em;color:var(--dark,#1E1E1E);margin:0 0 .75rem">Editar avaliação</p>'
     + '<div id="pedit-stars-wrap" style="display:flex;gap:.3rem;margin-bottom:.85rem">' + starsHtml + '</div>'
     + '<textarea id="pedit-text" rows="4" style="width:100%;padding:.6rem .75rem;border:1px solid var(--gray-line,rgba(0,0,0,.12));border-radius:8px;font-size:.85rem;resize:vertical;font-family:inherit;box-sizing:border-box;background:var(--off-white,#F7F6F3);color:var(--dark,#1E1E1E);">' + esc(review.text) + '</textarea>'
     + '<div style="display:flex;gap:.5rem;margin-top:.75rem;justify-content:flex-end">'
-    + '<button onclick="initPerfil()" class="review-action-btn" style="border-color:var(--gray-line);color:var(--gray-dark);">Cancelar</button>'
-    + '<button onclick="saveEditProfileReview(\'' + safeKey + '\',' + id + ')" style="padding:.35rem 1.1rem;background:var(--orange,#F07800);color:#fff;border:none;border-radius:20px;cursor:pointer;font-size:.7rem;font-weight:600;font-family:var(--font-sans,sans-serif);letter-spacing:.04em;text-transform:uppercase;transition:background .2s;" onmouseover="this.style.background=\'var(--orange-dark,#C86200)\'" onmouseout="this.style.background=\'var(--orange,#F07800)\'">Salvar</button>'
+    + '<button class="review-action-btn" data-action="cancel-edit-review" style="border-color:var(--gray-line);color:var(--gray-dark);">Cancelar</button>'
+    + '<button class="pedit-save-btn" data-action="save-edit-review" data-skey="' + safeKey + '" data-id="' + id + '">Salvar</button>'
     + '</div>'
     + '</div>';
+  var saveBtn = wrap.querySelector('.pedit-save-btn');
+  if (saveBtn) {
+    saveBtn.addEventListener('mouseenter', function() { saveBtn.style.background = 'var(--orange-dark,#C86200)'; });
+    saveBtn.addEventListener('mouseleave', function() { saveBtn.style.background = 'var(--orange,#F07800)'; });
+  }
 }
 
 function setEditStar(n) {
@@ -378,8 +381,7 @@ function deleteProfileReview(storageKey, id) {
       if (countEl) countEl.textContent = Math.max(0, (parseInt(countEl.textContent, 10) || 0) - 1);
       var container = document.getElementById('js-avaliacoes-list');
       if (container && !container.querySelector('.perfil-review-wrap')) {
-        container.innerHTML = '<div class="perfil-empty">'
-          + '<div class="perfil-empty__icon">★</div>'
+        container.innerHTML = '<div class="perfil-empty"><div class="perfil-empty__icon">★</div>'
           + '<p class="perfil-empty__title">Nenhuma avaliação ainda</p>'
           + '<p class="perfil-empty__sub">Visite a <a href="produtos.html">página de produtos</a> e compartilhe sua experiência.</p>'
           + '</div>';
@@ -408,11 +410,19 @@ function renderFavoritos(items) {
       + '<div class="perfil-fav-card__name">' + esc(item.name) + '</div>'
       + '</a>'
       + '<div class="perfil-fav-footer">'
-      + '<button class="perfil-fav-remove-btn" onclick="event.preventDefault();removeFavorite(\'' + itemId + '\')">' + xSvg + ' Remover</button>'
+      + '<button class="perfil-fav-remove-btn" data-action="remove-fav" data-item-id="' + itemId + '">' + xSvg + ' Remover</button>'
       + '</div>'
       + '</div>';
   }).join('');
 }
+
+// Delegação: grid de favoritos
+document.getElementById('js-favoritos-grid').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-action="remove-fav"]');
+  if (!btn) return;
+  e.preventDefault();
+  removeFavorite(btn.dataset.itemId);
+});
 
 function removeFavorite(itemId) {
   try {
@@ -465,13 +475,13 @@ function renderCatalogo(email) {
     + '<p class="eyebrow" style="margin:0">Meus Catálogos'
     + (items.length ? ' <small style="font-size:.7rem;opacity:.55;text-transform:none;letter-spacing:0">(' + items.length + ')</small>' : '')
     + '</p>'
-    + (items.length ? '<button class="btn btn--primary btn--sm" onclick="sendCatalogByEmail()">&#9993; Enviar para CSM</button>' : '')
+    + (items.length ? '<button class="btn btn--primary btn--sm" data-action="send-catalog">&#9993; Enviar para CSM</button>' : '')
     + '</div>'
     + '<label class="perfil-catalogo-upload" for="' + uploadId + '">'
     + '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'
     + '<span class="perfil-catalogo-upload__text">Arraste ou clique para enviar</span>'
     + '<span class="perfil-catalogo-upload__hint">PDF, JPG, PNG — máx 5 MB por arquivo</span>'
-    + '<input type="file" id="' + uploadId + '" accept=".pdf,image/jpeg,image/png,image/webp" multiple style="display:none" onchange="handleCatalogUpload(this)" />'
+    + '<input type="file" id="' + uploadId + '" accept=".pdf,image/jpeg,image/png,image/webp" multiple style="display:none" />'
     + '</label>';
 
   if (items.length) {
@@ -495,7 +505,7 @@ function renderCatalogo(email) {
             + '<p class="perfil-catalogo-card__name" title="' + esc(item.name) + '">' + esc(item.name) + '</p>'
             + '<p class="perfil-catalogo-card__meta">' + size + ' · ' + date + '</p>'
             + '</div>'
-            + '<button class="perfil-catalogo-card__remove" onclick="removeCatalogItem(\'' + esc(item.id) + '\')" title="Remover" aria-label="Remover arquivo">'
+            + '<button class="perfil-catalogo-card__remove" data-action="remove-catalog" data-catalog-id="' + esc(item.id) + '" title="Remover" aria-label="Remover arquivo">'
             + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
             + '</button>'
             + '</div>';
@@ -511,7 +521,6 @@ function renderCatalogo(email) {
 
   container.innerHTML = html;
 
-  // Drag & drop
   var uploadArea = container.querySelector('.perfil-catalogo-upload');
   uploadArea.addEventListener('dragover', function(e) { e.preventDefault(); uploadArea.classList.add('is-dragover'); });
   uploadArea.addEventListener('dragleave', function() { uploadArea.classList.remove('is-dragover'); });
@@ -520,21 +529,30 @@ function renderCatalogo(email) {
     uploadArea.classList.remove('is-dragover');
     handleCatalogFiles(e.dataTransfer.files);
   });
+
+  var uploadInput = container.querySelector('#' + uploadId);
+  if (uploadInput) {
+    uploadInput.addEventListener('change', function() {
+      handleCatalogFiles(this.files);
+      this.value = '';
+    });
+  }
 }
 
-function handleCatalogUpload(input) {
-  handleCatalogFiles(input.files);
-  input.value = '';
-}
+// Delegação: área de catálogo
+document.getElementById('js-catalogo-content').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  if (btn.dataset.action === 'send-catalog') sendCatalogByEmail();
+  else if (btn.dataset.action === 'remove-catalog') removeCatalogItem(btn.dataset.catalogId);
+});
 
 function handleCatalogFiles(fileList) {
   var files   = Array.prototype.slice.call(fileList);
   var email   = _catalogEmail;
   var items   = getCatalogItems(email);
   var pending = files.length;
-
   if (!pending) return;
-
   files.forEach(function(file) {
     if (file.size > 5 * 1024 * 1024) {
       alert('O arquivo "' + file.name + '" excede 5 MB e não foi adicionado.');
@@ -550,19 +568,17 @@ function handleCatalogFiles(fileList) {
       date: Date.now(),
       dataUrl: null
     };
-    var isImage = file.type.startsWith('image/');
-    if (isImage) {
+    if (file.type.startsWith('image/')) {
       var reader = new FileReader();
       reader.onload = function(e) {
         item.dataUrl = e.target.result;
         items.unshift(item);
         pending--;
-        try {
-          saveCatalogItems(email, items);
-        } catch(ex) {
+        try { saveCatalogItems(email, items); }
+        catch(ex) {
           items[0].dataUrl = null;
           try { saveCatalogItems(email, items); } catch(ex2) {
-            alert('Espaço insuficiente no armazenamento local. Remova itens antigos.');
+            alert('Espaço insuficiente. Remova itens antigos.');
             items.shift();
           }
         }
@@ -573,7 +589,7 @@ function handleCatalogFiles(fileList) {
       items.unshift(item);
       pending--;
       try { saveCatalogItems(email, items); } catch(ex) {
-        alert('Espaço insuficiente no armazenamento local. Remova itens antigos.');
+        alert('Espaço insuficiente. Remova itens antigos.');
         items.shift();
       }
       if (!pending) renderCatalogo(email);
@@ -585,23 +601,13 @@ function sendCatalogByEmail() {
   var session = CSMAuth.getSession();
   var items   = getCatalogItems(_catalogEmail);
   if (!items.length) return;
-
   var nome  = (session && session.name) || 'Fornecedor';
   var email = (session && session.email) || '';
   var lista = items.map(function(it, i) {
-    var size = it.size < 1024*1024
-      ? Math.round(it.size/1024) + ' KB'
-      : (it.size/(1024*1024)).toFixed(1) + ' MB';
+    var size = it.size < 1024*1024 ? Math.round(it.size/1024) + ' KB' : (it.size/(1024*1024)).toFixed(1) + ' MB';
     return (i+1) + '. ' + it.name + ' (' + size + ')';
   }).join('\n');
-
-  var texto = encodeURIComponent(
-    'Olá, equipe CSM Decor! 👋\n\n'
-    + 'Sou ' + nome + ' (' + email + ') e gostaria de enviar meus catálogos para avaliação de parceria:\n\n'
-    + lista + '\n\n'
-    + 'Por favor, me orientem sobre como enviar os arquivos. Obrigado(a)!'
-  );
-
+  var texto = encodeURIComponent('Olá, equipe CSM Decor! 👋\n\nSou ' + nome + ' (' + email + ') e gostaria de enviar meus catálogos para avaliação de parceria:\n\n' + lista + '\n\nPor favor, me orientem sobre como enviar os arquivos. Obrigado(a)!');
   window.open('https://wa.me/5519990034068?text=' + texto, '_blank');
 }
 
@@ -627,10 +633,8 @@ function togglePassVis(inputId, btn) {
   var input   = document.getElementById(inputId);
   var curtain = input.parentElement.querySelector('.perfil-pass-curtain');
   var showing = input.type === 'text';
-
   btn.classList.toggle('is-visible', !showing);
   btn.setAttribute('aria-label', showing ? 'Mostrar senha' : 'Ocultar senha');
-
   if (!showing) {
     curtain.style.transition = 'none';
     curtain.style.transform  = 'translateX(0)';
@@ -687,7 +691,7 @@ function toggleEditPanel() {
   }
 }
 
-// ── Upload de foto (via avatar do hero) ──────────────────────────
+// ── Upload de foto ────────────────────────────────────────────────
 var _pendingPhotoFile = null;
 var _removePhoto      = false;
 var _savedPhotoUrl    = '';
@@ -697,16 +701,13 @@ function avatarClick() {
   document.getElementById('edit-photo').click();
 }
 
-// SVG da câmera reutilizável (estático — seguro em innerHTML)
 var _CAMERA_SVG = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>';
 
 function setPhotoUI(savedSrc) {
   _savedPhotoUrl = savedSrc || '';
   var wrap      = document.getElementById('js-avatar-wrap');
   var btnRemove = document.getElementById('js-btn-remove-photo');
-
   if (savedSrc) {
-    // DOM API — sem interpolação de string com dados do usuário
     var img = document.createElement('img');
     img.src = savedSrc;
     img.alt = '';
@@ -741,7 +742,6 @@ function handlePhotoUpload(input) {
   }
   _pendingPhotoFile = file;
   _removePhoto      = false;
-  // URL.createObjectURL retorna blob: URL gerada pelo browser — não é dado do usuário
   var previewUrl = URL.createObjectURL(file);
   var wrap = document.getElementById('js-avatar-wrap');
   var img = document.createElement('img');
@@ -757,7 +757,6 @@ function handlePhotoUpload(input) {
   wrap.appendChild(overlay);
 }
 
-// Faz resize e upload para Supabase Storage; retorna URL pública ou null
 function uploadPhotoToSupabase(file, userId) {
   return new Promise(function (resolve) {
     var reader = new FileReader();
@@ -771,14 +770,12 @@ function uploadPhotoToSupabase(file, userId) {
         canvas.height = Math.round(img.height * ratio);
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
         canvas.toBlob(function (blob) {
-          var ext  = 'jpg';
-          var path = userId + '/' + Date.now() + '.' + ext;
+          var path = userId + '/' + Date.now() + '.jpg';
           var sb   = CSMAuth.supabase;
           sb.storage.from('avatars').upload(path, blob, { contentType: 'image/jpeg', upsert: true })
             .then(function (res) {
               if (res.error) { console.error('[Perfil] Upload erro:', res.error); resolve(null); return; }
-              var urlRes = sb.storage.from('avatars').getPublicUrl(path);
-              resolve(urlRes.data.publicUrl || null);
+              resolve(sb.storage.from('avatars').getPublicUrl(path).data.publicUrl || null);
             });
         }, 'image/jpeg', 0.82);
       };
@@ -796,7 +793,6 @@ function removePhoto() {
   var color   = CSMAuth.ROLE_COLORS[(session && session.tipo) || 'comum'];
   var initial = ((session && session.name) || 'U')[0].toUpperCase();
   var wrap    = document.getElementById('js-avatar-wrap');
-  // color é string de cor predefinida (ex: "#F07800"), initial é 1 letra — ambos seguros
   wrap.innerHTML =
     '<div class="perfil-hero__avatar-initial" id="js-avatar-initial" style="background:' + color + '">' + initial + '</div>'
     + '<div class="perfil-avatar-overlay" aria-hidden="true">' + _CAMERA_SVG + '</div>';
@@ -806,10 +802,8 @@ function removePhoto() {
 function saveProfile() {
   var session = CSMAuth.getSession();
   if (!session) return;
-
-  var saveBtn = document.querySelector('.perfil-edit-actions .btn--primary');
+  var saveBtn = document.getElementById('js-btn-save-profile');
   if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Salvando…'; }
-
   var data = {
     name:      document.getElementById('edit-name').value.trim() || session.name,
     bio:       document.getElementById('edit-bio').value.trim(),
@@ -817,7 +811,6 @@ function saveProfile() {
     cau:       document.getElementById('edit-cau').value.trim(),
     cnpj:      document.getElementById('edit-cnpj').value.trim()
   };
-
   var photoPromise;
   if (_pendingPhotoFile) {
     photoPromise = uploadPhotoToSupabase(_pendingPhotoFile, session.id)
@@ -828,7 +821,6 @@ function saveProfile() {
   } else {
     photoPromise = Promise.resolve();
   }
-
   photoPromise.then(function () {
     return CSMAuth.updateUserProfile(session.email, data);
   }).then(function (ok) {
@@ -843,14 +835,13 @@ function saveProfile() {
 
 // ── Alterar senha ─────────────────────────────────────────────────
 function handleChangePassword() {
-  var current  = (document.getElementById('edit-pass-current')  || {}).value || '';
-  var newPass  = (document.getElementById('edit-pass-new')      || {}).value || '';
-  var confirm  = (document.getElementById('edit-pass-confirm')  || {}).value || '';
-  var errEl    = document.getElementById('perfil-pass-error');
-  var btn      = document.querySelector('[onclick="handleChangePassword()"]');
+  var current = (document.getElementById('edit-pass-current') || {}).value || '';
+  var newPass = (document.getElementById('edit-pass-new')     || {}).value || '';
+  var confirm = (document.getElementById('edit-pass-confirm') || {}).value || '';
+  var errEl   = document.getElementById('perfil-pass-error');
+  var btn     = document.getElementById('js-btn-confirm-pass');
   if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
-  if (btn) { btn.disabled = true; btn.textContent = 'Aguarde…'; }
-
+  if (btn)   { btn.disabled = true; btn.textContent = 'Aguarde…'; }
   CSMAuth.doChangePassword(current, newPass, confirm).then(function (result) {
     if (btn) { btn.disabled = false; btn.textContent = 'Confirmar'; }
     if (!result.ok) {
@@ -869,8 +860,8 @@ function handleChangePassword() {
 function showPasswordResetUI() {
   var hero = document.getElementById('perfil-hero');
   var tabs = document.querySelector('.perfil-tabs-bar');
-  if (hero)   hero.style.display   = 'none';
-  if (tabs)   tabs.style.display   = 'none';
+  if (hero) hero.style.display = 'none';
+  if (tabs) tabs.style.display = 'none';
 
   var editSection = document.getElementById('js-edit-panel');
   if (editSection) editSection.hidden = false;
@@ -888,12 +879,15 @@ function showPasswordResetUI() {
   var currentLabel = document.querySelector('[for="edit-pass-current"]');
   if (currentLabel) currentLabel.closest('.perfil-edit-row').style.display = 'none';
 
-  var confirmBtn = document.querySelector('[onclick="handleChangePassword()"]');
+  // Substitui o listener do botão confirmar por handleResetPassword
+  var confirmBtn = document.getElementById('js-btn-confirm-pass');
   if (confirmBtn) {
     confirmBtn.textContent = 'Definir nova senha';
-    confirmBtn.onclick = function () { handleResetPassword(); };
+    var newBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+    newBtn.addEventListener('click', handleResetPassword);
   }
-  var cancelBtn = document.querySelector('[onclick="togglePassFields()"]');
+  var cancelBtn = document.getElementById('js-btn-cancel-pass');
   if (cancelBtn) cancelBtn.style.display = 'none';
 }
 
@@ -901,10 +895,9 @@ function handleResetPassword() {
   var newPass = (document.getElementById('edit-pass-new')     || {}).value || '';
   var confirm = (document.getElementById('edit-pass-confirm') || {}).value || '';
   var errEl   = document.getElementById('perfil-pass-error');
-  var btn     = document.querySelector('[onclick="handleResetPassword()"]');
+  var btn     = document.getElementById('js-btn-confirm-pass');
   if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
-  if (btn) { btn.disabled = true; btn.textContent = 'Salvando…'; }
-
+  if (btn)   { btn.disabled = true; btn.textContent = 'Salvando…'; }
   CSMAuth.doSetNewPassword(newPass, confirm).then(function (result) {
     if (btn) { btn.disabled = false; btn.textContent = 'Definir nova senha'; }
     if (!result.ok) {
@@ -935,18 +928,12 @@ function initPublicPerfil(targetEmail) {
     return;
   }
 
-  // Oculta elementos que não fazem sentido no modo público
-  ['js-edit-panel','js-edit-panel'].forEach(function(id){
-    var el = document.getElementById(id); if (el) el.hidden = true;
-  });
   var editPanel = document.getElementById('js-edit-panel');
   if (editPanel) editPanel.hidden = true;
   var tabBar = document.querySelector('.perfil-tabs-bar');
   if (tabBar) tabBar.hidden = true;
-  var panels = document.querySelectorAll('.perfil-panel');
-  panels.forEach(function(p){ p.hidden = true; });
+  document.querySelectorAll('.perfil-panel').forEach(function(p){ p.hidden = true; });
 
-  // Avatar e avatar overlay (remove botão de troca)
   var avatarWrap = document.getElementById('js-avatar-wrap');
   if (avatarWrap) {
     avatarWrap.onclick  = null;
@@ -958,12 +945,11 @@ function initPublicPerfil(targetEmail) {
   var removeBtn = document.getElementById('js-btn-remove-photo');
   if (removeBtn) removeBtn.hidden = true;
 
-  // Renderiza dados do usuário-alvo
   renderAvatar(user);
 
-  var badge    = document.getElementById('js-role-badge');
-  var roleMap  = { admin: 'Admin', arquiteto: 'Arquiteto', fornecedor: 'Fornecedor', comum: 'Cliente' };
-  var color    = CSMAuth.ROLE_COLORS[user.tipo] || CSMAuth.ROLE_COLORS.comum;
+  var badge   = document.getElementById('js-role-badge');
+  var roleMap = { admin: 'Admin', arquiteto: 'Arquiteto', fornecedor: 'Fornecedor', comum: 'Cliente' };
+  var color   = CSMAuth.ROLE_COLORS[user.tipo] || CSMAuth.ROLE_COLORS.comum;
   badge.textContent = roleMap[user.tipo] || 'Cliente';
   badge.style.background = color;
   if (user.tipo && user.tipo !== 'comum') badge.classList.add('perfil-role-badge--' + user.tipo);
@@ -976,19 +962,17 @@ function initPublicPerfil(targetEmail) {
     } else {
       partnerBadge.hidden = true;
     }
-    partnerBadge.removeAttribute('hidden');
     if (!user.isPartner) partnerBadge.hidden = true;
   }
 
   var namePrefix = user.genero === 'masculino' ? 'Sr. ' : user.genero === 'feminino' ? 'Sra. ' : '';
-  document.getElementById('js-perfil-name').textContent  = namePrefix + user.name;
+  document.getElementById('js-perfil-name').textContent = namePrefix + user.name;
   document.getElementById('js-perfil-email').hidden = true;
 
   var bioEl = document.getElementById('js-perfil-bio');
   bioEl.hidden = !user.bio;
   bioEl.textContent = user.bio || '';
 
-  // Social — DOM API + whitelist de chars (mesmo padrão do initPerfil)
   var socialEl = document.getElementById('js-perfil-social');
   socialEl.hidden = false;
   if (user.instagram) {
@@ -1004,35 +988,82 @@ function initPublicPerfil(targetEmail) {
     socialEl.appendChild(pubLink);
   } else { socialEl.hidden = true; }
 
-  // Stats: apenas avaliações
   var reviews = getUserReviews(user.email);
   document.getElementById('js-stat-avaliacoes').textContent = reviews.length;
   document.getElementById('js-stat-favoritos').parentElement.hidden = true;
   var moodWrap = document.getElementById('js-stat-moodboard-wrap');
   if (moodWrap) moodWrap.hidden = true;
 
-  // CTAs: só "Voltar"
   var ctasEl = document.querySelector('.perfil-hero__ctas');
   if (ctasEl) ctasEl.innerHTML = '<a href="javascript:history.back()" class="btn btn--outline btn--sm">← Voltar</a>';
 
-  // Painel de avaliações público
   var panelAval = document.getElementById('panel-avaliacoes');
   if (panelAval) {
     panelAval.hidden = false;
     panelAval.classList.add('active');
     renderAvaliacoes(reviews, false);
-    panelAval.querySelectorAll('.review-action-btn').forEach(function(b){ b.closest('.perfil-review-actions') && (b.closest('.perfil-review-actions').hidden = true); });
   }
 
-  // Título da página
   document.title = 'Perfil de ' + user.name + ' — CSM Decor';
 }
 
-// ── Run ───────────────────────────────────────────────────────────
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
-    _publicEmail ? initPublicPerfil(_publicEmail) : initPerfil();
+// ── Wiring de handlers estáticos do HTML ─────────────────────────
+function initEventListeners() {
+  var avatarWrap = document.getElementById('js-avatar-wrap');
+  if (avatarWrap) avatarWrap.addEventListener('click', avatarClick);
+
+  var btnRemovePhoto = document.getElementById('js-btn-remove-photo');
+  if (btnRemovePhoto) btnRemovePhoto.addEventListener('click', removePhoto);
+
+  var editPhotoInput = document.getElementById('edit-photo');
+  if (editPhotoInput) editPhotoInput.addEventListener('change', function() { handlePhotoUpload(this); });
+
+  var btnEdit = document.getElementById('js-btn-edit');
+  if (btnEdit) btnEdit.addEventListener('click', toggleEditPanel);
+
+  var btnLogout = document.getElementById('js-btn-logout');
+  if (btnLogout) btnLogout.addEventListener('click', function() { CSMAuth.doLogout(); });
+
+  var cnpjInput = document.getElementById('edit-cnpj');
+  if (cnpjInput) cnpjInput.addEventListener('input', function() { if (window.formatCNPJInput) formatCNPJInput(this); });
+
+  var btnSave = document.getElementById('js-btn-save-profile');
+  if (btnSave) btnSave.addEventListener('click', saveProfile);
+
+  var btnCancelEdit = document.getElementById('js-btn-cancel-edit');
+  if (btnCancelEdit) btnCancelEdit.addEventListener('click', toggleEditPanel);
+
+  var btnTogglePass = document.getElementById('js-btn-toggle-pass');
+  if (btnTogglePass) btnTogglePass.addEventListener('click', togglePassFields);
+
+  document.querySelectorAll('.perfil-pass-eye[data-for]').forEach(function(btn) {
+    btn.addEventListener('click', function() { togglePassVis(btn.dataset.for, btn); });
   });
+
+  var btnConfirmPass = document.getElementById('js-btn-confirm-pass');
+  if (btnConfirmPass) btnConfirmPass.addEventListener('click', handleChangePassword);
+
+  var btnCancelPass = document.getElementById('js-btn-cancel-pass');
+  if (btnCancelPass) btnCancelPass.addEventListener('click', togglePassFields);
+
+  // Tabs — delegação na barra
+  var tabsBar = document.querySelector('.perfil-tabs-bar');
+  if (tabsBar) {
+    tabsBar.addEventListener('click', function(e) {
+      var btn = e.target.closest('.perfil-tab-btn[data-tab]');
+      if (btn) switchPerfilTab(btn.dataset.tab);
+    });
+  }
+}
+
+// ── Run ───────────────────────────────────────────────────────────
+function _boot() {
+  initEventListeners();
+  if (_publicEmail) initPublicPerfil(_publicEmail);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _boot);
 } else {
-  _publicEmail ? initPublicPerfil(_publicEmail) : initPerfil();
+  _boot();
 }
