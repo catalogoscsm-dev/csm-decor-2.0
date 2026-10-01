@@ -7,6 +7,9 @@ diag-test.jpg
 diag-hunyuan3d.js
 modelos-3d/
 
+# Credenciais — nunca commitar
+supabase-config.js
+
 # Local Netlify folder
 .netlify
 
