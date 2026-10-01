@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Relatório de Auditoria de Segurança — CSM Decor · Outubro 2026</title>
+  <style>
+    :root {
+      --orange: #e07000;
+      --red:    #c0392b;
+      --green:  #1a7a4a;
+      --blue:   #1a4f8a;
+      --yellow: #b8860b;
+      --dark:   #111;
+      --gray:   #2a2a2a;
+      --muted:  #555;
+      --light:  #f8f7f4;
+      --border: #ddd;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      --mono: 'Courier New', Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.75;
+      color: #222;
+      background: #fff;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 6rem;
+    }
+
+    /* ── CAPA ─────────────────────────────────────────── */
+    .cover {
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+      border-bottom: 3px solid var(--orange);
+      margin-bottom: 3rem;
+    }
+    .cover__badge {
+      display: inline-block;
+      background: #fff3e0;
+      color: var(--orange);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 20px;
+      border: 1px solid #f0c080;
+      margin-bottom: 1.25rem;
+    }
+    .cover__title {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: .5rem;
+    }
+    .cover__sub {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+    .cover__stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .cover__stat {
+      text-align: center;
+    }
+    .cover__stat-num {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 700;
+      font-family: var(--serif);
+      line-height: 1;
+    }
+    .cover__stat-label {
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cover__stat--red   .cover__stat-num { color: var(--red); }
+    .cover__stat--orange .cover__stat-num { color: var(--orange); }
+    .cover__stat--green  .cover__stat-num { color: var(--green); }
+    .cover__stat--blue   .cover__stat-num { color: var(--blue); }
+
+    /* ── SEÇÕES ──────────────────────────────────────── */
+    h2.section {
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      color: var(--dark);
+      margin: 3.5rem 0 1.25rem;
+      padding-bottom: .6rem;
+      border-bottom: 2px solid var(--border);
+    }
+    h3.sub {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 2.25rem 0 .6rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    p { margin-bottom: .85rem; color: #333; }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: .35rem; color: #333; }
+    code {
+      background: #f0efe9;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: .05rem .35rem;
+      font-family: var(--mono);
+      font-size: .82em;
+      color: #c0392b;
+    }
+
+    /* ── EXECUTIVE BOX ───────────────────────────────── */
+    .exec {
+      background: var(--light);
+      border-left: 4px solid var(--orange);
+      padding: 1.4rem 1.75rem;
+      margin-bottom: 2.5rem;
+      border-radius: 0 6px 6px 0;
+    }
+    .exec h2 {
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: .6rem;
+    }
+    .exec p { font-size: .9rem; color: #333; margin: 0; }
+
+    /* ── BADGES ──────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: .2rem .6rem;
+      border-radius: 4px;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge--alta       { background: #fde8e6; color: var(--red); border: 1px solid #f5c0bc; }
+    .badge--media      { background: #e8f0fd; color: var(--blue); border: 1px solid #b8ccf0; }
+    .badge--baixa      { background: #fffbdd; color: var(--yellow); border: 1px solid #e0d080; }
+    .badge--info       { background: #f0f0f0; color: #555; border: 1px solid #ccc; }
+    .badge--corrigido  { background: #e6f7ee; color: var(--green); border: 1px solid #a0d8b8; }
+    .badge--pendente   { background: #fff3cd; color: #8a5a00; border: 1px solid #f0d080; }
+
+    /* ── TABELA ──────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 2rem;
+      font-size: .85rem;
+    }
+    thead th {
+      background: var(--dark);
+      color: #fff;
+      padding: .6rem .9rem;
+      text-align: left;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    tbody tr:nth-child(even) { background: #fafaf8; }
+    tbody td { padding: .6rem .9rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ── ANALOGIA ────────────────────────────────────── */
+    .analogy {
+      background: #fffbf0;
+      border: 1px solid #f0d890;
+      border-left: 4px solid var(--orange);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.3rem;
+      margin: 1.1rem 0 1.3rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .analogy__icon { flex-shrink: 0; margin-top: .15rem; }
+    .analogy__content {}
+    .analogy__label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: block;
+      margin-bottom: .25rem;
+    }
+    .analogy p { margin: 0; color: #4a3a18; font-size: .9rem; }
+
+    /* ── ILUSTRAÇÃO ──────────────────────────────────── */
+    .ilustra {
+      display: flex;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+    .ilustra svg { max-width: 100%; }
+
+    /* ── DIFF ANTES/DEPOIS ───────────────────────────── */
+    .diff {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin: 1.1rem 0 1.5rem;
+    }
+    @media (max-width: 640px) { .diff { grid-template-columns: 1fr; } }
+    .diff-col { border-radius: 6px; overflow: hidden; font-size: .82rem; }
+    .diff-col__head {
+      padding: .4rem .9rem;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .diff-col--bad  .diff-col__head { background: #c0392b; color: #fff; }
+    .diff-col--good .diff-col__head { background: #1a7a4a; color: #fff; }
+    .diff-col__body {
+      background: #1a1a1a;
+      color: #ccc;
+      padding: 1rem 1.1rem;
+      font-family: var(--mono);
+      font-size: .78rem;
+      line-height: 1.65;
+      min-height: 90px;
+    }
+    .diff-col--bad  .diff-col__body { border: 2px solid #c0392b; border-top: none; }
+    .diff-col--good .diff-col__body { border: 2px solid #1a7a4a; border-top: none; }
+    .r  { color: #f48771; }
+    .g  { color: #b5cea8; }
+    .c  { color: #6a9955; }
+    .k  { color: #569cd6; }
+    .s  { color: #ce9178; }
+
+    /* ── BLOCOS DE CÓDIGO ────────────────────────────── */
+    .code {
+      background: #1a1a1a;
+      color: #ccc;
+      border-radius: 6px;
+      padding: 1.1rem 1.4rem;
+      margin: .9rem 0 1.25rem;
+      font-family: var(--mono);
+      font-size: .8rem;
+      line-height: 1.65;
+      overflow-x: auto;
+    }
+
+    /* ── VULN CARD ───────────────────────────────────── */
+    .vuln-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.75rem 0;
+    }
+    .vuln-card__head {
+      padding: .85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .vuln-card__head--alta   { background: #fde8e6; }
+    .vuln-card__head--media  { background: #e8f0fd; }
+    .vuln-card__head--baixa  { background: #fffbdd; }
+    .vuln-card__head--info   { background: #f4f4f4; }
+    .vuln-card__title { font-weight: 700; font-size: .95rem; flex: 1; color: var(--dark); }
+    .vuln-card__file  { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+    .vuln-card__body  { padding: 1.25rem 1.4rem; }
+
+    /* ── CHECKLIST ───────────────────────────────────── */
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      padding: .45rem 0 .45rem 2rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li.done::before  { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 1rem; }
+    .checklist li.pend::before  { content: '○'; position: absolute; left: 0; color: var(--yellow); font-weight: 700; font-size: 1rem; }
+
+    /* ── GRID DE IMPACTO ─────────────────────────────── */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
+      margin: 1rem 0 1.5rem;
+    }
+    @media (max-width: 620px) { .impact-grid { grid-template-columns: 1fr 1fr; } }
+    .impact-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .8rem 1rem;
+      text-align: center;
+    }
+    .impact-card__icon { font-size: 1.8rem; line-height: 1; margin-bottom: .4rem; }
+    .impact-card__label { font-size: .75rem; color: var(--muted); }
+
+    /* ── RODAPÉ ──────────────────────────────────────── */
+    .footer {
+      margin-top: 4.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: .75rem;
+      color: #999;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    /* ── PRINT ───────────────────────────────────────── */
+    @media print {
+      @page { size: A4; margin: 1.8cm 2cm; }
+      body { padding: 0; font-size: 11.5px; max-width: 100%; }
+      .cover { padding: 2rem 0 2rem; }
+      h2.section { page-break-before: always; }
+      h2.section:first-of-type { page-break-before: avoid; }
+      .vuln-card { page-break-inside: avoid; }
+      .diff { page-break-inside: avoid; }
+      .ilustra svg { max-height: 160px; }
+      .analogy { page-break-inside: avoid; }
+      code { border: none; background: #eee; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     CAPA
+══════════════════════════════════════════ -->
+<div class="cover">
+  <span class="cover__badge">Documento Interno · Confidencial · Outubro 2026</span>
+
+  <!-- SVG Capa: Escudo com lupa e código -->
+  <div class="ilustra" style="margin-bottom:1.5rem">
+    <svg width="360" height="200" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- fundo gradiente suave -->
+      <rect width="360" height="200" rx="12" fill="#fafaf7"/>
+
+      <!-- escudo principal -->
+      <path d="M120 30 L120 30 Q120 28 122 28 L238 28 Q240 28 240 30 L240 30 L240 115 Q240 155 180 170 Q120 155 120 115 Z"
+            fill="#e8f0fa" stroke="#1a4f8a" stroke-width="2.5"/>
+      <!-- inner escudo -->
+      <path d="M130 42 L130 42 L230 42 L230 112 Q230 145 180 157 Q130 145 130 112 Z"
+            fill="#d0e0f5" stroke="#1a4f8a" stroke-width="1"/>
+
+      <!-- cadeado no centro do escudo -->
+      <rect x="161" y="90" width="38" height="30" rx="4" fill="#1a4f8a"/>
+      <path d="M168 90 L168 80 Q168 68 180 68 Q192 68 192 80 L192 90" stroke="#1a4f8a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="180" cy="107" r="5" fill="white"/>
+      <rect x="178" y="107" width="4" height="7" rx="1" fill="white"/>
+
+      <!-- lupa (vermelho = encontrou problema) -->
+      <circle cx="260" cy="80" r="38" fill="white" stroke="#c0392b" stroke-width="3"/>
+      <circle cx="260" cy="80" r="26" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+      <!-- código dentro da lupa -->
+      <text x="248" y="73" font-family="Courier New" font-size="8" fill="#c0392b" font-weight="bold">&lt;img</text>
+      <text x="244" y="83" font-family="Courier New" font-size="7" fill="#c0392b">onerr=</text>
+      <text x="248" y="93" font-family="Courier New" font-size="8" fill="#c0392b">"evil"</text>
+      <!-- cabo lupa -->
+      <line x1="281" y1="101" x2="305" y2="125" stroke="#c0392b" stroke-width="5" stroke-linecap="round"/>
+
+      <!-- alerta vermelho -->
+      <circle cx="296" cy="55" r="16" fill="#c0392b"/>
+      <text x="292" y="61" font-family="sans-serif" font-size="18" fill="white" font-weight="bold">!</text>
+
+      <!-- texto "8 falhas encontradas" -->
+      <rect x="60" y="158" width="240" height="28" rx="14" fill="#c0392b"/>
+      <text x="180" y="177" text-anchor="middle" font-family="sans-serif" font-size="12" fill="white" font-weight="bold">8 VULNERABILIDADES DETECTADAS</text>
+
+      <!-- pequenos bugs flutuando -->
+      <circle cx="50" cy="70" r="8" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="46" y="75" font-size="10">🐛</text>
+      <circle cx="310" cy="160" r="8" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="306" y="165" font-size="10">🐛</text>
+      <circle cx="40" cy="140" r="8" fill="#e6f7ee" stroke="#1a7a4a" stroke-width="1.5"/>
+      <text x="36" y="145" font-size="10">✓</text>
+    </svg>
+  </div>
+
+  <h1 class="cover__title">Auditoria de Cibersegurança<br/>CSM Decor</h1>
+  <p class="cover__sub">Análise completa de vulnerabilidades · Fase 2 — Perfis, autenticação e catálogo</p>
+
+  <div class="cover__stats">
+    <div class="cover__stat cover__stat--red">
+      <span class="cover__stat-num">8</span>
+      <span class="cover__stat-label">Falhas encontradas</span>
+    </div>
+    <div class="cover__stat cover__stat--red">
+      <span class="cover__stat-num">2</span>
+      <span class="cover__stat-label">Críticas · Alta</span>
+    </div>
+    <div class="cover__stat cover__stat--orange">
+      <span class="cover__stat-num">2</span>
+      <span class="cover__stat-label">Médias</span>
+    </div>
+    <div class="cover__stat cover__stat--blue">
+      <span class="cover__stat-num">3</span>
+      <span class="cover__stat-label">Baixas</span>
+    </div>
+    <div class="cover__stat cover__stat--green">
+      <span class="cover__stat-num">2</span>
+      <span class="cover__stat-label">Corrigidas nesta sessão</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SUMÁRIO EXECUTIVO
+══════════════════════════════════════════ -->
+<div class="exec">
+  <h2>Sumário Executivo — Para quem não é técnico</h2>
+  <p>
+    Realizamos uma varredura completa de segurança no site CSM Decor e encontramos
+    <strong>8 vulnerabilidades</strong>. Duas delas permitiam que qualquer pessoa com uma conta no site
+    executasse código malicioso para roubar dados de outros usuários — e foram <strong>corrigidas
+    imediatamente</strong>. As outras 6 estão documentadas neste relatório com prioridade de correção clara.
+    Nenhuma credencial bancária ou dado financeiro está em risco direto, mas dados de perfil e sessões
+    de usuário precisam de atenção. Este documento explica cada problema com linguagem simples,
+    analogias do mundo real e mostra exatamente o que foi feito.
+  </p>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     O QUE É SEGURANÇA WEB?
+══════════════════════════════════════════ -->
+<h2 class="section">1. O que é Segurança Web — Conceitos Básicos</h2>
+
+<p>
+  Antes de entrar nas vulnerabilidades, vale entender como um site funciona
+  do ponto de vista de segurança. Pense nele como uma casa:
+</p>
+
+<!-- SVG: Casa com camadas de segurança -->
+<div class="ilustra">
+  <svg width="700" height="200" viewBox="0 0 700 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="700" height="200" rx="10" fill="#fafaf7"/>
+
+    <!-- Casa -->
+    <rect x="270" y="80" width="160" height="100" fill="#e8d5c0" stroke="#8a6030" stroke-width="2"/>
+    <!-- Telhado -->
+    <polygon points="260,80 350,30 440,80" fill="#c07030" stroke="#8a4020" stroke-width="2"/>
+    <!-- Porta -->
+    <rect x="325" y="130" width="50" height="50" rx="2" fill="#6a3a18" stroke="#4a2a0a" stroke-width="1.5"/>
+    <circle cx="368" cy="158" r="4" fill="#d4a020"/>
+    <!-- Janelas -->
+    <rect x="285" y="95" width="40" height="30" rx="2" fill="#b8d8f0" stroke="#4a7aaa" stroke-width="1.5"/>
+    <rect x="375" y="95" width="40" height="30" rx="2" fill="#b8d8f0" stroke="#4a7aaa" stroke-width="1.5"/>
+
+    <!-- Camada 1: Servidor (fundo) -->
+    <rect x="40" y="60" width="200" height="110" rx="8" fill="#e6f7ee" stroke="#1a7a4a" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="140" y="85" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a7a4a" font-weight="bold">SERVIDOR / DEPLOY</text>
+    <text x="140" y="100" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a8a5a">Headers HTTP de segurança</text>
+    <text x="140" y="115" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a8a5a">HTTPS obrigatório</text>
+    <text x="140" y="130" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a8a5a">Credenciais protegidas</text>
+    <text x="140" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a8a5a">Política de senhas</text>
+    <!-- ícone -->
+    <text x="140" y="162" text-anchor="middle" font-size="16">🔒</text>
+
+    <!-- Camada 2: Aplicação -->
+    <rect x="460" y="60" width="210" height="110" rx="8" fill="#e8f0fd" stroke="#1a4f8a" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="565" y="85" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a4f8a" font-weight="bold">APLICAÇÃO / CÓDIGO</text>
+    <text x="565" y="100" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a5a9a">Sanitização de dados</text>
+    <text x="565" y="115" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a5a9a">Validação de inputs</text>
+    <text x="565" y="130" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a5a9a">Verificação de integridade</text>
+    <text x="565" y="145" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2a5a9a">API segura</text>
+    <text x="565" y="162" text-anchor="middle" font-size="16">🛡️</text>
+
+    <!-- setas -->
+    <path d="M240 115 L265 115" stroke="#888" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M435 115 L458 115" stroke="#888" stroke-width="2" marker-end="url(#arr)"/>
+
+    <defs>
+      <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#888"/>
+      </marker>
+    </defs>
+
+    <!-- Label central -->
+    <text x="350" y="195" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999">Segurança em camadas: cada camada protege a anterior</text>
+  </svg>
+</div>
+
+<p>
+  Segurança não é uma única fechadura — é um conjunto de camadas. Um atacante que passa
+  pela primeira ainda encontra a segunda. Neste relatório, encontramos falhas em ambas as camadas.
+</p>
+
+
+<!-- ══════════════════════════════════════════
+     TABELA GERAL
+══════════════════════════════════════════ -->
+<h2 class="section">2. Visão Geral — Todas as Vulnerabilidades</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Vulnerabilidade</th>
+      <th>Arquivo</th>
+      <th>Severidade</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Stored XSS — campo Instagram do perfil</td>
+      <td><code>perfil.html:394</code></td>
+      <td><span class="badge badge--alta">🔴 Alta</span></td>
+      <td><span class="badge badge--corrigido">✓ Corrigido</span></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Stored XSS — foto de perfil (photo_url)</td>
+      <td><code>perfil.html:447</code></td>
+      <td><span class="badge badge--alta">🔴 Alta</span></td>
+      <td><span class="badge badge--corrigido">✓ Corrigido</span></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Credenciais Supabase no histórico Git</td>
+      <td><code>supabase-config.js</code></td>
+      <td><span class="badge badge--media">🟠 Média</span></td>
+      <td><span class="badge badge--pendente">○ Pendente</span></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>CSP com <code>unsafe-inline</code> — proteção nula</td>
+      <td><code>vercel.json</code></td>
+      <td><span class="badge badge--media">🟠 Média</span></td>
+      <td><span class="badge badge--pendente">○ Pendente</span></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Scripts CDN sem verificação de integridade (SRI)</td>
+      <td><code>produtos.html, produto.html, perfil.html</code></td>
+      <td><span class="badge badge--baixa">🟡 Baixa</span></td>
+      <td><span class="badge badge--pendente">○ Pendente</span></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Dados pessoais enviados ao formsubmit.co (LGPD)</td>
+      <td><code>fale-conosco.html</code></td>
+      <td><span class="badge badge--baixa">🟡 Baixa</span></td>
+      <td><span class="badge badge--pendente">○ Pendente</span></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Senha mínima de 6 caracteres bypassável via API</td>
+      <td><code>auth.js:177</code></td>
+      <td><span class="badge badge--baixa">🟡 Baixa</span></td>
+      <td><span class="badge badge--pendente">○ Pendente</span></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Cliente Supabase autenticado exposto globalmente</td>
+      <td><code>auth.js:709</code></td>
+      <td><span class="badge badge--info">ℹ Informativa</span></td>
+      <td><span class="badge badge--pendente">○ Pendente</span></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 3 — ALTA SEVERIDADE
+══════════════════════════════════════════ -->
+<h2 class="section">3. Vulnerabilidades de Alta Severidade — <span style="color:var(--green)">Corrigidas</span></h2>
+
+<!-- ─────────────────────────────────────
+     3.1 XSS Instagram
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--alta">
+    <span class="badge badge--alta">🔴 Alta</span>
+    <span class="vuln-card__title">Falha #1 — Stored XSS via campo Instagram do Perfil</span>
+    <span class="vuln-card__file">perfil.html · linha 394</span>
+    <span class="badge badge--corrigido">✓ Corrigido</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fff3e0" stroke="#e07000" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">📋</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          Imagine que você vai a um banco e preenche uma ficha com seu nome.
+          O atendente pega a ficha e lê em voz alta para toda a agência.
+          Se alguém escrever na ficha: <em>"Meu nome é João. TODOS LEVANTEM AGORA!"</em> —
+          o atendente grita o comando para todos. O XSS funciona igual:
+          o site "lê em voz alta" para o navegador qualquer coisa salva no banco,
+          sem verificar se é texto normal ou código malicioso.
+        </p>
+      </div>
+    </div>
+
+    <!-- SVG: Fluxo do ataque -->
+    <div class="ilustra">
+      <svg width="660" height="150" viewBox="0 0 660 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="660" height="150" rx="8" fill="#fdf8f4"/>
+
+        <!-- Passo 1: Usuário malicioso -->
+        <rect x="10" y="25" width="130" height="100" rx="6" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="75" y="48" text-anchor="middle" font-size="22">😈</text>
+        <text x="75" y="66" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">ATACANTE</text>
+        <text x="75" y="80" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">Cria conta e</text>
+        <text x="75" y="92" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">salva Instagram:</text>
+        <text x="75" y="108" text-anchor="middle" font-family="Courier New" font-size="7" fill="#c0392b">&lt;script&gt;evil()&lt;/script&gt;</text>
+
+        <!-- Seta 1 -->
+        <path d="M142 75 L180 75" stroke="#c0392b" stroke-width="2.5" marker-end="url(#red-arr)"/>
+        <text x="161" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">salva no</text>
+        <text x="161" y="78" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">banco</text>
+
+        <!-- Passo 2: Banco de dados -->
+        <rect x="182" y="25" width="120" height="100" rx="6" fill="#fff3cd" stroke="#b8860b" stroke-width="1.5"/>
+        <text x="242" y="48" text-anchor="middle" font-size="22">🗄️</text>
+        <text x="242" y="66" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8a6000" font-weight="bold">BANCO DE DADOS</text>
+        <text x="242" y="82" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">Supabase armazena</text>
+        <text x="242" y="95" text-anchor="middle" font-family="Courier New" font-size="7" fill="#c0392b">"&lt;script&gt;evil()&lt;/script&gt;"</text>
+        <text x="242" y="110" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">sem questionar</text>
+
+        <!-- Seta 2 -->
+        <path d="M304 75 L342 75" stroke="#c0392b" stroke-width="2.5" marker-end="url(#red-arr)"/>
+        <text x="323" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">vítima</text>
+        <text x="323" y="78" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">visita perfil</text>
+
+        <!-- Passo 3: Código no DOM -->
+        <rect x="344" y="25" width="150" height="100" rx="6" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="419" y="45" text-anchor="middle" font-size="20">💻</text>
+        <text x="419" y="62" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">innerHTML (VULNERÁVEL)</text>
+        <text x="419" y="78" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">socialEl.innerHTML =</text>
+        <text x="419" y="90" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">'...' + instaHandle</text>
+        <text x="419" y="102" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">⚠ dados do banco</text>
+        <text x="419" y="114" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">viram código HTML</text>
+
+        <!-- Seta 3 -->
+        <path d="M496 75 L534 75" stroke="#c0392b" stroke-width="2.5" marker-end="url(#red-arr)"/>
+        <text x="515" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">executa</text>
+        <text x="515" y="78" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">no browser</text>
+
+        <!-- Passo 4: Ataque executado -->
+        <rect x="536" y="25" width="114" height="100" rx="6" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+        <text x="593" y="48" text-anchor="middle" font-size="22">💀</text>
+        <text x="593" y="65" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">ATAQUE!</text>
+        <text x="593" y="80" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">Roubo de cookies</text>
+        <text x="593" y="93" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">Roubo de sessão</text>
+        <text x="593" y="106" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">Redirect malicioso</text>
+
+        <defs>
+          <marker id="red-arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#c0392b"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <p>
+      <strong>O que estava errado:</strong> O handle do Instagram do usuário era buscado do banco de dados
+      (Supabase) e inserido diretamente na página via <code>innerHTML</code>, sem nenhuma verificação.
+      Se alguém salvasse código JavaScript no lugar do handle, esse código seria executado pelo navegador
+      de qualquer pessoa que visitasse o perfil.
+    </p>
+
+    <p><strong>O que um atacante poderia fazer:</strong></p>
+    <ul>
+      <li>Roubar o cookie de sessão de outros usuários logados</li>
+      <li>Redirecionar a vítima para um site falso (phishing)</li>
+      <li>Fazer ações no site em nome da vítima sem ela saber</li>
+      <li>Capturar senhas digitadas enquanto a página infectada está aberta</li>
+    </ul>
+
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     3.2 XSS photo_url
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--alta">
+    <span class="badge badge--alta">🔴 Alta</span>
+    <span class="vuln-card__title">Falha #2 — Stored XSS via Foto de Perfil (photo_url)</span>
+    <span class="vuln-card__file">perfil.html · linha 447</span>
+    <span class="badge badge--corrigido">✓ Corrigido</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fff3e0" stroke="#e07000" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">🖼️</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          Imagine um cartão de visita. Você coloca o nome dentro de aspas:
+          <em>"Nome: João"</em>. Agora imagine que o João escreve no nome dele:
+          <em>João" cargo="Diretor</em>. Ao copiar o nome entre aspas, você
+          acidentalmente criaria: <em>"Nome: João" cargo="Diretor"</em> —
+          inventando um campo que não existia. É exatamente isso que acontecia
+          com o campo de foto: uma aspa mal colocada permitia "inventar"
+          atributos HTML — incluindo um que executa código.
+        </p>
+      </div>
+    </div>
+
+    <!-- SVG: Escapando das aspas -->
+    <div class="ilustra">
+      <svg width="600" height="140" viewBox="0 0 600 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="600" height="140" rx="8" fill="#fdf8f4"/>
+
+        <!-- Tag img antes -->
+        <rect x="20" y="20" width="260" height="100" rx="6" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="150" y="40" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">❌ CÓDIGO VULNERÁVEL</text>
+        <text x="30" y="58" font-family="Courier New" font-size="8.5" fill="#666">&lt;img src="</text>
+        <text x="100" y="58" font-family="Courier New" font-size="8.5" fill="#c0392b">"+photoUrl+"</text>
+        <text x="195" y="58" font-family="Courier New" font-size="8.5" fill="#666">"&gt;</text>
+
+        <text x="150" y="75" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">Se photoUrl = :</text>
+        <text x="150" y="88" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">" onerror="evil()</text>
+
+        <text x="150" y="103" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">Resultado no HTML:</text>
+        <text x="150" y="116" text-anchor="middle" font-family="Courier New" font-size="7.5" fill="#c0392b">&lt;img src="" onerror="evil()"&gt;</text>
+
+        <!-- seta -->
+        <text x="300" y="72" text-anchor="middle" font-size="24" fill="#1a7a4a">→</text>
+
+        <!-- Tag img depois -->
+        <rect x="320" y="20" width="260" height="100" rx="6" fill="#e6f7ee" stroke="#1a7a4a" stroke-width="1.5"/>
+        <text x="450" y="40" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a4a" font-weight="bold">✓ CÓDIGO CORRIGIDO</text>
+
+        <text x="330" y="60" font-family="Courier New" font-size="8.5" fill="#666">var img =</text>
+        <text x="330" y="72" font-family="Courier New" font-size="8.5" fill="#1a7a4a">  document.createElement('img')</text>
+        <text x="330" y="84" font-family="Courier New" font-size="8.5" fill="#1a7a4a">img.src = photoUrl</text>
+        <text x="330" y="96" font-family="Courier New" font-size="8.5" fill="#1a7a4a">img.alt = userName</text>
+        <text x="330" y="110" font-family="sans-serif" font-size="8" fill="#2a8a5a">✓ Browser trata como URL pura</text>
+        <text x="330" y="122" font-family="sans-serif" font-size="8" fill="#2a8a5a">✓ Aspas não têm poder aqui</text>
+      </svg>
+    </div>
+
+    <p>
+      <strong>O que estava errado:</strong> A função <code>esc()</code> local de <code>perfil.html</code>
+      não escapava aspas duplas (<code>"</code>), apenas <code>&lt;</code> e <code>&gt;</code>.
+      Isso permitia que um valor de foto contendo <code>" onerror="</code> quebrasse para fora do atributo
+      <code>src</code> e injetasse um novo atributo HTML com código executável.
+    </p>
+
+    <p>
+      <strong>Agravante:</strong> Qualquer usuário pode atualizar seu próprio <code>photo_url</code>
+      direto na API do Supabase usando apenas seu próprio token de acesso (que está disponível
+      no browser do usuário logado).
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 4 — MÉDIA SEVERIDADE
+══════════════════════════════════════════ -->
+<h2 class="section">4. Vulnerabilidades de Média Severidade — <span style="color:var(--yellow)">Pendentes</span></h2>
+
+<!-- ─────────────────────────────────────
+     4.1 supabase-config
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--media">
+    <span class="badge badge--media">🟠 Média</span>
+    <span class="vuln-card__title">Falha #3 — Credenciais do Supabase no Histórico Git</span>
+    <span class="vuln-card__file">supabase-config.js · .gitignore</span>
+    <span class="badge badge--pendente">○ Pendente</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fff3e0" stroke="#e07000" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">🗝️</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          É como gravar um vídeo de segurança mostrando onde a chave reserva da sua casa está escondida
+          e depois publicar esse vídeo no YouTube. Mesmo que você apague o vídeo depois,
+          alguém pode ter feito download. O Git funciona igual: cada commit é permanente no histórico.
+          Uma vez que uma chave secreta entra no repositório, ela nunca mais é verdadeiramente secreta.
+        </p>
+      </div>
+    </div>
+
+    <!-- SVG: Chave no repositório público -->
+    <div class="ilustra">
+      <svg width="560" height="140" viewBox="0 0 560 140" fill="none">
+        <rect width="560" height="140" rx="8" fill="#fdf8f4"/>
+
+        <!-- Repositório Git -->
+        <rect x="20" y="20" width="160" height="100" rx="8" fill="#e8f0fd" stroke="#1a4f8a" stroke-width="2"/>
+        <text x="100" y="42" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a4f8a" font-weight="bold">📁 Repositório Git</text>
+        <text x="100" y="60" text-anchor="middle" font-family="Courier New" font-size="8" fill="#444">index.html</text>
+        <text x="100" y="74" text-anchor="middle" font-family="Courier New" font-size="8" fill="#444">style.css</text>
+        <text x="100" y="88" text-anchor="middle" font-family="Courier New" font-size="8" fill="#444">auth.js</text>
+        <text x="100" y="102" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b" font-weight="bold">⚠ supabase-config.js</text>
+
+        <!-- seta "push" -->
+        <path d="M182 70 L218 70" stroke="#1a4f8a" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#blue-arr)"/>
+        <text x="200" y="62" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a4f8a">git push</text>
+
+        <!-- GitHub / servidor remoto -->
+        <rect x="220" y="20" width="160" height="100" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+        <text x="300" y="42" text-anchor="middle" font-size="18">🐙</text>
+        <text x="300" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#c0392b" font-weight="bold">GitHub (público)</text>
+        <text x="300" y="78" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">anonKey: "eyJhbGci..."</text>
+        <text x="300" y="92" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">url: "supabase.co/..."</text>
+        <text x="300" y="108" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">qualquer pessoa vê</text>
+
+        <!-- seta "scraper" -->
+        <path d="M382 70 L418 70" stroke="#c0392b" stroke-width="2.5" marker-end="url(#red-arr2)"/>
+        <text x="400" y="62" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">acessa</text>
+
+        <!-- Atacante usando a chave -->
+        <rect x="420" y="20" width="120" height="100" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+        <text x="480" y="42" text-anchor="middle" font-size="18">😈</text>
+        <text x="480" y="60" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">Atacante</text>
+        <text x="480" y="76" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">Usa a anonKey</text>
+        <text x="480" y="90" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">para queries</text>
+        <text x="480" y="104" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#666">diretas no banco</text>
+
+        <defs>
+          <marker id="blue-arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#1a4f8a"/>
+          </marker>
+          <marker id="red-arr2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#c0392b"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <p>
+      <strong>O que foi encontrado:</strong> O arquivo <code>supabase-config.js</code>
+      contém a URL e a <em>anon key</em> do banco de dados. O próprio arquivo tem um comentário dizendo
+      <em>"Este arquivo não deve ser commitado"</em> — mas ele não está no <code>.gitignore</code>,
+      o que significa que já foi ou será enviado ao repositório remoto.
+    </p>
+    <p>
+      <strong>Por que a anon key importa:</strong> Ela permite que qualquer pessoa faça requisições
+      diretas ao banco via API REST — criar contas em massa, testar políticas de acesso (RLS),
+      e se alguma tabela tiver uma política permissiva, ler ou escrever dados livremente.
+    </p>
+    <p>
+      <strong>Como corrigir:</strong> Adicionar <code>supabase-config.js</code> ao <code>.gitignore</code>
+      imediatamente. Considerar rotacionar a anonKey no painel do Supabase.
+    </p>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────
+     4.2 CSP unsafe-inline
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--media">
+    <span class="badge badge--media">🟠 Média</span>
+    <span class="vuln-card__title">Falha #4 — Content Security Policy com unsafe-inline (proteção nula)</span>
+    <span class="vuln-card__file">vercel.json · linha 32</span>
+    <span class="badge badge--pendente">○ Pendente</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fff3e0" stroke="#e07000" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">🚧</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          O CSP é como um segurança na porta de uma festa com uma lista de convidados.
+          Mas <code>unsafe-inline</code> é como dizer ao segurança:
+          <em>"Pode entrar qualquer pessoa que estiver dentro do salão."</em>
+          A lista existe, mas não filtra ninguém que já esteja lá.
+          As falhas de XSS (#1 e #2) não seriam bloqueadas pelo CSP mesmo se configurado,
+          porque <code>unsafe-inline</code> permite scripts inline incondicionalmente.
+        </p>
+      </div>
+    </div>
+
+    <!-- SVG: Muro com buraco -->
+    <div class="ilustra">
+      <svg width="500" height="130" viewBox="0 0 500 130" fill="none">
+        <rect width="500" height="130" rx="8" fill="#fdf8f4"/>
+
+        <!-- Muro esquerdo -->
+        <rect x="30" y="20" width="80" height="90" rx="0" fill="#8a7a6a" stroke="#6a5a4a" stroke-width="2"/>
+        <text x="70" y="70" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#fff">CSP</text>
+        <text x="70" y="82" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#fff">Muro</text>
+
+        <!-- Buraco / porta aberta no meio -->
+        <rect x="110" y="30" width="120" height="80" rx="4" fill="#fde8e6" stroke="#c0392b" stroke-width="2" stroke-dasharray="6,3"/>
+        <text x="170" y="58" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">BURACO:</text>
+        <text x="170" y="72" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">unsafe-inline</text>
+        <text x="170" y="88" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">tudo inline passa</text>
+
+        <!-- Muro direito -->
+        <rect x="230" y="20" width="80" height="90" rx="0" fill="#8a7a6a" stroke="#6a5a4a" stroke-width="2"/>
+        <text x="270" y="70" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#fff">CSP</text>
+        <text x="270" y="82" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#fff">Muro</text>
+
+        <!-- Atacante passando -->
+        <text x="95" y="75" font-size="18">😈</text>
+        <path d="M108 70 L112 70" stroke="#c0392b" stroke-width="2" marker-end="url(#red-small)"/>
+
+        <!-- Versus: muro sem buraco -->
+        <text x="365" y="30" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a4a" font-weight="bold">✓ Correto (sem unsafe-inline)</text>
+        <rect x="320" y="35" width="80" height="75" rx="0" fill="#2a8a5a" stroke="#1a6a3a" stroke-width="2"/>
+        <text x="360" y="78" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#fff">CSP sólido</text>
+        <text x="360" y="90" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#fff">sem brechas</text>
+        <text x="305" y="78" font-size="18">😈</text>
+        <path d="M318 72 L321 72" stroke="#1a7a4a" stroke-width="2"/>
+        <text x="313" y="95" font-size="12">🚫</text>
+
+        <defs>
+          <marker id="red-small" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#c0392b"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <p>
+      <strong>O que está errado:</strong> O <code>vercel.json</code> tem um CSP configurado, o que é
+      ótimo — mas ele inclui <code>'unsafe-inline'</code> na diretiva <code>script-src</code>.
+      Isso cancela completamente a proteção contra XSS, que é o objetivo principal de um CSP.
+    </p>
+    <p>
+      <strong>Por que isso existe:</strong> O site tem muitos scripts inline no HTML. Para remover
+      o <code>unsafe-inline</code>, todos esses scripts precisam ser movidos para arquivos externos
+      (<code>.js</code>) — o que é um refactor maior, mas necessário a longo prazo.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 5 — BAIXA SEVERIDADE
+══════════════════════════════════════════ -->
+<h2 class="section">5. Vulnerabilidades de Baixa Severidade</h2>
+
+<!-- ─────────────────────────────────────
+     5.1 SRI
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--baixa">
+    <span class="badge badge--baixa">🟡 Baixa</span>
+    <span class="vuln-card__title">Falha #5 — Scripts CDN sem Verificação de Integridade (SRI)</span>
+    <span class="vuln-card__file">produtos.html · produto.html · perfil.html</span>
+    <span class="badge badge--pendente">○ Pendente</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fffbdd" stroke="#b8860b" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">📦</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          Você pede um remédio na farmácia. Confiam na distribuidora e não abrem cada caixa.
+          Um dia, alguém no meio do caminho substitui o remédio por veneno mantendo a embalagem original.
+          O SRI resolve isso com um <strong>lacre numerado</strong>: se o número não bater, o remédio
+          não é dispensado — mesmo que a embalagem pareça idêntica.
+        </p>
+      </div>
+    </div>
+
+    <!-- SVG: Entrega com e sem lacre -->
+    <div class="ilustra">
+      <svg width="520" height="120" viewBox="0 0 520 120" fill="none">
+        <rect width="520" height="120" rx="8" fill="#fdf8f4"/>
+
+        <!-- Sem SRI (risco) -->
+        <rect x="20" y="15" width="220" height="90" rx="6" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="130" y="35" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">❌ Sem SRI (arriscado)</text>
+
+        <text x="130" y="52" text-anchor="middle" font-size="16">🚚</text>
+        <path d="M130 60 L130 68" stroke="#888" stroke-width="1.5"/>
+        <text x="130" y="68" text-anchor="middle" font-size="16">📦</text>
+        <text x="130" y="80" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">CDN entrega o arquivo</text>
+        <text x="130" y="93" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">browser aceita sem checar</text>
+
+        <!-- Com SRI (seguro) -->
+        <rect x="280" y="15" width="220" height="90" rx="6" fill="#e6f7ee" stroke="#1a7a4a" stroke-width="1.5"/>
+        <text x="390" y="35" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a4a" font-weight="bold">✓ Com SRI (seguro)</text>
+
+        <text x="365" y="52" text-anchor="middle" font-size="16">🚚</text>
+        <path d="M365 60 L365 68" stroke="#1a7a4a" stroke-width="1.5"/>
+        <text x="365" y="68" text-anchor="middle" font-size="16">📦</text>
+        <text x="380" y="62" font-size="10">🔒</text>
+        <text x="390" y="80" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">Browser calcula hash SHA-512</text>
+        <text x="390" y="93" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a7a4a">Bate com o declarado → OK!</text>
+      </svg>
+    </div>
+
+    <p>
+      <strong>Onde:</strong> Em <code>produtos.html</code>, <code>produto.html</code> e
+      <code>perfil.html</code>, scripts como GSAP e Supabase são carregados de CDNs externos
+      sem o atributo <code>integrity</code>. O <code>index.html</code> já tem SRI correto —
+      as outras páginas precisam receber o mesmo tratamento.
+    </p>
+    <p>
+      <strong>Como corrigir:</strong> Adicionar <code>integrity="sha512-..."</code> e
+      <code>crossorigin="anonymous"</code> em cada tag <code>&lt;script&gt;</code> externo.
+      O hash pode ser obtido em <code>srihash.org</code> ou diretamente no CDN.
+    </p>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────
+     5.2 formsubmit / LGPD
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--baixa">
+    <span class="badge badge--baixa">🟡 Baixa</span>
+    <span class="vuln-card__title">Falha #6 — Dados Pessoais Enviados ao formsubmit.co (LGPD)</span>
+    <span class="vuln-card__file">fale-conosco.html</span>
+    <span class="badge badge--pendente">○ Pendente</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fffbdd" stroke="#b8860b" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">📮</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          É como entregar as cartas dos seus clientes para um correio terceirizado sem saber
+          onde eles armazenam as cópias, quem tem acesso, ou por quanto tempo guardam.
+          A LGPD (Lei Geral de Proteção de Dados) exige que você saiba e controle como
+          os dados dos seus clientes são tratados por terceiros.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      Os formulários de contato (nome, e-mail, telefone, mensagem) são enviados para o serviço
+      <strong>formsubmit.co</strong>, que os recebe, armazena temporariamente e reencaminha por e-mail.
+      Não há contrato de DPA (Data Processing Agreement) com esse serviço — um requisito da LGPD
+      para qualquer empresa que processe dados de terceiros em seu nome.
+    </p>
+    <p>
+      <strong>Como corrigir:</strong> Migrar o envio dos formulários para uma solução própria
+      (função serverless no Vercel, por exemplo) ou assinar um DPA formal com o formsubmit.co.
+    </p>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────
+     5.3 Senha
+───────────────────────────────────────── -->
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--baixa">
+    <span class="badge badge--baixa">🟡 Baixa</span>
+    <span class="vuln-card__title">Falha #7 — Política de Senha Mínima Bypassável via API</span>
+    <span class="vuln-card__file">auth.js · linha 177</span>
+    <span class="badge badge--pendente">○ Pendente</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#fffbdd" stroke="#b8860b" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">🔐</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          O segurança na porta exige documento para entrar. Mas há uma janela dos fundos sem segurança.
+          A validação de senha no JavaScript só funciona para quem usa a interface do site.
+          Quem enviar a requisição diretamente para o servidor (via <code>curl</code> ou Postman)
+          ignora completamente essa regra — e pode criar uma conta com senha <code>1</code>.
+        </p>
+      </div>
+    </div>
+
+    <!-- SVG: Porta da frente vs janela dos fundos -->
+    <div class="ilustra">
+      <svg width="480" height="120" viewBox="0 0 480 120" fill="none">
+        <rect width="480" height="120" rx="8" fill="#fdf8f4"/>
+
+        <!-- Site (porta) -->
+        <rect x="20" y="20" width="160" height="80" rx="6" fill="#e8f0fd" stroke="#1a4f8a" stroke-width="1.5"/>
+        <text x="100" y="40" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a4f8a" font-weight="bold">Interface do Site</text>
+        <text x="100" y="58" text-anchor="middle" font-size="16">🚪</text>
+        <text x="100" y="75" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a4f8a">Exige mínimo 6 chars</text>
+        <text x="100" y="89" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a7a4a">✓ Validação ativa</text>
+
+        <!-- API (janela) -->
+        <rect x="300" y="20" width="160" height="80" rx="6" fill="#fde8e6" stroke="#c0392b" stroke-width="1.5"/>
+        <text x="380" y="40" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b" font-weight="bold">API Supabase Direta</text>
+        <text x="380" y="58" text-anchor="middle" font-size="16">🪟</text>
+        <text x="380" y="75" text-anchor="middle" font-family="Courier New" font-size="8" fill="#c0392b">POST /auth/v1/signup</text>
+        <text x="380" y="89" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c0392b">sem regra de senha</text>
+
+        <text x="240" y="65" text-anchor="middle" font-size="20" fill="#888">⚡</text>
+        <text x="240" y="82" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">bypass</text>
+      </svg>
+    </div>
+
+    <p>
+      <strong>Como corrigir:</strong> Configurar a política de senha diretamente no
+      <strong>Supabase Dashboard → Authentication → Security → Password strength</strong>.
+      A regra definida lá é aplicada no servidor — não pode ser burlada via API.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 6 — INFORMATIVA
+══════════════════════════════════════════ -->
+<h2 class="section">6. Informativa</h2>
+
+<div class="vuln-card">
+  <div class="vuln-card__head vuln-card__head--info">
+    <span class="badge badge--info">ℹ Info</span>
+    <span class="vuln-card__title">Falha #8 — Cliente Supabase Autenticado Exposto Globalmente</span>
+    <span class="vuln-card__file">auth.js · linha 709</span>
+    <span class="badge badge--pendente">○ Pendente</span>
+  </div>
+  <div class="vuln-card__body">
+
+    <div class="analogy">
+      <div class="analogy__icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="17" fill="#f4f4f4" stroke="#888" stroke-width="1.5"/>
+          <text x="10" y="24" font-size="18">🪟</text>
+        </svg>
+      </div>
+      <div class="analogy__content">
+        <span class="analogy__label">Analogia — Como entender isso</span>
+        <p>
+          É como o cofre do gerente bancário ser visível pela janela da rua.
+          O cofre está trancado (as permissões do banco de dados protegem os dados),
+          mas qualquer um na calçada pode ver que o cofre existe, qual modelo é,
+          e tentar testá-lo. Remover o cofre da janela não resolve o problema de segurança
+          do cofre, mas elimina informação desnecessária para potenciais atacantes.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      O objeto <code>window.CSMAuth.supabase</code> expõe o cliente Supabase autenticado
+      como uma variável global acessível pelo console do browser. Isso significa que um usuário
+      logado (ou código JavaScript injetado via XSS) pode rodar comandos como
+      <code>CSMAuth.supabase.from('profiles').select('*')</code> diretamente pelo console —
+      com o JWT do usuário logado, enumerando a API e testando políticas de acesso (RLS).
+    </p>
+    <p>
+      <strong>Como corrigir:</strong> Remover <code>supabase: _sb</code> de
+      <code>window.CSMAuth</code> em <code>auth.js:709</code>.
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 7 — CORREÇÕES APLICADAS
+══════════════════════════════════════════ -->
+<h2 class="section">7. Correções Aplicadas Nesta Sessão — Antes e Depois</h2>
+
+<p>
+  As duas vulnerabilidades de alta severidade foram corrigidas imediatamente após a descoberta,
+  na mesma sessão de auditoria. Ambas utilizaram a mesma estratégia: substituir interpolação
+  de strings com <code>innerHTML</code> por <strong>DOM API</strong> — a forma mais segura
+  de inserir dados do usuário em uma página web.
+</p>
+
+<!-- ─────────────────────────────────────
+     Correção 1: Instagram
+───────────────────────────────────────── -->
+<h3 class="sub">
+  <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#1a7a4a"/><path d="M5 10l4 4 6-7" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Correção #1 — XSS via campo Instagram
+</h3>
+
+<p>
+  A correção usa duas estratégias combinadas para máxima segurança:
+  <strong>(1)</strong> o handle é filtrado por uma lista branca — só caracteres válidos de
+  um handle Instagram passam; <strong>(2)</strong> o link é construído via DOM API, nunca
+  por concatenação de strings em HTML.
+</p>
+
+<div class="diff">
+  <div class="diff-col diff-col--bad">
+    <div class="diff-col__head">❌ Antes — Vulnerável (perfil.html:394)</div>
+    <div class="diff-col__body">
+<span class="k">var</span> instaHandle =<br/>
+&nbsp;&nbsp;user.instagram.replace(<span class="s">/^@/</span>, <span class="s">''</span>);<br/>
+<br/>
+<span class="r">socialEl.innerHTML =</span><br/>
+<span class="r">&nbsp;&nbsp;'&lt;a href="https://instagram.com/'</span><br/>
+<span class="r">&nbsp;&nbsp;+ instaHandle +</span> <span class="c">// ⚠ livre</span><br/>
+<span class="r">&nbsp;&nbsp;'"&gt;@' + instaHandle + '&lt;/a&gt;';</span><br/>
+<br/>
+<span class="c">// qualquer string vira HTML</span>
+    </div>
+  </div>
+  <div class="diff-col diff-col--good">
+    <div class="diff-col__head">✓ Depois — Seguro</div>
+    <div class="diff-col__body">
+<span class="k">var</span> instaHandle = user.instagram<br/>
+&nbsp;&nbsp;.replace(<span class="s">/^@/</span>, <span class="s">''</span>)<br/>
+<span class="g">&nbsp;&nbsp;.replace(/[^a-zA-Z0-9_.]/g, '')</span><br/>
+<span class="g">&nbsp;&nbsp;.slice(0, 30);</span><br/>
+<br/>
+<span class="g">var link = document.createElement('a');</span><br/>
+<span class="g">link.href = 'https://instagram.com/' + instaHandle;</span><br/>
+<span class="g">link.appendChild(document.createTextNode('@'+instaHandle));</span><br/>
+<span class="g">socialEl.appendChild(link);</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────
+     Correção 2: photo_url
+───────────────────────────────────────── -->
+<h3 class="sub">
+  <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#1a7a4a"/><path d="M5 10l4 4 6-7" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Correção #2 — XSS via foto de perfil (photo_url)
+</h3>
+
+<p>
+  O avatar foi reescrito para criar o elemento <code>&lt;img&gt;</code> via DOM API.
+  Ao definir <code>img.src = valor</code> como propriedade JavaScript (em vez de interpolar
+  em uma string HTML), o browser trata o valor como URL pura — aspas e outros caracteres
+  especiais não têm poder de injetar HTML.
+</p>
+
+<div class="diff">
+  <div class="diff-col diff-col--bad">
+    <div class="diff-col__head">❌ Antes — Vulnerável (perfil.html:447)</div>
+    <div class="diff-col__body">
+<span class="r">wrap.innerHTML =</span><br/>
+<span class="r">&nbsp;&nbsp;'&lt;img src="'</span><br/>
+<span class="r">&nbsp;&nbsp;+ user.photoUrl +</span> <span class="c">// ⚠ aspas</span><br/>
+<span class="r">&nbsp;&nbsp;'" alt="' + user.name + '"'</span><br/>
+<span class="r">&nbsp;&nbsp;+ 'onerror="..."&gt;';</span><br/>
+<br/>
+<span class="c">// " no photoUrl quebra o</span><br/>
+<span class="c">// atributo src e injeta código</span>
+    </div>
+  </div>
+  <div class="diff-col diff-col--good">
+    <div class="diff-col__head">✓ Depois — Seguro</div>
+    <div class="diff-col__body">
+<span class="g">var img = document.createElement('img');</span><br/>
+<span class="g">img.src = user.photoUrl;</span> <span class="c">// URL pura</span><br/>
+<span class="g">img.alt = user.name || '';</span>&nbsp;&nbsp;<span class="c">// texto puro</span><br/>
+<br/>
+<span class="g">img.addEventListener('error', function() {</span><br/>
+<span class="g">&nbsp;&nbsp;var div = document.createElement('div');</span><br/>
+<span class="g">&nbsp;&nbsp;div.textContent = primeiraLetra;</span><br/>
+<span class="g">&nbsp;&nbsp;wrap.appendChild(div);</span><br/>
+<span class="g">});</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────
+     Correção 3: esc()
+───────────────────────────────────────── -->
+<h3 class="sub">
+  <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#1a7a4a"/><path d="M5 10l4 4 6-7" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Correção Bônus — Função esc() corrigida (defesa em profundidade)
+</h3>
+
+<p>
+  A função <code>esc()</code> de <code>perfil.html</code> não escapava aspas duplas
+  (<code>"</code>), ao contrário da versão correta em <code>auth.js</code>.
+  A versão foi corrigida para incluir este escape — garantindo que, mesmo que algum
+  <code>innerHTML</code> use <code>esc()</code> no futuro, ele seja seguro.
+</p>
+
+<div class="diff">
+  <div class="diff-col diff-col--bad">
+    <div class="diff-col__head">❌ Antes — Incompleta</div>
+    <div class="diff-col__body">
+<span class="k">function</span> esc(s) {<br/>
+&nbsp;&nbsp;<span class="k">return</span> String(s||<span class="s">''</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/&amp;/g</span>, <span class="s">'&amp;amp;'</span>)<br/>
+<span class="r">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c">// ⚠ aspas " não escapadas!</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/&lt;/g</span>, <span class="s">'&amp;lt;'</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/&gt;/g</span>, <span class="s">'&amp;gt;'</span>);<br/>
+}
+    </div>
+  </div>
+  <div class="diff-col diff-col--good">
+    <div class="diff-col__head">✓ Depois — Completa</div>
+    <div class="diff-col__body">
+<span class="k">function</span> esc(s) {<br/>
+&nbsp;&nbsp;<span class="k">return</span> String(s||<span class="s">''</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/&amp;/g</span>, <span class="s">'&amp;amp;'</span>)<br/>
+<span class="g">&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/"/g</span>,  <span class="s">'&amp;quot;'</span>)</span>&nbsp;<span class="c">// ← adicionado</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/&lt;/g</span>, <span class="s">'&amp;lt;'</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.replace(<span class="s">/&gt;/g</span>, <span class="s">'&amp;gt;'</span>);<br/>
+}
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 8 — PENDÊNCIAS
+══════════════════════════════════════════ -->
+<h2 class="section">8. Pendências — Próximos Passos por Prioridade</h2>
+
+<p>As 6 vulnerabilidades restantes são listadas abaixo em ordem de prioridade de correção:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prioridade</th>
+      <th>O que fazer</th>
+      <th>Arquivo</th>
+      <th>Esforço</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="badge badge--alta">1 · Urgente</span></td>
+      <td>Adicionar <code>supabase-config.js</code> ao <code>.gitignore</code></td>
+      <td><code>.gitignore</code></td>
+      <td>5 min</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge--alta">2 · Urgente</span></td>
+      <td>Configurar política de senha mínima no Supabase Dashboard</td>
+      <td>Supabase Admin</td>
+      <td>5 min</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge--media">3 · Médio</span></td>
+      <td>Remover <code>supabase: _sb</code> de <code>window.CSMAuth</code></td>
+      <td><code>auth.js:709</code></td>
+      <td>5 min</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge--media">4 · Médio</span></td>
+      <td>Adicionar atributo <code>integrity</code> nos scripts CDN sem SRI</td>
+      <td><code>produtos.html · produto.html · perfil.html</code></td>
+      <td>30 min</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge--baixa">5 · Planejado</span></td>
+      <td>Migrar formulários do formsubmit.co para solução própria ou assinar DPA</td>
+      <td><code>fale-conosco.html</code></td>
+      <td>2–4h</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge--baixa">6 · Planejado</span></td>
+      <td>Mover scripts inline para <code>.js</code> externos e remover <code>unsafe-inline</code> do CSP</td>
+      <td>Todas as páginas</td>
+      <td>Refactor maior</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 9 — CHECKLIST
+══════════════════════════════════════════ -->
+<h2 class="section">9. Checklist de Status</h2>
+
+<ul class="checklist">
+  <li class="done">Auditoria completa realizada — 8 vulnerabilidades identificadas</li>
+  <li class="done">XSS #1 corrigido — campo instagram migrado para DOM API + whitelist de caracteres</li>
+  <li class="done">XSS #2 corrigido — photo_url migrado para DOM API (createElement/appendChild)</li>
+  <li class="done">Função esc() corrigida — adicionado escape de aspas duplas (&amp;quot;)</li>
+  <li class="done">Correções commitadas e publicadas (commit <code>0e07264</code>)</li>
+  <li class="pend">Adicionar supabase-config.js ao .gitignore</li>
+  <li class="pend">Configurar política de senha mínima no Supabase Dashboard</li>
+  <li class="pend">Remover window.CSMAuth.supabase da API pública</li>
+  <li class="pend">Adicionar SRI nos scripts CDN de produtos.html, produto.html e perfil.html</li>
+  <li class="pend">Avaliar alternativa ao formsubmit.co para conformidade LGPD</li>
+  <li class="pend">Mover scripts inline para arquivos .js externos (refactor de longo prazo)</li>
+</ul>
+
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO 10 — CONCLUSÃO
+══════════════════════════════════════════ -->
+<h2 class="section">10. Conclusão</h2>
+
+<!-- SVG: Antes x Depois - semáforo de risco -->
+<div class="ilustra">
+  <svg width="580" height="160" viewBox="0 0 580 160" fill="none">
+    <rect width="580" height="160" rx="10" fill="#fafaf7"/>
+
+    <!-- Antes -->
+    <rect x="30" y="20" width="230" height="120" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+    <text x="145" y="45" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#c0392b" font-weight="bold">ANTES DA AUDITORIA</text>
+    <circle cx="85" cy="88" r="22" fill="#c0392b"/>
+    <text x="85" y="94" text-anchor="middle" font-family="sans-serif" font-size="20" fill="white">⚠</text>
+    <text x="160" y="75" font-family="sans-serif" font-size="9" fill="#666">• 2 XSS ativos e exploráveis</text>
+    <text x="160" y="90" font-family="sans-serif" font-size="9" fill="#666">• Credenciais no histórico Git</text>
+    <text x="160" y="105" font-family="sans-serif" font-size="9" fill="#666">• CSP sem efeito real</text>
+    <text x="160" y="120" font-family="sans-serif" font-size="9" fill="#666">• Scripts CDN sem verificação</text>
+
+    <!-- Seta de transição -->
+    <path d="M265 90 L315 90" stroke="#1a7a4a" stroke-width="3" marker-end="url(#green-arr)"/>
+    <text x="290" y="82" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a4a">Auditoria</text>
+    <text x="290" y="100" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a7a4a">+ Correções</text>
+
+    <!-- Depois -->
+    <rect x="320" y="20" width="230" height="120" rx="8" fill="#e6f7ee" stroke="#1a7a4a" stroke-width="2"/>
+    <text x="435" y="45" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a7a4a" font-weight="bold">DEPOIS (parcial)</text>
+    <circle cx="370" cy="88" r="22" fill="#1a7a4a"/>
+    <text x="370" y="94" text-anchor="middle" font-family="sans-serif" font-size="20" fill="white">✓</text>
+    <text x="445" y="75" font-family="sans-serif" font-size="9" fill="#444">• XSS corrigidos — DOM API</text>
+    <text x="445" y="90" font-family="sans-serif" font-size="9" fill="#444">• esc() completa com &amp;quot;</text>
+    <text x="445" y="105" font-family="sans-serif" font-size="9" fill="#b8860b">○ 6 pendências documentadas</text>
+    <text x="445" y="120" font-family="sans-serif" font-size="9" fill="#b8860b">○ com prazo e esforço claro</text>
+
+    <defs>
+      <marker id="green-arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+        <path d="M0,0 L7,3.5 L0,7 Z" fill="#1a7a4a"/>
+      </marker>
+    </defs>
+  </svg>
+</div>
+
+<p>
+  A auditoria encontrou <strong>8 vulnerabilidades reais e concretas</strong> — não hipotéticas.
+  As duas de maior risco (<em>Stored XSS via instagram</em> e <em>Stored XSS via photo_url</em>)
+  foram corrigidas na mesma sessão, com código publicado no repositório.
+</p>
+<p>
+  As 6 vulnerabilidades restantes estão documentadas com prioridade, arquivo exato e estimativa
+  de esforço. As três primeiras da lista de pendências podem ser resolvidas em menos de 20 minutos —
+  especialmente adicionar <code>supabase-config.js</code> ao <code>.gitignore</code>.
+</p>
+<p>
+  <strong>Mensagem central:</strong> Segurança não é um estado definitivo — é um processo contínuo.
+  Esta auditoria é um passo importante, mas deve ser repetida a cada nova funcionalidade adicionada
+  ao site. O custo de corrigir uma vulnerabilidade antes do site ir ao ar é
+  <em>dezenas de vezes menor</em> do que depois de um incidente.
+</p>
+
+<blockquote style="border-left:4px solid var(--orange);padding:.8rem 1.2rem;background:#fffbf0;border-radius:0 6px 6px 0;margin:1.5rem 0;color:#4a3a18;font-style:italic;font-size:.92rem;">
+  "Segurança é como uma corrente — sua força é determinada pelo elo mais fraco.
+  Hoje, os elos mais fracos foram reforçados. Os próximos estão identificados."
+</blockquote>
+
+<!-- RODAPÉ -->
+<div class="footer">
+  <span>CSM Decor — Campinas Shopping Móveis · Relatório de Auditoria de Segurança · Fase 2</span>
+  <span>01 de outubro de 2026 · Documento Interno Confidencial</span>
+</div>
+
+</body>
+</html>
