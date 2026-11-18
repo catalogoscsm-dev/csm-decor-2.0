@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSM Agende sua Visita</title>
+<meta name="description" content="Conheça o showroom da Campinas Shopping Móveis: mais de 30 anos, 6.000 m² e mais de 200 marcas. Agende sua visita pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: warm editorial showroom. Brand orange (#FE7D00 from the CSM logo) over sand and espresso, one hero armchair on an orange disc, photo cards with slow zoom, one action repeated. */
+:root{
+  --orange:#fe7d00;
+  --orange-hi:#ff9a3c;
+  --orange-ink:#b44d00;
+  --ink:#1e130c;
+  --ink-2:#2b1d13;
+  --sand:#f7eee4;
+  --paper:#fffaf4;
+  --line:#e6d8c8;
+  --muted:#5f4b3d;
+  --display:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme: light;
+}
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--sand);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+p{margin:0}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.012em}
+h1{font-size:clamp(2.7rem,7vw,5.3rem)}
+h2{font-size:clamp(2.1rem,4.6vw,3.4rem)}
+h3{font-size:1.55rem}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--orange-ink)}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--orange)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* header */
+header{position:sticky;top:0;z-index:30;background:rgba(247,238,228,.86);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+header.scrolled{border-color:var(--line);box-shadow:0 8px 30px -18px rgba(60,30,0,.35)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+.logo img{height:44px;width:auto}
+
+/* buttons */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 30px;border-radius:999px;border:0;background:var(--orange);color:var(--ink);font:800 .95rem var(--body);letter-spacing:.03em;text-decoration:none;cursor:pointer;box-shadow:0 10px 28px -10px rgba(254,125,0,.75),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .8s var(--ease)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(254,125,0,.9),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn:hover::after{transform:translateX(120%)}
+.btn .arr{transition:transform .35s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn.ghost{background:transparent;box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff;box-shadow:inset 0 0 0 1.5px var(--ink),0 14px 30px -14px rgba(30,19,12,.6)}
+.btn.ghost::after{display:none}
+.btn.small{min-height:46px;padding:0 22px;font-size:.85rem}
+
+/* hero */
+.hero{position:relative;padding:clamp(36px,6vw,84px) 0 clamp(56px,8vw,110px);overflow:hidden;background:
+  radial-gradient(900px 520px at 88% 8%, rgba(254,125,0,.20), transparent 62%),
+  radial-gradient(700px 480px at -5% 100%, rgba(254,154,60,.18), transparent 60%),
+  var(--sand)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,72px);align-items:center}
+.hero h1{margin-top:18px}
+.hero h1 em{font-style:italic;color:var(--orange-ink);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.14em;background:linear-gradient(90deg,var(--orange),rgba(254,125,0,0));border-radius:99px;transform-origin:left;animation:draw 1.2s .5s var(--ease) both}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.lead{margin-top:24px;font-size:1.15rem;max-width:33em;color:var(--muted)}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.proof{display:flex;flex-wrap:wrap;gap:12px 34px;margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
+.proof div{min-width:7rem}
+.proof b{display:block;font-family:var(--display);font-size:2.6rem;line-height:1;color:var(--ink);font-weight:700}
+.proof span{display:block;margin-top:4px;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+
+/* hero visual */
+.stage{position:relative;aspect-ratio:1/1.04;width:100%;max-width:560px;margin-inline:auto;--px:0;--py:0;--sy:0;touch-action:pan-y}
+.disc{position:absolute;inset:6% 4% 12% 4%;border-radius:50%;background:radial-gradient(circle at 32% 26%,var(--orange-hi),var(--orange) 46%,#e86a00 100%);box-shadow:0 50px 90px -40px rgba(254,125,0,.8),inset 0 -30px 60px rgba(150,60,0,.25);transform:translate(calc(var(--px)*-10px),calc(var(--py)*-10px + var(--sy)*10px))}
+.ring{position:absolute;border-radius:50%;pointer-events:none}
+.ring.r1{inset:-1% 0 5% 0;border:1.5px dashed rgba(30,19,12,.35);animation:spin 60s linear infinite}
+.ring.r2{inset:12% 12% 22% 12%;border:1px solid rgba(255,255,255,.5)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chair{position:absolute;left:50%;top:50%;width:86%;transform:translate(calc(-50% + var(--px)*16px),calc(-52% + var(--py)*16px + var(--sy)*-22px));filter:drop-shadow(0 26px 24px rgba(80,30,0,.35));animation:float 9s ease-in-out infinite}
+@keyframes float{50%{margin-top:-10px}}
+.card-float{position:absolute;right:-2%;bottom:2%;width:42%;background:var(--paper);padding:7px;border-radius:18px;box-shadow:0 30px 50px -22px rgba(60,25,0,.55);transform:translate(calc(var(--px)*24px),calc(var(--py)*24px + var(--sy)*-30px)) rotate(3deg)}
+.card-float img{border-radius:12px;aspect-ratio:4/3;object-fit:cover;width:100%}
+.card-float figcaption{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;padding:8px 6px 3px;color:var(--ink)}
+.badge{position:absolute;left:-1%;top:12%;background:var(--ink);color:#fff;border-radius:16px;padding:12px 18px;box-shadow:0 24px 40px -20px rgba(0,0,0,.6);transform:translate(calc(var(--px)*-20px),calc(var(--py)*-20px + var(--sy)*14px)) rotate(-4deg)}
+.badge b{display:block;font-family:var(--display);font-size:2rem;line-height:1;color:var(--orange-hi)}
+.badge span{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+
+.gyro{position:absolute;left:2%;bottom:-2px;white-space:nowrap;z-index:5;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:999px;background:var(--ink);color:#fff;font:800 .74rem var(--body);letter-spacing:.12em;text-transform:uppercase;box-shadow:0 14px 28px -12px rgba(0,0,0,.6);cursor:pointer}
+.gyro::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(254,125,0,.3)}
+[hidden]{display:none !important}
+
+/* marquee */
+.band{background:var(--ink);color:#fff;overflow:hidden;border-block:1px solid #000}
+.track{display:flex;width:max-content;animation:mq 38s linear infinite}
+.track ul{list-style:none;margin:0;padding:18px 0;display:flex;gap:0}
+.track li{font-family:var(--display);font-style:italic;font-size:1.5rem;white-space:nowrap;padding:0 30px;display:flex;align-items:center;gap:60px}
+.track li::after{content:"\2726";color:var(--orange);font-style:normal;font-size:1rem}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+section{padding:clamp(64px,9vw,120px) 0}
+.head{max-width:44rem;margin-bottom:clamp(32px,5vw,60px)}
+.head h2{margin-top:14px}
+.head p{margin-top:16px;color:var(--muted);font-size:1.05rem}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
+.step{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:34px 30px 32px;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s}
+.step::before{content:"";position:absolute;inset:auto -30% -60% auto;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(254,125,0,.22),transparent 65%);transition:transform .6s var(--ease)}
+.step:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 30px 50px -28px rgba(254,125,0,.55)}
+.step:hover::before{transform:scale(1.4)}
+.step .n{font-family:var(--display);font-size:4.4rem;line-height:.9;font-weight:700;color:transparent;-webkit-text-stroke:1.5px var(--orange);}
+.step h3{margin:16px 0 10px}
+.step p{color:var(--muted);position:relative}
+
+/* gallery */
+.rooms{background:var(--paper);border-block:1px solid var(--line)}
+.gal{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(150px,19vw,230px);gap:clamp(10px,1.6vw,20px)}
+.tile{position:relative;display:block;overflow:hidden;border-radius:24px;text-decoration:none;color:#fff;background:var(--sand);isolation:isolate}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);will-change:transform}
+.tile::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(30,19,12,0) 45%,rgba(30,19,12,.78) 100%);transition:opacity .5s}
+.tile:hover img{transform:scale(1.08)}
+.tile .cap{position:absolute;left:22px;right:22px;bottom:20px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.tile .cap b{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.05;font-weight:600}
+.tile .cap i{font-style:normal;flex:none;width:44px;height:44px;border-radius:50%;background:var(--orange);color:var(--ink);display:grid;place-items:center;font-weight:800;transform:translateY(8px) scale(.8);opacity:0;transition:all .45s var(--ease)}
+.tile:hover .cap i,.tile:focus-visible .cap i{transform:none;opacity:1}
+.t1{grid-column:span 7;grid-row:span 2}
+.t2{grid-column:span 5;grid-row:span 3}
+.t3{grid-column:span 4;grid-row:span 2}
+.t4{grid-column:span 3;grid-row:span 2}
+.t5{grid-column:span 5;grid-row:span 2}
+.t6{grid-column:span 4;grid-row:span 2;background:radial-gradient(circle at 50% 40%,#ffd3a1,var(--orange) 80%)}
+.t6 img{object-fit:contain;padding:8% 6% 16%;mix-blend-mode:multiply}
+.t6::after{background:linear-gradient(180deg,rgba(30,19,12,0) 60%,rgba(30,19,12,.55) 100%)}
+.more{margin-top:26px;color:var(--muted)}
+.more b{color:var(--ink)}
+
+/* quotes */
+.quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+blockquote{position:relative;margin:0;background:var(--paper);border:1px solid var(--line);padding:42px 34px 30px;border-radius:26px}
+blockquote::before{content:"\201C";position:absolute;left:28px;top:-6px;font-family:var(--display);font-size:6rem;line-height:1;color:var(--orange)}
+blockquote p{font-family:var(--display);font-size:1.5rem;line-height:1.3;font-weight:500;padding-top:22px}
+blockquote footer{margin-top:20px;display:flex;align-items:center;gap:12px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.stars{color:var(--orange);letter-spacing:.2em;font-size:.95rem}
+
+/* pro */
+.pro{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;background:var(--ink);color:#f3e8dc;border-radius:34px;padding:clamp(34px,5.5vw,72px)}
+.pro::before{content:"";position:absolute;right:-12%;top:-40%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(254,125,0,.55),transparent 68%)}
+.pro>*{position:relative}
+.pro h2{color:#fff}
+.pro .eyebrow{color:var(--orange-hi)}
+.pro ul{margin:0;padding:0;list-style:none}
+.pro li{padding:16px 0 16px 38px;border-bottom:1px solid rgba(255,255,255,.14);position:relative}
+.pro li::before{content:"\2726";position:absolute;left:0;top:16px;color:var(--orange)}
+.pro .btn{margin-top:28px}
+
+/* faq */
+.faq{max-width:50rem}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--ink)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:22px 0;font-weight:700;font-size:1.08rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--orange);color:var(--orange-ink);font-size:1.4rem;transition:all .3s var(--ease)}
+details[open] summary::after{content:"\2212";background:var(--orange);color:var(--ink)}
+details p{padding:0 0 22px;color:var(--muted);max-width:40rem}
+
+/* booking */
+.book{position:relative;background:linear-gradient(180deg,var(--sand),#fbe3c9);border-top:1px solid var(--line)}
+.book-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,6vw,88px);align-items:start}
+.book-info ul{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:14px}
+.book-info li{padding-left:30px;position:relative}
+.book-info li::before{content:"\2726";color:var(--orange);position:absolute;left:0;top:0}
+.book-info a{color:var(--orange-ink);font-weight:700}
+.glow{position:relative;border-radius:30px;padding:2px;background:conic-gradient(from var(--ang),var(--orange),#ffd9b0,var(--orange-ink),var(--orange));animation:turn 7s linear infinite;box-shadow:0 40px 70px -40px rgba(254,125,0,.7)}
+@keyframes turn{to{--ang:360deg}}
+form,.done{border-radius:28px;background:var(--paper);padding:clamp(24px,3.6vw,42px)}
+.field{display:grid;gap:7px;margin-bottom:18px}
+label,.legend{font-weight:800;font-size:.9rem}
+.opt{font-weight:500;color:var(--muted)}
+input[type=text],input[type=tel]{width:100%;min-height:56px;padding:0 18px;border:1.5px solid #d9c6b2;border-radius:14px;background:#fff;font:500 1rem var(--body);color:var(--ink);transition:border-color .2s,box-shadow .2s}
+input[type=text]:focus,input[type=tel]:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 4px rgba(254,125,0,.22)}
+input[aria-invalid=true]{border-color:#b3261e}
+.err{color:#b3261e;font-size:.85rem;min-height:1.2em}
+fieldset{border:0;margin:0 0 18px;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips label{font-weight:700;font-size:.88rem;padding:10px 17px;border:1.5px solid #d9c6b2;border-radius:999px;background:#fff;cursor:pointer;transition:all .2s var(--ease)}
+.chips label:hover{border-color:var(--orange)}
+.chips input:checked+label{background:var(--ink);border-color:var(--ink);color:#fff;transform:translateY(-1px)}
+.chips input:focus-visible+label{outline:3px solid var(--orange);outline-offset:2px}
+.consent{font-size:.8rem;color:var(--muted);margin:4px 0 20px}
+form .btn{width:100%}
+.done{display:none}
+.done.show{display:block}
+.done h3{margin-bottom:10px}
+.done p{color:var(--muted)}
+.done .btn{margin-top:22px;width:100%}
+.done small{display:block;margin-top:14px;color:var(--muted)}
+
+/* footer */
+footer.site{background:var(--ink);color:#d6c8ba;padding:64px 0 40px;font-size:.93rem}
+footer.site .cols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:32px}
+footer.site h4{margin:0 0 12px;font:800 .74rem var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--orange-hi)}
+footer.site a{color:#fff}
+.chip{display:inline-block;background:var(--paper);border-radius:16px;padding:10px 16px}
+.chip img{height:42px;width:auto}
+.legal{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);font-size:.8rem;color:#9d8e80}
+
+/* dock */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,250,244,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;gap:10px}
+.dock .btn{flex:1;min-height:50px;padding:0 12px}
+
+/* reveal (only below the fold; content is always visible if JS is slow) */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .hero-grid,.book-grid,.pro,.quotes,footer.site .cols,.steps{grid-template-columns:1fr}
+  .stage{max-width:430px;margin-top:8px}
+  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(150px,42vw,230px)}
+  .t1,.t2,.t3,.t4,.t5,.t6{grid-column:span 1;grid-row:span 1}
+  .t1{grid-column:span 2}
+  .t2{grid-row:span 2}
+  .tile .cap{left:16px;right:14px;bottom:16px}
+  .tile .cap b{min-width:0;font-size:1.35rem}
+  .tile .cap i{opacity:1;transform:none;width:38px;height:38px}
+  .dock{display:flex}
+  header .btn{display:none}
+  footer.site{padding-bottom:124px}
+  .proof{display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:10px 14px}
+  .proof div{min-width:0}
+  .proof b{font-size:1.85rem;white-space:nowrap}
+  .proof span{font-size:.62rem;letter-spacing:.08em}
+}
+@media (hover:none){ .btn::after{display:none} }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .rv{opacity:1;transform:none}
+  .track{flex-wrap:wrap;width:auto}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap bar">
+    <a class="logo" href="#topo" aria-label="CSM Campinas Shopping Móveis"><img src="assets/logo.png" alt="CSM Campinas Shopping Móveis" width="768" height="305"></a>
+    <a class="btn small" href="#agendar" data-cta="header">Agendar visita <span class="arr" aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="topo">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Showroom em Campinas · Cambuí</p>
+        <h1>Antes de levar para casa, <em>sente, toque e compare.</em></h1>
+        <p class="lead">Um showroom de 6.000&nbsp;m² com mais de 200 marcas de móveis e decoração de alto padrão. Conte o que você procura e a nossa equipe prepara a sua visita.</p>
+        <div class="cta-row">
+          <a class="btn" href="#agendar" data-cta="hero-agendar">Quero agendar minha visita <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn ghost" id="wa-hero" href="https://wa.me/5519990034068" data-cta="hero-whatsapp">Falar no WhatsApp</a>
+        </div>
+        <div class="proof" aria-label="A CSM em números">
+          <div><b>30+</b><span>anos de história</span></div>
+          <div><b>6.000 m²</b><span>de showroom</span></div>
+          <div><b>200+</b><span>marcas parceiras</span></div>
+        </div>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="disc"></div>
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <img class="chair" src="assets/volpi.png" alt="Poltrona de couro caramelo com assento arredondado" width="900" height="900">
+        <button class="gyro" id="gyro" type="button" hidden>Ativar efeito 3D</button>
+        <div class="badge"><b>200+</b><span>marcas curadas</span></div>
+        <figure class="card-float" style="margin:0">
+          <img src="assets/marajo-3.jpg" alt="Sofá modular terracota com puff redondo no showroom" width="600" height="339">
+          <figcaption>Sofás sob medida</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="band" aria-hidden="true">
+    <div class="track">
+      <ul><li>Alta marcenaria</li><li>Estofados premium</li><li>Marcas curadas</li><li>Sob encomenda e pronta entrega</li><li>Showroom no Cambuí</li></ul>
+      <ul><li>Alta marcenaria</li><li>Estofados premium</li><li>Marcas curadas</li><li>Sob encomenda e pronta entrega</li><li>Showroom no Cambuí</li></ul>
+    </div>
+  </div>
+
+  <section id="como">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Como funciona</p>
+        <h2>Da primeira mensagem ao orçamento, em três passos.</h2>
+      </div>
+      <div class="steps">
+        <div class="step rv"><div class="n">1</div><h3>Você conta o que procura</h3><p>Nome, WhatsApp e o ambiente que quer mobiliar. Leva menos de um minuto.</p></div>
+        <div class="step rv"><div class="n">2</div><h3>Visita ao showroom</h3><p>Percorra os ambientes, sente nos sofás, compare tecidos e acabamentos com um consultor ao lado.</p></div>
+        <div class="step rv"><div class="n">3</div><h3>Orçamento do seu projeto</h3><p>Com as peças escolhidas, você recebe o orçamento e as condições de pagamento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rooms" id="ambientes">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Ambientes</p>
+        <h2>Escolha por onde começar.</h2>
+        <p>Toque em um ambiente e o agendamento já abre com ele escolhido.</p>
+      </div>
+      <div class="gal">
+        <a class="tile t1 rv" href="#agendar" data-room="Sala de estar"><img src="assets/venus2-3.jpg" alt="Sala de estar com sofá curvo cinza" width="600" height="344" loading="lazy" decoding="async"><span class="cap"><b>Sala de estar</b><i aria-hidden="true">→</i></span></a>
+        <a class="tile t2 rv" href="#agendar" data-room="Sala de jantar"><img src="assets/spock-2.jpg" alt="Sala de jantar com mesa oval de madeira e teto em madeira" width="407" height="600" loading="lazy" decoding="async"><span class="cap"><b>Sala de jantar</b><i aria-hidden="true">→</i></span></a>
+        <a class="tile t3 rv" href="#agendar" data-room="Sofás e estofados"><img src="assets/marajo-4.jpg" alt="Sofá chaise terracota e puff" width="600" height="341" loading="lazy" decoding="async"><span class="cap"><b>Sofás e estofados</b><i aria-hidden="true">→</i></span></a>
+        <a class="tile t4 rv" href="#agendar" data-room="Sofá em couro"><img src="assets/pietro-3.jpg" alt="Sofá de couro caramelo em sala com tapete" width="600" height="600" loading="lazy" decoding="async"><span class="cap"><b>Couro</b><i aria-hidden="true">→</i></span></a>
+        <a class="tile t5 rv" href="#agendar" data-room="Mesas de jantar"><img src="assets/essenza-flow-3.jpg" alt="Mesa de jantar de madeira com cadeiras e aparador" width="600" height="402" loading="lazy" decoding="async"><span class="cap"><b>Mesas</b><i aria-hidden="true">→</i></span></a>
+        <a class="tile t6 rv" href="#agendar" data-room="Poltronas e decoração"><img src="assets/mabel.jpg" alt="Poltrona clara com pés dourados" width="900" height="900" loading="lazy" decoding="async"><span class="cap"><b>Poltronas</b><i aria-hidden="true">→</i></span></a>
+      </div>
+      <p class="more rv">E também <b>dormitórios, escritório e área gourmet</b>. Peça no atendimento.</p>
+    </div>
+  </section>
+
+  <section id="clientes">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Avaliações no Google</p>
+        <h2>Quem já comprou conta como foi.</h2>
+      </div>
+      <div class="quotes">
+        <blockquote class="rv">
+          <p>Minha experiência foi perfeita, a loja é incrível e o atendimento impecável. Cumpriram com prazo de entrega, montagem e tudo que combinamos.</p>
+          <footer><span class="stars" aria-label="5 estrelas">★★★★★</span> Ana Cristina Denni · Google Maps</footer>
+        </blockquote>
+        <blockquote class="rv">
+          <p>O atendimento aqui foi impecável. Extremamente simpático e atencioso, além de paciente e com muito bom gosto nas sugestões.</p>
+          <footer><span class="stars" aria-label="5 estrelas">★★★★★</span> Gabriel Coelho · Google Maps</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="pro rv">
+        <div>
+          <p class="eyebrow">Para profissionais</p>
+          <h2 style="margin-top:14px">Arquiteto ou decorador? Atendimento dedicado.</h2>
+          <a class="btn" id="wa-pro" href="https://wa.me/5519990034068" data-cta="pro-whatsapp">Cadastrar como parceiro <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <ul>
+          <li>Comissão sobre projetos especificados</li>
+          <li>Acesso antecipado a novas coleções</li>
+          <li>Suporte técnico para o seu projeto</li>
+          <li>Prazos diferenciados</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="duvidas" style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><p class="eyebrow">Dúvidas</p><h2>O que perguntam antes de vir.</h2></div>
+      <div class="faq rv">
+        <details><summary>Onde fica e qual o horário?</summary><p>Av. Dr. Moraes Sales, 1575, Cambuí, Campinas (SP). Segunda a sexta, das 9h às 19h. Sábado, das 9h às 18h. Domingos e feriados, das 10h às 18h.</p></details>
+        <details><summary>Como funciona o orçamento?</summary><p>Você pode pedir pelo WhatsApp ou durante a visita ao showroom. O consultor monta o orçamento com as peças que você escolher.</p></details>
+        <details><summary>Quais formas de pagamento?</summary><p>Aceitamos PIX e cartão. As condições para o seu projeto são apresentadas no orçamento.</p></details>
+        <details><summary>Vocês atendem arquitetos e decoradores?</summary><p>Sim. Há um atendimento específico para profissionais, com acesso antecipado a coleções e suporte técnico. Use o botão da seção "Para profissionais".</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="agendar">
+    <div class="wrap book-grid">
+      <div class="book-info rv">
+        <p class="eyebrow">Agendamento</p>
+        <h2 style="margin-top:14px">Agende sua visita ao showroom.</h2>
+        <p style="margin-top:18px;color:var(--muted)">Só nome e WhatsApp são obrigatórios. O resto ajuda a nossa equipe a receber você preparada.</p>
+        <ul>
+          <li>Atendimento direto pelo WhatsApp, sem formulário longo.</li>
+          <li>Av. Dr. Moraes Sales, 1575 · Cambuí, Campinas.</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Dr.+Moraes+Sales,+1575,+Campinas" data-cta="mapa">Ver no Google Maps</a></li>
+        </ul>
+      </div>
+
+      <div class="glow rv">
+        <form id="lead" novalidate>
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Seu nome" required>
+            <span class="err" id="err-nome" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="fone">WhatsApp com DDD</label>
+            <input type="tel" id="fone" name="fone" inputmode="tel" autocomplete="tel-national" placeholder="(19) 90000-0000" required>
+            <span class="err" id="err-fone" role="alert"></span>
+          </div>
+          <fieldset>
+            <span class="legend">Qual ambiente você quer mobiliar? <span class="opt">(opcional)</span></span>
+            <div class="chips">
+              <input type="radio" name="amb" id="a1" value="Sala de estar"><label for="a1">Sala de estar</label>
+              <input type="radio" name="amb" id="a2" value="Sala de jantar"><label for="a2">Sala de jantar</label>
+              <input type="radio" name="amb" id="a3" value="Dormitório"><label for="a3">Dormitório</label>
+              <input type="radio" name="amb" id="a4" value="Casa completa"><label for="a4">Casa completa</label>
+              <input type="radio" name="amb" id="a5" value="Sou arquiteto(a) ou decorador(a)"><label for="a5">Sou arquiteto(a)</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <span class="legend">Para quando precisa dos móveis? <span class="opt">(opcional)</span></span>
+            <div class="chips">
+              <input type="radio" name="prazo" id="p1" value="Imediato"><label for="p1">Imediato</label>
+              <input type="radio" name="prazo" id="p2" value="Em até 30 dias"><label for="p2">Até 30 dias</label>
+              <input type="radio" name="prazo" id="p3" value="Em 60 a 90 dias"><label for="p3">60 a 90 dias</label>
+              <input type="radio" name="prazo" id="p4" value="Estou pesquisando"><label for="p4">Estou pesquisando</label>
+            </div>
+          </fieldset>
+          <p class="consent">Ao enviar, você aceita que a CSM entre em contato pelo WhatsApp sobre o seu atendimento. Seus dados são usados apenas para isso. Política de Privacidade completa em csmdecor.com.br.</p>
+          <button class="btn" type="submit" id="enviar">Agendar meu atendimento <span class="arr" aria-hidden="true">→</span></button>
+        </form>
+
+        <div class="done" id="done" role="status" tabindex="-1">
+          <h3>Pronto! Falta um toque.</h3>
+          <p>Abra o WhatsApp para enviar seu pedido de visita. A mensagem já vai preenchida.</p>
+          <a class="btn" id="wa-final" href="https://wa.me/5519990034068" data-cta="whatsapp-final">Abrir WhatsApp com meu pedido <span class="arr" aria-hidden="true">→</span></a>
+          <small>Se preferir, ligue para (19) 99003-4068.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="chip" href="#topo"><img src="assets/logo.png" alt="CSM Campinas Shopping Móveis" width="768" height="305"></a>
+        <p style="margin-top:16px;max-width:22rem">Móveis e decoração de alto padrão em Campinas, com showroom de 6.000&nbsp;m².</p>
+      </div>
+      <div>
+        <h4>Localização</h4>
+        <p>Av. Dr. Moraes Sales, 1575<br>Cambuí · Campinas, SP<br>CEP 13010-002</p>
+      </div>
+      <div>
+        <h4>Horário</h4>
+        <p>Seg a sex: 9h às 19h<br>Sábado: 9h às 18h<br>Dom e feriados: 10h às 18h</p>
+        <p style="margin-top:10px">WhatsApp <a href="https://wa.me/5519990034068" data-cta="footer-whatsapp">(19) 99003-4068</a></p>
+      </div>
+    </div>
+    <p class="legal">© Campinas Shopping Móveis. Todos os direitos reservados. <a href="https://csmdecor.com.br/">csmdecor.com.br</a></p>
+  </div>
+</footer>
+
+<div class="dock" role="region" aria-label="Ações rápidas">
+  <a class="btn" href="#agendar" data-cta="dock-agendar">Agendar visita</a>
+  <a class="btn ghost" id="wa-dock" href="https://wa.me/5519990034068" data-cta="dock-whatsapp">WhatsApp</a>
+</div>
+
+<script>
+(function(){
+  var WA = "5519990034068";
+  var dl = (window.dataLayer = window.dataLayer || []);
+  function track(name, extra){ try{ var e = {event:name}; for (var k in extra){ e[k]=extra[k]; } dl.push(e); }catch(_){} }
+
+  var origem = "";
+  try{
+    var q = new URLSearchParams(location.search), parts = [];
+    ["utm_source","utm_medium","utm_campaign"].forEach(function(k){ if(q.get(k)) parts.push(q.get(k)); });
+    origem = parts.join("/");
+  }catch(_){}
+
+  function waLink(text){ return "https://wa.me/" + WA + "?text=" + encodeURIComponent(text); }
+  function base(msg){ return msg + (origem ? "\n(origem: " + origem + ")" : ""); }
+
+  var hello = base("Olá! Vim pela página da CSM e quero agendar uma visita ao showroom.");
+  ["wa-hero","wa-dock"].forEach(function(id){ var a=document.getElementById(id); if(a) a.href = waLink(hello); });
+  var pro = document.getElementById("wa-pro");
+  if(pro) pro.href = waLink(base("Olá! Sou arquiteto(a)/decorador(a) e quero me cadastrar como parceiro da CSM."));
+
+  track("lp_view", {page:"lp-agendar-visita", origem: origem});
+
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // header shadow on scroll
+  var hdr = document.getElementById("hdr");
+  function onScroll(){ hdr.classList.toggle("scrolled", window.scrollY > 8); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  // reveal: only elements below the fold start hidden; failsafe shows everything
+  var rv = [].slice.call(document.querySelectorAll(".rv"));
+  if(reduce || !("IntersectionObserver" in window)){
+    rv.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+    rv.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight){ el.classList.add("in"); } else { io.observe(el); }
+    });
+    setTimeout(function(){ rv.forEach(function(el){ el.classList.add("in"); }); }, 4000);
+  }
+
+  // hero 3D: mouse (desktop), finger drag, phone tilt (gyroscope) and scroll (everywhere)
+  var stage = document.getElementById("stage");
+  if(stage && !reduce){
+    var tx = 0, ty = 0, cx = 0, cy = 0, running = false, gyroOn = false, gotTilt = false, g0 = null, b0 = null;
+    function apply(){
+      cx += (tx - cx) * .12; cy += (ty - cy) * .12;
+      stage.style.setProperty("--px", cx.toFixed(3)); stage.style.setProperty("--py", cy.toFixed(3));
+      if(Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002){ requestAnimationFrame(apply); } else { running = false; }
+    }
+    function aim(x, y){
+      tx = Math.max(-1, Math.min(1, x)); ty = Math.max(-1, Math.min(1, y));
+      if(!running){ running = true; requestAnimationFrame(apply); }
+    }
+    stage.addEventListener("pointermove", function(ev){
+      var b = stage.getBoundingClientRect();
+      aim(((ev.clientX - b.left) / b.width - .5) * 2, ((ev.clientY - b.top) / b.height - .5) * 2);
+    });
+    ["pointerleave","pointerup","pointercancel"].forEach(function(n){
+      stage.addEventListener(n, function(){ if(!gyroOn){ aim(0, 0); } });
+    });
+
+    // phone tilt: the effect follows the angle and slowly re-centers when the phone is held still
+    function onTilt(e){
+      if(e.gamma == null || e.beta == null){ return; }
+      if(g0 === null){ g0 = e.gamma; b0 = e.beta; }
+      gotTilt = true; gyroOn = true;
+      aim((e.gamma - g0) / 16, (e.beta - b0) / 16);
+      g0 += (e.gamma - g0) * .015; b0 += (e.beta - b0) * .015;
+    }
+    var DOE = window.DeviceOrientationEvent;
+    var finePointer = window.matchMedia && matchMedia("(hover:hover) and (pointer:fine)").matches;
+    if(DOE && !finePointer){
+      // Android and most browsers send motion right away; iPhone only after a tap
+      window.addEventListener("deviceorientation", onTilt);
+      setTimeout(function(){
+        var gb = document.getElementById("gyro");
+        if(!gotTilt && gb && typeof DOE.requestPermission === "function"){
+          gb.hidden = false;
+          gb.addEventListener("click", function(){
+            DOE.requestPermission().then(function(r){ if(r === "granted"){ track("gyro_on", {}); } gb.hidden = true; }).catch(function(){ gb.hidden = true; });
+          });
+        }
+      }, 900);
+    }
+
+    // scroll depth: works on every device, no permission needed
+    function onScrollDepth(){
+      var r = stage.getBoundingClientRect(), vh = window.innerHeight;
+      if(r.bottom < 0 || r.top > vh){ return; }
+      var p = ((r.top + r.height / 2) - vh / 2) / vh;
+      stage.style.setProperty("--sy", Math.max(-1, Math.min(1, p)).toFixed(3));
+    }
+    window.addEventListener("scroll", onScrollDepth, {passive:true}); onScrollDepth();
+  }
+
+  // clicks: tracking + room preselect
+  var form = document.getElementById("lead");
+  var customRoom = "";
+  document.addEventListener("click", function(ev){
+    var t = ev.target;
+    var el = t.closest ? t.closest("[data-cta]") : null;
+    if(el){ track("cta_click", {cta: el.getAttribute("data-cta")}); }
+    var room = t.closest ? t.closest("[data-room]") : null;
+    if(room){
+      var v = room.getAttribute("data-room"), found = false;
+      var radios = form.querySelectorAll("input[name=amb]");
+      for(var i=0;i<radios.length;i++){ radios[i].checked = (radios[i].value === v); if(radios[i].checked) found = true; }
+      customRoom = found ? "" : v;
+      track("room_click", {room: v});
+    }
+  });
+  form.addEventListener("change", function(ev){ if(ev.target.name === "amb"){ customRoom = ""; } });
+
+  var done = document.getElementById("done");
+  function val(name){ var c = form.querySelector("input[name="+name+"]:checked"); return c ? c.value : ""; }
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var nome = form.nome.value.trim();
+    var digits = form.fone.value.replace(/\D/g,"");
+    var okNome = nome.length >= 3;
+    var okFone = digits.length === 10 || digits.length === 11;
+    document.getElementById("err-nome").textContent = okNome ? "" : "Digite seu nome.";
+    document.getElementById("err-fone").textContent = okFone ? "" : "Digite o WhatsApp com DDD, por exemplo (19) 90000-0000.";
+    form.nome.setAttribute("aria-invalid", okNome ? "false":"true");
+    form.fone.setAttribute("aria-invalid", okFone ? "false":"true");
+    if(!okNome){ form.nome.focus(); return; }
+    if(!okFone){ form.fone.focus(); return; }
+
+    var amb = val("amb") || customRoom;
+    var prazo = val("prazo");
+    var linhas = ["Olá! Quero agendar uma visita ao showroom da CSM.", "Nome: " + nome, "WhatsApp: " + form.fone.value.trim()];
+    if(amb) linhas.push("Ambiente: " + amb);
+    if(prazo) linhas.push("Prazo: " + prazo);
+    document.getElementById("wa-final").href = waLink(base(linhas.join("\n")));
+
+    track("lead_submit", {ambiente: amb, prazo: prazo, origem: origem});
+    // Produção: enviar também os dados ao CRM/e-mail da CSM antes de mostrar este passo.
+    form.style.display = "none";
+    done.classList.add("show");
+    done.focus();
+  });
+})();
+</script>
+</body>
+</html>
